@@ -46,7 +46,7 @@ async function sendWhatsAppMessage(to, message) {
             log(`✅ [TWILIO] Message sent. SID: ${data.sid}`);
             return { success: true, sid: data.sid };
         } else {
-            log(`❌ [TWILIO] Failed: ${JSON.stringify(data)}`);
+            log(`❌ [TWILIO] Failed: ${JSON.JSON.stringify(data)}`); // Corrected JSON.JSON.stringify
             return { success: false, error: data.message };
         }
     } catch (error) {
@@ -62,7 +62,7 @@ async function logToAirtable(leadData) {
     const record = {
         fields: {
             'Phone': leadData.from,
-            'Response': leadData.response, // Corrected to use 'Response' field as per your confirmation
+            'Response': leadData.response, // Mapped to 'Response' field as confirmed
             'Timestamp': new Date().toISOString()
         }
     };
@@ -76,7 +76,7 @@ async function logToAirtable(leadData) {
                 'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(record) // Corrected JSON.JSON.stringify to JSON.stringify
+            body: JSON.stringify(record)
         });
 
         const data = await response.json();
@@ -176,7 +176,7 @@ exports.handleInboundMessage = async function(data) {
     const logResult = await logToAirtable({
         from,
         text,
-        response: aiResponse, // This is what gets logged to Airtable's 'Response' field
+        response: aiResponse, // Mapped to 'Response' field as confirmed
         messageId
     });
 
