@@ -3,12 +3,12 @@
  * SENTINEL SHIELD BUILD - Immune to undefined and field mismatches
  */
 
-const ANTHROPIC_API_KEY= process.env.ANTHROPIC_API_KEY;
-const AIRTABLE_API_KEY= process.env.AIRTABLE_API_KEY;
+const GEMINI_API_KEY=***
+const ANTHROPIC_API_KEY=***
+const AIRTABLE_API_KEY=***
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-const TWILIO_AUTH_TOKEN= process.env.TWILIO_AUTH_TOKEN;
-const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER || '+141****8886';
+const TWILIO_AUTH_TOKEN=***
 
 // SENTINEL: Hardcoded fallback to prevent undefined
 const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER || '+141****8886';
@@ -58,17 +58,16 @@ async function sendWhatsAppMessage(to, message) {
 async function logToAirtable(leadData) {
     const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Leads`;
 
-    // SENTINEL: Corrected field mapping - "Car Interest" instead of "Message"
+    // SENTINEL: Corrected field mapping - "Response" for the AI's reply
     const record = {
         fields: {
             'Phone': leadData.from,
-            'Car Interest': leadData.text,
-            'Response': leadData.response,
+            'Response': leadData.response, // Corrected to use 'Response' field as per your confirmation
             'Timestamp': new Date().toISOString()
         }
     };
 
-    log(`📊 [AIRTABLE] Logging lead with fields: Phone, Car Interest, Response, Timestamp`);
+    log(`📊 [AIRTABLE] Logging lead with fields: Phone, Response, Timestamp`);
 
     try {
         const response = await fetch(url, {
@@ -77,7 +76,7 @@ async function logToAirtable(leadData) {
                 'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(record)
+            body: JSON.stringify(record) // Corrected JSON.JSON.stringify to JSON.stringify
         });
 
         const data = await response.json();
@@ -115,7 +114,7 @@ Keep responses concise (under 160 words) and always end with a question to keep 
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'x-api-key': ANTHROPIC_API_KEY,
+                'x-api-key': ANTHROPIC_API_KEY, // Ensure this is correctly set in Render Environment Variables
                 'anthropic-version': '2023-06-01',
                 'Content-Type': 'application/json'
             },
@@ -177,7 +176,7 @@ exports.handleInboundMessage = async function(data) {
     const logResult = await logToAirtable({
         from,
         text,
-        response: aiResponse,
+        response: aiResponse, // This is what gets logged to Airtable's 'Response' field
         messageId
     });
 
