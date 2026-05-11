@@ -63,7 +63,7 @@ const PORT = process.env.PORT || 3001;
 const server = app.listen(PORT, () => {
     log('🚀 ==========================================');
     log(`🚀 SPEED TO LEAD™ GATEWAY: http://localhost:${PORT}`);
-    log('🚀 STATUS: VERBOSE TRACING ACTIVE');
+    log('🚀 STATUS: SENTINEL SHIELD ACTIVE');
     log('🚀 ==========================================');
 });
 
