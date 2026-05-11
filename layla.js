@@ -2,13 +2,13 @@
  * LAYLA.JS - The Emirati Closer for AI Nexlify Agencies
  * SENTINEL SHIELD BUILD - Immune to undefined and field mismatches
  */
-
-const GEMINI_API_KEY=***
-const ANTHROPIC_API_KEY=***
-const AIRTABLE_API_KEY=***
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
+const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-const TWILIO_AUTH_TOKEN=***
+
 
 // SENTINEL: Hardcoded fallback to prevent undefined
 const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER || '+141****8886';
@@ -46,7 +46,7 @@ async function sendWhatsAppMessage(to, message) {
             log(`✅ [TWILIO] Message sent. SID: ${data.sid}`);
             return { success: true, sid: data.sid };
         } else {
-            log(`❌ [TWILIO] Failed: ${JSON.JSON.stringify(data)}`); // Corrected JSON.JSON.stringify
+            log(`❌ [TWILIO] Failed: ${JSON.stringify(data)}`);
             return { success: false, error: data.message };
         }
     } catch (error) {
@@ -58,16 +58,16 @@ async function sendWhatsAppMessage(to, message) {
 async function logToAirtable(leadData) {
     const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Leads`;
 
-    // SENTINEL: Corrected field mapping - "Response" for the AI's reply
+    // SENTINEL: Corrected field mapping - "AI Reasoning" for the AI's reply
     const record = {
         fields: {
             'Phone': leadData.from,
-            'Response': leadData.response, // Mapped to 'Response' field as confirmed
+            'AI Reasoning': leadData.response, // Mapped to 'AI Reasoning' field as confirmed
             'Timestamp': new Date().toISOString()
         }
     };
 
-    log(`📊 [AIRTABLE] Logging lead with fields: Phone, Response, Timestamp`);
+    log(`📊 [AIRTABLE] Logging lead with fields: Phone, AI Reasoning, Timestamp`);
 
     try {
         const response = await fetch(url, {
@@ -176,7 +176,7 @@ exports.handleInboundMessage = async function(data) {
     const logResult = await logToAirtable({
         from,
         text,
-        response: aiResponse, // Mapped to 'Response' field as confirmed
+        response: aiResponse, // Mapped to 'AI Reasoning' field as confirmed
         messageId
     });
 
