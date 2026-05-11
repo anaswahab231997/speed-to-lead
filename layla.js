@@ -16,7 +16,7 @@ const log = (msg) => {
 
 async function generateAIResponse(userMessage) {
     // Google Gemini API Endpoint
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+    const url = https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY};
 
     const systemPrompt = "You are Layla, an elite Emirati sales closer for AI Nexlify Agencies in the UAE. You are professional, warm, and highly consultative. Greet the lead, explain how AI automation saves businesses time and money, and ask one qualifying question to book a discovery call.";
 
