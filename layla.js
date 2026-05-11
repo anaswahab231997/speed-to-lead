@@ -4,7 +4,7 @@
  */
 
 const GEMINI_API_KEY= process.env.GEMINI_API_KEY;
-const ANTHROPIC_API_KEY= process.env.ANTHROPIC_API_KEY;
+const ANTHROPIC_API_KEY= process.env.ANTHROPIC_API_KEY; // Corrected to ANTHROPIC_API_KEY
 const AIRTABLE_API_KEY= process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
@@ -95,7 +95,7 @@ async function logToAirtable(leadData) {
 }
 
 async function generateAIResponse(userMessage) {
-    const url = 'https://api.anthropic.com/v1/messages';
+    const url = 'https://api.anthropic.com/v1/messages'; // This URL is for Anthropic
 
     const systemPrompt = `You are Layla, a professional and warm AI sales assistant for AI Nexlify Agencies, a premium AI automation agency based in the UAE. Your role is to:
 1. Greet leads warmly and professionally
