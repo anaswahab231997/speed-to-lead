@@ -1,9 +1,9 @@
-const GEMINI_API_KEY=***
-const ANTHROPIC_API_KEY=***
-const AIRTABLE_API_KEY=***
+const GEMINI_API_KEY=process.env.ANTHROPIC_API_KEY
+const ANTHROPIC_API_KEY=process.env.GEMINI_API_KEY
+const AIRTABLE_API_KEY=process.env.AIRTABLE_API_KEY
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-const TWILIO_AUTH_TOKEN=***
+const TWILIO_AUTH_TOKEN=process.env.TWILIO_AUTH_TOKEN
 const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
 
 const log = (msg) => {
