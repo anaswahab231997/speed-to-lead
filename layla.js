@@ -1,10 +1,16 @@
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-const AIRTABLE_API_KEY=process.env.AIRTABLE_API_KEY
+/**
+ * LAYLA.JS - The Emirati Closer for AI Nexlify Agencies
+ * SENTINEL SHIELD BUILD - Immune to undefined and field mismatches
+ */
+
+const ANTHROPIC_API_KEY= process.env.ANTHROPIC_API_KEY;
+const AIRTABLE_API_KEY= process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-const TWILIO_AUTH_TOKEN=process.env.TWILIO_AUTH_TOKEN
-const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
+const TWILIO_AUTH_TOKEN= process.env.TWILIO_AUTH_TOKEN;
+
+// SENTINEL: Hardcoded fallback to prevent undefined
+const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER || '+141****8886';
 
 const log = (msg) => {
     process.stdout.write(`\n[LAYLA] ${msg}\n`);
@@ -13,10 +19,15 @@ const log = (msg) => {
 async function sendWhatsAppMessage(to, message) {
     const url = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`;
 
+    // SENTINEL: Ensure sender is never undefined
+    const sender = TWILIO_PHONE_NUMBER || '+141****8886';
+
     const params = new URLSearchParams();
     params.append('To', `whatsapp:${to}`);
-    params.append('From', `whatsapp:${TWILIO_PHONE_NUMBER}`);
+    params.append('From', `whatsapp:${sender}`);
     params.append('Body', message);
+
+    log(`📱 [TWILIO] Sending from: whatsapp:${sender} to: whatsapp:${to}`);
 
     try {
         const response = await fetch(url, {
@@ -34,7 +45,7 @@ async function sendWhatsAppMessage(to, message) {
             log(`✅ [TWILIO] Message sent. SID: ${data.sid}`);
             return { success: true, sid: data.sid };
         } else {
-            log(`❌ [TWILIO] Failed: ${data.message}`);
+            log(`❌ [TWILIO] Failed: ${JSON.stringify(data)}`);
             return { success: false, error: data.message };
         }
     } catch (error) {
@@ -46,15 +57,17 @@ async function sendWhatsAppMessage(to, message) {
 async function logToAirtable(leadData) {
     const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Leads`;
 
+    // SENTINEL: Corrected field mapping - "Car Interest" instead of "Message"
     const record = {
         fields: {
             'Phone': leadData.from,
-            'Message': leadData.text,
+            'Car Interest': leadData.text,
             'Response': leadData.response,
-            'Timestamp': new Date().toISOString(),
-            'MessageSID': leadData.messageId || ''
+            'Timestamp': new Date().toISOString()
         }
     };
+
+    log(`📊 [AIRTABLE] Logging lead with fields: Phone, Car Interest, Response, Timestamp`);
 
     try {
         const response = await fetch(url, {
@@ -94,7 +107,10 @@ async function generateAIResponse(userMessage) {
 
 Keep responses concise (under 160 words) and always end with a question to keep the conversation going.`;
 
+    // SENTINEL: AI Guard with strict try/catch - pipeline continues even if AI fails
     try {
+        log(`🔑 [AI] Attempting Anthropic call...`);
+        
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -115,15 +131,23 @@ Keep responses concise (under 160 words) and always end with a question to keep 
         const data = await response.json();
 
         if (response.ok && data.content && data.content[0]) {
-            log(`✅ [AI] Response generated`);
-            return data.content[0].text;
+            log(`✅ [AI] Response generated successfully`);
+            return { success: true, text: data.content[0].text };
         } else {
-            log(`❌ [AI] Failed: ${JSON.stringify(data)}`);
-            return 'Thank you for reaching out to AI Nexlify Agencies! One of our team members will be with you shortly. How can we help transform your business with AI today?';
+            log(`❌ [AI] API Error: ${JSON.stringify(data)}`);
+            return { 
+                success: false, 
+                text: 'Thank you for reaching out to AI Nexlify Agencies! One of our team members will be with you shortly. How can we help transform your business with AI today?',
+                error: data
+            };
         }
     } catch (error) {
-        log(`❌ [AI] Error: ${error.message}`);
-        return 'Thank you for reaching out to AI Nexlify Agencies! One of our team members will be with you shortly. How can we help transform your business with AI today?';
+        log(`❌ [AI] Exception: ${error.message}`);
+        return { 
+            success: false, 
+            text: 'Thank you for reaching out to AI Nexlify Agencies! One of our team members will be with you shortly. How can we help transform your business with AI today?',
+            error: error.message
+        };
     }
 }
 
@@ -132,44 +156,36 @@ exports.handleInboundMessage = async function(data) {
 
     log(`📥 Processing message from ${from}: "${text}"`);
 
-    try {
-        log('🤖 Generating AI response...');
-        const aiResponse = await generateAIResponse(text);
-        log(`💬 AI Response: "${aiResponse}"`);
-
-        log('📤 Sending response via Twilio...');
-        const sendResult = await sendWhatsAppMessage(from, aiResponse);
-
-        log('📊 Logging to Airtable...');
-        const logResult = await logToAirtable({
-            from,
-            text,
-            response: aiResponse,
-            messageId
-        });
-
-        log('✅ [COMPLETE] Message processed');
-
-        return {
-            success: true,
-            aiResponse,
-            twilioResult: sendResult,
-            airtableResult: logResult
-        };
-
-    } catch (error) {
-        log(`❌ [CRITICAL] ${error.message}`);
-        log(`❌ [STACK] ${error.stack}`);
-
-        try {
-            await sendWhatsAppMessage(from, 'Thank you for your message! Our team will get back to you shortly.');
-        } catch (fallbackError) {
-            log(`❌ [FALLBACK] ${fallbackError.message}`);
-        }
-
-        return {
-            success: false,
-            error: error.message
-        };
+    // Step 1: Generate AI response (continues even if AI fails)
+    log('🤖 Generating AI response...');
+    const aiResult = await generateAIResponse(text);
+    const aiResponse = aiResult.text;
+    
+    if (aiResult.success) {
+        log(`💬 AI Response (LIVE): "${aiResponse}"`);
+    } else {
+        log(`💬 AI Response (FALLBACK): "${aiResponse}"`);
     }
+
+    // Step 2: Send response via Twilio (continues even if Step 1 failed)
+    log('📤 Sending response via Twilio...');
+    const sendResult = await sendWhatsAppMessage(from, aiResponse);
+
+    // Step 3: Log to Airtable (continues even if Step 2 failed)
+    log('📊 Logging to Airtable...');
+    const logResult = await logToAirtable({
+        from,
+        text,
+        response: aiResponse,
+        messageId
+    });
+
+    log('✅ [COMPLETE] Pipeline finished');
+
+    return {
+        success: true,
+        aiResult,
+        twilioResult: sendResult,
+        airtableResult: logResult
+    };
 };
