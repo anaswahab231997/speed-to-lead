@@ -151,3 +151,4 @@ Keep responses concise (under 160 words) and always end with a question to keep 
         };
     }
 }
+module.exports = { handleInboundMessage };
