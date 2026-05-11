@@ -10,8 +10,8 @@ const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 const TWILIO_AUTH_TOKEN= process.env.TWILIO_AUTH_TOKEN;
 
-// SENTINEL: Hardcoded fallback to prevent undefined
-const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER || '+141****8886';
+// SENTINEL: Explicitly use TWILIO_SENDER_NUMBER from Render, with fallback
+const TWILIO_PHONE_NUMBER = process.env.TWILIO_SENDER_NUMBER || '+14155238886';
 
 const log = (msg) => {
     process.stdout.write(`\n[LAYLA] ${msg}\n`);
@@ -20,12 +20,12 @@ const log = (msg) => {
 async function sendWhatsAppMessage(to, message) {
     const url = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`;
 
-    // SENTINEL: Ensure sender is never undefined
-    const sender = TWILIO_PHONE_NUMBER || '+141****8886';
+    // SENTINEL: Ensure sender is never undefined by directly using the corrected env var reference
+    const sender = TWILIO_PHONE_NUMBER;
 
     const params = new URLSearchParams();
     params.append('To', `whatsapp:${to}`);
-    params.append('From', `whatsapp:${sender}`);
+    params.append('From', `whatsapp:${sender}`); // Directly use the sender variable
     params.append('Body', message);
 
     log(`📱 [TWILIO] Sending from: whatsapp:${sender} to: whatsapp:${to}`);
