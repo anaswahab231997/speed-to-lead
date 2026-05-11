@@ -1,59 +1,59 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const { handleInboundMessage } = require('./layla');
-const app = express();
 
+// 🤝 THE HANDSHAKE (TOP): Import using destructuring
+const { handleInboundMessage } = require('./layla');
+
+const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 1. FORCE THE LOGS TO WINDOWS
+// Force logs to be visible in the console
 const log = (msg) => {
     process.stdout.write(`\n${msg}\n`);
 };
 
-// Global error handlers for uncaught exceptions and unhandled rejections
-process.on('unhandledRejection', (reason, promise) => {
-    log('❌ [FATAL] Unhandled Rejection at:');
-    log(`❌ [FATAL] Promise: ${promise}`);
-    log(`❌ [FATAL] Reason: ${reason}`);
-    process.exit(1);
-});
+// Global error handlers to prevent crashes
+process.on('unhandledRejection', (reason) => log(`❌ [FATAL] Unhandled Rejection: ${reason}`));
+process.on('uncaughtException', (err) => log(`❌ [FATAL] Uncaught Exception: ${err.message}`));
 
-process.on('uncaughtException', (err) => {
-    log('❌ [FATAL] Uncaught Exception:');
-    log(`❌ [FATAL] Error: ${err.message}`);
-    log(`❌ [FATAL] Stack: ${err.stack}`);
-    process.exit(1);
-});
-
-// 2. THE UN-MUZZLED WEBHOOK
+/**
+ * THE UN-MUZZLED WEBHOOK
+ * Specifically tuned for raw Twilio/WhatsApp payloads
+ */
 app.post('/api/twilio/webhook', async (req, res) => {
     log('🚨 [INCOMING] Webhook detected from UAE Lead!');
-    log(`📦 Payload: ${JSON.stringify(req.body, null, 2)}`);
-
-    // Send immediate 200 OK to Twilio
+    
+    // 1. Immediate 200 OK to Twilio to stop retries
     res.status(200).send('<Response></Response>');
 
     try {
         const body = req.body;
-        // Filter out status updates
+        
+        // 2. Filter out status updates (SmsStatus 'sent', 'delivered', etc.)
         if (body.SmsStatus && body.SmsStatus !== 'received') {
-            log(`⚠️ [FILTERED] Ignoring status: ${body.SmsStatus}`);
+            log(`⚠️ [FILTERED] Ignoring status update: ${body.SmsStatus}`);
             return;
         }
 
+        // 3. Extract core payload
         const msg = {
             from: (body.From || '').replace('whatsapp:', '').trim(),
             text: body.Body || '',
             messageId: body.MessageSid
         };
 
-        log(`✅ [PROCEEDING] Body: "${msg.text}" from ${msg.from}`);
-        log('🚀 [AI] Handing over to the Emirati Closer (Layla)...');
+        log(`✅ [PROCEEDING] Message: "${msg.text}" from ${msg.from}`);
+        log('🚀 [AI] Handing over to Layla (The Emirati Closer)...');
 
-        await handleInboundMessage({ ...msg, tenantDealer: null });
+        // 4. CALL LAYLA (The Handshake Check)
+        if (typeof handleInboundMessage === 'function') {
+            await handleInboundMessage({ ...msg, tenantDealer: null });
+        } else {
+            throw new Error('CRITICAL: handleInboundMessage is not a function. Check exports in layla.js!');
+        }
 
     } catch (err) {
         log(`❌ [ERROR] ${err.message}`);
@@ -61,24 +61,9 @@ app.post('/api/twilio/webhook', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3001;
-
-// Force the Loop & Async Block Audit: Ensure server binds and keeps event loop open
-try {
-    const server = app.listen(PORT, () => {
-        log('🚀 ==========================================');
-        log(`🚀 SPEED TO LEAD™ GATEWAY: http://localhost:${PORT}`);
-        log('🚀 STATUS: VERBOSE TRACING ACTIVE');
-        log('🚀 ==========================================');
-    });
-
-    server.on('error', (err) => {
-        log(`❌ [SERVER BINDING ERROR] Server failed to bind to port ${PORT}: ${err.message}`);
-        // This is a critical error, so we should exit.
-        process.exit(1);
-    });
-
-} catch (error) {
-    log(`❌ [CRITICAL STARTUP ERROR] An unexpected error occurred during server startup: ${error.message}`);
-    log(`❌ [CRITICAL STARTUP ERROR] Stack: ${error.stack}`);
-    process.exit(1);
-}
+app.listen(PORT, () => {
+    log('🚀 ==========================================');
+    log(`🚀 SPEED TO LEAD™ GATEWAY LIVE`);
+    log(`🚀 URL: http://localhost:${PORT}`);
+    log('🚀 ==========================================');
+});
