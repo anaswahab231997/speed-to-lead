@@ -95,7 +95,7 @@ async function logToAirtable(leadData) {
 }
 
 async function generateAIResponse(userMessage) {
-    const url = 'https://api.anthropic.com/v1/messages'; // This URL is for Anthropic
+    const url = 'https://api.anthropic.com/v1/messages';
 
     const systemPrompt = `You are Layla, a professional and warm AI sales assistant for AI Nexlify Agencies, a premium AI automation agency based in the UAE. Your role is to:
 1. Greet leads warmly and professionally
@@ -119,7 +119,8 @@ Keep responses concise (under 160 words) and always end with a question to keep 
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'claude-3-haiku-20240307',
+                // SENTINEL: Model upgraded to claude-3-5-sonnet-20240620
+                model: 'claude-3-5-sonnet-20240620', 
                 max_tokens: 300,
                 system: systemPrompt,
                 messages: [
@@ -150,42 +151,3 @@ Keep responses concise (under 160 words) and always end with a question to keep 
         };
     }
 }
-
-exports.handleInboundMessage = async function(data) {
-    const { from, text, messageId } = data;
-
-    log(`📥 Processing message from ${from}: "${text}"`);
-
-    // Step 1: Generate AI response (continues even if AI fails)
-    log('🤖 Generating AI response...');
-    const aiResult = await generateAIResponse(text);
-    const aiResponse = aiResult.text;
-    
-    if (aiResult.success) {
-        log(`💬 AI Response (LIVE): "${aiResponse}"`);
-    } else {
-        log(`💬 AI Response (FALLBACK): "${aiResponse}"`);
-    }
-
-    // Step 2: Send response via Twilio (continues even if Step 1 failed)
-    log('📤 Sending response via Twilio...');
-    const sendResult = await sendWhatsAppMessage(from, aiResponse);
-
-    // Step 3: Log to Airtable (continues even if Step 2 failed)
-    log('📊 Logging to Airtable...');
-    const logResult = await logToAirtable({
-        from,
-        text,
-        response: aiResponse, // Mapped to 'AI Reasoning' field as confirmed
-        messageId
-    });
-
-    log('✅ [COMPLETE] Pipeline finished');
-
-    return {
-        success: true,
-        aiResult,
-        twilioResult: sendResult,
-        airtableResult: logResult
-    };
-};
