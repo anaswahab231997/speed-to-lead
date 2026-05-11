@@ -22,7 +22,7 @@ async function handleInboundMessage(data) {
     try {
         log(`🔑 [AI] Calling Gemini 1.5 Flash...`);
         // Note the backticks around the URL - this prevents the SyntaxError
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent?key=${GEMINI_API_KEY}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
         
         const systemPrompt = "You are Layla, an elite sales closer for AI Nexlify Agencies. Warm, professional, UAE-based. Greet the lead, suggest AI automation benefits, and ask a question to book a call.";
         
