@@ -2,13 +2,13 @@
  * LAYLA.JS - The Emirati Closer for AI Nexlify Agencies
  * SENTINEL SHIELD BUILD - Immune to undefined and field mismatches
  */
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
-const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
+
+const GEMINI_API_KEY= process.env.GEMINI_API_KEY;
+const ANTHROPIC_API_KEY= process.env.ANTHROPIC_API_KEY;
+const AIRTABLE_API_KEY= process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-
+const TWILIO_AUTH_TOKEN= process.env.TWILIO_AUTH_TOKEN;
 
 // SENTINEL: Hardcoded fallback to prevent undefined
 const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER || '+141****8886';
