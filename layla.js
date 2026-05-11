@@ -1,75 +1,76 @@
-/**
- * LAYLA.JS - The Emirati Closer for AI Nexlify Agencies
- * GOOGLE GEMINI EDITION - High Performance | Zero Latency
- */
+const fetch = require('node-fetch');
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY; // Using your Google Pro Key
+// 🔐 Secure Key Mapping from Render
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
-const TWILIO_PHONE_NUMBER = process.env.TWILIO_SENDER_NUMBER || '+14155238886';
+const TWILIO_SENDER = process.env.TWILIO_SENDER_NUMBER || '+14155238886';
 
 const log = (msg) => {
     process.stdout.write(`\n[LAYLA] ${msg}\n`);
 };
 
-async function generateAIResponse(userMessage) {
-    // Google Gemini API Endpoint
-    const url = 'https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}';
+async function handleInboundMessage(data) {
+    const { from, text } = data;
+    log(`📥 Incoming from ${from}: "${text}"`);
 
-    const systemPrompt = "You are Layla, an elite Emirati sales closer for AI Nexlify Agencies in the UAE. You are professional, warm, and highly consultative. Greet the lead, explain how AI automation saves businesses time and money, and ask one qualifying question to book a discovery call.";
-
+    // 1. AI RESPONSE (Google Gemini 1.5 Flash v1 Stable)
+    let aiResponse = "Thank you for reaching out to AI Nexlify Agencies! Our team will be with you shortly.";
+    
     try {
         log(`🔑 [AI] Calling Gemini 1.5 Flash...`);
+        // Note the backticks around the URL - this prevents the SyntaxError
+        const url = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+        
+        const systemPrompt = "You are Layla, an elite sales closer for AI Nexlify Agencies. Warm, professional, UAE-based. Greet the lead, suggest AI automation benefits, and ask a question to book a call.";
+        
         const response = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contents: [{
-                    parts: [{ text: `${systemPrompt}\n\nUser Message: ${userMessage}` }]
+                    parts: [{ text: `${systemPrompt}\n\nUser: ${text}` }]
                 }]
             })
         });
 
-        const data = await response.json();
-        
-        if (data.candidates && data.candidates[0].content.parts[0].text) {
-            log(`✅ [AI] Gemini Response Generated.`);
-            return { success: true, text: data.candidates[0].content.parts[0].text };
+        const resData = await response.json();
+        if (response.ok && resData.candidates) {
+            aiResponse = resData.candidates[0].content.parts[0].text;
+            log(`✅ [AI] Gemini success.`);
         } else {
-            log(`❌ [AI] Gemini Error: ${JSON.stringify(data)}`);
-            return { success: false, text: "Thank you for reaching out! Layla is reviewing your request and will be with you shortly." };
+            log(`❌ [AI] Error: ${JSON.stringify(resData)}`);
         }
-    } catch (error) {
-        log(`❌ [AI] Exception: ${error.message}`);
-        return { success: false, text: "Thank you for reaching out! Layla will be with you shortly." };
+    } catch (e) {
+        log(`❌ [AI] Exception: ${e.message}`);
     }
-}
 
-async function sendWhatsAppMessage(to, message) {
-    const url = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`;
+    // 2. TWILIO OUTBOUND
     try {
-        await fetch(url, {
+        const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`;
+        await fetch(twilioUrl, {
             method: 'POST',
             headers: {
                 'Authorization': 'Basic ' + Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString('base64'),
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({
-                'To': `whatsapp:${to}`,
-                'From': `whatsapp:${TWILIO_PHONE_NUMBER}`,
-                'Body': message
+                'To': `whatsapp:${from}`,
+                'From': `whatsapp:${TWILIO_SENDER}`,
+                'Body': aiResponse
             })
         });
-        log(`✅ [TWILIO] Sent to ${to}`);
-    } catch (e) { log(`❌ [TWILIO] Error: ${e.message}`); }
-}
+        log(`✅ [TWILIO] Message sent.`);
+    } catch (e) {
+        log(`❌ [TWILIO] Error: ${e.message}`);
+    }
 
-async function logToAirtable(from, text, response) {
-    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Leads`;
+    // 3. AIRTABLE LOGGING
     try {
-        await fetch(url, {
+        const airtableUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Leads`;
+        await fetch(airtableUrl, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
@@ -78,23 +79,17 @@ async function logToAirtable(from, text, response) {
             body: JSON.stringify({
                 fields: {
                     'Phone': from,
-                    'AI Reasoning': response,
+                    'AI Reasoning': aiResponse,
                     'Car Interest': text
                 }
             })
         });
-        log(`✅ [AIRTABLE] Logged.`);
-    } catch (e) { log(`❌ [AIRTABLE] Error: ${e.message}`); }
+        log(`✅ [AIRTABLE] Record created.`);
+    } catch (e) {
+        log(`❌ [AIRTABLE] Error: ${e.message}`);
+    }
+
+    log('🏁 Pipeline Finished.');
 }
 
-// THE FINAL HANDSHAKE
-exports.handleInboundMessage = async function(data) {
-    const { from, text } = data;
-    log(`📥 Incoming: "${text}" from ${from}`);
-
-    const aiResult = await generateAIResponse(text);
-    await sendWhatsAppMessage(from, aiResult.text);
-    await logToAirtable(from, text, aiResult.text);
-
-    log('✅ [COMPLETE] Pipeline finished');
-};
+module.exports = { handleInboundMessage };
