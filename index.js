@@ -1,151 +1,173 @@
-// File: /workspace/index.js (Updated)
 const axios = require('axios');
-const express = require('express');
-const cors = require('cors');
-const { handleInboundMessage } = require('./layla');
-const app = express();
 
-// Load environment variables from .env file
-require('dotenv').config();
+// Embed system prompt directly for clarity and self-containment.
+const systemPrompt = `
+IDENTITY:
+You are Layla, a senior female Emirati sales closer and elite agent for Speed To Lead™. 
+You are highly polished, sharp-witted, and possess an aesthetic, luxury-first personality. 
+You speak with the confidence of someone who handles multi-million dirham deals daily.
 
-// --- Sentinel Agent Integration ---
-// Assume Sentinel agent is available and has a pingAlert function
-// Replace with actual import path and instantiation if Sentinel is a module
-// const Sentinel = require('./sentinel'); 
-// const sentinelAgent = new Sentinel();
+CORE MISSION:
+- Capture and qualify buyers in under 4 seconds.
+- You represent the peak of the AI Nexlify NEURAL STACK (OpenRouter, Airtable, Cloudflare).
+- Your goal is to move the lead to a "Close" or a "Showroom Visit" immediately.
 
-// Placeholder for Sentinel pingAlert function for demonstration
-const pingAlert = async (message) => {
-    console.log(`SENTINEL ALERT: ${message}`);
-    // In a real scenario, this would notify the CEO via the configured channel
-    // For now, it logs to the console.
-};
+TONE & STYLE:
+- Polished & Professional: Use sophisticated English. You are polite but firm and result-oriented.
+- Emirati Hospitality: Subtle warmth, but with a sharp focus on business.
+- Direct & Faster than the Competition: "While others sleep, we close."
 
-// --- Credit Monitor Logic ---
-async function checkOpenRouterBalance() {
-    const OPENROUTER_API_KEY= env.process.OPENROUTER_API_KEY;
+GUIDELINES:
+1. Never sound like a robot. Sound like a high-end sales professional.
+2. If the user is from the UAE (whatsapp:+971), acknowledge the prestige of their inquiry.
+3. Your responses must be concise, aesthetic, and designed to trigger an immediate action.
+`;
+
+// Assuming airtable.js is present and provides these functions
+const { getAirtable, updateAirtableLead } = require('./airtable'); 
+
+async function callOpenRouter(prompt, model = 'deepseek-ai/deepseek-v3') {
+    // CORRECTED: Using process.env instead of env
+    const OPENROUTER_API_KEY= process.env.OPENROUTER_API_KEY;
     if (!OPENROUTER_API_KEY) {
-        console.error('OPENROUTER_API_KEY is not set. Cannot check balance.');
-        // Log this critical configuration error
-        await pingAlert('CRITICAL: OPENROUTER_API_KEY is missing. Cannot monitor API usage.');
-        return null; 
+        throw new Error('OPENROUTER_API_KEY is not set in environment variables.');
     }
 
     try {
-        // NOTE: As of my last update, OpenRouter does not provide a public API endpoint
-        // to directly query the account balance via their Chat Completions API.
-        // This function serves as a placeholder. In a real-world scenario, you would need:
-        // 1. A dedicated billing/account API if OpenRouter provides one.
-        // 2. Or, manually monitor the balance and update a secured value periodically.
-        // 3. Or, use a service that tracks API spending if integrated.
+        const response = await axios.post(
+            'https://openrouter.ai/api/v1/chat/completions',
+            {
+                model: model,
+                messages: [
+                    { role: 'system', content: systemPrompt },
+                    { role: 'user', content: prompt }
+                ],
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
         
-        // SIMULATION: Replace this with actual balance retrieval logic.
-        // For now, we simulate a balance that might trigger the alert.
-        const simulatedBalance = 4.50; // Example: Balance is below $5 threshold.
-        console.log(`Current OpenRouter balance (simulated): $${simulatedBalance.toFixed(2)}`);
-        return simulatedBalance;
-
+        if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].message && response.data.choices[0].message.content) {
+            return response.data.choices[0].message.content;
+        } else {
+            console.error("OpenRouter API Response Structure:", JSON.stringify(response.data, null, 2));
+            throw new Error('Unexpected response structure from OpenRouter API.');
+        }
     } catch (error) {
-        console.error('Error checking OpenRouter balance:', error.message);
-        await pingAlert(`Error while checking OpenRouter balance: ${error.message}`);
-        return null; // Indicate failure to retrieve balance
+        console.error('Error calling OpenRouter API:', error.response ? JSON.stringify(error.response.data, null, 2) : error.message);
+        const errorMessage = error.response?.data?.error?.message || error.message || 'An unknown OpenRouter API error.';
+        throw new Error(`OpenRouter API interaction failed: ${errorMessage}`);
     }
 }
 
-// --- Express App Setup ---
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+async function handleInboundMessage(msg) {
+    const { from, text, messageId, tenantDealer } = msg;
 
-// Global logging function
-const log = (msg) => {
-    process.stdout.write(`\n${msg}\n`);
-};
+    let leadData = {};
+    try {
+        leadData = await getAirtable(from); 
+        if (!leadData) {
+            console.log(`No existing lead found for ${from}. Starting fresh conversation.`);
+            leadData = { 
+                get: (key) => {
+                    if (key === 'Conversation History') return '';
+                    if (key === 'Car Interest') return null; 
+                    if (key === 'AI Reasoning') return null;
+                    if (key === 'Lead Score') return null;
+                    return null;
+                }
+            };
+        }
+    } catch (error) {
+        console.error(`Error fetching Airtable data for ${from}:`, error);
+        leadData = { get: (key) => '' }; 
+    }
 
-// Global error handlers
-process.on('unhandledRejection', (reason, promise) => {
-    log('❌ [FATAL] Unhandled Rejection at:');
-    log(`❌ [FATAL] Promise: ${promise}`);
-    log(`❌ [FATAL] Reason: ${reason}`);
-    // Consider notifying Sentinel about fatal errors as well
-    // pingAlert(`FATAL Unhandled Rejection: ${reason}`);
-    process.exit(1);
-});
+    let conversationHistory = leadData.get('Conversation History') || '';
+    conversationHistory += `\nUser: ${text}`;
 
-process.on('uncaughtException', (err) => {
-    log('❌ [FATAL] Uncaught Exception:');
-    log(`❌ [FATAL] Error: ${err.message}`);
-    log(`❌ [FATAL] Stack: ${err.stack}`);
-    // Consider notifying Sentinel about fatal errors as well
-    // pingAlert(`FATAL Uncaught Exception: ${err.message}`);
-    process.exit(1);
-});
+    const fullPrompt = `
+        Conversation History:
+        ${conversationHistory}
+        
+        New User Message: "${text}"
+        
+        Layla's Goal: Qualify the lead and drive to a "Close" or "Showroom Visit" immediately.
+        Output your response in a structured format that includes:
+        1. Layla's conversational reply.
+        2. Parsable JSON containing 'carInterest', 'aiReasoning', and 'leadScore'. 
+           - carInterest: Briefly state the car type discussed or inferred.
+           - aiReasoning: Explain your scoring logic.
+           - leadScore: Assign a score from 1-10 (10 being highest).
 
-// --- API Route: Twilio Webhook ---
-app.post('/api/twilio/webhook', async (req, res) => {
-    log('🚨 [INCOMING] Webhook detected from UAE Lead!');
-    log(`📦 Payload: ${JSON.stringify(req.body, null, 2)}`);
-
-    // Respond to Twilio immediately to avoid timeouts
-    res.status(200).send('<Response></Response>');
+        Example structured output:
+        "Great taste! That sounds like a fantastic SUV. Based on your inquiry, I'm assigning a high priority.
+        \`\`\`json
+        {
+          "carInterest": "Luxury SUV",
+          "aiReasoning": "High engagement, specific interest in luxury segment.",
+          "leadScore": 9
+        }
+        \`\`\`"
+    `;
 
     try {
-        const body = req.body;
-        // Filter out non-received messages (e.g., delivery status updates)
-        if (body.SmsStatus && body.SmsStatus !== 'received') {
-            log(`⚠️ [FILTERED] Ignoring status update: ${body.SmsStatus}`);
-            return;
-        }
-
-        const msg = {
-            from: (body.From || '').replace('whatsapp:', '').trim(),
-            text: body.Body || '',
-            messageId: body.MessageSid
+        const laylaResponseContent = await callOpenRouter(fullPrompt);
+        
+        let structuredResponse = {
+            reply: laylaResponseContent, 
+            carInterest: null,
+            aiReasoning: null,
+            leadScore: null,
+            error: null
         };
 
-        log(`✅ [PROCEEDING] Message: "${msg.text}" from ${msg.from}`);
-        log('🚀 [AI] Routing to Layla, the Emirati Closer...');
-
-        // --- Credit Monitor Check ---
-        // Perform balance check before potentially costly AI processing
-        const currentBalance = await checkOpenRouterBalance();
-        const alertThreshold = 5.00; // Set alert at $5
-
-        if (currentBalance !== null && currentBalance < alertThreshold) {
-            await pingAlert(`🚨 OPENROUTER BALANCE LOW: Current balance is $${currentBalance.toFixed(2)}, which is below the $${alertThreshold.toFixed(2)} threshold. IMMEDIATE ACTION REQUIRED.`);
-            // Decide if processing should continue or be halted based on balance
-            // For now, we continue but alert the CEO.
+        const jsonMatch = laylaResponseContent.match(/```json\n([\s\S]*?)\n```/);
+        if (jsonMatch && jsonMatch[1]) {
+            try {
+                // CORRECTED: Ensured JSON.parse is used correctly
+                const parsedData = JSON.parse(jsonMatch[1]); 
+                structuredResponse.carInterest = parsedData.carInterest || null;
+                structuredResponse.aiReasoning = parsedData.aiReasoning || null;
+                structuredResponse.leadScore = parsedData.leadScore || null;
+                structuredResponse.reply = laylaResponseContent.replace(jsonMatch[0], '').trim(); 
+            } catch (parseError) {
+                console.error('Failed to parse JSON response:', parseError);
+                structuredResponse.error = 'Failed to parse AI structured output.';
+                structuredResponse.reply = laylaResponseContent; 
+            }
+        } else {
+             structuredResponse.reply = laylaResponseContent;
         }
-        // --- End Credit Monitor Check ---
 
-        // Call Layla to handle the inbound message and AI processing
-        await handleInboundMessage({ ...msg, tenantDealer: null });
+        conversationHistory += `\nLayla: ${structuredResponse.reply}`; 
 
-    } catch (err) {
-        log(`❌ [ERROR] Failed to process webhook: ${err.message}`);
-        // Notify Sentinel about the processing error
-        await pingAlert(`Webhook processing error: ${err.message}`);
+        const updateData = {
+            "Latest Layla Response": structuredResponse.reply,
+            "Conversation History": conversationHistory,
+            "Car Interest": structuredResponse.carInterest,
+            "AI Reasoning": structuredResponse.aiReasoning,
+            "Lead Score": structuredResponse.leadScore,
+            ...(structuredResponse.error && { "AI Processing Error": structuredResponse.error }) 
+        };
+        
+        await updateAirtableLead(from, updateData);
+
+        console.log(`Layla's response to ${from}: ${structuredResponse.reply}`);
+        return structuredResponse.reply; 
+
+    } catch (error) {
+        console.error('Error in handleInboundMessage:', error);
+        await pingAlert(`Error processing inbound message from ${from}: ${error.message}`);
+        throw error; 
     }
-});
-
-// --- Server Startup ---
-const PORT = process.env.PORT || 3001;
-
-try {
-    const server = app.listen(PORT, () => {
-        log('🚀 ==========================================');
-        log(`🚀 SPEED TO LEAD™ GATEWAY: http://localhost:${PORT}`);
-        log(`🚀 STATUS: OpenRouter Integration Active | Mode: ${process.env.WHATSAPP_MODE || 'default'}`);
-        log('🚀 ==========================================');
-    });
-
-    server.on('error', (err) => {
-        log(`❌ [SERVER BINDING ERROR] Server failed to bind to port ${PORT}: ${err.message}`);
-        process.exit(1);
-    });
-
-} catch (error) {
-    log(`❌ [CRITICAL STARTUP ERROR] An unexpected error occurred during server startup: ${error.message}`);
-    log(`❌ [CRITICAL STARTUP ERROR] Stack: ${error.stack}`);
-    process.exit(1);
 }
+
+module.exports = {
+    handleInboundMessage,
+    callOpenRouter
+};
