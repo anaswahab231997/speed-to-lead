@@ -23,7 +23,7 @@ const pingAlert = async (message) => {
 
 // --- Credit Monitor Logic ---
 async function checkOpenRouterBalance() {
-    const OPENROUTER_API_KEY=***
+    const OPENROUTER_API_KEY= env.process.OPENROUTER_API_KEY;
     if (!OPENROUTER_API_KEY) {
         console.error('OPENROUTER_API_KEY is not set. Cannot check balance.');
         // Log this critical configuration error
