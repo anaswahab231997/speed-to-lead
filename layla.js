@@ -28,7 +28,7 @@ const { getAirtable, updateAirtableLead } = require('./airtable');
 
 async function callOpenRouter(prompt, model = 'deepseek-ai/deepseek-v3') {
     // CORRECTED: Using process.env instead of env
-    const OPENROUTER_API_KEY= process.env.OPENROUTER_API_KEY
+    const OPENROUTER_API_KEY= process.env.OPENROUTER_API_KEY;
     if (!OPENROUTER_API_KEY) {
         throw new Error('OPENROUTER_API_KEY is not set in environment variables.');
     }
