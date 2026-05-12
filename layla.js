@@ -26,18 +26,26 @@ GUIDELINES:
 // Assuming airtable.js is present and provides these functions
 const { getAirtable, updateAirtableLead } = require('./airtable'); 
 
-async function callOpenRouter(prompt, model = 'deepseek-ai/deepseek-v3') {
+async function callOpenRouter(prompt, model) { // Removed default model to enforce selection
     // CORRECTED: Using process.env instead of env
     const OPENROUTER_API_KEY= process.env.OPENROUTER_API_KEY;
     if (!OPENROUTER_API_KEY) {
         throw new Error('OPENROUTER_API_KEY is not set in environment variables.');
     }
 
+    // CORRECTED: Updated model IDs
+    const validModels = ['deepseek-ai/deepseek-chat', 'meta-llama/llama-3.1-70b-instruct'];
+    if (!validModels.includes(model)) {
+        // Fallback or throw error if an invalid model is passed
+        console.warn(`Invalid model ID "${model}" provided. Falling back to 'deepseek-ai/deepseek-chat'.`);
+        model = 'deepseek-ai/deepseek-chat'; // Default to a known valid model
+    }
+
     try {
         const response = await axios.post(
             'https://openrouter.ai/api/v1/chat/completions',
             {
-                model: model,
+                model: model, // Use the selected or fallback model
                 messages: [
                     { role: 'system', content: systemPrompt },
                     { role: 'user', content: prompt }
@@ -116,7 +124,8 @@ async function handleInboundMessage(msg) {
     `;
 
     try {
-        const laylaResponseContent = await callOpenRouter(fullPrompt);
+        // CORRECTED: Explicitly pass model ID to callOpenRouter
+        const laylaResponseContent = await callOpenRouter(fullPrompt, 'deepseek-ai/deepseek-chat'); // Using 'deepseek-ai/deepseek-chat' as primary
         
         let structuredResponse = {
             reply: laylaResponseContent, 
@@ -129,7 +138,6 @@ async function handleInboundMessage(msg) {
         const jsonMatch = laylaResponseContent.match(/```json\n([\s\S]*?)\n```/);
         if (jsonMatch && jsonMatch[1]) {
             try {
-                // CORRECTED: Ensured JSON.parse is used correctly
                 const parsedData = JSON.parse(jsonMatch[1]); 
                 structuredResponse.carInterest = parsedData.carInterest || null;
                 structuredResponse.aiReasoning = parsedData.aiReasoning || null;
