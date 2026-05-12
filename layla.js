@@ -1,18 +1,6 @@
-const fetch = require('node-fetch');
-
-// 🔐 Secure Key Mapping from Render
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
-const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
-const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
-const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
-const TWILIO_SENDER = process.env.TWILIO_SENDER_NUMBER || '+14155238886';
-
-// File: /workspace/layla.js (Updated)
 const axios = require('axios');
 
 // Embed system prompt directly for clarity and self-containment.
-// If systemPrompt is complex or managed elsewhere, ensure it's correctly imported/defined.
 const systemPrompt = `
 IDENTITY:
 You are Layla, a senior female Emirati sales closer and elite agent for Speed To Lead™. 
@@ -39,7 +27,8 @@ GUIDELINES:
 const { getAirtable, updateAirtableLead } = require('./airtable'); 
 
 async function callOpenRouter(prompt, model = 'deepseek-ai/deepseek-v3') {
-    const OPENROUTER_API_KEY= env.process.OPENROUTER_API_KEY;
+    // CORRECTED: Using process.env instead of env
+    const OPENROUTER_API_KEY= process.env.OPENROUTER_API_KEY
     if (!OPENROUTER_API_KEY) {
         throw new Error('OPENROUTER_API_KEY is not set in environment variables.');
     }
@@ -53,9 +42,6 @@ async function callOpenRouter(prompt, model = 'deepseek-ai/deepseek-v3') {
                     { role: 'system', content: systemPrompt },
                     { role: 'user', content: prompt }
                 ],
-                // Consider adding temperature and max_tokens for more controlled generation
-                // temperature: 0.7, 
-                // max_tokens: 150, 
             },
             {
                 headers: {
@@ -65,7 +51,6 @@ async function callOpenRouter(prompt, model = 'deepseek-ai/deepseek-v3') {
             }
         );
         
-        // Robustly access the response content
         if (response.data && response.data.choices && response.data.choices.length > 0 && response.data.choices[0].message && response.data.choices[0].message.content) {
             return response.data.choices[0].message.content;
         } else {
@@ -74,8 +59,7 @@ async function callOpenRouter(prompt, model = 'deepseek-ai/deepseek-v3') {
         }
     } catch (error) {
         console.error('Error calling OpenRouter API:', error.response ? JSON.stringify(error.response.data, null, 2) : error.message);
-        // Provide a more actionable error message
-        const errorMessage = error.response?.data?.error?.message || error.message || 'An unknown error occurred with the OpenRouter API.';
+        const errorMessage = error.response?.data?.error?.message || error.message || 'An unknown OpenRouter API error.';
         throw new Error(`OpenRouter API interaction failed: ${errorMessage}`);
     }
 }
@@ -83,16 +67,15 @@ async function callOpenRouter(prompt, model = 'deepseek-ai/deepseek-v3') {
 async function handleInboundMessage(msg) {
     const { from, text, messageId, tenantDealer } = msg;
 
-    // Fetch existing lead data from Airtable if available
     let leadData = {};
     try {
         leadData = await getAirtable(from); 
         if (!leadData) {
             console.log(`No existing lead found for ${from}. Starting fresh conversation.`);
-            leadData = { // Mock structure if getAirtable returns null/undefined
+            leadData = { 
                 get: (key) => {
                     if (key === 'Conversation History') return '';
-                    if (key === 'Car Interest') return null; // Ensure default values
+                    if (key === 'Car Interest') return null; 
                     if (key === 'AI Reasoning') return null;
                     if (key === 'Lead Score') return null;
                     return null;
@@ -101,16 +84,12 @@ async function handleInboundMessage(msg) {
         }
     } catch (error) {
         console.error(`Error fetching Airtable data for ${from}:`, error);
-        // Decide if processing should halt or continue with a default state
-        // For now, continue assuming empty history if fetch fails
         leadData = { get: (key) => '' }; 
     }
 
     let conversationHistory = leadData.get('Conversation History') || '';
     conversationHistory += `\nUser: ${text}`;
 
-    // Construct the full prompt for Layla
-    // Instruct Layla to return structured data for Airtable if possible
     const fullPrompt = `
         Conversation History:
         ${conversationHistory}
@@ -140,35 +119,32 @@ async function handleInboundMessage(msg) {
         const laylaResponseContent = await callOpenRouter(fullPrompt);
         
         let structuredResponse = {
-            reply: laylaResponseContent, // Default reply
+            reply: laylaResponseContent, 
             carInterest: null,
             aiReasoning: null,
             leadScore: null,
             error: null
         };
 
-        // Attempt to parse structured JSON output
         const jsonMatch = laylaResponseContent.match(/```json\n([\s\S]*?)\n```/);
         if (jsonMatch && jsonMatch[1]) {
             try {
-                const parsedData = JSON.parse(jsonMatch[1]);
+                // CORRECTED: Ensured JSON.parse is used correctly
+                const parsedData = JSON.parse(jsonMatch[1]); 
                 structuredResponse.carInterest = parsedData.carInterest || null;
                 structuredResponse.aiReasoning = parsedData.aiReasoning || null;
                 structuredResponse.leadScore = parsedData.leadScore || null;
-                // Use the conversational part of the response as the main reply
                 structuredResponse.reply = laylaResponseContent.replace(jsonMatch[0], '').trim(); 
             } catch (parseError) {
                 console.error('Failed to parse JSON response:', parseError);
                 structuredResponse.error = 'Failed to parse AI structured output.';
-                // Fallback: Use the full content if JSON parsing fails
                 structuredResponse.reply = laylaResponseContent; 
             }
         } else {
-             // If no JSON block, use the whole response as the reply
              structuredResponse.reply = laylaResponseContent;
         }
 
-        conversationHistory += `\nLayla: ${structuredResponse.reply}`; // Append the conversational reply
+        conversationHistory += `\nLayla: ${structuredResponse.reply}`; 
 
         const updateData = {
             "Latest Layla Response": structuredResponse.reply,
@@ -176,20 +152,18 @@ async function handleInboundMessage(msg) {
             "Car Interest": structuredResponse.carInterest,
             "AI Reasoning": structuredResponse.aiReasoning,
             "Lead Score": structuredResponse.leadScore,
-            // Add error logging if structured output failed
             ...(structuredResponse.error && { "AI Processing Error": structuredResponse.error }) 
         };
         
         await updateAirtableLead(from, updateData);
 
         console.log(`Layla's response to ${from}: ${structuredResponse.reply}`);
-        return structuredResponse.reply; // Return only the conversational reply
+        return structuredResponse.reply; 
 
     } catch (error) {
         console.error('Error in handleInboundMessage:', error);
-        // Attempt to notify Sentinel about the failure
         await pingAlert(`Error processing inbound message from ${from}: ${error.message}`);
-        throw error; // Re-throw to be caught by the webhook handler
+        throw error; 
     }
 }
 
