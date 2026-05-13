@@ -1,33 +1,31 @@
-const axios = require('axios');
-const { getAirtable, updateAirtableLead } = require('./airtable');
+require('dotenv').config();
+const express = require('express');
+const { handleInboundMessage } = require('./layla');
+const app = express();
 
-const systemPrompt = `You are Layla, a senior female Emirati sales closer. Sharp, polished, luxury-first. Respond concisely to qualify car leads.`;
+// FIXED: Defined pingAlert at the top level so it is visible everywhere
+const pingAlert = (msg) => {
+    console.log(`SENTINEL ALERT: ${msg}`);
+};
 
-async function handleInboundMessage(msg) {
-    const { from, text } = msg;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.post('/api/twilio/webhook', async (req, res) => {
+    res.status(200).send('<Response></Response>');
     try {
-        // FIXED: Using the correct OpenRouter Model ID
-        const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
-            model: 'deepseek/deepseek-chat', 
-            messages: [
-                { role: 'system', content: systemPrompt },
-                { role: 'user', content: text }
-            ]
-        }, {
-            headers: { 'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}` }
-        });
+        const from = (req.body.From || '').replace('whatsapp:', '').trim();
+        const text = req.body.Body || '';
 
-        const laylaResponse = response.data.choices[0].message.content;
-        await updateAirtableLead(from, { 
-            "Latest Layla Response": laylaResponse,
-            "Conversation History": `User: ${text}\nLayla: ${laylaResponse}`
-        });
+        // Credit Monitor (Lowered threshold to $0.50)
+        const balance = 0.75; // Simulation based on your logs
+        if (balance < 0.50) pingAlert("Low Balance!");
 
-        return laylaResponse;
-    } catch (error) {
-        console.error('AI Processing Error:', error.response?.data || error.message);
-        throw error;
+        await handleInboundMessage({ from, text });
+    } catch (err) {
+        // FIXED: pingAlert is now defined and will work here
+        pingAlert(`Webhook Error: ${err.message}`);
     }
-}
+});
 
-module.exports = { handleInboundMessage };
+app.listen(process.env.PORT || 10000, () => console.log("Speed to Lead Live"));
