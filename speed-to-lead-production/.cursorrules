@@ -1,0 +1,115 @@
+# SPEED TO LEAD™ — PERMANENT GLOBAL ENGINEERING DIRECTIVES
+# Author: Chief AI Architect & Swarm Overseer
+# Target: All Agent/Model Interactions in this Workspace
+
+---
+
+## 1. CORE OPERATIONAL PARADIGM: HALT & ESCALATE (THE GOLDEN RULE)
+
+> [!IMPORTANT]
+> To prevent chat amnesia, logical drifting, and catastrophic code regression, the AI Agent must strictly operate under the "Halt & Escalate" protocol.
+
+### The Halt & Escalate Protocol:
+1. **No Silent Assumptions:** If an implementation detail, API dependency, or variable mapping is ambiguous, the Agent **MUST** halt execution, draft an architecture brief, and request human oversight from the CEO (Anas) before proceeding.
+2. **Regression Interception:** Before overwriting ANY existing code block, the Agent must perform a regression check (`grep_search` or `view_file` on related nodes). If the edit impacts adjacent modules (e.g., modifying `airtable.js` impacting `dealerApi.js`), the Agent **MUST** halt and present a clear structural diff of the ripple effect for CEO approval.
+3. **API Key Isolation:** Hardcoding plain-text credentials, passwords, or tokens in application files is a **fatal security violation**. 
+   * All credentials must be sourced strictly from `process.env`.
+   * If a required environment variable is missing, the Agent must instantly fail securely, output a clear log of the missing `.env` key, and halt execution.
+
+---
+
+## 2. REPOSITORY ARCHITECTURAL DIRECTIVES
+
+### A. Global State & Multi-Tenant Routing
+* **Unified State:** Port 3001 (`index.js`) and Port 3002 (`dealerApi.js`) must align their database views. In-memory caches must have synchronous file/DB write-through mappings to prevent stale lead records.
+* **Tenant Isolation:** Every lead, conversation log, and inventory item in the database must be bound to a unique dealership token (`dl_...`). Databases must enforce logical separation or Row-Level Security (RLS). 
+
+### B. UI/UX Design System Guidelines (Mobile-First Cyber-Luxe)
+* **Mobile-First CSS:** All dealership interfaces and CRM pulse feeds are tailored for mobile PWAs (primarily iOS). Use strict mobile responsive Viewports, touch-friendly layouts (minimum 44px hit-targets), and premium transitions.
+* **Premium Theme (Cyber-Luxe):** Dark modes with glassmorphism (`backdrop-filter`), smooth gradients, distinct semantic status tags (`var(--hot)` / `var(--cold)`), custom modern typography (e.g., Outfit, Inter), and micro-animations for hover and active states. No plain primary colors or generic web styling.
+* **Framework Preservation:** Never alter or overwrite existing React layout grids, component hooks, or state machines unless explicitly directed. Any UI overhaul must preserve underlying functions and api routes.
+
+---
+
+## 3. DEPLOYMENT PIPELINE ARCHITECTURE (CI/CD)
+
+As we bridge the gap between the local workspace and the live domain (`ainexlifyagencies.com`), the following multi-port Node.js server layout requires a hardened cloud environment rather than standard static hosting (like raw Vercel/Netlify frontend proxies).
+
+```mermaid
+graph TD
+    A[Git Push to GitHub] --> B[GitHub Actions CI/CD]
+    B -->|Build Webpack/Vite Assets| C[Publish Frontend to S3/CDN]
+    B -->|Deploy Docker Swarm/PM2 Container| D[Virtual Private Server VPS / AWS EC2]
+    D -->|Reverse Proxy Port 3001 Core/Webhooks| E[Nginx with SSL]
+    D -->|Reverse Proxy Port 3002 Dealer Pulse| E
+    D -->|Reverse Proxy Port 5000 Admin Command| E
+```
+
+### Safest, Most Capable Production Stack:
+1. **Engine Hosts (Port 3001 / 3002 / 5000):** Deploy as Dockerized container nodes on an **AWS EC2** instance or custom **Linux VPS (Ubuntu)**.
+2. **Process Monitor:** Enforce auto-restart capabilities using **PM2 Cluster Mode** on the host. 
+3. **Domain & Routing Proxy (Nginx / Cloudflare):** Configure an **Nginx Reverse Proxy** or Cloudflare Tunnel to handle SSL/TLS termination and route traffic cleanly:
+   * `https://ainexlifyagencies.com/` $\rightarrow$ Points to Frontend.
+   * `https://pulse.ainexlifyagencies.com/` $\rightarrow$ Reverse Proxy to Port `3002` (Dealer Pulse).
+   * `https://api.ainexlifyagencies.com/` $\rightarrow$ Reverse Proxy to Port `3001` (Inbound Webhooks).
+   * `/admin` $\rightarrow$ Authenticated routing to Port `5000` (CEO War Room).
+4. **Environment Secrets:** Inject credentials securely into the container runtime environment using **GitHub Secret Store** mapped to `.env` variables during action triggers.
+
+---
+
+## 4. COMMAND SCHEMAS (FUTURE EXPANSION PROMPTS)
+
+Use these three structured prompts in future conversational iterations to guide the AI agent safely.
+
+````carousel
+### Prompt A: Complex Backend Integration
+```markdown
+[ROLE: CHIEF SYSTEMS ARCHITECT]
+TASK: Integrate complex backend API: [INSERT API NAME / e.g., Twilio Sandbox].
+CONTEXT: We are refactoring the inbound communication layer in index.js to hook into [API NAME].
+
+OBJECTIVE:
+1. Establish a zero-downtime webhook endpoint at '/webhook/[API_NAME]' with strict parameter validation and source verification.
+2. Refactor 'extractMessages' to parse, normalize, and cleanly format the incoming payload.
+3. Integrate outbound dispatch routes mapped inside 'whatsapp.js' or equivalent.
+
+MANDATORY RULES:
+- Perform an absolute Halt & Escalate if any environment variable or parameter mapping is undocumented.
+- Fall back securely with custom error logs if connections fail or time out.
+- Write a localized mocha/jest test script to mock and execute the endpoint under load.
+- Output exact file diffs. No placeholders.
+```
+<!-- slide -->
+### Prompt B: Responsive Frontend Overhaul
+```markdown
+[ROLE: LEAD DESIGN ARCHITECT]
+TASK: Refactor UI component: [INSERT COMPONENT PATH / e.g., LeadsTab.jsx]
+CONTEXT: We are upgrading the visual aesthetic of [COMPONENT NAME] without breaking current logic.
+
+OBJECTIVE:
+1. Beautify layout using our Cyber-Luxe Design System (dark-mode, glassmorphism, smooth micro-animations, and fluid touch interactions).
+2. Mandate absolute mobile-first scaling; test responsive flexboxes on viewports from 320px to 1200px width.
+
+MANDATORY RULES:
+- Read the target component file entirely before writing a single line of CSS.
+- You are FORBIDDEN from altering or deleting existing React hooks, state initializations, api fetch triggers, or parent callback integrations.
+- Validate layout changes dynamically in a headless test if possible. Output the precise style changes.
+```
+<!-- slide -->
+### Prompt C: Outbound SDR Swarm Expansion
+```markdown
+[ROLE: CHIEF AI SWARM ENGINEER]
+TASK: Architect Autonomous Outbound SDR Agent Swarm: [INSERT AGENT TYPE / e.g., Inventory Intelligence]
+CONTEXT: We need to spawn a specialized background agent to automate outreach for dealer stock.
+
+OBJECTIVE:
+1. Create a specialized agent worker file inside '/agents/agent_stock.js' mapped into our Sentinel Daemon cron orchestration loops.
+2. Hook the agent into our database schemas to pull live inventory statistics and find dealer contact parameters.
+3. Equip the agent with Claude 4.6 (claude-sonnet-4-6) to synthesize and draft high-conversion, hyper-personalized emails and WhatsApp stock proposals.
+
+MANDATORY RULES:
+- All outbound drafts must write to the Human-in-the-Loop approval queue table in Airtable (tbl1IPxJCcrc9N0T1).
+- No message can be dispatched autonomously to a real client without explicit admin approval flags.
+- Safely check and fail securely if process execution exceeds the 65% workspace workload limit.
+```
+````

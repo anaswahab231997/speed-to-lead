@@ -1,0 +1,27 @@
+{
+  "wins": [
+    {
+      "id": 1778244626469,
+      "capturedAt": "2026-05-08T12:50:26.469Z",
+      "carInterest": "https://www.alghandiauto.com",
+      "buyerMessage": "Not captured",
+      "laylaReply": "[NEX-02 RECON AUDIT] Digital Score: 1/8. WhatsApp: Missing. Mobile PageSpeed: 11%. Google Rating: 4.3 (107 reviews). Social Active: No. Identified Monthly Commission Leak: AED 1,83,750.",
+      "objection": "",
+      "outcome": "Contacted",
+      "score": "Hot"
+    },
+    {
+      "id": 1778387786475,
+      "capturedAt": "2026-05-10T04:36:26.475Z",
+      "carInterest": "2021 Toyota Land Cruiser GXR",
+      "buyerMessage": "Not captured",
+      "laylaReply": "Pre-approved bank finance. Needs trade-in option. Extremely high intent, ready to sign.",
+      "objection": "",
+      "outcome": "Contacted",
+      "score": "Hot"
+    }
+  ],
+  "tactics": "",
+  "totalWins": 2,
+  "lastSummarized": null
+}

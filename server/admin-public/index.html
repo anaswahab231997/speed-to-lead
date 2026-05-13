@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Nexlify™ — Deterministic Command Center</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <!-- React & ReactDOM via CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #070709;
+      --surface: #0f0f13;
+      --surface-elevated: #16161c;
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #ff3b30;
+      --accent-glow: rgba(255, 59, 48, 0.2);
+      --accent-blue: #0084ff;
+      --accent-blue-glow: rgba(0, 132, 255, 0.25);
+      --success: #30d158;
+      --success-glow: rgba(48, 209, 88, 0.2);
+      --warm: #ff9f0a;
+      --warm-glow: rgba(255, 159, 10, 0.2);
+      --teal: #64d2ff;
+      --text: #ffffff;
+      --text-secondary: #8e8e93;
+      --text-tertiary: #48484a;
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Layout */
+    .dashboard-container {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--accent), #ff9f0a);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.5rem;
+      box-shadow: 0 0 20px rgba(255, 59, 48, 0.3);
+    }
+
+    .brand-title {
+      font-weight: 900;
+      font-size: 1.3rem;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .header-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .user-badge {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 8px 16px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--teal);
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .nav-tab {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 24px;
+      border-radius: 12px;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-tab.active {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: 0 4px 15px rgba(0, 132, 255, 0.15);
+    }
+
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+
+    .col-3 { grid-column: span 3; }
+    .col-4 { grid-column: span 4; }
+    .col-5 { grid-column: span 5; }
+    .col-6 { grid-column: span 6; }
+    .col-7 { grid-column: span 7; }
+    .col-8 { grid-column: span 8; }
+    .col-12 { grid-column: span 12; }
+
+    @media (max-width: 1024px) {
+      .col-3, .col-4, .col-5, .col-6, .col-7, .col-8 { grid-column: span 12; }
+    }
+
+    /* Glass Panels */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .panel::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 14px;
+    }
+
+    .panel-title {
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Status Items */
+    .status-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status-dot.nominal {
+      background-color: var(--success);
+      box-shadow: 0 0 10px var(--success-glow);
+    }
+
+    .status-dot.degraded {
+      background-color: var(--warm);
+      box-shadow: 0 0 10px rgba(255, 159, 10, 0.4);
+    }
+
+    .status-dot.offline {
+      background-color: var(--accent);
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      color: #ffffff;
+      font-size: 0.85rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 10px rgba(0, 132, 255, 0.15);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-blue {
+      background: linear-gradient(135deg, var(--accent-blue), #00c6ff);
+      color: #ffffff;
+      box-shadow: 0 4px 15px var(--accent-blue-glow);
+    }
+
+    .btn-accent {
+      background: linear-gradient(135deg, var(--accent), #ff9f0a);
+      color: #ffffff;
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, var(--success), #00ffaa);
+      color: #000000;
+      box-shadow: 0 4px 15px var(--success-glow);
+    }
+
+    .btn-secondary {
+      background: var(--surface-elevated);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Terminal Console */
+    .console-box {
+      background: #040406;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: #30d158;
+      line-height: 1.5;
+      height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    .console-line {
+      margin-bottom: 6px;
+    }
+
+    .console-prompt {
+      color: rgba(255, 255, 255, 0.3);
+      margin-right: 8px;
+    }
+
+    /* Table / Lists */
+    .dealer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .dealer-row:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .dealer-row:last-child {
+      border-bottom: none;
+    }
+
+    .dealer-name {
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    .dealer-details {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* Outbound Swarm elements */
+    .prospect-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 20px;
+    }
+
+    .prospect-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .prospect-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .prospect-tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: rgba(100, 210, 255, 0.15);
+      color: var(--teal);
+    }
+
+    .prospect-tag.fired {
+      background: rgba(48, 209, 88, 0.15);
+      color: var(--success);
+    }
+
+    .prospect-tag.redrafted {
+      background: rgba(255, 159, 10, 0.15);
+      color: var(--warm);
+    }
+
+    .prospect-meta {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .prospect-research {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      color: var(--warm);
+      line-height: 1.4;
+      margin-bottom: 14px;
+      border-left: 3px solid var(--warm);
+    }
+
+    .prospect-draft-box {
+      background: #040406;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: #e5e5ea;
+      white-space: pre-wrap;
+      word-break: break-all;
+      word-wrap: break-word;
+      max-height: 250px;
+      overflow-y: auto;
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    /* Agent Status Badge */
+    .agent-status-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .agent-status-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 500px) {
+      .agent-status-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .agent-status-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .agent-status-name {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .agent-status-pulse {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--success);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* Proposal Card */
+    .proposal-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .proposal-card.approved {
+      border-color: rgba(48, 209, 88, 0.3);
+      background: linear-gradient(135deg, rgba(48, 209, 88, 0.02), var(--surface-elevated));
+    }
+
+    /* Legal Footer */
+    .footer {
+      text-align: center;
+      margin-top: 50px;
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      padding-bottom: 40px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* Responsive Utilities */
+    .system-health-agents-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+    @media (max-width: 768px) {
+      .system-health-agents-grid {
+        grid-template-columns: 1fr !important;
+      }
+      .dashboard-container {
+        padding: 12px;
+      }
+      .panel {
+        padding: 16px;
+      }
+      .grid {
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="root"></div>
+
+  <!-- React GUI logic in JSX parsed via Babel stably inside container -->
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    function App() {
+      // General App State
+      const [activeTab, setActiveTab] = useState('telemetry'); // telemetry OR warroom
+      const [systemStatus, setSystemStatus] = useState({
+        status: 'ONLINE',
+        swarms_deployed: 0,
+        logs: [],
+        db: { status: 'SECURED', dealer_count: 0 }
+      });
+      const [dealers, setDealers] = useState([]);
+      const [activeWorker, setActiveWorker] = useState(null);
+      const [workerConsole, setWorkerConsole] = useState([]);
+      const consoleEndRef = useRef(null);
+
+      // Tab 1 (Telemetry) Forms
+      const [formDealerName, setFormDealerName] = useState('Al Mansour Motors');
+      const [formPhone, setFormPhone] = useState('971509876543');
+      const [formWabaId, setFormWabaId] = useState('15822263653');
+      const [formPhoneId, setFormPhoneId] = useState('971509876543');
+      const [formToken, setFormToken] = useState('EAALeGlVYcVMBRXgxeEezbX');
+      const [selectedDealerId, setSelectedDealerId] = useState('');
+      const [markupPercent, setMarkupPercent] = useState('5');
+
+      // Tab 2 (War Room) HITL States
+      const [outboundQueue, setOutboundQueue] = useState([]);
+      const [boardProposals, setBoardProposals] = useState([]);
+      const [qaDefects, setQaDefects] = useState([]);
+
+      // Load initial telemetry & dealers data
+      const loadTelemetry = async () => {
+        try {
+          const res = await fetch('/api/telemetry');
+          const data = await res.json();
+          setSystemStatus(data.sentinel);
+          setDealers(data.dealers);
+          if (data.dealers.length > 0 && !selectedDealerId) {
+            setSelectedDealerId(data.dealers[0].dealer_id);
+          }
+        } catch (e) {
+          console.error('Failed to load telemetry:', e);
+        }
+      };
+
+      // Load HITL Outbound Queue, Proposals, and QA Defects
+      const loadWarRoomData = async () => {
+        try {
+          const [outboundRes, proposalsRes, qaRes] = await Promise.all([
+            fetch('/api/outbound/queue'),
+            fetch('/api/proposals'),
+            fetch('/api/qa/defects')
+          ]);
+          const outboundData = await outboundRes.json();
+          const proposalsData = await proposalsRes.json();
+          const qaData = await qaRes.json();
+          setOutboundQueue(outboundData.data);
+          setBoardProposals(proposalsData.data);
+          setQaDefects(qaData.data);
+        } catch (e) {
+          console.error('Failed to load War Room and QA data:', e);
+        }
+      };
+
+      useEffect(() => {
+        loadTelemetry();
+        loadWarRoomData();
+        const interval = setInterval(() => {
+          loadTelemetry();
+          loadWarRoomData();
+        }, 5000);
+        return () => clearInterval(interval);
+      }, []);
+
+      // Scroll console to bottom
+      useEffect(() => {
+        if (consoleEndRef.current) {
+          consoleEndRef.current.scrollTop = consoleEndRef.current.scrollHeight;
+        }
+      }, [workerConsole]);
+
+      const logToConsole = (msg) => {
+        const timestamp = new Date().toLocaleTimeString();
+        setWorkerConsole(prev => [...prev, `[${timestamp}] ${msg}`]);
+      };
+
+      // Trigger Worker A (Provisioner)
+      const handleTriggerWorkerA = async () => {
+        if (!formDealerName || !formPhone || !formWabaId || !formPhoneId || !formToken) {
+          alert('Please fill in all Worker A configuration parameters!');
+          return;
+        }
+
+        setActiveWorker('Worker A (Provisioner)');
+        logToConsole(`⚡ Initializing Worker A (Provisioner)...`);
+        
+        try {
+          const res = await fetch('/api/trigger-worker-a', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              dealerName: formDealerName,
+              phone: formPhone,
+              wabaId: formWabaId,
+              phoneId: formPhoneId,
+              token: formToken
+            })
+          });
+
+          const data = await res.json();
+          if (data.success) {
+            logToConsole(`✅ Worker A Completed Successfully.`);
+            data.logs.forEach(line => logToConsole(`[Worker Out] ${line}`));
+          } else {
+            logToConsole(`❌ Worker A Failed: ${data.error}`);
+          }
+          loadTelemetry();
+        } catch (e) {
+          logToConsole(`❌ Network/Server exception while running Worker A: ${e.message}`);
+        } finally {
+          setActiveWorker(null);
+        }
+      };
+
+      // Trigger Worker B (Scraper)
+      const handleTriggerWorkerB = async () => {
+        if (!selectedDealerId) {
+          alert('Please select a target Dealer profile!');
+          return;
+        }
+
+        setActiveWorker('Worker B (Scraper)');
+        logToConsole(`⚡ Dispatching Worker B (Scraper/Updater) for target: ${selectedDealerId}...`);
+
+        try {
+          const res = await fetch('/api/trigger-worker-b', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              dealerId: selectedDealerId,
+              markupPercent: markupPercent
+            })
+          });
+
+          const data = await res.json();
+          if (data.success) {
+            logToConsole(`✅ Worker B Pricing Update Completed Successfully.`);
+            data.logs.forEach(line => logToConsole(`[Worker Out] ${line}`));
+          } else {
+            logToConsole(`❌ Worker B Failed: ${data.error}`);
+          }
+          loadTelemetry();
+        } catch (e) {
+          logToConsole(`❌ Network/Server exception while running Worker B: ${e.message}`);
+        } finally {
+          setActiveWorker(null);
+        }
+      };
+
+      // HITL: Fire message
+      const handleFireMessage = async (showroom) => {
+        logToConsole(`🔥 Requesting HITL outbound approval for "${showroom}"...`);
+        try {
+          const res = await fetch('/api/outbound/fire', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ showroom })
+          });
+          const data = await res.json();
+          if (data.success) {
+            logToConsole(`✅ ${data.message}`);
+            data.logs.forEach(l => logToConsole(l));
+            loadWarRoomData();
+          } else {
+            logToConsole(`❌ Outbound dispatch failed: ${data.error}`);
+          }
+        } catch (e) {
+          logToConsole(`❌ Error firing outbound: ${e.message}`);
+        }
+      };
+
+      // HITL: Re-draft message
+      const handleRedraftMessage = async (showroom) => {
+        logToConsole(`✍️ Triggering SDR Copy re-draft variation for "${showroom}"...`);
+        try {
+          const res = await fetch('/api/outbound/redraft', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ showroom })
+          });
+          const data = await res.json();
+          if (data.success) {
+            logToConsole(`✅ ${data.message}`);
+            loadWarRoomData();
+          } else {
+            logToConsole(`❌ Re-draft failed: ${data.error}`);
+          }
+        } catch (e) {
+          logToConsole(`❌ Error re-drafting outbound: ${e.message}`);
+        }
+      };
+
+      // HITL: Approve Advisory Board Proposal
+      const handleApproveProposal = async (id, title) => {
+        logToConsole(`✅ CEO Trigger: Approving and merging "${title}" into active code configurations...`);
+        try {
+          const res = await fetch('/api/proposals/approve', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+          });
+          const data = await res.json();
+          if (data.success) {
+            logToConsole(`✅ ${data.message}`);
+            loadWarRoomData();
+          } else {
+            logToConsole(`❌ Proposal approval failed: ${data.error}`);
+          }
+        } catch (e) {
+          logToConsole(`❌ Error approving proposal: ${e.message}`);
+        }
+      };
+
+      // HITL: Enforce Absolute Override (QA Syndicate)
+      const handleEnforceOverride = async (id, target) => {
+        logToConsole(`🛡️ CEO Override Triggered: Executing absolute QA override on failed code module "${target}"...`);
+        try {
+          const res = await fetch('/api/qa/defects/enforce', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id })
+          });
+          const data = await res.json();
+          if (data.success) {
+            logToConsole(`🛡️ SUCCESS: ${data.message}`);
+            loadWarRoomData();
+          } else {
+            logToConsole(`❌ QA Override failed: ${data.error}`);
+          }
+        } catch (e) {
+          logToConsole(`❌ Error enforcing QA override: ${e.message}`);
+        }
+      };
+
+      return (
+        <div className="dashboard-container">
+          {/* Header */}
+          <div className="header">
+            <div className="brand">
+              <div className="brand-logo">⚡</div>
+              <div>
+                <h1 className="brand-title">Ai Nexlify™ OS</h1>
+                <div className="brand-subtitle">DETERMINISTIC COMMAND CENTER</div>
+              </div>
+            </div>
+            <div className="header-meta">
+              <span className="user-badge">🔒 SYSTEM ROOT: ANAS WAHAB</span>
+            </div>
+          </div>
+
+          {/* Navigation Tabs */}
+          <div className="nav-tabs">
+            <button className={`nav-tab ${activeTab === 'telemetry' ? 'active' : ''}`} onClick={() => setActiveTab('telemetry')}>
+              📋 SETUP & SETTINGS
+            </button>
+            <button className={`nav-tab ${activeTab === 'warroom' ? 'active' : ''}`} onClick={() => setActiveTab('warroom')}>
+              🔥 SALES OUTREACH
+            </button>
+            <button className={`nav-tab ${activeTab === 'qadefects' ? 'active' : ''}`} onClick={() => setActiveTab('qadefects')}>
+              🛠️ SYSTEM HEALTH
+            </button>
+          </div>
+
+          {/* Tab 1: Telemetry & Workers */}
+          {activeTab === 'telemetry' && (
+            <div className="grid">
+              {/* Health & Status Panel */}
+              <div className="panel col-4">
+                <div className="panel-header">
+                  <span className="panel-title">📡 Core Integrations Status</span>
+                </div>
+                
+                <div className="status-item">
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem' }}>WhatsApp Connection</div>
+                    <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', marginTop: '2px' }}>Live 🟢</div>
+                  </div>
+                  <span className="status-dot nominal"></span>
+                </div>
+
+                <div className="status-item">
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem' }}>Layla AI Engine</div>
+                    <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', marginTop: '2px' }}>Active 🟢</div>
+                  </div>
+                  <span className="status-dot nominal"></span>
+                </div>
+
+                <div className="status-item">
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem' }}>Continuous Guard System</div>
+                    <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', marginTop: '2px' }}>Secured 🟢</div>
+                  </div>
+                  <span className="status-dot nominal"></span>
+                </div>
+
+                <div className="status-item" style={{ marginTop: '20px', background: 'rgba(96, 210, 255, 0.05)' }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--teal)' }}>Secure Lead Database</div>
+                    <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', marginTop: '2px' }}>Encrypted & Safe</div>
+                  </div>
+                  <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--success)' }}>{systemStatus.db?.status || 'SECURED'}</span>
+                </div>
+              </div>
+
+              {/* Dealers Directory */}
+              <div className="panel col-4">
+                <div className="panel-header">
+                  <span className="panel-title">🏢 Connected Showrooms ({dealers.length})</span>
+                </div>
+                <div style={{ maxHeight: '250px', overflowY: 'auto', borderRadius: '8px', background: 'rgba(0,0,0,0.2)' }}>
+                  {dealers.length === 0 ? (
+                    <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.8rem' }}>
+                      No showroom connections found. Connect a showroom below to start.
+                    </div>
+                  ) : (
+                    dealers.map(d => (
+                      <div key={d.dealer_id} className="dealer-row" onClick={() => setSelectedDealerId(d.dealer_id)}>
+                        <div>
+                          <div className="dealer-name" style={selectedDealerId === d.dealer_id ? { color: 'var(--teal)' } : {}}>{d.dealership_name}</div>
+                          <div className="dealer-details">📞 +{d.phone_number_id} · WABA: {d.waba_id}</div>
+                        </div>
+                        <span style={{ fontSize: '0.65rem', background: 'rgba(255,255,255,0.06)', padding: '2px 8px', borderRadius: '10px' }}>
+                          {d.inventory_data?.length || 0} Cars
+                        </span>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Worker B (Scraper) */}
+              <div className="panel col-4">
+                <div className="panel-header">
+                  <span className="panel-title">🚜 Catalog Price Updater</span>
+                </div>
+                <div className="form-group">
+                  <label>Select Showroom</label>
+                  <select 
+                    className="form-input" 
+                    value={selectedDealerId} 
+                    onChange={e => setSelectedDealerId(e.target.value)}
+                    style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border)' }}
+                  >
+                    {dealers.map(d => (
+                      <option key={d.dealer_id} value={d.dealer_id}>{d.dealership_name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>Inventory Price Adjustment (%)</label>
+                  <input 
+                    type="number" 
+                    className="form-input" 
+                    value={markupPercent} 
+                    onChange={e => setMarkupPercent(e.target.value)}
+                    placeholder="Enter price markup/markdown percentage (e.g., 5)"
+                  />
+                </div>
+                <button 
+                  className="btn btn-accent" 
+                  onClick={handleTriggerWorkerB}
+                  disabled={!!activeWorker}
+                  style={{ marginTop: '8px' }}
+                >
+                  {activeWorker === 'Worker B (Scraper)' ? 'UPDATING SHOWROOM CAR PRICES...' : '⚡ UPDATE SHOWROOM CAR PRICES'}
+                </button>
+              </div>
+
+              {/* Worker A (The Provisioner) Form */}
+              <div className="panel col-6">
+                <div className="panel-header">
+                  <span className="panel-title">🏗️ Connect New Showroom Line</span>
+                </div>
+                
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className="form-group">
+                    <label>Showroom Name</label>
+                    <input type="text" className="form-input" value={formDealerName} onChange={e => setFormDealerName(e.target.value)} />
+                  </div>
+                  <div className="form-group">
+                    <label>WhatsApp Number</label>
+                    <input type="text" className="form-input" value={formPhone} onChange={e => setFormPhone(e.target.value)} />
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className="form-group">
+                    <label>WhatsApp Business Account ID</label>
+                    <input type="text" className="form-input" value={formWabaId} onChange={e => setFormWabaId(e.target.value)} />
+                  </div>
+                  <div className="form-group">
+                    <label>WhatsApp Phone ID</label>
+                    <input type="text" className="form-input" value={formPhoneId} onChange={e => setFormPhoneId(e.target.value)} />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>WhatsApp Security Token</label>
+                  <input type="text" className="form-input" value={formToken} onChange={e => setFormToken(e.target.value)} />
+                </div>
+
+                <button 
+                  className="btn btn-blue" 
+                  onClick={handleTriggerWorkerA}
+                  disabled={!!activeWorker}
+                  style={{ marginTop: '10px' }}
+                >
+                  {activeWorker === 'Worker A (Provisioner)' ? 'Connecting Showroom WhatsApp Line...' : '⚡ CONNECT WHATSAPP LINE'}
+                </button>
+              </div>
+
+              {/* Console Log Reader Panel */}
+              <div className="panel col-6">
+                <div className="panel-header">
+                  <span className="panel-title">📺 Live System Activity</span>
+                  {activeWorker && <span style={{ fontSize: '0.68rem', color: 'var(--accent)', animation: 'pulse 1s infinite' }}>● ACTIVE PROCESSING</span>}
+                </div>
+                <div className="console-box" ref={consoleEndRef}>
+                  {workerConsole.length === 0 ? (
+                    <div style={{ color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+                      --- System on standby. Run a setting above to watch live updates. ---
+                    </div>
+                  ) : (
+                    workerConsole.map((line, idx) => (
+                      <div key={idx} className="console-line">
+                         <span className="console-prompt">$</span>{line}
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Tab 2: Outbound War Room & Swarm */}
+          {activeTab === 'warroom' && (
+            <div className="grid">
+              
+              {/* Swarm State Grid */}
+              <div className="col-12">
+                <div className="agent-status-grid">
+                  <div className="agent-status-card">
+                    <div className="agent-status-name">Agent D: The Prospector</div>
+                    <div className="agent-status-pulse">🟢 ACTIVE RECON</div>
+                  </div>
+                  <div className="agent-status-card">
+                    <div className="agent-status-name">Agent E: The SDR</div>
+                    <div className="agent-status-pulse">🟢 DRAFTING OUTREACH</div>
+                  </div>
+                  <div className="agent-status-card">
+                    <div className="agent-status-name">Agent A: Market Intel</div>
+                    <div className="agent-status-pulse" style={{ color: 'var(--teal)' }}>🔵 MONITORING SAAS</div>
+                  </div>
+                  <div className="agent-status-card">
+                    <div className="agent-status-name">Agent B: The Strategist</div>
+                    <div className="agent-status-pulse" style={{ color: 'var(--warm)' }}>🟠 PROPOSING RULES</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Outbound Queue */}
+              <div className="panel col-7">
+                <div className="panel-header">
+                  <span className="panel-title">🔥 Sales Outreach Queue (Requires CEO Approval)</span>
+                </div>
+
+                <div style={{ maxHeight: '600px', overflowY: 'auto', paddingRight: '4px' }}>
+                  {outboundQueue.map((item, idx) => (
+                    <div key={idx} className="prospect-card">
+                      <div className="prospect-header">
+                        <div>
+                          <div className="prospect-title">{item.showroom}</div>
+                          <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
+                            👤 {item.decisionMaker} ({item.role}) · ✉️ {item.email}
+                          </div>
+                        </div>
+                        <span className={`prospect-tag ${item.status === 'DISPATCHED' ? 'fired' : item.status === 'RE-DRAFTED' ? 'redrafted' : ''}`}>
+                          {item.status === 'DISPATCHED' ? 'Sent 🟢' : item.status === 'RE-DRAFTED' ? 'AI Enhanced 🟠' : 'Ready for Review'}
+                        </span>
+                      </div>
+
+                      <div className="prospect-research">
+                        <strong>🔎 Showroom Recon Data:</strong> {item.news}
+                        <div style={{ marginTop: '6px', fontWeight: 700, textTransform: 'uppercase', fontSize: '0.62rem' }}>
+                          ⚠️ Discovered Pain Point: {item.painPoint}
+                        </div>
+                      </div>
+
+                      <div className="prospect-draft-box">
+                        {item.draftMessage}
+                      </div>
+
+                      {item.status !== 'DISPATCHED' ? (
+                        <div style={{ display: 'flex', gap: '12px' }}>
+                          <button className="btn btn-success" onClick={() => handleFireMessage(item.showroom)} style={{ flex: 1 }}>
+                            🚀 Approve & Send Outreach
+                          </button>
+                          <button className="btn btn-secondary" onClick={() => handleRedraftMessage(item.showroom)} style={{ flex: 1 }}>
+                            ✍️ Improve Outreach with AI Psychology
+                          </button>
+                        </div>
+                      ) : (
+                        <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--success)', background: 'rgba(48,209,88,0.1)', padding: '10px', borderRadius: '8px', textAlign: 'center' }}>
+                          ✓ Outreach message sent successfully
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Advisory Board Proposals */}
+              <div className="panel col-5">
+                <div className="panel-header">
+                  <span className="panel-title">🧠 AI Strategy Recommendations</span>
+                </div>
+
+                <div style={{ maxHeight: '600px', overflowY: 'auto' }}>
+                  {boardProposals.map((prop, idx) => (
+                    <div key={idx} className={`proposal-card ${prop.status === 'APPROVED' ? 'approved' : ''}`}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--teal)' }}>{prop.agent === 'Agent A (Market Intel)' ? 'Agent A: Market Intel' : prop.agent === 'Agent B (Strategist)' ? 'Agent B: Urgency Strategist' : prop.agent}</span>
+                        <span style={{ fontSize: '0.65rem', padding: '2px 8px', borderRadius: '8px', background: 'rgba(255,255,255,0.05)', color: prop.status === 'APPROVED' ? 'var(--success)' : 'var(--text-secondary)' }}>
+                          {prop.status === 'APPROVED' ? 'Approved & Unified' : 'Pending Review'}
+                        </span>
+                      </div>
+
+                      <h4 style={{ fontSize: '0.9rem', fontWeight: 800, marginBottom: '6px', color: '#ffffff' }}>{prop.title}</h4>
+                      <p style={{ fontSize: '0.76rem', color: 'var(--text-secondary)', lineHeight: '1.4', marginBottom: '14px' }}>{prop.description}</p>
+
+                      {prop.status !== 'APPROVED' ? (
+                        <button className="btn btn-blue" onClick={() => handleApproveProposal(prop.id, prop.title)} style={{ padding: '10px 14px', fontSize: '0.76rem' }}>
+                          ✅ Approve & Apply Strategy
+                        </button>
+                      ) : (
+                        <div style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--success)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          ✓ Approved & Live
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Local console logger display in warroom */}
+              <div className="col-12">
+                <div className="panel" style={{ padding: '16px' }}>
+                  <div className="panel-header" style={{ marginBottom: '12px', paddingBottom: '8px' }}>
+                    <span className="panel-title" style={{ fontSize: '0.85rem' }}>📺 Outreach Activity Logs</span>
+                  </div>
+                  <div className="console-box" ref={consoleEndRef} style={{ height: '180px' }}>
+                    {workerConsole.length === 0 ? (
+                      <div style={{ color: 'var(--text-secondary)', fontStyle: 'italic' }}>
+                        --- System on standby. Click Send Outreach or AI Psychology above to watch activity. ---
+                      </div>
+                    ) : (
+                      workerConsole.map((line, idx) => (
+                        <div key={idx} className="console-line">
+                          <span className="console-prompt">$</span>{line}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          )}
+
+          {/* Tab 3: QA & Defects */}
+          {activeTab === 'qadefects' && (
+            <div className="grid">
+              
+              {/* Syndicate Agent Status Header */}
+              <div className="col-12">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                  <div>
+                    <h2 style={{ fontSize: '1.25rem', fontWeight: 900, letterSpacing: '-0.03em', color: '#ffffff' }}>🛡️ SYSTEM HEALTH MONITOR</h2>
+                    <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>Oversight panel ensuring continuous zero-defect performance and system stability.</p>
+                  </div>
+                  <div className="user-badge" style={{ background: 'rgba(255, 69, 58, 0.12)', border: '1px solid rgba(255, 69, 58, 0.2)', color: 'var(--accent)' }}>
+                    🚨 STATUS: SYSTEM ACCESS LEVEL ROOT
+                  </div>
+                </div>
+                
+                <div className="agent-status-grid system-health-agents-grid">
+                  <div className="agent-status-card" style={{ border: '1px solid rgba(100, 210, 255, 0.15)', background: 'linear-gradient(135deg, rgba(100, 210, 255, 0.05), var(--surface-elevated))' }}>
+                    <div className="agent-status-name" style={{ color: 'var(--teal)' }}>Agent F: Health Auditor</div>
+                    <div style={{ fontSize: '0.76rem', color: '#ffffff', marginTop: '6px', fontWeight: 500 }}>Constantly audits system layouts and connection pipelines to ensure perfect uptime.</div>
+                    <div className="agent-status-pulse" style={{ color: 'var(--teal)', marginTop: '10px' }}>🟢 ACTIVE SCANNING</div>
+                  </div>
+                  <div className="agent-status-card" style={{ border: '1px solid rgba(255, 59, 48, 0.15)', background: 'linear-gradient(135deg, rgba(255, 59, 48, 0.05), var(--surface-elevated))' }}>
+                    <div className="agent-status-name" style={{ color: 'var(--accent)' }}>Agent G: Auto-Recovery System</div>
+                    <div style={{ fontSize: '0.76rem', color: '#ffffff', marginTop: '6px', fontWeight: 500 }}>Intervenes instantly on system glitches to generate self-healing recovery fixes.</div>
+                    <div className="agent-status-pulse" style={{ color: 'var(--success)', marginTop: '10px' }}>🟢 STANDBY WATCH</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Defect Resolution Proposals List */}
+              <div className="panel col-8">
+                <div className="panel-header">
+                  <span className="panel-title">⚠️ Identified System Glitches ({qaDefects.filter(d => d.status === 'PENDING').length})</span>
+                </div>
+
+                <div style={{ maxHeight: '600px', overflowY: 'auto', paddingRight: '4px' }}>
+                  {qaDefects.length === 0 ? (
+                    <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
+                      ✓ All systems performing nominally. Zero anomalies detected.
+                    </div>
+                  ) : (
+                    qaDefects.map((defect) => (
+                      <div key={defect.id} className="prospect-card" style={{ border: defect.status === 'ENFORCED' ? '1px solid rgba(48, 209, 88, 0.3)' : '1px solid rgba(255, 255, 255, 0.08)' }}>
+                        <div className="prospect-header" style={{ marginBottom: '14px' }}>
+                          <div>
+                            <span style={{ fontSize: '0.65rem', fontWeight: 800, padding: '3px 8px', borderRadius: '4px', background: defect.severity === 'CRITICAL' ? 'rgba(255, 59, 48, 0.15)' : 'rgba(255, 159, 10, 0.15)', color: defect.severity === 'CRITICAL' ? 'var(--accent)' : 'var(--warm)', marginRight: '8px' }}>
+                              {defect.severity}
+                            </span>
+                            <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#ffffff' }}>Target: {defect.target === 'index.css' ? 'Showroom Styling Layout' : defect.target}</span>
+                            <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
+                              Detected by Agent G · Source: <strong>{defect.builderAgent === 'Agent C (UI Builder)' ? 'Agent C: UI Builder' : defect.builderAgent}</strong>
+                            </div>
+                          </div>
+                          <span className={`prospect-tag ${defect.status === 'ENFORCED' ? 'fired' : ''}`} style={{ textTransform: 'uppercase' }}>
+                            {defect.status === 'ENFORCED' ? 'Fix Applied 🟢' : 'Anomaly Detected 🔴'}
+                          </span>
+                        </div>
+
+                        <div className="prospect-research" style={{ background: 'rgba(255, 59, 48, 0.04)', color: '#ffc1bd', borderLeft: '3px solid var(--accent)', padding: '12px 16px', borderRadius: '10px', fontSize: '0.8rem', lineHeight: '1.5', marginBottom: '16px' }}>
+                          <strong style={{ color: '#ffffff', display: 'block', marginBottom: '4px' }}>🚨 GLITCH ROOT CAUSE:</strong>
+                          {defect.rootCause === 'Builder Agent tangled the CSS Flexbox (Hardcoded width: 520px in .faceid-container breaking 390px mobile viewport)' ? 'Auto-Builder applied hardcoded dimensions to screen wrapper, breaking rendering on compact screens' : defect.rootCause}
+                          <div style={{ marginTop: '8px', color: 'var(--text-secondary)', fontSize: '0.76rem' }}>
+                            {defect.defectReport === 'The UI Builder agent applied a static, fixed pixel width (width: 520px;) directly on .faceid-container under standard viewports, overriding fluid layout properties and causing catastrophic horizontal clipping on device screens < 520px.' ? 'Static horizontal sizing forced elements to extend beyond device edges, making standard login screens look clipped.' : defect.defectReport}
+                          </div>
+                        </div>
+
+                        <div style={{ marginBottom: '14px' }}>
+                          <span style={{ fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--teal)', display: 'block', marginBottom: '6px' }}>🛡️ AI Diagnostic Correction Path:</span>
+                          <div className="prospect-draft-box" style={{ background: '#030304', border: '1px solid rgba(100, 210, 255, 0.15)', color: '#64d2ff' }}>
+                            {defect.cleanCode}
+                          </div>
+                        </div>
+
+                        {defect.status !== 'ENFORCED' ? (
+                          <button className="btn btn-blue" onClick={() => handleEnforceOverride(defect.id, defect.target)} style={{ background: 'linear-gradient(135deg, var(--accent-blue), var(--teal))', boxShadow: '0 4px 15px rgba(0, 132, 255, 0.3)' }}>
+                            Apply Fix
+                          </button>
+                        ) : (
+                          <div style={{ fontSize: '0.78rem', fontWeight: 800, color: 'var(--success)', background: 'rgba(48,209,88,0.08)', border: '1px solid rgba(48,209,88,0.2)', padding: '12px', borderRadius: '10px', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                            ✓ System Health Nominal: Fix Applied & Stabilized
+                          </div>
+                        )}
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Active Internal Audits panel */}
+              <div className="panel col-4">
+                <div className="panel-header">
+                  <span className="panel-title">🔎 System Health Diagnostics</span>
+                </div>
+                
+                <div className="status-item" style={{ background: 'rgba(255,255,255,0.01)' }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '0.8rem' }}>Security Audit Speed</div>
+                    <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', marginTop: '2px' }}>Active background scanning</div>
+                  </div>
+                  <span style={{ fontSize: '0.76rem', fontWeight: 700, color: 'var(--teal)' }}>0.4s</span>
+                </div>
+
+                <div className="status-item" style={{ background: 'rgba(255,255,255,0.01)' }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '0.8rem' }}>Self-Healing Interventions</div>
+                    <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', marginTop: '2px' }}>Preventative loop blocks</div>
+                  </div>
+                  <span style={{ fontSize: '0.76rem', fontWeight: 700, color: 'var(--accent)' }}>4 blocked</span>
+                </div>
+
+                <div className="status-item" style={{ background: 'rgba(255,255,255,0.01)' }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '0.8rem' }}>System Integrity Rating</div>
+                    <div style={{ fontSize: '0.68rem', color: 'var(--text-secondary)', marginTop: '2px' }}>Continuous live validation</div>
+                  </div>
+                  <span style={{ fontSize: '0.76rem', fontWeight: 700, color: 'var(--success)' }}>100% PERFECT</span>
+                </div>
+
+                <div style={{ marginTop: '20px', padding: '14px', borderRadius: '10px', background: 'rgba(255, 159, 10, 0.04)', border: '1px solid rgba(255, 159, 10, 0.15)' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--warm)', textTransform: 'uppercase', letterSpacing: '0.04em', display: 'block', marginBottom: '4px' }}>⚠️ Operational Guardrail:</span>
+                  <span style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', lineHeight: '1.4', display: 'block' }}>
+                    Security guardrails operate with absolute autonomy but are completely subservient to the CEO. These layers exist solely to safeguard uptime and system integrity.
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Legal Footer */}
+          <div className="footer">
+            © 2026 AI Nexlify. Speed To Lead™ is a proprietary technology of the Nexlify Agentic OS.
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexlify — Speed to Lead — The 4-Second Advantage</title>
+  <meta name="description" content="Nexlify Speed to Lead is an elite conversational engine and autonomous reconnaissance system for luxury auto dealers. Disarm digital leaks in 4 seconds flat.">
+  
+  <!-- Premium Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2.1">
+
+  <style>
+    :root {
+      --bg: #020202;
+      --card-bg: rgba(10, 10, 12, 0.75);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --text: #f5f5f7;
+      --text-secondary: rgba(245, 245, 247, 0.65);
+      --text-tertiary: rgba(245, 245, 247, 0.4);
+      --accent: #0a84ff;
+      --accent-glow: rgba(10, 132, 255, 0.25);
+      --hot: #ff453a;
+      --hot-glow: rgba(255, 69, 58, 0.35);
+      --success: #30d158;
+      --success-glow: rgba(48, 209, 88, 0.3);
+      --radius: 24px;
+      --font: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      overflow-x: hidden;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Subtle Grain Texture Overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      opacity: 0.015;
+      pointer-events: none;
+      z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* Apple Parallax Styling */
+    .parallax-section {
+      position: relative;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    .parallax-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, rgba(2,2,2,0.95) 0%, rgba(2,2,2,0.6) 50%, rgba(2,2,2,0.95) 100%);
+      z-index: 1;
+    }
+
+    /* Radial Backlight Glows */
+    .glow-bg {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(10, 132, 255, 0.08) 0%, rgba(2, 2, 2, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-1 { top: -200px; right: -100px; }
+    .glow-2 { top: 800px; left: -200px; background: radial-gradient(circle, rgba(255, 69, 58, 0.05) 0%, rgba(2, 2, 2, 0) 70%); }
+
+    /* Frosted Glassmorphism Header */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 74px;
+      background: rgba(2, 2, 2, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 40px;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo span {
+      background: linear-gradient(135deg, #fff, rgba(255,255,255,0.4));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .logo-icon {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #ffffff;
+    }
+
+    .btn-header {
+      background: #ffffff;
+      color: #000000;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      border: 1px solid #ffffff;
+      transition: all 0.2s;
+    }
+    .btn-header:hover {
+      background: transparent;
+      color: #ffffff;
+    }
+
+    /* Hero Section with Kinetic Typography */
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 160px 40px 80px 40px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Kinetic Typography Text Block */
+    .kinetic-text {
+      font-size: 4.2rem;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+      margin-bottom: 24px;
+    }
+    
+    .kinetic-word-static {
+      color: #ffffff;
+    }
+    
+    .kinetic-word-dynamic {
+      display: block;
+      background: linear-gradient(135deg, var(--accent) 0%, #a259ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 40px rgba(10, 132, 255, 0.15);
+      animation: tracking-expand 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) infinite alternate;
+    }
+
+    @keyframes tracking-expand {
+      0% { letter-spacing: -0.05em; }
+      100% { letter-spacing: 0.02em; }
+    }
+
+    .hero-text p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+      max-width: 500px;
+      font-weight: 400;
+    }
+
+    /* Ultra-Realistic Floating iOS Dashboard Frame */
+    .mockup-container {
+      perspective: 1200px;
+    }
+    .ios-dashboard {
+      background: linear-gradient(145deg, #161618, #070708);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 44px;
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.85), inset 0 1px 2px rgba(255,255,255,0.15);
+      padding: 26px;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      transform: rotateY(-10deg) rotateX(6deg) translateY(-10px);
+      transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+      position: relative;
+    }
+    .ios-dashboard:hover {
+      transform: rotateY(0deg) rotateX(0deg) translateY(0);
+    }
+
+    /* Dynamic Island */
+    .di-header {
+      width: 115px;
+      height: 30px;
+      background: #000;
+      border-radius: 20px;
+      margin: 0 auto 22px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0.5px solid rgba(255,255,255,0.08);
+    }
+    .di-green-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+      animation: pulse-green 1.5s infinite;
+    }
+
+    /* Live Stat Dashboard Cards inside Frame */
+    .mock-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .mock-stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 0.5px solid var(--border);
+      border-radius: 14px;
+      padding: 10px;
+      text-align: center;
+    }
+    .msc-val {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .msc-lbl {
+      font-size: 0.55rem;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* CPO Revenue Lost Counter */
+    .leak-widget {
+      background: linear-gradient(135deg, rgba(255,69,58,0.15), rgba(28,28,30,0.9));
+      border: 1px solid rgba(255,69,58,0.4);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 20px rgba(255,69,58,0.05);
+    }
+    .leak-widget-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--hot);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .leak-val {
+      font-size: 1.9rem;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.04em;
+    }
+    .leak-label {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* Notification Lead Stack */
+    .mock-notif {
+      background: rgba(28, 28, 30, 0.95);
+      border: 1px solid var(--border-strong);
+      border-radius: 18px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .mock-notif-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.65rem;
+      color: var(--text-tertiary);
+      margin-bottom: 4px;
+    }
+    .mock-notif-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .mock-notif-desc {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .mock-notif-badge {
+      background: rgba(255,69,58,0.15);
+      color: var(--hot);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 0.58rem;
+      font-weight: 700;
+    }
+
+    /* Bento Grid Feature Section */
+    .section-title {
+      text-align: center;
+      max-width: 800px;
+      margin: 80px auto 40px auto;
+      padding: 0 20px;
+    }
+    .section-title h2 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 12px;
+    }
+    .section-title p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+    }
+
+    .bento-grid {
+      max-width: 1200px;
+      margin: 0 auto 80px auto;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .bento-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      position: relative;
+    }
+    .bento-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-4px);
+    }
+
+    .bento-wide {
+      grid-column: span 2;
+    }
+
+    .bento-card h3 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+      color: #ffffff;
+    }
+    .bento-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .card-meta {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Agentic Transparency & Parallel Processing OS */
+    .orchestration-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      width: 100%;
+    }
+    @media (min-width: 768px) {
+      .orchestration-grid {
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 40px;
+      }
+    }
+
+    .agent-transparency-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-top: 30px;
+    }
+    
+    .agent-trans-card {
+      background: rgba(255,255,255,0.015);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .agent-trans-card:hover {
+      background: rgba(255,255,255,0.03);
+      border-color: var(--border-strong);
+    }
+
+    .agent-trans-icon {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      display: inline-block;
+      position: relative;
+    }
+    
+    .agent-pulse-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--success);
+      opacity: 0;
+      animation: agent-ring-pulse 2s infinite;
+    }
+    
+    @keyframes agent-ring-pulse {
+      0% { width: 32px; height: 32px; opacity: 0.8; }
+      100% { width: 56px; height: 56px; opacity: 0; }
+    }
+
+    .agent-trans-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .agent-trans-status {
+      font-size: 0.65rem;
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    /* System Load Monitor Card */
+    .sys-load-box {
+      border-left: 1px solid var(--border);
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .sys-load-bar-bg {
+      width: 100%; height: 6px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+    .sys-load-bar-fill {
+      height: 100%; width: 28%;
+      background: var(--accent);
+      border-radius: 10px;
+      transition: width 1s ease;
+    }
+
+    /* Silent Leak Diagnostic Prominent Form */
+    .diagnostic-cta-banner {
+      background: linear-gradient(135deg, rgba(255, 69, 58, 0.08) 0%, rgba(2, 2, 2, 0.95) 100%);
+      border: 1px solid rgba(255, 69, 58, 0.25);
+      border-radius: var(--radius);
+      padding: 40px;
+      max-width: 1120px;
+      margin: 60px auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+    
+    .diag-text h3 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+    .diag-text p {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Elegant Audit Inputs */
+    .audit-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .audit-input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 18px;
+      color: #ffffff;
+      font-size: 0.92rem;
+      font-family: var(--font);
+      transition: all 0.2s;
+    }
+    .audit-input:focus {
+      outline: none;
+      border-color: var(--hot);
+      background: rgba(255,255,255,0.07);
+    }
+    .audit-btn {
+      width: 100%;
+      background: var(--hot);
+      color: #ffffff;
+      border: none;
+      border-radius: 30px;
+      padding: 14px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 0 15px rgba(255,69,58,0.25);
+    }
+    .audit-btn:hover {
+      background: #ff544a;
+      box-shadow: 0 0 25px rgba(255,69,58,0.45);
+    }
+
+    /* Human-in-the-Loop Philosopy Section */
+    .human-enablement-banner {
+      background: linear-gradient(135deg, rgba(10, 132, 255, 0.08) 0%, rgba(10, 10, 12, 0.95) 100%);
+      border: 1px solid rgba(10, 132, 255, 0.25);
+      border-radius: var(--radius);
+      padding: 50px;
+      max-width: 1120px;
+      margin: 80px auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+    
+    .human-text h2 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    
+    .human-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .human-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .human-card h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .human-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Live Proof Banner */
+    .live-proof-banner {
+      background: radial-gradient(ellipse at center, rgba(10, 132, 255, 0.12) 0%, rgba(2, 2, 2, 0.8) 100%);
+      border: 1px solid rgba(10, 132, 255, 0.2);
+      border-radius: var(--radius);
+      padding: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1120px;
+      margin: 0 auto 60px auto;
+    }
+    .proof-val {
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: -0.04em;
+    }
+
+    /* General Apply Form Section */
+    .bento-forms-container {
+      max-width: 1200px;
+      margin: 0 auto 100px auto;
+      padding: 0 40px;
+    }
+
+    .form-box {
+      background: rgba(10, 10, 12, 0.85);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      max-width: 600px;
+      margin: 0 auto;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+    }
+
+    .form-box h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .form-box p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-tertiary);
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-family: var(--font);
+      transition: all 0.2s;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: #ffffff;
+      color: #000000;
+      border: none;
+      border-radius: 30px;
+      padding: 14px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-submit:hover {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(10, 132, 255, 0.4);
+    }
+    .btn-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Keyframe Animations */
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.15); opacity: 1; }
+    }
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 4px var(--success-glow); }
+      50% { box-shadow: 0 0 12px var(--success); }
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--hot);
+      box-shadow: 0 0 8px var(--hot-glow);
+      animation: heartbeat 2s ease infinite;
+    }
+
+    /* Loading animation for report builder */
+    .loader-wheel {
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top: 3px solid var(--hot);
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-tertiary);
+      letter-spacing: 0.02em;
+    }
+
+    @media (max-width: 900px) {
+      .hero-container, .bento-grid, .diagnostic-cta-banner, .human-enablement-banner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .bento-card {
+        grid-column: span 1 !important;
+      }
+      .agent-transparency-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .sys-load-box {
+        border-left: none;
+        padding-left: 0;
+        margin-top: 20px;
+      }
+    }
+    @media (max-width: 768px) {
+      header {
+        height: 64px;
+        padding: 0 16px;
+      }
+      .logo {
+        font-size: 1.05rem;
+        gap: 6px;
+      }
+      .logo span {
+        display: inline-block;
+        transform: translateY(0.5px);
+      }
+      .logo-icon {
+        width: 10px;
+        height: 10px;
+      }
+      nav {
+        gap: 12px;
+      }
+      nav a:not([href="/dealer-pulse/"]) {
+        display: none !important;
+      }
+      nav a[href="/dealer-pulse/"] {
+        padding: 6px 12px !important;
+        font-size: 0.75rem !important;
+      }
+      nav a[href="/dealer-pulse/"] span {
+        font-size: 0.75rem !important;
+      }
+      .bento-card {
+        padding: 24px 16px !important;
+      }
+    }
+    @media (max-width: 600px) {
+      .agent-transparency-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+    }
+    @media (max-width: 400px) {
+      .agent-transparency-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+
+    /* iOS Installation Prompt Styles */
+    .ios-prompt-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 100000; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .ios-prompt-overlay.active {
+      opacity: 1; pointer-events: auto;
+    }
+    .ios-prompt-sheet {
+      background: rgba(18, 18, 20, 0.85);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 28px; padding: 28px; width: 90%; max-width: 400px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      text-align: center; transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .ios-prompt-overlay.active .ios-prompt-sheet {
+      transform: scale(1);
+    }
+    .ios-prompt-icon {
+      width: 58px; height: 58px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), #a259ff);
+      margin: 0 auto 16px auto;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; box-shadow: 0 0 15px var(--accent-glow);
+    }
+    .ios-prompt-title {
+      font-size: 1.35rem; font-weight: 800; color: #ffffff;
+      letter-spacing: -0.02em; margin-bottom: 8px;
+    }
+    .ios-prompt-desc {
+      font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 24px;
+      line-height: 1.45;
+    }
+    .ios-prompt-steps {
+      display: flex; flex-direction: column; gap: 14px; text-align: left;
+      margin-bottom: 24px; background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05); border-radius: 16px;
+      padding: 16px;
+    }
+    .step-item {
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .step-num {
+      background: rgba(255,255,255,0.06); width: 22px; height: 22px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 700; color: var(--accent); flex-shrink: 0;
+    }
+    .step-text {
+      font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;
+    }
+    .step-text strong {
+      color: #ffffff;
+    }
+    .ios-prompt-close {
+      background: #ffffff; color: #000000; border: none;
+      border-radius: 30px; padding: 12px 28px; font-weight: 700;
+      font-size: 0.88rem; width: 100%; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .ios-prompt-close:hover {
+      background: var(--accent); color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon"></div>
+      <span>AI NEXLIFY AGENCIES</span>
+    </div>
+    <nav>
+      <a href="#problem">The Leak</a>
+      <a href="#solution">Meet Layla</a>
+      <a href="#human-loop">Human Core</a>
+      <a href="/dealer-pulse/" class="btn-header" style="background: var(--accent); color: #ffffff; border-color: var(--accent); display: flex; align-items: center; gap: 6px; padding: 8px 16px;">
+        <span>Deploy Layla</span> ⚡
+      </a>
+      <a href="#audit" class="btn-header">Audit Showroom</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-container">
+    <div class="hero-text">
+      <div class="kinetic-text" style="font-size: 3.4rem;">
+        <span class="kinetic-word-static" style="display: block; line-height: 1.1;">Stop Losing High-Ticket Buyers</span>
+        <span class="kinetic-word-dynamic" style="display: inline-block; line-height: 1.1;">To the 5-Minute Wait.</span>
+      </div>
+      <p style="font-weight: 600; color: #ffffff; font-size: 1.25rem; margin-bottom: 12px; letter-spacing: -0.02em;">Speed to Lead™ by AI Nexlify Agencies</p>
+      <p>Luxury buyers bounce in 15 seconds if ignored. Layla is your elite 24/7 digital closer. She engages, qualifies, and schedules viewings for high-net-worth clients in 4 seconds flat—perfectly synchronized with your premium inventory.</p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <a href="#audit" class="btn-header" style="padding: 14px 28px; font-size: 0.95rem; background: var(--hot); color: #fff; border-color: var(--hot);">Find Your Leak</a>
+        <a href="/dealer-pulse/" class="btn-header" style="padding: 14px 28px; font-size: 0.95rem; background: var(--accent); color: #ffffff; border-color: var(--accent); display: flex; align-items: center; gap: 8px;">
+          <span>Install AI Showroom</span> ⚡
+        </a>
+      </div>
+    </div>
+    
+    <div class="mockup-container">
+      <div class="ios-dashboard">
+        <!-- Dynamic Island -->
+        <div class="di-header">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <div class="di-green-dot"></div>
+            <span style="font-size: 0.52rem; color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Layla Core Active</span>
+          </div>
+        </div>
+
+        <!-- Real-time WhatsApp Mockup -->
+        <div class="whatsapp-mockup" style="background: #0f0f10; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 14px; margin-bottom: 14px; text-align: left;">
+          <div style="display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; margin-bottom: 10px;">
+            <div style="background: var(--accent); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">L</div>
+            <div>
+              <div style="font-size: 0.75rem; font-weight: 700; color: #fff;">Layla (Senior closer)</div>
+              <div style="font-size: 0.55rem; color: var(--success); display: flex; align-items: center; gap: 3px;">
+                <span style="width: 5px; height: 5px; background: var(--success); border-radius: 50%; display: inline-block;"></span> Active Now
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px 12px 12px 0px; padding: 8px 10px; font-size: 0.72rem; align-self: flex-start; max-width: 85%; color: var(--text-secondary);">
+              Do you have a 2024 Nissan Patrol in stock?
+            </div>
+            <div style="background: var(--accent); border-radius: 12px 12px 0px 12px; padding: 8px 10px; font-size: 0.72rem; align-self: flex-end; max-width: 85%; color: #fff; line-height: 1.4;">
+              We have a pristine Pearl White 2024 Nissan Patrol V8 in the showroom available for AED 215,000. Want to schedule a VIP viewing tomorrow morning?
+            </div>
+          </div>
+        </div>
+
+        <!-- Revenue Lost Card -->
+        <div class="leak-widget" style="margin-bottom: 0;">
+          <div class="leak-widget-header">
+            <span>🚨 Live Showroom Leak Tracker</span>
+            <div class="pulse-dot"></div>
+          </div>
+          <div class="leak-val" id="loss-counter">AED 135,000</div>
+          <div class="leak-label">unanswered leads loss today</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Luxury Showroom Cinematic Render with Parallax Scrolling -->
+  <section class="parallax-section" style="background-image: url('showroom_handshake_deal.png?v=2.1'); min-height: 450px;">
+    <div class="parallax-overlay"></div>
+    <div style="position: relative; z-index: 10; text-align: center; max-width: 700px; padding: 0 20px;">
+      <h2 style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 16px;">Luxury Deserves Instant Response</h2>
+      <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">High-net-worth clients shopping for AED 150,000+ luxury vehicles bounce within 15 seconds. If your response time isn't instant, your commission belongs to a competitor.</p>
+    </div>
+  </section>
+
+  <!-- The Problem Section (Grid) -->
+  <section id="problem" class="section-title" style="margin-top: 100px;">
+    <div class="card-meta" style="color: var(--hot);">The Epidemic</div>
+    <h2>The Silent Revenue Leak</h2>
+    <p>Luxury dealers lose up to 45% of high-intent commissions because of latency and resource drain.</p>
+  </section>
+
+  <section class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 80px;">
+    <div class="bento-card" style="border-color: rgba(255, 69, 58, 0.15);">
+      <div>
+        <div class="card-meta" style="color: var(--hot);">Leak 01</div>
+        <h3>The Tire-Kicker Swamp</h3>
+        <p>Human sales managers spend 80% of their working hours answering basic questions (specifications, dimensions, colors) for low-intent buyers, completely draining focus from actual hot deals.</p>
+      </div>
+    </div>
+    <div class="bento-card" style="border-color: rgba(255, 69, 58, 0.15);">
+      <div>
+        <div class="card-meta" style="color: var(--hot);">Leak 02</div>
+        <h3>The 15-Second Competitor Jump</h3>
+        <p>Luxury buyers enquire at 3 dealerships simultaneously. If your response time is 5 minutes, your competitor who responds in 30 seconds has already booked the viewings and won the relationship.</p>
+      </div>
+    </div>
+    <div class="bento-card" style="border-color: rgba(255, 69, 58, 0.15);">
+      <div>
+        <div class="card-meta" style="color: var(--hot);">Leak 03</div>
+        <h3>The Off-Hours Black Hole</h3>
+        <p>62% of high-ticket luxury vehicle web enquiries occur after 8:00 PM when your showroom doors are locked and sales staff are offline. These leads freeze and bounce by morning.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Solution Section -->
+  <section id="solution" class="section-title">
+    <div class="card-meta">The Antidote</div>
+    <h2>Meet Layla: Your Relentless, 24/7 Digital Closer</h2>
+    <p>A sophisticated luxury car expert representing your dealership live on WhatsApp around the clock.</p>
+  </section>
+
+  <section class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 100px;">
+    <div class="bento-card" style="border-color: rgba(10, 132, 255, 0.15);">
+      <div>
+        <div class="card-meta">Capability 01</div>
+        <h3>White-Glove Conversational Allure</h3>
+        <p>Layla speaks with high-end confidence, absolute brevity, and impeccable luxury automobile knowledge. Zero robotic lines. Zero clunky AI jargon. She represents your showroom with pure premium class.</p>
+      </div>
+    </div>
+    <div class="bento-card" style="border-color: rgba(10, 132, 255, 0.15);">
+      <div>
+        <div class="card-meta">Capability 02</div>
+        <h3>1:1 Live Inventory Synchronicity</h3>
+        <p>Directly synchronized with your dealership stock sheets. Layla knows every car's exact condition, color, trim, mileage, and showroom pricing (e.g. confidently offering our Pearl White 2024 Nissan Patrol for AED 215,000) instantly.</p>
+      </div>
+    </div>
+    <div class="bento-card" style="border-color: rgba(10, 132, 255, 0.15);">
+      <div>
+        <div class="card-meta">Capability 03</div>
+        <h3>VIP Hand-off to Human Closer</h3>
+        <p>Once Layla qualifies the budget, verifies trade-in interest, and scores the lead hot (score 8/10+), she delivers a clean, silver-platter dossier to your human sales floor manager to sign the final contract.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Human-in-the-Loop Philosophy Section (NOT A REPLACEMENT. AN ACCELERATOR) -->
+  <section id="human-loop" class="human-enablement-banner">
+    <div class="human-text">
+      <div class="card-meta">🛡️ Human Core Philosophy</div>
+      <h2>Not a replacement.<br>Your ultimate sales accelerator.</h2>
+      <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.6; margin-top: 14px;">
+        Nexlify Speed to Lead™ is <strong>not built to replace your human sales agents or dealership owners</strong>. We believe high-ticket luxury vehicle transactions always require a human's emotional touch, relationship-building skills, and negotiation artistry.
+        <br><br>
+        Instead, Speed to Lead™ acts as an intelligent, relentless 24/7 filter. It manages 95% of initial cold queries, collects vehicle interest specifications, analyzes trade-in values, and filters out low-intent tire-kickers.
+      </p>
+    </div>
+    
+    <div class="human-grid">
+      <div class="human-card">
+        <h4>1. Tire-Kicker Filter</h4>
+        <p>The system interacts with hundreds of cold web queries, answering specification and pricing questions instantly. Low-intent leads are auto-dismissed without taking a single second of your team's time.</p>
+      </div>
+      <div class="human-card" style="border-color: rgba(48, 209, 88, 0.25);">
+        <h4>2. Silver-Platter Routing 🟢</h4>
+        <p>When a lead demonstrates high purchase intent (intent score 8/8), they are instantly routed directly to your human sales agent or owner on WhatsApp and Airtable CRM. Your human closers step in only when the client is at their absolute hottest.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prominent "Silent Leak" Diagnostic Audit Tool -->
+  <section id="audit" class="diagnostic-cta-banner">
+    <div class="diag-text">
+      <h3>DISCOVER YOUR HIDDEN REVENUE LEAK</h3>
+      <p>Enter your website URL. Our autonomous NEX-02 Recon Specialist Agent will perform a live diagnostic check (PageSpeed index, WhatsApp routing, social links) and compile your custom Luxury PDF Vulnerability Report in real-time.</p>
+    </div>
+    
+    <div class="audit-form-group">
+      <form id="auditForm" style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+        <input type="text" id="auditUrl" class="audit-input" placeholder="e.g. www.rmamotors.com" required>
+        <input type="text" id="auditName" class="audit-input" placeholder="Dealership Name" required>
+        <input type="tel" id="auditPhone" class="audit-input" placeholder="WhatsApp (e.g. +971501234567)" required>
+        <input type="email" id="auditEmail" class="audit-input" placeholder="Email Address for PDF delivery" required>
+        <button type="submit" class="audit-btn" id="btnAudit">
+          DISPATCH NEX-02 SWARM ⚡
+        </button>
+      </form>
+      
+      <!-- Real-Time Report Generation Showroom Widget -->
+      <div id="auditStatusBox" style="display: none; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-top: 10px;">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+          <div class="loader-wheel" id="auditLoader"></div>
+          <span id="auditStatusTitle" style="font-size: 0.9rem; font-weight: 700; color: #ffffff;">DISPATCHING AUDIT SENSORS...</span>
+        </div>
+        <p id="auditStatusText" style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4;"></p>
+        <div id="pdfDownloadSection" style="display: none; margin-top: 14px; border-top: 0.5px solid var(--border); paddingTop: 14px;">
+          <a href="#" id="pdfDownloadBtn" class="audit-btn" style="background: var(--success); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;" download>
+            📥 DOWNLOAD LUXURY PDF REPORT
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Proof -->
+  <div class="live-proof-banner">
+    <div>
+      <div class="card-meta">🟢 Live Operations</div>
+      <div style="font-size: 1.1rem; font-weight: 700;">Revenue Saved This Month</div>
+    </div>
+    <div class="proof-val" id="recovered-counter">AED 3,450,150</div>
+  </div>
+
+  <!-- Agentic Transparency Section -->
+  <section id="features" class="section-title">
+    <h2>NEXLIFY OS: AGENTIC TRANSPARENCY</h2>
+    <p>Five specialized autonomous agents executing in parallel. Absolute workflow transparency, 24/7/365.</p>
+  </section>
+
+  <div class="bento-grid" style="grid-template-columns: 1fr; max-width: 1120px; margin-bottom: 60px;">
+    <div class="bento-card bento-wide" style="padding: 36px;">
+      <div class="orchestration-grid">
+        <div>
+          <div class="card-meta">🤖 Multi-Agent Orchestration</div>
+          <h3>Parallel Agent Node Health</h3>
+          <p>Unlike simple bots, Nexlify OS coordinates five distinct autonomous processes to capture, verify, nurture, and log high-ticket commission targets simultaneously.</p>
+          
+          <div class="agent-transparency-grid">
+            <div class="agent-trans-card">
+              <div class="agent-trans-icon">🛡️<div class="agent-pulse-ring"></div></div>
+              <div class="agent-trans-name">Sentinel</div>
+              <div class="agent-trans-status">🟢 Live</div>
+            </div>
+            <div class="agent-trans-card">
+              <div class="agent-trans-icon">⚡<div class="agent-pulse-ring"></div></div>
+              <div class="agent-trans-name">Layla</div>
+              <div class="agent-trans-status">🟢 Live</div>
+            </div>
+            <div class="agent-trans-card">
+              <div class="agent-trans-icon">🕵️<div class="agent-pulse-ring"></div></div>
+              <div class="agent-trans-name">Recon</div>
+              <div class="agent-trans-status">🟢 Live</div>
+            </div>
+            <div class="agent-trans-card">
+              <div class="agent-trans-icon">📧<div class="agent-pulse-ring"></div></div>
+              <div class="agent-trans-name">Triage</div>
+              <div class="agent-trans-status">🟢 Live</div>
+            </div>
+            <div class="agent-trans-card">
+              <div class="agent-trans-icon">📊<div class="agent-pulse-ring"></div></div>
+              <div class="agent-trans-name">Intel</div>
+              <div class="agent-trans-status">🟢 Live</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sys-load-box">
+          <div class="card-meta">⚡ Real-Time Load</div>
+          <h3 style="font-size: 2.2rem; font-weight: 800; color: #ffffff;" id="sysLoadVal">24.5%</h3>
+          <div class="sys-load-bar-bg">
+            <div class="sys-load-bar-fill" id="sysLoadFill"></div>
+          </div>
+          <div style="font-size: 0.72rem; color: var(--text-tertiary); display: flex; justify-content: space-between;">
+            <span>Threads Active: 5</span>
+            <span>Uptime: 100%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tech HUD Cinematic Render with Parallax Scrolling -->
+  <section class="parallax-section" style="background-image: url('dealership_team_metrics.png?v=2.1'); min-height: 40vh;">
+    <div class="parallax-overlay"></div>
+    <div style="position: relative; z-index: 10; text-align: center; max-width: 650px; padding: 0 20px;">
+      <h2 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px;">Data-Driven Revenue Recovery</h2>
+      <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.5;">Every single interaction is automatically captured, scored, and securely synced with Airtable database tbly7iJArFklrO8yd, ensuring full pipeline traceability.</p>
+    </div>
+  </section>
+
+  <!-- Complete Speed to Lead Selling Points bento grid -->
+  <section class="section-title">
+    <h2>Why Luxury Dealers Deploy Speed to Lead™</h2>
+    <p>Constructed specifically for UAE high-ticket auto retailers who expect nothing less than absolute perfection.</p>
+  </section>
+
+  <section class="bento-grid" style="margin-bottom: 100px;">
+    <div class="bento-card">
+      <div>
+        <div class="card-meta">⚡ The 4-Second Closing Closer</div>
+        <h3>Relentless Conversational Intel</h3>
+        <p>Answering clients within 5 minutes multiplies your close rate by 8x. Layla, our central conversational core, answers in 4 seconds flat. She is pre-trained on complex luxury automotive catalogs, financing rates, and custom vehicle specs, answering prospects instantly on WhatsApp.</p>
+      </div>
+    </div>
+
+    <div class="bento-card">
+      <div>
+        <div class="card-meta">📈 High-Performance ROI</div>
+        <h3>Tire-Kicker Elimination</h3>
+        <p>Your elite human sales agents should only speak to buyers who have money in hand. Speed to Lead™ qualifies inbound web and social traffic, filtering out tire-kickers and low-value requests automatically. When a qualified lead emerges, your sales team receives a structured brief.</p>
+      </div>
+    </div>
+
+    <div class="bento-card">
+      <div>
+        <div class="card-meta">📦 Automated Inventory Synchronization</div>
+        <h3>Live Catalog Mapping</h3>
+        <p>No manual input required. The system links directly with your active stock sheets, auto-synchronizing car models, model years, specs, colors, condition grades, and prices. If a car is sold or reserved, Layla automatically updates her conversational database.</p>
+      </div>
+    </div>
+
+    <div class="bento-card">
+      <div>
+        <div class="card-meta">🕵️ Swarm Reconnaissance Diagnostics</div>
+        <h3>Digital Vulnerability Scanning</h3>
+        <p>Nexlify's Recon swarm sweeps your dealer channels, diagnosing broken chat buttons, loading latencies, un-optimized SEO tags, and unreplied reviews. Any failure instantly alerts the system to dispatch automated follow-ups.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Forms Section: Membership application -->
+  <section id="apply" class="bento-forms-container" style="margin-top: 80px;">
+    <div class="form-box">
+      <h3>Apply for Nexlify Membership</h3>
+      <p>Secure your exclusive dealership license. We setup and deploy your custom instance of Nexlify OS with a hardened, local inventory database.</p>
+      
+      <form id="applyForm">
+        <div class="form-group">
+          <label for="applyName">Contact Name</label>
+          <input type="text" id="applyName" placeholder="e.g. Salim Al Maktoum" required>
+        </div>
+        <div class="form-group">
+          <label for="applyPhone">WhatsApp Number</label>
+          <input type="tel" id="applyPhone" placeholder="e.g. +971509998888" required>
+        </div>
+        <div class="form-group">
+          <label for="applyEmail">Email Address</label>
+          <input type="email" id="applyEmail" placeholder="e.g. info@yourdealership.ae" required>
+        </div>
+        <div class="form-group">
+          <label for="applyDealer">Dealership Name</label>
+          <input type="text" id="applyDealer" placeholder="e.g. Al Aram Used Cars" required>
+        </div>
+        <button type="submit" class="btn-submit" id="btnApply" style="background: var(--accent); color: #fff;">
+          <span>APPLY FOR MEMBERSHIP</span> 🔒
+        </button>
+      </form>
+      <div id="applyStatus" style="margin-top: 12px; font-size: 0.85rem; display: none;"></div>
+    </div>
+  </section>
+
+  <!-- iOS Installation Instructions Sheet overlay -->
+  <div class="ios-prompt-overlay" id="iosPrompt">
+    <div class="ios-prompt-sheet">
+      <div class="ios-prompt-icon">⚡</div>
+      <h3 class="ios-prompt-title">Install Speed to Lead™</h3>
+      <p class="ios-prompt-desc">Add our premium showrooms tracker and closer dashboard to your phone for a native, zero-latency iOS experience.</p>
+      
+      <div class="ios-prompt-steps">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-text">Tap the <strong>Share</strong> icon in Safari (at the bottom toolbar).</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-text">Scroll down the menu and choose <strong>'Add to Home Screen'</strong>.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-text">Tap <strong>'Add'</strong> in the top-right to lock your AI Showroom live link.</div>
+        </div>
+      </div>
+      
+      <button class="ios-prompt-close" id="btnClosePrompt">UNDERSTOOD</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Nexlify AI Agencies. Powered by Nexlify Agent OS. All Rights Secured.</p>
+    <p style="margin-top: 6px; opacity: 0.5;">Ainexlifyagencies.com — Luxury Auto SaaS Command Headquarters</p>
+  </footer>
+
+  <script>
+    // Live Tickers
+    let lossVal = 135000;
+    let recVal = 3450150;
+
+    setInterval(() => {
+      // Revenue Lost counter ticking live
+      lossVal += Math.floor(Math.random() * 25) + 5;
+      document.getElementById('loss-counter').innerText = 'AED ' + lossVal.toLocaleString();
+
+      // Revenue Recovered counter ticking live
+      recVal += Math.floor(Math.random() * 45) + 15;
+      document.getElementById('recovered-counter').innerText = 'AED ' + recVal.toLocaleString();
+    }, 3000);
+
+    // Dynamic System Load Ticker
+    setInterval(() => {
+      const load = (20 + Math.random() * 15).toFixed(1);
+      document.getElementById('sysLoadVal').innerText = load + '%';
+      document.getElementById('sysLoadFill').style.width = load + '%';
+    }, 4000);
+
+    // Form Submissions - NEX-02 Recon Audit with Polling Loop
+    document.getElementById('auditForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnAudit');
+      const statusBox = document.getElementById('auditStatusBox');
+      const loader = document.getElementById('auditLoader');
+      const statusTitle = document.getElementById('auditStatusTitle');
+      const statusText = document.getElementById('auditStatusText');
+      const downloadSection = document.getElementById('pdfDownloadSection');
+      const downloadBtn = document.getElementById('pdfDownloadBtn');
+      
+      const url = document.getElementById('auditUrl').value;
+      const name = document.getElementById('auditName').value;
+      const phone = document.getElementById('auditPhone').value;
+      const email = document.getElementById('auditEmail').value;
+
+      btn.disabled = true;
+      btn.innerHTML = 'NEX-02 SPECIALIST ACTIVE... 🟢';
+      
+      statusBox.style.display = 'block';
+      statusTitle.innerText = 'DISPATCHING AUDIT SENSORS...';
+      statusText.innerText = 'NEX-02 Instance spawned. Attempting connection to ' + url + '. Measuring response performance, testing WhatsApp accessibility, and analyzing reputation parameters...';
+      downloadSection.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/agency/audit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, name, phone, email })
+        });
+        const data = await res.json();
+        
+        if (data.success && data.pdfUrl) {
+          const pdfUrl = data.pdfUrl;
+          
+          // Poll for PDF generation in the background
+          statusTitle.innerText = 'NEX-02 SWARM IN PROGRESS...';
+          statusText.innerText = 'Audit parameters successfully ingested. Simulating PageSpeed Lighthouse test, measuring TTFB, scanning homepage anchor links. Generating customized luxury PDF audit report... (May take 5-15 seconds)';
+          
+          let checkCount = 0;
+          const pollInterval = setInterval(async () => {
+            checkCount++;
+            
+            // Check if file exists via a HEAD request
+            try {
+              const fileCheck = await fetch(pdfUrl, { method: 'HEAD' });
+              if (fileCheck.status === 200) {
+                // PDF generated successfully!
+                clearInterval(pollInterval);
+                loader.style.display = 'none';
+                statusTitle.innerText = 'AUDIT COMPLETE. CLEAN SUMMARY COMPILED. ✅';
+                statusText.innerText = '🟢 NEX-02 specialist completed the live scan of ' + url + '. The diagnostic metrics have been verified. An email with the attached PDF report has been dispatched to ' + email + ' and logged in tbly7iJArFklrO8yd.';
+                
+                downloadBtn.href = pdfUrl;
+                downloadSection.style.display = 'block';
+                btn.innerHTML = 'AUDIT COMPLETED ✅';
+              } else if (checkCount > 30) {
+                // Timeout after 30 checks (30 seconds)
+                clearInterval(pollInterval);
+                loader.style.display = 'none';
+                statusTitle.innerText = 'AUDIT ARCHIVED SUCCESFULLY';
+                statusText.innerText = '🟢 The audit completed. Your PDF report is queued for final compilation. It has been processed for email delivery to ' + email + '. Check your inbox shortly!';
+                btn.disabled = false;
+                btn.innerHTML = 'RUN ANOTHER AUDIT ⚡';
+              }
+            } catch (err) {
+              // Ignore network check errors during polling
+            }
+          }, 1000);
+          
+        } else {
+          throw new Error(data.error || 'Swarm dispatch failed.');
+        }
+      } catch (err) {
+        loader.style.display = 'none';
+        statusTitle.innerText = 'NEX-02 RECON SWARM OFFLINE';
+        statusText.innerText = '🔴 Audit failed: ' + err.message + '. Please ensure your inputs are valid and try again.';
+        btn.disabled = false;
+        btn.innerHTML = 'DISPATCH NEX-02 SWARM ⚡';
+      }
+    });
+
+    // Membership Application Submission
+    document.getElementById('applyForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('btnApply');
+      const status = document.getElementById('applyStatus');
+
+      const name = document.getElementById('applyName').value;
+      const phone = document.getElementById('applyPhone').value;
+      const email = document.getElementById('applyEmail').value;
+      const website = document.getElementById('applyDealer').value;
+
+      btn.disabled = true;
+      btn.innerHTML = 'TRANSMITTING APPLICATION... 🔒';
+      status.style.display = 'block';
+      status.style.color = 'var(--accent)';
+      status.innerText = 'Securing transmission tunnel. Syncing to Leads table tbly7iJArFklrO8yd...';
+
+      try {
+        const res = await fetch('/api/agency/apply', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, phone, email, website })
+        });
+        const data = await res.json();
+        if (data.success) {
+          status.style.color = 'var(--success)';
+          status.innerText = '🔒 APPLICATION TRANSMITTED SECURELY! A confirmation WhatsApp message has been dispatched to ' + phone + '. One of our core system architects will contact you for deployment verification.';
+          btn.innerHTML = 'APPLICATION SECURED ✅';
+        } else {
+          throw new Error(data.error);
+        }
+      } catch (err) {
+      status.style.color = 'var(--hot)';
+      status.innerText = '🔴 Transmission failed: ' + err.message + '. Please retry.';
+      btn.disabled = false;
+      btn.innerHTML = 'APPLY FOR MEMBERSHIP 🔒';
+    }
+  });
+
+  // iOS App prompt handlers
+  const prompt = document.getElementById('iosPrompt');
+  const btnNav = document.getElementById('btnNavInstall');
+  const btnHero = document.getElementById('btnHeroInstall');
+  const btnClose = document.getElementById('btnClosePrompt');
+
+  const openPrompt = (e) => {
+    e.preventDefault();
+    prompt.classList.add('active');
+  };
+
+  const closePrompt = () => {
+    prompt.classList.remove('active');
+  };
+
+  if (btnNav) btnNav.addEventListener('click', openPrompt);
+  if (btnHero) btnHero.addEventListener('click', openPrompt);
+  if (btnClose) btnClose.addEventListener('click', closePrompt);
+  prompt.addEventListener('click', (e) => {
+    if (e.target === prompt) closePrompt();
+  });
+</script>
+</body>
+</html>

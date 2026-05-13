@@ -1,0 +1,62 @@
+{
+  "dealers": [
+    {
+      "dealer_id": "dlr_971509876543",
+      "dealership_name": "Al Aram Used CarsAl Mansour Motors",
+      "waba_id": "15822263653",
+      "phone_number_id": "971509876543",
+      "meta_access_token": "ed51a273ab368d071e1fc674c4182ca2:09b32ecd6424fb45134c3699fd14ea3b3aeed8b18150adee24d7933747c1aa5d",
+      "inventory_data": [
+        {
+          "id": "car1",
+          "name": "2024 Nissan Patrol V8 Platinum",
+          "price": "AED 295,000",
+          "stock": 3
+        },
+        {
+          "id": "car2",
+          "name": "2023 Porsche Macan GTS",
+          "price": "AED 340,000",
+          "stock": 1
+        },
+        {
+          "id": "car3",
+          "name": "2024 Land Cruiser 300 VXR",
+          "price": "AED 310,000",
+          "stock": 2
+        }
+      ],
+      "business_hours": "9:00 AM to 9:00 PM",
+      "updatedAt": "2026-05-10T04:22:18.887Z"
+    },
+    {
+      "dealer_id": "dlr_649894946",
+      "dealership_name": "Apex Luxury Cars",
+      "waba_id": "15822383202",
+      "phone_number_id": "649894946",
+      "meta_access_token": "3cc9c3381fbe48957c8cfd8fa83d8fe4:e211bc48e0440dad0a9f35c4fd8866c3ba5436ce2570c4389e955c9d0a797fbe",
+      "inventory_data": [
+        {
+          "id": "car1",
+          "name": "2024 Nissan Patrol V8 Platinum",
+          "price": "AED 3,24,500",
+          "stock": 4
+        },
+        {
+          "id": "car2",
+          "name": "2023 Porsche Macan GTS",
+          "price": "AED 3,74,000",
+          "stock": 2
+        },
+        {
+          "id": "car3",
+          "name": "2024 Land Cruiser 300 VXR",
+          "price": "AED 3,41,000",
+          "stock": 3
+        }
+      ],
+      "business_hours": "9:00 AM to 9:00 PM",
+      "updatedAt": "2026-05-10T06:19:00.180Z"
+    }
+  ]
+}
