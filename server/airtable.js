@@ -115,14 +115,23 @@ async function getAvailableInventory() {
       try {
         const formula = `OR({${schema.available}} = TRUE(), {${schema.available}} = 'Available', {${schema.available}} = 'In Stock', {${schema.status}} = 'Available')`;
         
-        console.log(`📡 [AIRTABLE] Fetching inventory (Attempt ${attempts})...`);
+        console.log(`📡 [AIRTABLE] Fetching inventory (Attempt ${attempts}, limit 50)...`);
         
         let records = [];
         try {
-          records = await base(INVENTORY_TABLE).select({ filterByFormula: formula }).all();
+          // 🚀 Performance Cap: Only fetch 50 records max to prevent hanging
+          records = await base(INVENTORY_TABLE).select({ 
+            filterByFormula: formula,
+            maxRecords: 50,
+            pageSize: 50
+          }).all();
         } catch (filterErr) {
           console.warn(`⚠️ [AIRTABLE] Filtered fetch failed: ${filterErr.message}. Retrying WITHOUT filter...`);
-          records = await base(INVENTORY_TABLE).select({ maxRecords: 100 }).all();
+          records = await base(INVENTORY_TABLE).select({ 
+            maxRecords: 50,
+            pageSize: 50
+          }).all();
+          // Manual filter
           records = records.filter(r => {
             const val = r.fields[schema.available] || r.fields[schema.status] || '';
             return val === true || val === 1 || String(val).toLowerCase().includes('avail') || String(val).toLowerCase().includes('stock');
