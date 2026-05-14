@@ -15,7 +15,7 @@ if (isTestEnv) {
   console.log(`📡 [AIRTABLE] 🧪 TEST ENVIRONMENT ACTIVE. Routing queries to Base ID: ${baseId}`);
 }
 
-const INVENTORY_TABLE = process.env.AIRTABLE_TABLE_ID || 'tblhrMiIjvR7OndME'
+const INVENTORY_TABLE = (process.env.AIRTABLE_TABLE_ID && process.env.AIRTABLE_TABLE_ID !== 'undefined') ? process.env.AIRTABLE_TABLE_ID : 'tblhrMiIjvR7OndME'
 const SYSTEM_HEALTH_TABLE = 'System Health'
 const URGENT_NOTIFICATIONS_TABLE = 'Urgent Notifications'
 const MARKET_RECON_TABLE = 'Market_Recon'
