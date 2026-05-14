@@ -43,7 +43,8 @@ app.get('/', (req, res) => {
 })
 
 // 📱 Decoupled Standalone iOS App Route deep-linking support
-app.get('/dealer-pulse*', (req, res) => {
+// Express 5.x requires (.*) for wildcards instead of just *
+app.get('/dealer-pulse(.*)', (req, res) => {
   res.sendFile(path.join(__dirname, 'agency-public', 'dealer-pulse', 'index.html'), (err) => {
     if (err) {
       res.status(404).send('Dealer Pulse App Not Found');
