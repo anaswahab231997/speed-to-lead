@@ -27,6 +27,9 @@ const leadsCache = new Map() // phone → lead object
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
 let inventoryFields = null;
+let cachedInventory = null;
+let lastInventoryFetch = 0;
+const CACHE_TTL = 60000; // 60 seconds
 
 async function discoverInventorySchema() {
   if (inventoryFields) return inventoryFields;
@@ -83,6 +86,12 @@ async function discoverInventorySchema() {
 }
 
 async function getAvailableInventory() {
+  // 🟢 CACHE CHECK: Prevent rate-limiting and redundant slow fetches
+  const now = Date.now();
+  if (cachedInventory && (now - lastInventoryFetch < CACHE_TTL)) {
+    return cachedInventory;
+  }
+
   let attempts = 0;
   const maxAttempts = 3;
   
@@ -117,7 +126,7 @@ async function getAvailableInventory() {
         console.log('ℹ️ [AIRTABLE] No matching available cars found in table.');
       }
 
-      return records.map(r => ({
+      const mapped = records.map(r => ({
         id: r.id,
         name: r.fields[schema.name] || 'Unnamed Vehicle',
         make: r.fields[schema.make] || '',
@@ -130,7 +139,13 @@ async function getAvailableInventory() {
         description: r.fields[schema.description] || '',
         dealer: r.fields[schema.dealer] || 'Elite Cars UAE',
         available: true,
-      }))
+      }));
+
+      // Update Cache
+      cachedInventory = mapped;
+      lastInventoryFetch = Date.now();
+      
+      return mapped;
     } catch (err) {
       console.error(`❌ [AIRTABLE FETCH ERROR] Attempt ${attempts} failed:`, err.message);
       if (attempts >= maxAttempts) {
