@@ -1,5 +1,5 @@
 require('dotenv').config({ path: require('path').join(__dirname, '.env') })
-const { saveLeadToAirtable, getLeadByPhone, updateLeadScore, getInventorySummaryForLayla } = require('./airtable')
+const { saveLeadToAirtable, getLeadByPhone, updateLeadScore, getInventorySummaryForLayla, logUrgentNotification } = require('./airtable')
 const { scoreLeadFull } = require('./scorer')
 const { sendWhatsAppMessage } = require('./whatsapp')
 const { getCurrentTactics } = require('./learnings')
@@ -86,20 +86,20 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
   
   let reply
 
-  // 🧠 Antigravity Direct-Flash Protocol: High-Availability Pivot
-  if (!reply && process.env.GEMINI_API_KEY) {
+  // 🧠 Antigravity Sovereign-Switch: Direct Google Flash Integration
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY
+  if (!reply && GEMINI_API_KEY) {
     try {
-      console.log(`📡 [LAYLA TRACE] Dispatching to Direct Gemini 2.5 Flash...`);
-      const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
+      console.log(`📡 [LAYLA] Dispatching to Direct Google Flash API (1.5 Flash)...`);
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
       
       const payload = {
-        system_instruction: {
-          parts: [{ text: systemPrompt }]
-        },
-        contents: history.map(h => ({
-          role: h.role === 'assistant' ? 'model' : 'user',
-          parts: [{ text: h.content }]
-        })),
+        contents: [
+          {
+            role: "user",
+            parts: [{ text: `SYSTEM: ${systemPrompt}\n\nCONVERSATION HISTORY:\n${history.map(h => `${h.role.toUpperCase()}: ${h.content}`).join('\n')}\n\nREPLY AS LAYLA (Luxury Sales Closer):` }]
+          }
+        ],
         generationConfig: {
           maxOutputTokens: 1000,
           temperature: 0.7
@@ -116,67 +116,24 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
         const data = await response.json();
         reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
         if (reply) {
-          console.log(`✅ [LAYLA TRACE] Direct Gemini response generated successfully.`);
+          console.log(`✅ [LAYLA] Direct Google Flash response received.`);
         }
       } else {
         const errJson = await response.json().catch(() => ({}));
-        console.error(`🚨 [LAYLA TRACE] Direct Gemini failed:`, errJson.error?.message || response.status);
+        console.error(`🚨 [LAYLA] Direct Google Flash failed:`, errJson.error?.message || response.status);
       }
     } catch (err) {
-      console.error(`🚨 [LAYLA TRACE] Direct Gemini exception:`, err.message);
+      console.error(`🚨 [LAYLA] Direct Google Flash exception:`, err.message);
     }
   }
 
-  // ─── OpenRouter Fallback (Tertiary Resilience) ───────────────────────────
+  // ─── Emergency Local Fallback ──────────────────────────────────────────────
   if (!reply) {
-    const modelsToTry = [
-      'google/gemini-2.0-flash-exp:free', 
-      'meta-llama/llama-3.1-8b-instruct:free'
-    ]
-
-    for (let i = 0; i < modelsToTry.length; i++) {
-      const modelName = modelsToTry[i]
-      if (!process.env.OPENROUTER_API_KEY) continue;
+    reply = "Hey, give me just a sec — having a small technical moment. I'll be right back with you!"
+    if (from === '+917977441599' || from === '+917439379780') {
       try {
-        console.log(`📡 [LAYLA TRACE] Dispatching to OpenRouter Fallback. Model: '${modelName}'`);
-        
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-            'HTTP-Referer': 'https://ainexlifyagencies.com',
-            'X-Title': 'AI Nexlify Agencies'
-          },
-          body: JSON.stringify({
-            model: modelName,
-            messages: [{ role: 'system', content: systemPrompt }, ...history],
-            max_tokens: 1000,
-            temperature: 0.7
-          })
-        })
-
-        if (response.ok) {
-          const responseData = await response.json()
-          reply = responseData.choices[0].message.content
-          console.log(`✅ [LAYLA TRACE] OpenRouter fallback successful.`);
-          break;
-        } else {
-          throw new Error(`HTTP ${response.status}`);
-        }
-      } catch (err) {
-        console.error(`🚨 [LAYLA TRACE] OpenRouter Model '${modelName}' failed:`, err.message);
-        
-        if (i === modelsToTry.length - 1) {
-          reply = "Hey, give me just a sec — having a small technical moment. I'll be right back with you!"
-          if (from === '+917977441599' || from === '+917439379780') {
-            try {
-              const { logUrgentNotification } = require('./airtable')
-              await logUrgentNotification(`🚨 CRITICAL DEMO ALERT: All models failed for ${from}. Error: ${err.message}`)
-            } catch (logErr) {}
-          }
-        }
-      }
+        await logUrgentNotification(`🚨 CRITICAL DEMO ALERT: Direct Gemini Flash failed for ${from}. Check API Key/Quota.`)
+      } catch (logErr) {}
     }
   }
 
@@ -203,11 +160,11 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
     lastCar: extractCarMention(text, history),
   }
 
-  // 1. Instantly dispatch the WhatsApp reply (maximizes Speed To Lead response speed)
+  // 1. Instantly dispatch the WhatsApp reply
   await sendWhatsAppMessage(from, reply, 3, null, tenantDealer)
   console.log(`[LAYLA] → WhatsApp reply dispatched instantly to ${from}.`)
 
-  // 2. Perform Airtable CRM update and Kill Switch alerts asynchronously in the background
+  // 2. Perform Airtable CRM update and Kill Switch alerts asynchronously
   const syncCRMInBackground = async () => {
     try {
       if (lead) {
@@ -217,12 +174,10 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
       }
       console.log(`📡 [LAYLA BACKGROUND] Airtable sync completed successfully.`)
 
-      // If Kill Switch was triggered, dispatch immediate operator alerts
       if (isInterventionRequired) {
         const reason = wantsHuman ? 'Customer requested human / flagged bot interaction' : `Confidence/Lead score dropped below threshold (Score: ${score}/10)`
         const alertMsg = `🚨 [KILL SWITCH] Human Intervention Required!\nLead: ${from}\nReason: ${reason}\nLast Message: "${text}"`
         
-        const { logUrgentNotification } = require('./airtable')
         await Promise.allSettled([
           sendWhatsAppMessage('+917439379780', alertMsg),
           logUrgentNotification(alertMsg)
@@ -233,7 +188,7 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
       console.error(`🚨 [LAYLA BACKGROUND ERROR] Airtable background sync/Kill Switch failed:`, err.message)
     }
   }
-  syncCRMInBackground() // Fire and forget
+  syncCRMInBackground() 
 
   console.log(`[LAYLA] → ${from} | Score: ${score}/10 | State: ${emotionalState} | Status: ${targetStatus}`)
   console.log(`[LAYLA] "${reply}"`)
