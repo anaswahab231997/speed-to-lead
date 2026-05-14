@@ -86,15 +86,15 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
   
   let reply
 
-  // 🧠 Antigravity Sovereign-Switch: Force-Injected Flash
+  // 🧠 Antigravity Sovereign-Switch: Pivot to v1beta for system_instruction support
   const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.Gemini_Api_Key
   
   console.log(`📡 [LAYLA] Checking Key Status: ${GEMINI_API_KEY ? 'FOUND (MASKED)' : 'MISSING'}`)
 
   if (!reply && GEMINI_API_KEY) {
     try {
-      console.log(`📡 [LAYLA] Dispatching to Direct Google Gemini 2.5 Flash (v1 Stable)...`);
-      const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+      console.log(`📡 [LAYLA] Dispatching to Direct Google Gemini 2.5 Flash (v1beta)...`);
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
       
       const payload = {
         system_instruction: {
