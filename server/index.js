@@ -8,21 +8,6 @@ const { runStressTest } = require('./stressTest')
 const { getAvailableInventory, leadsCache, logSystemHealth, injectInventoryUpdate } = require('./airtable')
 const { handlePulsePayload } = require('./sentinel')
 const { startOrchestrator, getAgentStatus } = require('./agents/orchestrator')
-...
-// ─── EVENT-DRIVEN WEBHOOKS (Zero-Latency Sync) ────────────────────────────────
-app.post('/api/webhooks/airtable/inventory', (req, res) => {
-  // 1. Immediate Confirmation to Airtable
-  res.status(200).json({ success: true, message: 'Update received' });
-
-  // 2. Background Injection into AI Memory
-  try {
-    const payload = req.body;
-    console.log('📡 [WEBHOOK] Airtable inventory update received for ID:', payload.id);
-    injectInventoryUpdate(payload);
-  } catch (err) {
-    console.error('❌ [WEBHOOK ERROR] Failed to inject inventory update:', err.message);
-  }
-})
 
 // 🛡️ RIGID SYSTEM PROTECTION
 process.on('unhandledRejection', (reason, promise) => {
@@ -78,6 +63,21 @@ app.get(/^\/dealer-pulse/, (req, res) => {
       res.status(404).send('Dealer Pulse App Not Found');
     }
   });
+})
+
+// ─── EVENT-DRIVEN WEBHOOKS (Zero-Latency Sync) ────────────────────────────────
+app.post('/api/webhooks/airtable/inventory', (req, res) => {
+  // 1. Immediate Confirmation to Airtable
+  res.status(200).json({ success: true, message: 'Update received' });
+
+  // 2. Background Injection into AI Memory
+  try {
+    const payload = req.body;
+    console.log('📡 [WEBHOOK] Airtable inventory update received for ID:', payload.id);
+    injectInventoryUpdate(payload);
+  } catch (err) {
+    console.error('❌ [WEBHOOK ERROR] Failed to inject inventory update:', err.message);
+  }
 })
 
 // ─── Health ───────────────────────────────────────────────────────────────────
