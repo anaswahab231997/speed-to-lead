@@ -32,9 +32,23 @@ const auditLimiter = rateLimit({
 const path = require('path')
 app.use(express.static(path.join(__dirname, 'agency-public')))
 
-// Decoupled Standalone iOS App Route deep-linking support
-app.get('/dealer-pulse*splat', (req, res) => {
-  res.sendFile(path.join(__dirname, 'agency-public', 'dealer-pulse', 'index.html'))
+// 🏠 Explicit Root Route (Prevents "Cannot GET /" on some environments)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'agency-public', 'index.html'), (err) => {
+    if (err) {
+      console.error('❌ [SERVER] Error serving index.html:', err.message);
+      res.status(404).send('Nexlify Agency Page Not Found');
+    }
+  });
+})
+
+// 📱 Decoupled Standalone iOS App Route deep-linking support
+app.get('/dealer-pulse*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'agency-public', 'dealer-pulse', 'index.html'), (err) => {
+    if (err) {
+      res.status(404).send('Dealer Pulse App Not Found');
+    }
+  });
 })
 
 // ─── Health ───────────────────────────────────────────────────────────────────
