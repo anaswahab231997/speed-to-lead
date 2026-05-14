@@ -141,6 +141,7 @@ async function discoverLeadsSchema() {
       const sourceField = findField(['source'], 'Source');
       const dealerField = findField(['dealer'], 'Dealer');
       const submittedAtField = findField(['submitted at', 'timestamp', 'created at', 'date'], 'Timestamp');
+      const midField = findField(['message id', 'message_id', 'last_message_id'], 'Message ID');
 
       discoveredFields = {
         phone: phoneField,
@@ -151,7 +152,8 @@ async function discoverLeadsSchema() {
         status: statusField,
         source: sourceField,
         dealer: dealerField,
-        submittedAt: submittedAtField
+        submittedAt: submittedAtField,
+        messageId: midField
       };
       
       console.log('✅ [AIRTABLE SCHEMA DISCOVERY] Schema mapped dynamically:', discoveredFields);

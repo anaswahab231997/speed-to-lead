@@ -1,17 +1,52 @@
 // loopGuard.js
 // Stores recent inbound and outbound messages to prevent duplicate processing and bot loops
+// Persists inbound IDs to disk to handle server restarts (Multi-Database Consistency)
+
+const fs = require('fs');
+const path = require('path');
+const PERSIST_PATH = path.join(__dirname, 'inbound_processed.json');
 
 const inboundHistory = new Map(); // messageId -> timestamp
 const outboundHistory = []; // Array of { text, timestamp }
+
+// Initialize from disk
+if (fs.existsSync(PERSIST_PATH)) {
+  try {
+    const data = JSON.parse(fs.readFileSync(PERSIST_PATH, 'utf8'));
+    for (const [id, time] of Object.entries(data)) {
+      inboundHistory.set(id, time);
+    }
+    console.log(`💾 [LOOP GUARD] Hydrated ${inboundHistory.size} processed message IDs from disk.`);
+  } catch (err) {
+    console.error(`[LOOP GUARD] Hydration failed:`, err.message);
+  }
+}
+
+function persistToDisk() {
+  try {
+    const data = Object.fromEntries(inboundHistory);
+    fs.writeFileSync(PERSIST_PATH, JSON.stringify(data, null, 2));
+  } catch (err) {
+    console.error(`[LOOP GUARD] Persistence failed:`, err.message);
+  }
+}
 
 function registerInbound(messageId) {
   if (!messageId) return;
   inboundHistory.set(messageId, Date.now());
   
-  // Clean up old message IDs (older than 10 mins)
-  const tenMinsAgo = Date.now() - 600000;
+  // Clean up old message IDs (older than 24 hours)
+  const oneDayAgo = Date.now() - 86400000;
+  let cleaned = false;
   for (const [id, time] of inboundHistory.entries()) {
-    if (time < tenMinsAgo) inboundHistory.delete(id);
+    if (time < oneDayAgo) {
+      inboundHistory.delete(id);
+      cleaned = true;
+    }
+  }
+  
+  if (cleaned || inboundHistory.size % 10 === 0) {
+    persistToDisk();
   }
 }
 

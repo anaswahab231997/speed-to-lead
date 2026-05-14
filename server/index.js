@@ -449,7 +449,9 @@ function extractMessages(body) {
   }
 
   if (body?.from && body?.text) {
-    return [{ from: body.from, text: body.text, messageId: body.messageId || Date.now().toString(), recipient: body.recipient || '' }]
+    const crypto = require('crypto')
+    const stableId = body.messageId || crypto.createHash('md5').update(body.from + body.text).digest('hex')
+    return [{ from: body.from, text: body.text, messageId: stableId, recipient: body.recipient || '' }]
   }
   return []
 }
