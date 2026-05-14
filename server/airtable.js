@@ -26,29 +26,72 @@ const leadsCache = new Map() // phone → lead object
 // ─── Inventory (read from existing Airtable schema) ──────────────────────────
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
+let inventoryFields = null;
+
+async function discoverInventorySchema() {
+  if (inventoryFields) return inventoryFields;
+  try {
+    const sampleRecords = await base(INVENTORY_TABLE).select({ maxRecords: 5 }).all();
+    if (sampleRecords.length > 0) {
+      let keys = [];
+      sampleRecords.forEach(r => { keys = [...new Set([...keys, ...Object.keys(r.fields)])]; });
+      
+      const findField = (aliases, fallback) => {
+        return keys.find(k => aliases.includes(k.toLowerCase().trim())) || fallback;
+      };
+
+      inventoryFields = {
+        name: findField(['car name', 'name', 'vehicle'], 'Car Name'),
+        available: findField(['available', 'in stock', 'status', 'is available'], 'Available'),
+        price: findField(['price aed', 'price', 'aed'], 'Price AED'),
+        mileage: findField(['mileage km', 'mileage', 'km'], 'Mileage KM'),
+        colour: findField(['colour', 'color'], 'Colour'),
+        condition: findField(['condition'], 'Condition'),
+        description: findField(['description', 'notes'], 'Description'),
+        make: findField(['make'], 'Make'),
+        model: findField(['model'], 'Model'),
+        year: findField(['year'], 'Year'),
+        dealer: findField(['dealer'], 'Dealer')
+      };
+      console.log('✅ [AIRTABLE INVENTORY] Schema discovered:', inventoryFields);
+      return inventoryFields;
+    }
+  } catch (err) {
+    console.error('[AIRTABLE INVENTORY] Discovery failed:', err.message);
+  }
+  return null;
+}
+
 async function getAvailableInventory() {
   let attempts = 0;
   const maxAttempts = 3;
+  
+  const schema = await discoverInventorySchema() || { 
+    name: 'Car Name', available: 'Available', price: 'Price AED', 
+    mileage: 'Mileage KM', colour: 'Colour', condition: 'Condition', 
+    description: 'Description', dealer: 'Dealer' 
+  };
+
   while (attempts < maxAttempts) {
     attempts++;
     try {
+      // Use a more resilient filter that handles both Boolean and String status
       const records = await base(INVENTORY_TABLE).select({
-        filterByFormula: `{Available} = TRUE()`,
+        filterByFormula: `OR({${schema.available}} = TRUE(), {${schema.available}} = 'Available', {${schema.available}} = 'In Stock')`,
       }).all()
 
       return records.map(r => ({
         id: r.id,
-        name: r.fields['Car Name'],
-        make: r.fields['Make'],
-        model: r.fields['Model'],
-        year: r.fields['Year'],
-        colour: r.fields['Colour'],
-        price: r.fields['Price AED'],
-        mileage: r.fields['Mileage KM'],
-        condition: r.fields['Condition'],
-        description: r.fields['Description'],
-        bodyType: r.fields['Body Type'],
-        dealer: r.fields['Dealer'],
+        name: r.fields[schema.name] || 'Unnamed Vehicle',
+        make: r.fields[schema.make],
+        model: r.fields[schema.model],
+        year: r.fields[schema.year],
+        colour: r.fields[schema.colour],
+        price: r.fields[schema.price],
+        mileage: r.fields[schema.mileage],
+        condition: r.fields[schema.condition],
+        description: r.fields[schema.description],
+        dealer: r.fields[schema.dealer],
         available: true,
       }))
     } catch (err) {
@@ -95,9 +138,16 @@ async function getAvailableInventory() {
 
 async function getInventorySummaryForLayla() {
   const cars = await getAvailableInventory()
-  if (cars.length === 0) return 'No cars currently available in inventory.'
-  return cars.map(c =>
-    `- ${c.name} (${c.colour}) | AED ${c.price.toLocaleString()} | ${c.mileage.toLocaleString()}km | Condition: ${c.condition} | ${c.description}`
+  const schema = await discoverInventorySchema() || { price: 'Price AED', mileage: 'Mileage KM' };
+  
+  if (!cars || cars.length === 0) return 'No cars currently available in inventory.'
+  
+  return cars.map(c => {
+    const p = c.price ? `AED ${c.price.toLocaleString()}` : 'Price on Request';
+    const m = c.mileage ? `${c.mileage.toLocaleString()}km` : 'Low Mileage';
+    return `- ${c.name} (${c.colour || 'N/A'}) | ${p} | ${m} | Condition: ${c.condition || 'Good'}`;
+  }).join('\n')
+}
   ).join('\n')
 }
 
