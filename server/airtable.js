@@ -30,36 +30,56 @@ let inventoryFields = null;
 
 async function discoverInventorySchema() {
   if (inventoryFields) return inventoryFields;
-  try {
-    const sampleRecords = await base(INVENTORY_TABLE).select({ maxRecords: 5 }).all();
-    if (sampleRecords.length > 0) {
-      let keys = [];
-      sampleRecords.forEach(r => { keys = [...new Set([...keys, ...Object.keys(r.fields)])]; });
-      
-      const findField = (aliases, fallback) => {
-        return keys.find(k => aliases.includes(k.toLowerCase().trim())) || fallback;
-      };
-
-      inventoryFields = {
-        name: findField(['car name', 'name', 'vehicle'], 'Car Name'),
-        available: findField(['available', 'in stock', 'status', 'is available'], 'Available'),
-        price: findField(['price aed', 'price', 'aed'], 'Price AED'),
-        mileage: findField(['mileage km', 'mileage', 'km'], 'Mileage KM'),
-        colour: findField(['colour', 'color'], 'Colour'),
-        condition: findField(['condition'], 'Condition'),
-        description: findField(['description', 'notes'], 'Description'),
-        make: findField(['make'], 'Make'),
-        model: findField(['model'], 'Model'),
-        year: findField(['year'], 'Year'),
-        dealer: findField(['dealer'], 'Dealer')
-      };
-      console.log('✅ [AIRTABLE INVENTORY] Schema discovered:', inventoryFields);
-      return inventoryFields;
-    }
-  } catch (err) {
-    console.error('[AIRTABLE INVENTORY] Discovery failed:', err.message);
+  if (!process.env.AIRTABLE_API_KEY) {
+    console.error('❌ [AIRTABLE] CRITICAL: AIRTABLE_API_KEY is missing from environment!');
+    return null;
   }
-  return null;
+
+  console.log(`📡 [AIRTABLE] Discovering schema for table: ${INVENTORY_TABLE} in base: ${baseId}`);
+  
+  try {
+    const sampleRecords = await base(INVENTORY_TABLE).select({ maxRecords: 3 }).all();
+    
+    if (!sampleRecords || sampleRecords.length === 0) {
+      console.warn('⚠️ [AIRTABLE] Inventory table appears to be empty. Using default schema mappings.');
+      return { name: 'Car Name', available: 'Available', price: 'Price AED', status: 'Status' };
+    }
+
+    const keys = [];
+    sampleRecords.forEach(r => { keys.push(...Object.keys(r.fields)); });
+    const uniqueKeys = [...new Set(keys)];
+    
+    const findField = (aliases, fallback) => {
+      const found = uniqueKeys.find(k => aliases.includes(k.toLowerCase().trim()));
+      if (found) return found;
+      // Secondary check: partial match
+      return uniqueKeys.find(k => aliases.some(a => k.toLowerCase().includes(a))) || fallback;
+    };
+
+    inventoryFields = {
+      name: findField(['car name', 'name', 'vehicle', 'title'], 'Car Name'),
+      available: findField(['available', 'in stock', 'is available', 'active'], 'Available'),
+      status: findField(['status', 'condition', 'state'], 'Status'),
+      price: findField(['price aed', 'price', 'aed', 'cost'], 'Price AED'),
+      mileage: findField(['mileage km', 'mileage', 'km', 'kms'], 'Mileage KM'),
+      colour: findField(['colour', 'color', 'exterior'], 'Colour'),
+      condition: findField(['condition', 'grade'], 'Condition'),
+      description: findField(['description', 'notes', 'details'], 'Description'),
+      make: findField(['make', 'brand'], 'Make'),
+      model: findField(['model', 'variant'], 'Model'),
+      year: findField(['year', 'model year'], 'Year'),
+      dealer: findField(['dealer', 'showroom'], 'Dealer')
+    };
+    
+    console.log('✅ [AIRTABLE INVENTORY] Dynamic schema mapped:', inventoryFields);
+    return inventoryFields;
+  } catch (err) {
+    console.error(`❌ [AIRTABLE SCHEMA ERROR] Discovery failed for ${INVENTORY_TABLE}:`, err.message);
+    if (err.message.includes('not found')) {
+      console.error('💡 TIP: Check if AIRTABLE_TABLE_ID and AIRTABLE_BASE_ID are correct and the API key has access to them.');
+    }
+    return null;
+  }
 }
 
 async function getAvailableInventory() {
@@ -69,35 +89,52 @@ async function getAvailableInventory() {
   const schema = await discoverInventorySchema() || { 
     name: 'Car Name', available: 'Available', price: 'Price AED', 
     mileage: 'Mileage KM', colour: 'Colour', condition: 'Condition', 
-    description: 'Description', dealer: 'Dealer' 
+    description: 'Description', dealer: 'Dealer', status: 'Status'
   };
 
   while (attempts < maxAttempts) {
     attempts++;
     try {
-      // Use a more resilient filter that handles both Boolean and String status
-      const records = await base(INVENTORY_TABLE).select({
-        filterByFormula: `OR({${schema.available}} = TRUE(), {${schema.available}} = 'Available', {${schema.available}} = 'In Stock')`,
-      }).all()
+      // Ultimate Resilience: Try with filters first, then without if it fails
+      const formula = `OR({${schema.available}} = TRUE(), {${schema.available}} = 'Available', {${schema.available}} = 'In Stock', {${schema.status}} = 'Available')`;
+      
+      console.log(`📡 [AIRTABLE] Fetching inventory (Attempt ${attempts})...`);
+      
+      let records = [];
+      try {
+        records = await base(INVENTORY_TABLE).select({ filterByFormula: formula }).all();
+      } catch (filterErr) {
+        console.warn(`⚠️ [AIRTABLE] Filtered fetch failed: ${filterErr.message}. Retrying WITHOUT filter...`);
+        records = await base(INVENTORY_TABLE).select({ maxRecords: 100 }).all();
+        // Manual filter
+        records = records.filter(r => {
+          const val = r.fields[schema.available] || r.fields[schema.status] || '';
+          return val === true || val === 1 || String(val).toLowerCase().includes('avail') || String(val).toLowerCase().includes('stock');
+        });
+      }
+
+      if (records.length === 0) {
+        console.log('ℹ️ [AIRTABLE] No matching available cars found in table.');
+      }
 
       return records.map(r => ({
         id: r.id,
         name: r.fields[schema.name] || 'Unnamed Vehicle',
-        make: r.fields[schema.make],
-        model: r.fields[schema.model],
-        year: r.fields[schema.year],
-        colour: r.fields[schema.colour],
-        price: r.fields[schema.price],
-        mileage: r.fields[schema.mileage],
-        condition: r.fields[schema.condition],
-        description: r.fields[schema.description],
-        dealer: r.fields[schema.dealer],
+        make: r.fields[schema.make] || '',
+        model: r.fields[schema.model] || '',
+        year: r.fields[schema.year] || '',
+        colour: r.fields[schema.colour] || '',
+        price: r.fields[schema.price] || 0,
+        mileage: r.fields[schema.mileage] || 0,
+        condition: r.fields[schema.condition] || 'Good',
+        description: r.fields[schema.description] || '',
+        dealer: r.fields[schema.dealer] || 'Elite Cars UAE',
         available: true,
       }))
     } catch (err) {
-      console.error(`[AIRTABLE] Inventory fetch failed (attempt ${attempts}):`, err.message)
+      console.error(`❌ [AIRTABLE FETCH ERROR] Attempt ${attempts} failed:`, err.message);
       if (attempts >= maxAttempts) {
-        console.warn(`🚨 [AIRTABLE] All inventory fetch attempts failed. Serving static hardcoded inventory cache failover...`);
+        console.warn(`🚨 [AIRTABLE] HARD FAILOVER: Serving static inventory cache.`);
         return [
           {
             id: 'recMock1',
@@ -110,7 +147,6 @@ async function getAvailableInventory() {
             mileage: 100,
             condition: 'Pristine',
             description: 'Rosso Corsa, pristine showroom spec.',
-            bodyType: 'Supercar',
             dealer: 'Elite Cars UAE',
             available: true
           },
@@ -125,13 +161,12 @@ async function getAvailableInventory() {
             mileage: 1500,
             condition: 'Pristine',
             description: 'Pearl White, pristine, VIP showroom spec.',
-            bodyType: 'SUV',
             dealer: 'Elite Cars UAE',
             available: true
           }
         ]
       }
-      await sleep(attempts * 150);
+      await sleep(attempts * 200);
     }
   }
 }
