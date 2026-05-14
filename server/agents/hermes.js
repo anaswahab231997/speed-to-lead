@@ -24,7 +24,7 @@ async function runHermesAgent() {
     }
 
     // 2. Communication Check (WhatsApp Mode)
-    const mode = process.env.WHATSAPP_MODE || 'aisensy';
+    const mode = process.env.WHATSAPP_MODE || 'twilio';
     console.log(`🏛️ [HERMES] Auditing Communication Path (Mode: ${mode})...`);
     auditResults.checks.push(`✅ WhatsApp Mode: ${mode.toUpperCase()}`);
     
@@ -55,9 +55,10 @@ async function runHermesAgent() {
     // 4. Persistence
     console.log('🏛️ [HERMES] Audit Complete. Status:', auditResults.status);
     
+    // Hardening: Use 'Success' instead of 'Active' to comply with Airtable Single-Select permissions
     await logSystemHealth({
       project: 'Speed To Lead',
-      status: auditResults.status === 'Healthy' ? 'Active' : 'Warning',
+      status: auditResults.status === 'Healthy' ? 'Success' : 'Fail',
       error_message: `Hermes System Audit: ${auditResults.checks.join(' | ')}`,
       last_module: 'HERMES_MASTER'
     });
