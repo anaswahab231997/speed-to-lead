@@ -35,10 +35,11 @@ async function runDealerAgent() {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+              'HTTP-Referer': 'https://ainexlifyagencies.com',
               'X-Title': 'AI Nexlify Agencies'
             },
             body: JSON.stringify({
-              model: 'google/gemini-pro-1.5',
+              model: 'google/gemini-2.0-flash-exp:free',
               messages: [{
                 role: 'user',
                 content: `Write a short, highly personalized cold email draft to pitch our Speed To Lead AI service to a used car dealer named ${dealerName} located in ${emirate}. The draft should be from Anas Wahab at Nexlify. Keep it under 100 words and focus on missed lead revenue.`

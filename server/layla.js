@@ -86,12 +86,11 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
   
   let reply
 
-  // 🧠 Antigravity Cognitive Routing Patch: Consolidated OpenRouter Dispatch
+  // 🧠 Antigravity Zero-Budget Routing Patch: Strictly Free Endpoints
   if (!reply) {
     const modelsToTry = [
-      'google/gemini-pro-1.5',       // Primary Engine
-      'anthropic/claude-3.5-sonnet', // Secondary Failover
-      'meta-llama/llama-3.1-405b-instruct' // absolute safety fallback model
+      'google/gemini-2.0-flash-exp:free', // Primary Free Engine
+      'meta-llama/llama-3.1-8b-instruct:free' // Secondary Free Fallback
     ]
 
     for (let i = 0; i < modelsToTry.length; i++) {
