@@ -378,14 +378,11 @@ app.post('/api/agency/audit', auditLimiter, async (req, res) => {
           targetEmail,
           `[NEX-02 RECON] Digital Audit Report — ${scoredData.name}`,
           emailBody,
-              filename: reportFilename,
-              path: absoluteOutputPath
-            }
-          ]
+          [{ filename: reportFilename, path: absoluteOutputPath }]
         )
-        console.log(`🕵️ [NEX-02 RECON] Zoho SMTP email sent successfully with PDF to: ${targetEmail}`)
-      } catch (mailErr) {
-        console.error(`🕵️ [NEX-02 RECON] Zoho SMTP email send failed:`, mailErr.message)
+        console.log(`📧 [ZOHO SMTP] Report dispatched to ${targetEmail}`)
+      } catch (emailErr) {
+        console.error('📧 [ZOHO SMTP] FAILED to send email:', emailErr.message)
       }
 
       // 5. Alert via WhatsApp
