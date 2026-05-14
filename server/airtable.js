@@ -29,6 +29,7 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 let inventoryFields = null;
 let cachedInventory = null;
 let lastInventoryFetch = 0;
+let inventoryFetchPromise = null; // 🔒 Singleton Lock
 const CACHE_TTL = 60000; // 60 seconds
 
 async function discoverInventorySchema() {
@@ -86,104 +87,87 @@ async function discoverInventorySchema() {
 }
 
 async function getAvailableInventory() {
-  // 🟢 CACHE CHECK: Prevent rate-limiting and redundant slow fetches
+  // 1. Check Memory Cache
   const now = Date.now();
   if (cachedInventory && (now - lastInventoryFetch < CACHE_TTL)) {
     return cachedInventory;
   }
 
-  let attempts = 0;
-  const maxAttempts = 3;
-  
-  const schema = await discoverInventorySchema() || { 
-    name: 'Car Name', available: 'Available', price: 'Price AED', 
-    mileage: 'Mileage KM', colour: 'Colour', condition: 'Condition', 
-    description: 'Description', dealer: 'Dealer', status: 'Status'
-  };
-
-  while (attempts < maxAttempts) {
-    attempts++;
-    try {
-      // Ultimate Resilience: Try with filters first, then without if it fails
-      const formula = `OR({${schema.available}} = TRUE(), {${schema.available}} = 'Available', {${schema.available}} = 'In Stock', {${schema.status}} = 'Available')`;
-      
-      console.log(`📡 [AIRTABLE] Fetching inventory (Attempt ${attempts})...`);
-      
-      let records = [];
-      try {
-        records = await base(INVENTORY_TABLE).select({ filterByFormula: formula }).all();
-      } catch (filterErr) {
-        console.warn(`⚠️ [AIRTABLE] Filtered fetch failed: ${filterErr.message}. Retrying WITHOUT filter...`);
-        records = await base(INVENTORY_TABLE).select({ maxRecords: 100 }).all();
-        // Manual filter
-        records = records.filter(r => {
-          const val = r.fields[schema.available] || r.fields[schema.status] || '';
-          return val === true || val === 1 || String(val).toLowerCase().includes('avail') || String(val).toLowerCase().includes('stock');
-        });
-      }
-
-      if (records.length === 0) {
-        console.log('ℹ️ [AIRTABLE] No matching available cars found in table.');
-      }
-
-      const mapped = records.map(r => ({
-        id: r.id,
-        name: r.fields[schema.name] || 'Unnamed Vehicle',
-        make: r.fields[schema.make] || '',
-        model: r.fields[schema.model] || '',
-        year: r.fields[schema.year] || '',
-        colour: r.fields[schema.colour] || '',
-        price: r.fields[schema.price] || 0,
-        mileage: r.fields[schema.mileage] || 0,
-        condition: r.fields[schema.condition] || 'Good',
-        description: r.fields[schema.description] || '',
-        dealer: r.fields[schema.dealer] || 'Elite Cars UAE',
-        available: true,
-      }));
-
-      // Update Cache
-      cachedInventory = mapped;
-      lastInventoryFetch = Date.now();
-      
-      return mapped;
-    } catch (err) {
-      console.error(`❌ [AIRTABLE FETCH ERROR] Attempt ${attempts} failed:`, err.message);
-      if (attempts >= maxAttempts) {
-        console.warn(`🚨 [AIRTABLE] HARD FAILOVER: Serving static inventory cache.`);
-        return [
-          {
-            id: 'recMock1',
-            name: '2024 Ferrari SF90 Stradale',
-            make: 'Ferrari',
-            model: 'SF90 Stradale',
-            year: 2024,
-            colour: 'Rosso Corsa',
-            price: 2100000,
-            mileage: 100,
-            condition: 'Pristine',
-            description: 'Rosso Corsa, pristine showroom spec.',
-            dealer: 'Elite Cars UAE',
-            available: true
-          },
-          {
-            id: 'recMock2',
-            name: '2024 Nissan Patrol V8 Platinum',
-            make: 'Nissan',
-            model: 'Patrol',
-            year: 2024,
-            colour: 'Pearl White',
-            price: 215000,
-            mileage: 1500,
-            condition: 'Pristine',
-            description: 'Pearl White, pristine, VIP showroom spec.',
-            dealer: 'Elite Cars UAE',
-            available: true
-          }
-        ]
-      }
-      await sleep(attempts * 200);
-    }
+  // 2. Singleton Lock: If a fetch is already in progress, wait for it
+  if (inventoryFetchPromise) {
+    console.log('⏳ [AIRTABLE] Concurrent fetch detected. Joining existing request...');
+    return inventoryFetchPromise;
   }
+
+  // 3. Start New Fetch
+  inventoryFetchPromise = (async () => {
+    let attempts = 0;
+    const maxAttempts = 3;
+    
+    const schema = await discoverInventorySchema() || { 
+      name: 'Car Name', available: 'Available', price: 'Price AED', 
+      mileage: 'Mileage KM', colour: 'Colour', condition: 'Condition', 
+      description: 'Description', dealer: 'Dealer', status: 'Status'
+    };
+
+    while (attempts < maxAttempts) {
+      attempts++;
+      try {
+        const formula = `OR({${schema.available}} = TRUE(), {${schema.available}} = 'Available', {${schema.available}} = 'In Stock', {${schema.status}} = 'Available')`;
+        
+        console.log(`📡 [AIRTABLE] Fetching inventory (Attempt ${attempts})...`);
+        
+        let records = [];
+        try {
+          records = await base(INVENTORY_TABLE).select({ filterByFormula: formula }).all();
+        } catch (filterErr) {
+          console.warn(`⚠️ [AIRTABLE] Filtered fetch failed: ${filterErr.message}. Retrying WITHOUT filter...`);
+          records = await base(INVENTORY_TABLE).select({ maxRecords: 100 }).all();
+          records = records.filter(r => {
+            const val = r.fields[schema.available] || r.fields[schema.status] || '';
+            return val === true || val === 1 || String(val).toLowerCase().includes('avail') || String(val).toLowerCase().includes('stock');
+          });
+        }
+
+        const mapped = records.map(r => ({
+          id: r.id,
+          name: r.fields[schema.name] || 'Unnamed Vehicle',
+          make: r.fields[schema.make] || '',
+          model: r.fields[schema.model] || '',
+          year: r.fields[schema.year] || '',
+          colour: r.fields[schema.colour] || '',
+          price: r.fields[schema.price] || 0,
+          mileage: r.fields[schema.mileage] || 0,
+          condition: r.fields[schema.condition] || 'Good',
+          description: r.fields[schema.description] || '',
+          dealer: r.fields[schema.dealer] || 'Elite Cars UAE',
+          available: true,
+        }));
+
+        // Update Cache
+        cachedInventory = mapped;
+        lastInventoryFetch = Date.now();
+        inventoryFetchPromise = null; // Release Lock
+        
+        return mapped;
+      } catch (err) {
+        console.error(`❌ [AIRTABLE FETCH ERROR] Attempt ${attempts} failed:`, err.message);
+        if (attempts >= maxAttempts) {
+          console.warn(`🚨 [AIRTABLE] HARD FAILOVER: Serving static inventory cache.`);
+          const mock = [
+            { id: 'recMock1', name: '2024 Ferrari SF90 Stradale', price: 2100000, dealer: 'Elite Cars UAE', available: true },
+            { id: 'recMock2', name: '2024 Nissan Patrol V8 Platinum', price: 215000, dealer: 'Elite Cars UAE', available: true }
+          ];
+          inventoryFetchPromise = null; // Release Lock
+          return mock;
+        }
+        await sleep(attempts * 200);
+      }
+    }
+    inventoryFetchPromise = null; // Safety release
+  })();
+
+  return inventoryFetchPromise;
 }
 
 async function getInventorySummaryForLayla() {
