@@ -120,23 +120,27 @@ let discoveredFields = null;
 async function discoverLeadsSchema() {
   if (discoveredFields) return discoveredFields;
   try {
-    const sampleRecords = await base(LEADS_TABLE).select({ maxRecords: 1 }).all();
+    const sampleRecords = await base(LEADS_TABLE).select({ maxRecords: 5 }).all();
     if (sampleRecords.length > 0) {
-      const keys = Object.keys(sampleRecords[0].fields);
+      // Aggregate all unique keys from multiple samples to ensure we don't miss empty fields in the first record
+      let keys = [];
+      sampleRecords.forEach(r => {
+        keys = [...new Set([...keys, ...Object.keys(r.fields)])];
+      });
       
-      const phoneField = keys.find(k => k.toLowerCase().trim() === 'phone') || 
-                         keys.find(k => k.toLowerCase().trim() === 'phone number') || 
-                         keys.find(k => k.toLowerCase().trim() === 'phone_number') || 
-                         'Phone';
-                         
-      const nameField = keys.find(k => k.toLowerCase().trim() === 'name') || 'Name';
-      const carInterestField = keys.find(k => k.toLowerCase().trim() === 'car interest') || 'Car Interest';
-      const aiReasoningField = keys.find(k => k.toLowerCase().trim() === 'ai reasoning') || 'AI Reasoning';
-      const leadScoreField = keys.find(k => k.toLowerCase().trim() === 'lead score') || 'Lead Score';
-      const statusField = keys.find(k => k.toLowerCase().trim() === 'status') || 'Status';
-      const sourceField = keys.find(k => k.toLowerCase().trim() === 'source') || 'Source';
-      const dealerField = keys.find(k => k.toLowerCase().trim() === 'dealer') || 'Dealer';
-      const submittedAtField = keys.find(k => k.toLowerCase().trim() === 'submitted at') || 'Submitted At';
+      const findField = (aliases, fallback) => {
+        return keys.find(k => aliases.includes(k.toLowerCase().trim())) || fallback;
+      };
+
+      const phoneField = findField(['phone', 'phone number', 'phone_number', 'mobile'], 'Phone');
+      const nameField = findField(['name', 'full name', 'contact'], 'Name');
+      const carInterestField = findField(['car interest', 'vehicle', 'interest'], 'Car Interest');
+      const aiReasoningField = findField(['ai reasoning', 'layla reply', 'reasoning'], 'AI Reasoning');
+      const leadScoreField = findField(['lead score', 'score'], 'Lead Score');
+      const statusField = findField(['status'], 'Status');
+      const sourceField = findField(['source'], 'Source');
+      const dealerField = findField(['dealer'], 'Dealer');
+      const submittedAtField = findField(['submitted at', 'timestamp', 'created at', 'date'], 'Timestamp');
 
       discoveredFields = {
         phone: phoneField,
@@ -166,7 +170,7 @@ async function discoverLeadsSchema() {
     status: 'Status',
     source: 'Source',
     dealer: 'Dealer',
-    submittedAt: 'Submitted At'
+    submittedAt: 'Timestamp'
   };
 }
 

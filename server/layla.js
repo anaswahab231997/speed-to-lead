@@ -88,6 +88,29 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
   
   let reply
 
+  if (!reply && process.env.CLAUDE_API_KEY) {
+    try {
+      console.log(`📡 [LAYLA TRACE] Attempting direct Anthropic SDK call...`);
+      const Anthropic = require('@anthropic-ai/sdk');
+      const anthropic = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
+      
+      const msg = await anthropic.messages.create({
+        model: "claude-3-5-sonnet-20240620",
+        max_tokens: 300,
+        temperature: 0.7,
+        system: systemPrompt,
+        messages: history.map(h => ({ role: h.role, content: h.content }))
+      });
+      
+      if (msg.content && msg.content[0]) {
+        reply = msg.content[0].text;
+        console.log(`✅ [LAYLA TRACE] Direct Anthropic response generated successfully.`);
+      }
+    } catch (anthropicErr) {
+      console.error(`🚨 [LAYLA TRACE] Direct Anthropic SDK failed:`, anthropicErr.message);
+    }
+  }
+
   if (!reply) {
     const modelsToTry = [
       process.env.OPENROUTER_MODEL || 'anthropic/claude-3.5-sonnet',
@@ -97,6 +120,13 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
 
     for (let i = 0; i < modelsToTry.length; i++) {
       const modelName = modelsToTry[i]
+      if (!process.env.OPENROUTER_API_KEY) {
+        console.warn(`⚠️ [LAYLA TRACE] Skipping OpenRouter model '${modelName}' due to missing API Key.`);
+        if (i === modelsToTry.length - 1 && !reply) {
+           reply = "Hey, give me just a sec — having a small technical moment. I'll be right back with you!"
+        }
+        continue;
+      }
       try {
         console.log(`📡 [LAYLA TRACE] Dispatching payload to OpenRouter. Model: '${modelName}' (Attempt ${i + 1}/${modelsToTry.length}). History Length: ${history.length} turns.`);
         
