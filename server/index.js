@@ -510,10 +510,10 @@ app.listen(PORT, () => {
   console.log('\n🟩 [AI NEXLIFY AGENCIES] SPEED TO LEAD™ TUNNEL SECURED. LAYLA IS AWAKE. 🟩\n')
   console.log(`⚡ Speed To Lead — server on port ${PORT}`)
   console.log(`📡 Dashboard API → http://localhost:${PORT}/api/`)
-  console.log(`🤖 Layla ready`)
+  console.log(`🤖 WhatsApp-Centric Engine ready`)
 
   scheduleFollowUps()
   
-  // Start the Multi-Agent Orchestrator
+  // Start the WhatsApp-Centric Orchestrator (Email Triage Decommissioned)
   startOrchestrator()
 })
