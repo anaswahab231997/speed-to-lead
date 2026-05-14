@@ -9,6 +9,19 @@ const { getAvailableInventory, leadsCache, logSystemHealth } = require('./airtab
 const { handlePulsePayload } = require('./sentinel')
 const { startOrchestrator, getAgentStatus } = require('./agents/orchestrator')
 
+// 🛡️ RIGID SYSTEM PROTECTION
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('💥 [CRITICAL] Unhandled Rejection:', reason);
+  logSystemHealth({ status: 'Error', error_message: `Unhandled Rejection: ${reason.message}`, stack: reason.stack });
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('💥 [CRITICAL] Uncaught Exception:', err.message);
+  logSystemHealth({ status: 'Error', error_message: `Uncaught Exception: ${err.message}`, stack: err.stack });
+  // Give time for logging before exiting
+  setTimeout(() => process.exit(1), 1000);
+});
+
 const app = express()
 
 // ─── Security Hardening ──────────────────────────────────────────────────────
