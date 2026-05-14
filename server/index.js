@@ -146,13 +146,16 @@ app.post('/webhook/whatsapp', async (req, res) => {
         console.log(`🛡️ [WEBHOOK WHATSAPP] Blocked loop alert from ${msg.from}: "${msg.text}"`)
         continue
       }
-      const { isOutboundReplyCircular } = require('./loopGuard')
-      if (isOutboundReplyCircular(msg.text)) {
-        console.log(`🛡️ [WEBHOOK WHATSAPP] Loop guard silently dropped circular replay: "${msg.text.substring(0, 45)}..."`)
+      
+      const { isInboundDuplicate, registerInbound } = require('./loopGuard')
+      if (isInboundDuplicate(msg.messageId)) {
+        console.log(`🛡️ [WEBHOOK WHATSAPP] Dropped duplicate message ID: ${msg.messageId}`)
         continue
       }
+      registerInbound(msg.messageId)
 
       // Multi-Tenant SaaS Routing Block
+
       let tenantDealer = null
       let dealerNameOverride = null
       
@@ -207,15 +210,12 @@ app.post('/api/twilio/webhook', async (req, res) => {
     }
 
     for (const msg of messages) {
-      if (isAlertMessage(msg.from, msg.text)) {
-        console.log(`🛡️ [TWILIO WEBHOOK TRACE] Blocked loop alert from ${msg.from}: "${msg.text}"`)
+      const { isInboundDuplicate, registerInbound } = require('./loopGuard')
+      if (isInboundDuplicate(msg.messageId)) {
+        console.log(`🛡️ [TWILIO WEBHOOK] Dropped duplicate message ID: ${msg.messageId}`)
         continue
       }
-      const { isOutboundReplyCircular } = require('./loopGuard')
-      if (isOutboundReplyCircular(msg.text)) {
-        console.log(`🛡️ [TWILIO WEBHOOK TRACE] Loop guard silently dropped circular replay: "${msg.text.substring(0, 45)}..."`)
-        continue
-      }
+      registerInbound(msg.messageId)
 
       console.log(`🚨 [TWILIO WEBHOOK TRACE] Handing message over to Layla engine. From: ${msg.from} | Text: "${msg.text}"`)
       
@@ -246,11 +246,14 @@ app.post('/webhook/make', async (req, res) => {
       console.log(`🛡️ [WEBHOOK MAKE] Blocked loop alert from ${from}: "${text}"`)
       return
     }
-    const { isOutboundReplyCircular } = require('./loopGuard')
-    if (isOutboundReplyCircular(text)) {
-      console.log(`🛡️ [WEBHOOK MAKE] Loop guard silently dropped circular replay: "${text.substring(0, 45)}..."`)
+
+    const { isInboundDuplicate, registerInbound } = require('./loopGuard')
+    const mid = messageId || `${from}_${Date.now()}`
+    if (isInboundDuplicate(mid)) {
+      console.log(`🛡️ [WEBHOOK MAKE] Dropped duplicate message: ${mid}`)
       return
     }
+    registerInbound(mid)
     try { await handleInboundMessage({ from, text, messageId: messageId || Date.now().toString() }) }
     catch (err) { console.error('[MAKE ERROR]', err.message) }
   }
