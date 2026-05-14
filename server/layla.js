@@ -86,20 +86,24 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
   
   let reply
 
-  // 🧠 Antigravity Sovereign-Switch: Direct Google Flash Integration
-  const GEMINI_API_KEY = process.env.GEMINI_API_KEY
+  // 🧠 Antigravity Sovereign-Switch: Force-Injected Flash
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.Gemini_Api_Key
+  
+  console.log(`📡 [LAYLA] Checking Key Status: ${GEMINI_API_KEY ? 'FOUND (MASKED)' : 'MISSING'}`)
+
   if (!reply && GEMINI_API_KEY) {
     try {
-      console.log(`📡 [LAYLA] Dispatching to Direct Google Flash API (1.5 Flash)...`);
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+      console.log(`📡 [LAYLA] Dispatching to Direct Google Gemini 2.5 Flash (v1 Stable)...`);
+      const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
       
       const payload = {
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: `SYSTEM: ${systemPrompt}\n\nCONVERSATION HISTORY:\n${history.map(h => `${h.role.toUpperCase()}: ${h.content}`).join('\n')}\n\nREPLY AS LAYLA (Luxury Sales Closer):` }]
-          }
-        ],
+        system_instruction: {
+          parts: [{ text: systemPrompt }]
+        },
+        contents: history.map(h => ({
+          role: h.role === 'assistant' ? 'model' : 'user',
+          parts: [{ text: h.content }]
+        })),
         generationConfig: {
           maxOutputTokens: 1000,
           temperature: 0.7
@@ -132,7 +136,7 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
     reply = "Hey, give me just a sec — having a small technical moment. I'll be right back with you!"
     if (from === '+917977441599' || from === '+917439379780') {
       try {
-        await logUrgentNotification(`🚨 CRITICAL DEMO ALERT: Direct Gemini Flash failed for ${from}. Check API Key/Quota.`)
+        await logUrgentNotification(`🚨 CRITICAL DEMO ALERT: Direct Gemini Flash failed for ${from}. Key Present: ${!!GEMINI_API_KEY}`)
       } catch (logErr) {}
     }
   }
