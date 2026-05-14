@@ -57,6 +57,18 @@
       ],
       "business_hours": "9:00 AM to 9:00 PM",
       "updatedAt": "2026-05-10T06:19:00.180Z"
+    },
+    {
+      "dealer_id": "dlr_admin",
+      "email": "admin@showroom.com",
+      "password": "$2b$10$BERWNkqLtCh8Xom41coAjui0bbqSofSNlKdga.hSzuglZdVt/LsT6",
+      "dealership_name": "Nexlify Master Admin",
+      "subscription_status": "active",
+      "subscription_plan": "enterprise",
+      "phone_number_id": "123456789",
+      "waba_id": "987654321",
+      "meta_access_token": "",
+      "updatedAt": "2026-05-14T18:22:37.208Z"
     }
   ]
 }

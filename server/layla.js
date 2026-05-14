@@ -93,8 +93,9 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
 
   if (!reply && GEMINI_API_KEY) {
     try {
-      console.log(`📡 [LAYLA] Dispatching to Direct Google Gemini 2.5 Flash (v1beta)...`);
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+      const relayBase = process.env.GEMINI_RELAY_URL ? process.env.GEMINI_RELAY_URL.replace(/\/$/, '') : 'https://generativelanguage.googleapis.com';
+      console.log(`📡 [LAYLA] Dispatching to ${process.env.GEMINI_RELAY_URL ? 'Sovereign Relay' : 'Direct Google'} Gemini 2.5 Flash (v1beta)...`);
+      const url = `${relayBase}/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
       
       const payload = {
         system_instruction: {
@@ -162,6 +163,7 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
     lastActivity: new Date().toISOString(),
     status: targetStatus,
     lastCar: extractCarMention(text, history),
+    dealer: tenantDealer?.dealership_name || dealerNameOverride || 'Elite Cars UAE'
   }
 
   // 1. Instantly dispatch the WhatsApp reply

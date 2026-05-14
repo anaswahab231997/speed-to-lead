@@ -65,7 +65,7 @@ async function getDealerByPhone(phoneNumberId) {
   
   const dealer = data.dealers.find(d => {
     const dPhone = String(d.phone_number_id || '').replace(/[^0-9]/g, '')
-    return dPhone === cleanId
+    return dPhone === cleanId && d.subscription_status === 'active'
   })
 
   if (!dealer) return null
@@ -127,7 +127,48 @@ async function saveDealerCredentials({
   }
 }
 
+async function getDealerByEmail(email) {
+  const data = readData()
+  const dealer = data.dealers.find(d => d.email === email)
+  if (!dealer) return null
+  return {
+    ...dealer,
+    meta_access_token: decrypt(dealer.meta_access_token)
+  }
+}
+
+async function getDealerById(id) {
+  const data = readData()
+  const dealer = data.dealers.find(d => d.dealer_id === id)
+  if (!dealer) return null
+  return {
+    ...dealer,
+    meta_access_token: decrypt(dealer.meta_access_token)
+  }
+}
+
+async function updateDealerSubscription(dealer_id, { stripe_customer_id, stripe_subscription_id, plan, status }) {
+  const data = readData()
+  const idx = data.dealers.findIndex(d => d.dealer_id === dealer_id)
+  if (idx === -1) return null
+
+  data.dealers[idx] = {
+    ...data.dealers[idx],
+    stripe_customer_id: stripe_customer_id || data.dealers[idx].stripe_customer_id,
+    stripe_subscription_id: stripe_subscription_id || data.dealers[idx].stripe_subscription_id,
+    subscription_plan: plan || data.dealers[idx].subscription_plan,
+    subscription_status: status || data.dealers[idx].subscription_status,
+    updatedAt: new Date().toISOString()
+  }
+
+  writeData(data)
+  return data.dealers[idx]
+}
+
 module.exports = {
   getDealerByPhone,
-  saveDealerCredentials
+  getDealerByEmail,
+  getDealerById,
+  saveDealerCredentials,
+  updateDealerSubscription
 }

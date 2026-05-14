@@ -16,17 +16,25 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 
 process.on('uncaughtException', (err) => {
-  console.error('💥 [CRITICAL] Uncaught Exception:', err.message);
+  console.error('💥 [CRITICAL] Uncaught Exception:', err.stack || err.message);
   logSystemHealth({ status: 'Error', error_message: `Uncaught Exception: ${err.message}`, stack: err.stack });
   // Give time for logging before exiting
   setTimeout(() => process.exit(1), 1000);
 });
 
+const { router: authRouter } = require('./auth')
+const stripeRouter = require('./stripe')
+const dealersRouter = require('./dealers')
+
 const app = express()
+
+// ─── Stripe Webhook Raw Body Handling ────────────────────────────────────────
+// Must come before express.json()
+app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }))
 
 // ─── Security Hardening ──────────────────────────────────────────────────────
 const corsOptions = {
-  origin: ['https://ainexlifyagencies.com', 'https://ainexlify-agencies.onrender.com', 'http://localhost:3001'],
+  origin: ['https://ainexlifyagencies.com', 'https://ainexlify-agencies.onrender.com', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:3001'],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204
@@ -34,6 +42,11 @@ const corsOptions = {
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// ─── SaaS Routers ───────────────────────────────────────────────────────────
+app.use('/api/auth', authRouter)
+app.use('/api/stripe', stripeRouter)
+app.use('/api/dealers', dealersRouter)
 
 // Rate limiting for the Recon Swarm Audit tool to prevent abuse
 const auditLimiter = rateLimit({

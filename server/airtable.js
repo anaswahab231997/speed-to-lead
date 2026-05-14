@@ -9,7 +9,14 @@ const baseId = isTestEnv
   ? (process.env.AIRTABLE_TEST_BASE_ID || process.env.AIRTABLE_BASE_ID)
   : process.env.AIRTABLE_BASE_ID;
 
-const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(baseId);
+const apiKey = process.env.AIRTABLE_API_KEY;
+if (!apiKey) {
+  console.error('❌ [AIRTABLE] CRITICAL: AIRTABLE_API_KEY is missing from process.env! Please check your .env file.');
+}
+
+const base = new Airtable({ 
+  apiKey: apiKey || 'missing_key' 
+}).base(baseId);
 
 if (isTestEnv) {
   console.log(`📡 [AIRTABLE] 🧪 TEST ENVIRONMENT ACTIVE. Routing queries to Base ID: ${baseId}`);

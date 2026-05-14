@@ -2,7 +2,9 @@ const Airtable = require('airtable');
 const { sendWhatsAppMessage } = require('../whatsapp');
 const { sendEmail } = require('./google_auth');
 
-const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID);
+const apiKey = process.env.AIRTABLE_API_KEY;
+if (!apiKey) console.warn('⚠️ [AIRTABLE] Missing API Key in server/agents/agent_health.js');
+const base = new Airtable({ apiKey: apiKey || 'missing' }).base(process.env.AIRTABLE_BASE_ID);
 const HEALTH_TABLE = 'System Health'; // Use name if ID not mapped
 
 async function runHealthAgent() {

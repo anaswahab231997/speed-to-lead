@@ -1,4 +1,4 @@
-export const API = `http://${window.location.hostname}:3002/api`
+export const API = (import.meta.env.VITE_API_URL) || `http://${window.location.hostname}:3001/api`
 
 
 async function call(path, opts = {}) {

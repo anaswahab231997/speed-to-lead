@@ -26,7 +26,9 @@ const upload = multer({
   }
 })
 
-const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base('appjPcjcc62gV2I0g')
+const apiKey = process.env.AIRTABLE_API_KEY;
+if (!apiKey) console.warn('⚠️ [AIRTABLE] Missing API Key in server/dealerApi.js');
+const base = new Airtable({ apiKey: apiKey || 'missing' }).base('appjPcjcc62gV2I0g')
 const INVENTORY = 'tblhrMiIjvR7OndME'
 const LEADS = 'tbly7iJArFklrO8yd'
 

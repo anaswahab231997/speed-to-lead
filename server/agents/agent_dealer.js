@@ -1,7 +1,9 @@
 const Airtable = require('airtable');
 const { sendEmail } = require('./google_auth');
 
-const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID);
+const apiKey = process.env.AIRTABLE_API_KEY;
+if (!apiKey) console.warn('⚠️ [AIRTABLE] Missing API Key in server/agents/agent_dealer.js');
+const base = new Airtable({ apiKey: apiKey || 'missing' }).base(process.env.AIRTABLE_BASE_ID);
 const DEALERS_TABLE = 'tblJWeMeKvHGB66EZ';
 
 async function runDealerAgent() {
