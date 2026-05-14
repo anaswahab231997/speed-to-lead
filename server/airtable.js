@@ -30,7 +30,8 @@ let inventoryFields = null;
 let cachedInventory = null;
 let lastInventoryFetch = 0;
 let inventoryFetchPromise = null; // 🔒 Singleton Lock
-const CACHE_TTL = 86400000; // 24 hours (Relying on Webhooks for real-time updates)
+const CACHE_TTL = 86400000; // 24 hours (Full re-fetch only as safety)
+let lastSyncTime = new Date(Date.now() - 3600000).toISOString(); // Start from 1 hour ago
 
 async function discoverInventorySchema() {
   if (inventoryFields) return inventoryFields;
@@ -228,6 +229,33 @@ function injectInventoryUpdate(payload) {
   lastInventoryFetch = Date.now();
   return { success: true, count: cachedInventory.length };
 }
+
+/**
+ * 🛰️ DELTA-SYNC PROTOCOL: Surgically fetches only records modified since the last sync.
+ */
+async function runDeltaSync() {
+  try {
+    const schema = await discoverInventorySchema();
+    if (!schema) return;
+
+    // Fetch only changed records
+    const filter = `IS_AFTER(LAST_MODIFIED_TIME(), '${lastSyncTime}')`;
+    const records = await base(INVENTORY_TABLE).select({ filterByFormula: filter }).all();
+
+    if (records.length > 0) {
+      console.log(`✅ [AIRTABLE] Delta Sync: ${records.length} new/updated vehicles injected.`);
+      records.forEach(record => injectInventoryUpdate(record));
+      lastSyncTime = new Date().toISOString();
+    }
+  } catch (err) {
+    // Silent fail for network/timeout issues as per directive
+  }
+}
+
+// Re-initiate surgery-grade polling loop
+setInterval(runDeltaSync, 60000);
+// Run once on startup to catch up
+setTimeout(runDeltaSync, 5000);
 
 async function getInventorySummaryForLayla() {
   const cars = await getAvailableInventory()
