@@ -19,7 +19,6 @@ async function runDealerAgent() {
     let processedCount = 0;
     
     for (const record of records) {
-      // Check if WhatsApp or Contact Person is missing per user instructions
       const hasWhatsApp = !!record.fields['WhatsApp'] || !!record.fields['Phone'];
       const hasContact = !!record.fields['Contact Person'];
       
@@ -27,38 +26,69 @@ async function runDealerAgent() {
         const dealerName = record.fields['Name'] || 'Dealer';
         const emirate = record.fields['Emirate'] || 'UAE';
         
-        // Draft personalized email via OpenRouter (Gemini 1.5 Pro)
+        // 🧠 Antigravity Direct-Flash Protocol: High-Availability Outreach
         let draft = '';
-        try {
-          const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
-              'HTTP-Referer': 'https://ainexlifyagencies.com',
-              'X-Title': 'AI Nexlify Agencies'
-            },
-            body: JSON.stringify({
-              model: 'google/gemini-2.0-flash-exp:free',
-              messages: [{
-                role: 'user',
-                content: `Write a short, highly personalized cold email draft to pitch our Speed To Lead AI service to a used car dealer named ${dealerName} located in ${emirate}. The draft should be from Anas Wahab at Nexlify. Keep it under 100 words and focus on missed lead revenue.`
-              }],
-              max_tokens: 1000,
-              temperature: 0.7
-            })
-          });
+        if (process.env.GEMINI_API_KEY) {
+          try {
+            console.log(`📡 [AGENT 3: DEALER] Dispatching to Direct Gemini 2.5 Flash...`);
+            const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
+            
+            const response = await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                system_instruction: {
+                  parts: [{ text: "You are Anas Wahab from Nexlify. Write high-conversion sales outreach." }]
+                },
+                contents: [{
+                  role: 'user',
+                  parts: [{ text: `Write a short, highly personalized cold email draft to pitch our Speed To Lead AI service to a used car dealer named ${dealerName} located in ${emirate}. Keep it under 100 words and focus on missed lead revenue.` }]
+                }],
+                generationConfig: { maxOutputTokens: 1000, temperature: 0.7 }
+              })
+            });
 
-          if (response.ok) {
-            const responseData = await response.json();
-            draft = responseData.choices[0].message.content;
-          } else {
-            draft = `[FAILED TO GENERATE DRAFT] Manual outreach required for ${dealerName}.`;
+            if (response.ok) {
+              const data = await response.json();
+              draft = data.candidates?.[0]?.content?.parts?.[0]?.text;
+            }
+          } catch (e) {
+            console.error('[AGENT 3: DEALER DIRECT AI ERROR]', e.message);
           }
-        } catch (e) {
-          console.error('[AGENT 3: DEALER AI ERROR]', e.message);
-          draft = `[AI ERROR] Failed to generate draft: ${e.message}`;
         }
+
+        if (!draft && process.env.OPENROUTER_API_KEY) {
+          try {
+            console.log(`📡 [AGENT 3: DEALER] Dispatching to OpenRouter Fallback...`);
+            const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+                'HTTP-Referer': 'https://ainexlifyagencies.com',
+                'X-Title': 'AI Nexlify Agencies'
+              },
+              body: JSON.stringify({
+                model: 'google/gemini-2.0-flash-exp:free',
+                messages: [{
+                  role: 'user',
+                  content: `Write a short, highly personalized cold email draft to pitch our Speed To Lead AI service to a used car dealer named ${dealerName} located in ${emirate}. The draft should be from Anas Wahab at Nexlify. Keep it under 100 words and focus on missed lead revenue.`
+                }],
+                max_tokens: 1000,
+                temperature: 0.7
+              })
+            });
+
+            if (response.ok) {
+              const responseData = await response.json();
+              draft = responseData.choices[0].message.content;
+            }
+          } catch (e) {
+            console.error('[AGENT 3: DEALER OPENROUTER ERROR]', e.message);
+          }
+        }
+
+        if (!draft) draft = `[FAILED TO GENERATE DRAFT] Manual outreach required for ${dealerName}.`;
         
         // Send draft for approval
         await sendEmail(

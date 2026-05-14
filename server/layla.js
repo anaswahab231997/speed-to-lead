@@ -86,32 +86,60 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
   
   let reply
 
-  // 🧠 Antigravity Zero-Budget Routing Patch: Strictly Free Endpoints
+  // 🧠 Antigravity Direct-Flash Protocol: High-Availability Pivot
+  if (!reply && process.env.GEMINI_API_KEY) {
+    try {
+      console.log(`📡 [LAYLA TRACE] Dispatching to Direct Gemini 2.5 Flash...`);
+      const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
+      
+      const payload = {
+        system_instruction: {
+          parts: [{ text: systemPrompt }]
+        },
+        contents: history.map(h => ({
+          role: h.role === 'assistant' ? 'model' : 'user',
+          parts: [{ text: h.content }]
+        })),
+        generationConfig: {
+          maxOutputTokens: 1000,
+          temperature: 0.7
+        }
+      };
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (reply) {
+          console.log(`✅ [LAYLA TRACE] Direct Gemini response generated successfully.`);
+        }
+      } else {
+        const errJson = await response.json().catch(() => ({}));
+        console.error(`🚨 [LAYLA TRACE] Direct Gemini failed:`, errJson.error?.message || response.status);
+      }
+    } catch (err) {
+      console.error(`🚨 [LAYLA TRACE] Direct Gemini exception:`, err.message);
+    }
+  }
+
+  // ─── OpenRouter Fallback (Tertiary Resilience) ───────────────────────────
   if (!reply) {
     const modelsToTry = [
-      'google/gemini-2.0-flash-exp:free', // Primary Free Engine
-      'meta-llama/llama-3.1-8b-instruct:free' // Secondary Free Fallback
+      'google/gemini-2.0-flash-exp:free', 
+      'meta-llama/llama-3.1-8b-instruct:free'
     ]
 
     for (let i = 0; i < modelsToTry.length; i++) {
       const modelName = modelsToTry[i]
-      if (!process.env.OPENROUTER_API_KEY) {
-        console.warn(`⚠️ [LAYLA TRACE] Skipping OpenRouter model '${modelName}' due to missing API Key.`);
-        continue;
-      }
+      if (!process.env.OPENROUTER_API_KEY) continue;
       try {
-        console.log(`📡 [LAYLA TRACE] Dispatching payload to OpenRouter. Model: '${modelName}' (Attempt ${i + 1}/${modelsToTry.length}).`);
+        console.log(`📡 [LAYLA TRACE] Dispatching to OpenRouter Fallback. Model: '${modelName}'`);
         
-        const payload = {
-          model: modelName,
-          messages: [
-            { role: 'system', content: systemPrompt },
-            ...history
-          ],
-          max_tokens: 1000, // Eliminating output choke
-          temperature: 0.7
-        }
-
         const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
           method: 'POST',
           headers: {
@@ -120,35 +148,33 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
             'HTTP-Referer': 'https://ainexlifyagencies.com',
             'X-Title': 'AI Nexlify Agencies'
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({
+            model: modelName,
+            messages: [{ role: 'system', content: systemPrompt }, ...history],
+            max_tokens: 1000,
+            temperature: 0.7
+          })
         })
 
-        if (!response.ok) {
-          const errJson = await response.json().catch(() => ({}))
-          throw new Error(errJson.error?.message || `HTTP ${response.status} Error`)
+        if (response.ok) {
+          const responseData = await response.json()
+          reply = responseData.choices[0].message.content
+          console.log(`✅ [LAYLA TRACE] OpenRouter fallback successful.`);
+          break;
+        } else {
+          throw new Error(`HTTP ${response.status}`);
         }
-
-        const responseData = await response.json()
-        reply = responseData.choices[0].message.content
-        console.log(`✅ [LAYLA TRACE] OpenRouter response generated successfully with model '${modelName}'. Response: "${reply.substring(0, 50)}..."`);
-        break; // Success! Break out of model failover retry loop.
       } catch (err) {
-        console.error(`🚨 [LAYLA TRACE] OpenRouter Model '${modelName}' failed:`, err.message)
+        console.error(`🚨 [LAYLA TRACE] OpenRouter Model '${modelName}' failed:`, err.message);
         
         if (i === modelsToTry.length - 1) {
-          // If this is the final backup model and it failed, trigger the fallback text message
           reply = "Hey, give me just a sec — having a small technical moment. I'll be right back with you!"
           if (from === '+917977441599' || from === '+917439379780') {
             try {
               const { logUrgentNotification } = require('./airtable')
-              await logUrgentNotification(`🚨 CRITICAL DEMO ALERT: Message from demo/personal number ${from} failed to receive any OpenRouter model response. Error: ${err.message}`)
-              console.log(`🛡️ [SENTINEL] Critical log generated in Urgent Notifications table for ${from}`)
-            } catch (logErr) {
-              console.error('Failed to log critical alert:', logErr.message)
-            }
+              await logUrgentNotification(`🚨 CRITICAL DEMO ALERT: All models failed for ${from}. Error: ${err.message}`)
+            } catch (logErr) {}
           }
-        } else {
-          console.log(`🔄 [LAYLA FAILOVER] Rate limit or outage hit on '${modelName}'. Pivoting to secondary model '${modelsToTry[i + 1]}' immediately...`)
         }
       }
     }
