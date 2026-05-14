@@ -161,6 +161,17 @@ app.get('/api/agents/status', (req, res) => {
   }
 })
 
+// 🏛️ HERMES MASTER PULSE
+app.post('/api/hermes/pulse', async (req, res) => {
+  try {
+    const { runHermesAgent } = require('./agents/hermes')
+    const result = await runHermesAgent()
+    res.json({ success: true, message: result })
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message })
+  }
+})
+
 // ─── WEBHOOK ENDPOINTS ────────────────────────────────────────────────────────
 
 app.get('/webhook/whatsapp', (req, res) => {

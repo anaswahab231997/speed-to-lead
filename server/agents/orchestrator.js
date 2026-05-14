@@ -1,8 +1,10 @@
 const cron = require('node-cron');
 const { runDealerAgent } = require('./agent_dealer');
 const { runHealthAgent } = require('./agent_health');
+const { runHermesAgent } = require('./hermes');
 
 const agentState = {
+  agent_hermes: { id: 'Hermes Master Agent', status: '🟢 Running', lastRun: 'Initial', nextRun: 'Every 6h', lastResult: 'System Audit' },
   agent_lead: { id: 'Lead Response Agent', status: '🟢 Running', lastRun: 'Continuous', nextRun: 'Continuous', lastResult: 'Monitoring Webhook' },
   agent_dealer: { id: 'Dealer Outreach Agent', status: '🟡 Sleeping', lastRun: 'Never', nextRun: 'Every 24h', lastResult: 'Waiting to start' },
   agent_health: { id: 'System Health Monitor', status: '🟡 Sleeping', lastRun: 'Never', nextRun: 'Every 1h', lastResult: 'Waiting to start' }
@@ -31,7 +33,10 @@ async function executeAgent(agentId, runFn) {
 }
 
 function startOrchestrator() {
-  console.log('🌐 [ORCHESTRATOR] WhatsApp-Centric System initializing...');
+  console.log('🌐 [ORCHESTRATOR] Hermes-Driven System initializing...');
+
+  // 🏛️ Master Agent: Hermes (Every 6 hours)
+  cron.schedule('0 */6 * * *', () => executeAgent('agent_hermes', runHermesAgent));
 
   // Agent 3: Dealer Outreach Agent (Once every 24 hours at 9:00 AM)
   cron.schedule('0 9 * * *', () => executeAgent('agent_dealer', runDealerAgent));
@@ -39,7 +44,10 @@ function startOrchestrator() {
   // Agent 4: System Health Monitor Agent (Every hour)
   cron.schedule('0 * * * *', () => executeAgent('agent_health', runHealthAgent));
 
-  console.log('✅ [ORCHESTRATOR] Active sales agents scheduled.');
+  // Run Hermes immediately on startup to verify the pipeline
+  executeAgent('agent_hermes', runHermesAgent);
+
+  console.log('✅ [ORCHESTRATOR] Active agents scheduled with Hermes Oversight.');
 }
 
 function getAgentStatus() {
