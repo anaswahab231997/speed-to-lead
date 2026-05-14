@@ -46,10 +46,7 @@ function startOrchestrator() {
   // Agent 4: System Health Monitor Agent (Every hour)
   cron.schedule('0 * * * *', () => executeAgent('agent_health', runHealthAgent));
 
-  // Agent 5: Inventory Intelligence Agent (Every 3 hours)
-  cron.schedule('0 */3 * * *', () => executeAgent('agent_inventory', runInventoryAgent));
-
-  console.log('✅ [ORCHESTRATOR] All agents scheduled and running concurrently.');
+  console.log('✅ [ORCHESTRATOR] All reactive agents scheduled.');
 }
 
 function getAgentStatus() {

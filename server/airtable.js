@@ -30,7 +30,7 @@ let inventoryFields = null;
 let cachedInventory = null;
 let lastInventoryFetch = 0;
 let inventoryFetchPromise = null; // 🔒 Singleton Lock
-const CACHE_TTL = 60000; // 60 seconds
+const CACHE_TTL = 86400000; // 24 hours (Relying on Webhooks for real-time updates)
 
 async function discoverInventorySchema() {
   if (inventoryFields) return inventoryFields;
@@ -177,6 +177,56 @@ async function getAvailableInventory() {
   })();
 
   return inventoryFetchPromise;
+}
+
+/**
+ * ⚡ EVENT-DRIVEN INJECTION: Updates the local cache instantly from a webhook.
+ * This eliminates the need for periodic polling.
+ */
+function injectInventoryUpdate(payload) {
+  if (!payload || !payload.id) return { success: false, error: 'Invalid payload' };
+  
+  if (!cachedInventory) cachedInventory = [];
+  
+  const schema = inventoryFields || { 
+    name: 'Car Name', available: 'Available', price: 'Price AED', 
+    mileage: 'Mileage KM', colour: 'Colour', condition: 'Condition', 
+    description: 'Description', dealer: 'Dealer', status: 'Status'
+  };
+
+  const fields = payload.fields || payload;
+  const isAvailable = fields[schema.available] === true || 
+                    fields[schema.available] === 'Available' || 
+                    fields[schema.status] === 'Available';
+
+  const mapped = {
+    id: payload.id,
+    name: fields[schema.name] || 'Unnamed Vehicle',
+    make: fields[schema.make] || '',
+    model: fields[schema.model] || '',
+    year: fields[schema.year] || '',
+    colour: fields[schema.colour] || '',
+    price: fields[schema.price] || 0,
+    mileage: fields[schema.mileage] || 0,
+    condition: fields[schema.condition] || 'Good',
+    description: fields[schema.description] || '',
+    dealer: fields[schema.dealer] || 'Elite Cars UAE',
+    available: isAvailable,
+  };
+
+  const index = cachedInventory.findIndex(c => c.id === payload.id);
+  
+  if (isAvailable) {
+    if (index !== -1) cachedInventory[index] = mapped;
+    else cachedInventory.push(mapped);
+    console.log(`⚡ [AIRTABLE WEBHOOK] Injected/Updated vehicle: ${mapped.name}`);
+  } else if (index !== -1) {
+    cachedInventory.splice(index, 1);
+    console.log(`⚡ [AIRTABLE WEBHOOK] Removed unavailable vehicle: ${mapped.name}`);
+  }
+
+  lastInventoryFetch = Date.now();
+  return { success: true, count: cachedInventory.length };
 }
 
 async function getInventorySummaryForLayla() {
