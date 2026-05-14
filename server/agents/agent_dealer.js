@@ -1,10 +1,8 @@
 const Airtable = require('airtable');
 const { sendEmail } = require('./google_auth');
-const Anthropic = require('@anthropic-ai/sdk');
 
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID);
 const DEALERS_TABLE = 'tblJWeMeKvHGB66EZ';
-const client = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
 
 async function runDealerAgent() {
   console.log('🕵️ [AGENT 3: DEALER] Scanning for Prospect Dealers...');
@@ -29,17 +27,37 @@ async function runDealerAgent() {
         const dealerName = record.fields['Name'] || 'Dealer';
         const emirate = record.fields['Emirate'] || 'UAE';
         
-        // Draft personalized email via Claude
-        const res = await client.messages.create({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 300,
-          messages: [{
-            role: 'user',
-            content: `Write a short, highly personalized cold email draft to pitch our Speed To Lead AI service to a used car dealer named ${dealerName} located in ${emirate}. The draft should be from Anas Wahab at Nexlify. Keep it under 100 words and focus on missed lead revenue.`
-          }]
-        });
-        
-        const draft = res.content[0].text;
+        // Draft personalized email via OpenRouter (Gemini 1.5 Pro)
+        let draft = '';
+        try {
+          const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+              'X-Title': 'AI Nexlify Agencies'
+            },
+            body: JSON.stringify({
+              model: 'google/gemini-pro-1.5',
+              messages: [{
+                role: 'user',
+                content: `Write a short, highly personalized cold email draft to pitch our Speed To Lead AI service to a used car dealer named ${dealerName} located in ${emirate}. The draft should be from Anas Wahab at Nexlify. Keep it under 100 words and focus on missed lead revenue.`
+              }],
+              max_tokens: 1000,
+              temperature: 0.7
+            })
+          });
+
+          if (response.ok) {
+            const responseData = await response.json();
+            draft = responseData.choices[0].message.content;
+          } else {
+            draft = `[FAILED TO GENERATE DRAFT] Manual outreach required for ${dealerName}.`;
+          }
+        } catch (e) {
+          console.error('[AGENT 3: DEALER AI ERROR]', e.message);
+          draft = `[AI ERROR] Failed to generate draft: ${e.message}`;
+        }
         
         // Send draft for approval
         await sendEmail(
