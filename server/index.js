@@ -1,6 +1,7 @@
 require('dotenv').config({ path: require('path').join(__dirname, '.env') })
 const express = require('express')
 const cors = require('cors')
+const rateLimit = require('express-rate-limit')
 const { handleInboundMessage } = require('./layla')
 const { scheduleFollowUps } = require('./followup')
 const { runStressTest } = require('./stressTest')
@@ -10,9 +11,23 @@ const { startOrchestrator, getAgentStatus } = require('./agents/orchestrator')
 
 const app = express()
 
-app.use(cors())
+// ─── Security Hardening ──────────────────────────────────────────────────────
+const corsOptions = {
+  origin: ['https://ainexlifyagencies.com', 'https://ainexlify-agencies.onrender.com', 'http://localhost:3001'],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204
+}
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+// Rate limiting for the Recon Swarm Audit tool to prevent abuse
+const auditLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5, // limit each IP to 5 audits per hour
+  message: { success: false, error: 'Too many audit requests from this IP. Please try again in an hour.' }
+})
 
 const path = require('path')
 app.use(express.static(path.join(__dirname, 'agency-public')))
@@ -287,7 +302,7 @@ app.post('/api/agency/apply', async (req, res) => {
 })
 
 // POST /api/agency/audit — Live conversion loop trigger for prospect audits
-app.post('/api/agency/audit', async (req, res) => {
+app.post('/api/agency/audit', auditLimiter, async (req, res) => {
   const { url, name, phone, email } = req.body
   if (!url) return res.status(400).json({ success: false, error: 'Website URL is required' })
 
