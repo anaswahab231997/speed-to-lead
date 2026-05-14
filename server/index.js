@@ -322,54 +322,59 @@ app.post('/api/agency/audit', auditLimiter, async (req, res) => {
   const runBackgroundAudit = async () => {
     try {
       console.log(`\n🕵️ [NEX-02 RECON SWARM] Swarm dispatched for: ${cleanUrl}`)
-      const { scoreDealer } = require('./recon')
+      const { scoreDealer, fetchDealersFromMaps } = require('./recon')
       const { saveDealerProspect } = require('./airtable')
       const { sendWhatsAppMessage } = require('./whatsapp')
       const { generateVulnerabilityPDF } = require('./pdfGenerator')
 
-      const title = host.split('.')[0].toUpperCase() + ' MOTORS'
-
-      const dealerProfile = {
-        title: title,
-        website: cleanUrl,
-        rating: 4.2,
-        ratingCount: Math.floor(Math.random() * 150) + 40
+      // 1. Live Discovery: Find real business metadata from Maps using the URL/Host
+      console.log(`[NEX-02] Performing deep Map discovery for: ${host}...`)
+      let dealerProfile = { title: host.toUpperCase(), website: cleanUrl, rating: 0, ratingCount: 0 }
+      
+      try {
+        const discovered = await fetchDealersFromMaps(host)
+        if (discovered && discovered.length > 0) {
+          // Find the best match by URL
+          const match = discovered.find(d => d.website.includes(host)) || discovered[0]
+          dealerProfile = { ...match, title: match.title || dealerProfile.title }
+          console.log(`[NEX-02] Live match found: ${dealerProfile.title} (${dealerProfile.rating}⭐)`)
+        }
+      } catch (discoveryErr) {
+        console.warn(`[NEX-02] Map discovery failed, falling back to basic scrape.`, discoveryErr.message)
       }
 
-      // 1. Run live check and score
+      // 2. Run live check and score
       const scoredData = await scoreDealer(dealerProfile)
       await saveDealerProspect(scoredData)
 
-      // 2. Persist Lead to table tbly7iJArFklrO8yd
+      // 3. Persist Lead to table tbly7iJArFklrO8yd
       const { saveLeadToAirtable } = require('./airtable')
       await saveLeadToAirtable({
-        name: name || title,
+        name: name || scoredData.name || host,
         phone: phone || '+971500000000',
         lastMessage: `Automated Website Audit Request for ${cleanUrl}. Calculated Score: ${scoredData.score}/8`,
         laylaReply: `Recon Report: WhatsApp=${scoredData.hasWhatsApp ? 'YES' : 'NO'}, Reviews=${scoredData.reviews}, PageSpeed=${scoredData.pageSpeedScore}%, Social=${scoredData.socialActive ? 'YES' : 'NO'}`,
-        intentScore: scoredData.score <= 3 ? 9 : 6,
+        intentScore: scoredData.score <= 4 ? 9 : 6,
         source: 'agency-audit',
-        dealer: title
+        dealer: scoredData.name
       })
 
-      // 3. Generate high-contrast luxury PDF
+      // 4. Generate high-contrast luxury PDF
       const absoluteOutputPath = path.join(__dirname, 'agency-public', 'reports', reportFilename)
       await generateVulnerabilityPDF(scoredData, absoluteOutputPath)
-      console.log(`🕵️ [NEX-02 RECON] Luxury PDF compiled successfully at: ${absoluteOutputPath}`)
+      console.log(`🕵️ [NEX-02 RECON] Luxury PDF compiled successfully: ${absoluteOutputPath}`)
 
-      // 4. Zoho SMTP dispatch with compiled luxury PDF attachment
+      // 5. Zoho SMTP dispatch with compiled luxury PDF attachment
       const { sendEmail } = require('./agents/google_auth')
       const targetEmail = email || 'anaswahab97@gmail.com'
       const emailBody = `Hello,\n\nPlease find attached the custom Digital Vulnerability and Revenue Recovery Audit Report for your dealership website: ${scoredData.website}.\n\nMaturity Score: ${scoredData.score}/8\n\nBest regards,\nAnas Wahab\nNexlify AI Agencies`
       
       try {
         await sendEmail(
-          'nexlifyhq@gmail.com',
+          process.env.ZOHO_EMAIL,
           targetEmail,
           `[NEX-02 RECON] Digital Audit Report — ${scoredData.name}`,
           emailBody,
-          [
-            {
               filename: reportFilename,
               path: absoluteOutputPath
             }
