@@ -148,8 +148,6 @@ async function getInventorySummaryForLayla() {
     return `- ${c.name} (${c.colour || 'N/A'}) | ${p} | ${m} | Condition: ${c.condition || 'Good'}`;
   }).join('\n')
 }
-  ).join('\n')
-}
 
 async function markCarUnavailable(carId) {
   try {
