@@ -3,7 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const Airtable = require('airtable')
 const multer = require('multer')
-const XLSX = require('xlsx')
+const ExcelJS = require('exceljs')
 const path = require('path')
 const fs = require('fs')
 const { captureWin } = require('./learnings')
@@ -58,18 +58,29 @@ function autoMapColumns(headers) {
   return mapping
 }
 
-function parseFile(buffer, originalname) {
+async function parseFile(buffer, originalname) {
   const ext = path.extname(originalname).toLowerCase()
-  let workbook
-
+  const workbook = new ExcelJS.Workbook()
+  
   if (ext === '.csv') {
-    workbook = XLSX.read(buffer, { type: 'buffer', raw: false })
+    const Readable = require('stream').Readable
+    const stream = new Readable()
+    stream.push(buffer)
+    stream.push(null)
+    await workbook.csv.read(stream)
   } else {
-    workbook = XLSX.read(buffer, { type: 'buffer' })
+    await workbook.xlsx.load(buffer)
   }
 
-  const sheet = workbook.Sheets[workbook.SheetNames[0]]
-  const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: '' })
+  const worksheet = workbook.worksheets[0]
+  if (!worksheet) return { headers: [], rows: [], mapping: {} }
+
+  const rows = []
+  worksheet.eachRow((row, rowNumber) => {
+    // ExcelJS row.values is 1-indexed and might contain holes
+    const values = Array.isArray(row.values) ? row.values.slice(1) : Object.values(row.values)
+    rows.push(values.map(v => v && typeof v === 'object' && v.text ? v.text : String(v ?? '').trim()))
+  })
 
   if (rows.length < 2) return { headers: [], rows: [], mapping: {} }
 
@@ -172,7 +183,7 @@ app.delete('/api/inventory/:id', async (req, res) => {
 app.post('/api/inventory/parse', upload.single('file'), async (req, res) => {
   if (!req.file) return res.status(400).json({ success: false, error: 'No file uploaded.' })
   try {
-    const { headers, rows, mapping } = parseFile(req.file.buffer, req.file.originalname)
+    const { headers, rows, mapping } = await parseFile(req.file.buffer, req.file.originalname)
     // Return first 10 rows as preview
     res.json({ success: true, headers, preview: rows.slice(0, 10), mapping, total: rows.length, filename: req.file.originalname })
   } catch (err) {
