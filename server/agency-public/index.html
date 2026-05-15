@@ -1000,17 +1000,40 @@
                 setTimeout(() => {
                     auditFormBox.style.display = 'none';
                     auditReport.style.display = 'block';
-                    document.getElementById('report-dealer').innerText = dealer;
                     
-                    // High-Impact Mock Logic for "Wowed" results
-                    const recovery = Math.floor(Math.random() * (580 - 150) + 150);
-                    document.getElementById('recovery-val').innerText = `AED ${recovery}K`;
+                    const s = data.scoredData;
+                    document.getElementById('report-dealer').innerText = s.name;
                     
-                    const score = Math.floor(Math.random() * 3) + 1;
-                    document.getElementById('report-score').innerText = `${score} / 8`;
+                    // --- REAL DATA-DRIVEN REVENUE FORMULA ---
+                    // 1. Establish Baseline Volume (Proxy: Google Reviews)
+                    let estMonthlySales = 15; // Conservative baseline
+                    if (s.reviews > 500) estMonthlySales = 55;
+                    else if (s.reviews > 100) estMonthlySales = 30;
+
+                    // 2. Calculate Leak Percentage
+                    let leakPct = 0;
+                    if (!s.hasWhatsApp) leakPct += 0.22; // No instant mobile capture
+                    if (s.pageSpeedScore < 50) leakPct += 0.15; // High bounce rate
+                    if (s.score < 5) leakPct += 0.10; // Poor automation footprint
                     
-                    const latencies = ["45+ MINS", "OVERNIGHT", "NO RESPONSE", "18 MINS"];
-                    document.getElementById('report-latency').innerText = latencies[Math.floor(Math.random() * latencies.length)];
+                    // 3. Financial Impact (Avg Luxury Profit: AED 25,000)
+                    const avgProfit = 25000;
+                    const monthlyLoss = Math.floor(estMonthlySales * leakPct * avgProfit);
+                    const formattedLoss = (monthlyLoss / 1000).toFixed(0);
+
+                    // Update UI with REAL metrics
+                    document.getElementById('recovery-val').innerText = `AED ${formattedLoss}K`;
+                    document.getElementById('report-score').innerText = `${s.score} / 8`;
+                    
+                    // Latency Mapping
+                    const latencyVal = s.pageSpeedScore < 40 ? "CRITICAL (5s+)" : (s.pageSpeedScore < 70 ? "SLUGGISH" : "OPTIMAL");
+                    document.getElementById('report-latency').innerText = latencyVal;
+                    
+                    // Leak Status
+                    const leakStatus = leakPct >= 0.3 ? "CRITICAL" : (leakPct > 0.1 ? "MODERATE" : "STABLE");
+                    document.getElementById('report-leak').innerText = leakStatus;
+                    document.getElementById('report-leak').style.color = leakPct >= 0.3 ? 'var(--hot)' : 'var(--success)';
+
                 }, 400);
             }, 8000);
         } catch (err) {
