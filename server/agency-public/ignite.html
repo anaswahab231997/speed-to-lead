@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGNITION PORTAL | AI Nexlify Agencies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --accent: #00f2ff;
+            --accent-glow: rgba(0, 242, 255, 0.3);
+            --bg: #050505;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Abstract background glow */
+        .glow {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            letter-spacing: 4px;
+            font-size: 24px;
+            color: #fff;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 15px;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            padding: 18px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .status {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 1px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .status.success {
+            background: rgba(0, 255, 127, 0.1);
+            color: #00ff7f;
+            display: block;
+        }
+
+        .status.error {
+            background: rgba(255, 68, 68, 0.1);
+            color: #ff4444;
+            display: block;
+        }
+
+        .footer-note {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="glow"></div>
+    <div class="container">
+        <div class="header">
+            <h1>Ignition Portal</h1>
+            <p>Decentralized Node Activation</p>
+        </div>
+
+        <form id="igniteForm">
+            <div class="form-group">
+                <label>Dealership Name</label>
+                <input type="text" id="dealerName" placeholder="e.g. Al Futtaim Motors" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number ID</label>
+                <input type="text" id="phoneNumberId" placeholder="15-digit ID from Meta" required>
+            </div>
+            <div class="form-group">
+                <label>WABA ID</label>
+                <input type="text" id="wabaId" placeholder="WhatsApp Business Account ID" required>
+            </div>
+            <div class="form-group">
+                <label>Meta Access Token</label>
+                <input type="password" id="metaAccessToken" placeholder="Permanent System User Token" required>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Activate Node</button>
+        </form>
+
+        <div id="status" class="status"></div>
+
+        <div class="footer-note">
+            Secure vaulting protocol active.<br>
+            Credentials are encrypted and stored in the Sovereign Admin Cloud.
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('igniteForm');
+        const status = document.getElementById('status');
+        const btn = document.getElementById('submitBtn');
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            btn.innerText = 'Synchronizing...';
+            btn.disabled = true;
+
+            const payload = {
+                dealerName: document.getElementById('dealerName').value,
+                phoneNumberId: document.getElementById('phoneNumberId').value,
+                wabaId: document.getElementById('wabaId').value,
+                metaAccessToken: document.getElementById('metaAccessToken').value
+            };
+
+            try {
+                // Target the Dealer API port (3002 or relative if proxied)
+                const response = await fetch('/api/onboard/dealer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    status.innerText = '🟢 NODE ACTIVATED: Cognitive sync initiated.';
+                    status.className = 'status success';
+                    form.reset();
+                } else {
+                    status.innerText = '🔴 UPLINK FAILED: ' + (result.error || 'Check credentials');
+                    status.className = 'status error';
+                }
+            } catch (err) {
+                status.innerText = '🔴 SYSTEM ERROR: Could not reach gateway.';
+                status.className = 'status error';
+            } finally {
+                btn.innerText = 'Activate Node';
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>

@@ -78,6 +78,43 @@ app.get(/^\/dealer-pulse/, (req, res) => {
   });
 })
 
+// 🏛️ IGNITION PORTAL (Decentralized Onboarding)
+app.get('/ignite', (req, res) => {
+  res.sendFile(path.join(__dirname, 'agency-public', 'ignite.html'));
+})
+
+app.post('/api/onboard/dealer', async (req, res) => {
+  const { dealerName, phoneNumberId, wabaId, metaAccessToken } = req.body;
+  if (!dealerName || !phoneNumberId || !wabaId || !metaAccessToken) {
+    return res.status(400).json({ success: false, error: 'Missing required credentials.' });
+  }
+  try {
+    const Airtable = require('airtable');
+    const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base('appjPcjcc62gV2I0g');
+    await base('Admin_Dealerships').create([{
+      fields: {
+        'Dealership Name': dealerName,
+        'Phone Number ID': String(phoneNumberId),
+        'WABA ID': String(wabaId),
+        'Meta Access Token': metaAccessToken,
+        'Status': 'Provisioned',
+        'Onboarded At': new Date().toISOString()
+      }
+    }]);
+
+    const twilio = require('twilio');
+    const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+    await client.messages.create({
+      body: `🟢 [NODE ACTIVATED] New dealership [${dealerName}] has submitted Meta credentials. Ready for cognitive sync.`,
+      from: process.env.TWILIO_SENDER_NUMBER,
+      to: '+917439379780'
+    });
+    res.json({ success: true, message: 'Credentials vaulted successfully.' });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+})
+
 // ─── EVENT-DRIVEN WEBHOOKS (Zero-Latency Sync) ────────────────────────────────
 app.post('/api/webhooks/airtable/inventory', (req, res) => {
   // 1. Immediate Confirmation to Airtable
