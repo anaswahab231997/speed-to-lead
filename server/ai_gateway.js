@@ -16,7 +16,7 @@ async function generateResponse({ systemPrompt, history, maxTokens = 1000, tempe
   if (GEMINI_API_KEY) {
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000); // Strict 5s timeout
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // Extended 10s timeout for stability
 
       const payload = {
         system_instruction: { parts: [{ text: systemPrompt }] },
