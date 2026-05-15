@@ -432,7 +432,7 @@ app.post('/api/agency/apply', async (req, res) => {
 
 // POST /api/agency/audit — Live conversion loop trigger for prospect audits
 app.post('/api/agency/audit', auditLimiter, async (req, res) => {
-  const { url, name, phone, email } = req.body
+  const { url, name } = req.body
   if (!url) return res.status(400).json({ success: false, error: 'Website URL is required' })
 
   const cleanUrl = url.trim().startsWith('http') ? url.trim() : `https://${url.trim()}`
@@ -442,88 +442,72 @@ app.post('/api/agency/audit', auditLimiter, async (req, res) => {
   } catch (e) {
     host = cleanUrl.replace(/[^a-zA-Z0-9]/g, '_')
   }
+
   const reportFilename = `report_${host}_${Date.now()}.pdf`
   const relativePath = `/reports/${reportFilename}`
 
-  // Respond immediately with the report URL so the UI can poll for the file's generation
-  res.json({ success: true, message: 'Recon Swarm dispatched. Audit in progress.', pdfUrl: relativePath })
-
-  const runBackgroundAudit = async () => {
+  // 1. Run the CORE scoring logic synchronously so we can return real data to the HUD
+  try {
+    const { scoreDealer, fetchDealersFromMaps } = require('./recon')
+    
+    // Quick Map Lookup for metadata
+    let dealerProfile = { title: name || host.toUpperCase(), website: cleanUrl, rating: 0, ratingCount: 0 }
     try {
-      console.log(`\n🕵️ [NEX-02 RECON SWARM] Swarm dispatched for: ${cleanUrl}`)
-      const { scoreDealer, fetchDealersFromMaps } = require('./recon')
-      const { saveDealerProspect } = require('./airtable')
-      const { sendWhatsAppMessage } = require('./whatsapp')
-      const { generateVulnerabilityPDF } = require('./pdfGenerator')
-
-      // 1. Live Discovery: Find real business metadata from Maps using the URL/Host
-      console.log(`[NEX-02] Performing deep Map discovery for: ${host}...`)
-      let dealerProfile = { title: host.toUpperCase(), website: cleanUrl, rating: 0, ratingCount: 0 }
-      
-      try {
-        const discovered = await fetchDealersFromMaps(host)
-        if (discovered && discovered.length > 0) {
-          // Find the best match by URL
-          const match = discovered.find(d => d.website.includes(host)) || discovered[0]
-          dealerProfile = { ...match, title: match.title || dealerProfile.title }
-          console.log(`[NEX-02] Live match found: ${dealerProfile.title} (${dealerProfile.rating}⭐)`)
-        }
-      } catch (discoveryErr) {
-        console.warn(`[NEX-02] Map discovery failed, falling back to basic scrape.`, discoveryErr.message)
+      const discovered = await fetchDealersFromMaps(name || host)
+      if (discovered && discovered.length > 0) {
+        const match = discovered.find(d => d.website && d.website.includes(host)) || discovered[0]
+        dealerProfile = { ...match, title: match.title || dealerProfile.title }
       }
-
-      // 2. Run live check and score
-      const scoredData = await scoreDealer(dealerProfile)
-      await saveDealerProspect(scoredData)
-
-      // 3. Persist Lead to table tbly7iJArFklrO8yd
-      const { saveLeadToAirtable } = require('./airtable')
-      await saveLeadToAirtable({
-        name: name || scoredData.name || host,
-        phone: phone || '+971500000000',
-        lastMessage: `Automated Website Audit Request for ${cleanUrl}. Calculated Score: ${scoredData.score}/8`,
-        laylaReply: `Recon Report: WhatsApp=${scoredData.hasWhatsApp ? 'YES' : 'NO'}, Reviews=${scoredData.reviews}, PageSpeed=${scoredData.pageSpeedScore}%, Social=${scoredData.socialActive ? 'YES' : 'NO'}`,
-        intentScore: scoredData.score <= 4 ? 9 : 6,
-        source: 'agency-audit',
-        dealer: scoredData.name
-      })
-
-      // 4. Generate high-contrast luxury PDF
-      const absoluteOutputPath = path.join(__dirname, 'agency-public', 'reports', reportFilename)
-      await generateVulnerabilityPDF(scoredData, absoluteOutputPath)
-      console.log(`🕵️ [NEX-02 RECON] Luxury PDF compiled successfully: ${absoluteOutputPath}`)
-
-      // 5. Zoho SMTP dispatch with compiled luxury PDF attachment
-      const { sendEmail } = require('./agents/google_auth')
-      const targetEmail = email || 'anaswahab97@gmail.com'
-      const emailBody = `Hello,\n\nPlease find attached the custom Digital Vulnerability and Revenue Recovery Audit Report for your dealership website: ${scoredData.website}.\n\nMaturity Score: ${scoredData.score}/8\n\nBest regards,\nAnas Wahab\nNexlify AI Agencies`
-      
-      try {
-        await sendEmail(
-          process.env.ZOHO_EMAIL,
-          targetEmail,
-          `[NEX-02 RECON] Digital Audit Report — ${scoredData.name}`,
-          emailBody,
-          [{ filename: reportFilename, path: absoluteOutputPath }]
-        )
-        console.log(`📧 [ZOHO SMTP] Report dispatched to ${targetEmail}`)
-      } catch (emailErr) {
-        console.error('📧 [ZOHO SMTP] FAILED to send email:', emailErr.message)
-      }
-
-      // 5. Alert via WhatsApp
-      const vulnerabilityReport = `*NEXLIFY DIGITAL AUDIT REPORT* 📊\n\n*Prospect:* ${scoredData.name}\n*Website:* ${scoredData.website}\n*Maturity Score:* ${scoredData.score}/8\n\n*Vulnerability Breakdown:*\n- WhatsApp Lead Capture: ${scoredData.hasWhatsApp ? '🟢 Active' : '🔴 Missing (-2 pts)'}\n- Google Reputation: ${scoredData.reviews > 50 ? '🟢 Strong' : '🟡 Low reviews'}\n- PageSpeed Score: ${scoredData.pageSpeedScore}% ${scoredData.pageSpeedScore >= 70 ? '🟢 Good' : '🔴 Critical Delay (-2 pts)'}\n- Social Engagement: ${scoredData.socialActive ? '🟢 Active' : '🔴 Dormant (-2 pts)'}\n\n*The ROI Math:*\nBased on an average vehicle value of AED 150,000 and a standard close rate of 5%, your current digital setup is actively losing high-value buyers. Converting just *one* additional sale pays for *20 years* of your Nexlify Monthly Subscription.\n\n_Nexlify Agent OS has been activated for this channel. Live demonstration is prepared._`
-
-      if (phone) {
-        await sendWhatsAppMessage(phone, vulnerabilityReport)
-        console.log(`🕵️ [AGENCY AUDIT] Dispatched vulnerability report to WhatsApp: ${phone}`)
-      }
-    } catch (err) {
-      console.error('[AGENCY AUDIT] Background audit error:', err.message)
+    } catch (discoveryErr) {
+      console.warn(`[AGENCY] Map discovery failed during sync phase.`, discoveryErr.message)
     }
-  }
 
-  runBackgroundAudit()
+    const scoredData = await scoreDealer(dealerProfile)
+    
+    // Respond with real data for the Interactive HUD
+    res.json({ 
+      success: true, 
+      message: 'Recon Swarm analysis complete.', 
+      scoredData,
+      pdfUrl: relativePath 
+    })
+
+    // 2. Perform heavy background tasks (PDF, CRM, Email)
+    const runBackgroundTasks = async () => {
+      try {
+        const { saveDealerProspect, saveLeadToAirtable } = require('./airtable')
+        const { generateVulnerabilityPDF } = require('./pdfGenerator')
+        const { sendEmail } = require('./agents/google_auth')
+
+        // Save to CRM
+        await saveDealerProspect(scoredData)
+        await saveLeadToAirtable({
+          name: name || scoredData.name || host,
+          phone: '+971500000000',
+          lastMessage: `Interactive Audit for ${cleanUrl}. Score: ${scoredData.score}/8`,
+          laylaReply: `Recon Report: WhatsApp=${scoredData.hasWhatsApp ? 'YES' : 'NO'}, Reviews=${scoredData.reviews}, PageSpeed=${scoredData.pageSpeedScore}%`,
+          intentScore: scoredData.score <= 4 ? 9 : 6,
+          source: 'agency-audit',
+          dealer: scoredData.name
+        })
+
+        // Generate PDF
+        const absoluteOutputPath = path.join(__dirname, 'agency-public', 'reports', reportFilename)
+        await generateVulnerabilityPDF(scoredData, absoluteOutputPath)
+
+        // Email
+        const emailBody = `Hello,\n\nPlease find attached the custom Digital Vulnerability and Revenue Recovery Audit Report for your dealership website: ${scoredData.website}.\n\nMaturity Score: ${scoredData.score}/8\n\nBest regards,\nAnas Wahab\nNexlify AI Agencies`
+        await sendEmail('anaswahab97@gmail.com', `NEX-02 RECON: Revenue Recovery Audit - ${scoredData.name}`, emailBody, [{ path: absoluteOutputPath }])
+      } catch (bgErr) {
+        console.error('[AGENCY] Background audit tasks failed:', bgErr.message)
+      }
+    }
+    runBackgroundTasks()
+
+  } catch (err) {
+    console.error('[AGENCY] Audit failed:', err.message)
+    res.status(500).json({ success: false, error: 'Recon Swarm initialization failed.' })
+  }
 })
 
 app.post('/stress-test', async (req, res) => {

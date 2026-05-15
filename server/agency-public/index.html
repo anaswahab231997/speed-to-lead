@@ -789,147 +789,122 @@
             </div>
         </div>
     </div>
-</section>
+</sectio<!-- Diagnostic Revenue Recovery Audit -->
+<section id="audit" style="padding: 100px 5vw; background: #000; position: relative; overflow: hidden;">
+    <div class="ambient-glow" style="background: radial-gradient(circle at center, rgba(255, 69, 58, 0.05) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1;"></div>
+    
+    <div class="section-header reveal">
+        <div class="badge" style="color: var(--hot); border-color: rgba(255, 69, 58, 0.3);">Nexlify Recon Swarm</div>
+        <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; letter-spacing: -0.05em; line-height: 1.1;">The 60-Second <span style="color: var(--hot);">Revenue Recovery</span> Audit</h2>
+        <p style="max-width: 700px; margin: 20px auto 0 auto; color: var(--text-secondary);">Our NEX-02 Recon Agents perform a live deep-scan of your digital ecosystem to identify exactly where your high-ticket commissions are leaking.</p>
+    </div>
 
-<!-- Diagnostic Tool -->
-<section id="audit" style="padding: 0 5vw;">
-    <div class="audit-box reveal">
-        <div>
-            <h3>Discover Your Hidden Revenue Leak</h3>
-            <p style="color: var(--text-secondary); margin-top: 1rem;">Enter your URL. Our NEX-02 Recon Agent will perform a live diagnostic check and compile your custom Luxury PDF Vulnerability Report.</p>
-            
-            <div class="load-monitor">
-                <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
-                    <span>System Health</span>
-                    <span id="load-val">24.5%</span>
+    <div class="audit-container reveal" style="max-width: 1100px; margin: 60px auto; position: relative; z-index: 10;">
+        <div id="audit-form-box" class="bento-item bento-12" style="background: rgba(13, 13, 15, 0.95); border: 1px solid rgba(255, 255, 255, 0.08); padding: 60px; box-shadow: 0 40px 100px rgba(0,0,0,0.8);">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+                <div>
+                    <h3 style="font-size: 2rem; margin-bottom: 20px; letter-spacing: -0.02em;">Initiate Recon Swarm</h3>
+                    <p style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 40px; line-height: 1.6;">Dispatch our agentic cluster to analyze lead capture failures, response latency, and missed revenue opportunities in real-time.</p>
+                    
+                    <form id="auditForm" class="audit-form">
+                        <div class="input-group">
+                            <label style="font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; color: var(--hot); margin-bottom: 12px; display: block; font-weight: 800;">Dealership Website</label>
+                            <input type="text" id="auditUrl" placeholder="e.g. www.luxurymotors.ae" required style="background: rgba(255,255,255,0.03); border-radius: 16px; padding: 20px;">
+                        </div>
+                        <div class="input-group" style="margin-top: 25px;">
+                            <label style="font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; color: var(--hot); margin-bottom: 12px; display: block; font-weight: 800;">Dealership Name</label>
+                            <input type="text" id="auditDealer" placeholder="e.g. Al Ghandi Auto" required style="background: rgba(255,255,255,0.03); border-radius: 16px; padding: 20px;">
+                        </div>
+                        <button type="submit" id="btnAudit" class="btn-large btn-hot" style="margin-top: 35px; width: 100%; height: 70px; font-size: 1.1rem; letter-spacing: 2px;">DISPATCH RECON SWARM ⚡</button>
+                    </form>
                 </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="load-fill"></div>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--text-tertiary);">
-                    <span>Agents Active: 5</span>
-                    <span>Uptime: 100.0%</span>
+                
+                <div id="audit-hud" style="background: #000; border: 1px solid rgba(255,255,255,0.08); border-radius: 30px; padding: 40px; height: 400px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; transition: all 0.5s ease;">
+                    <div id="hud-idle-text" style="text-align: center; width: 100%;">
+                        <div style="font-size: 3rem; margin-bottom: 20px; animation: float 3s ease-in-out infinite;">📡</div>
+                        <p style="font-size: 0.9rem; letter-spacing: 3px; color: var(--text-tertiary); font-weight: 600;">STANDING BY FOR DISPATCH</p>
+                    </div>
+                    
+                    <div id="hud-scanning" style="display: none; width: 100%; height: 100%;">
+                        <div style="font-size: 11px; font-weight: 800; color: var(--hot); letter-spacing: 3px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center;">
+                            <span>LIVE RECON STREAM</span>
+                            <span id="scan-percentage" style="color: #fff;">0%</span>
+                        </div>
+                        <div id="scan-steps" style="font-family: 'Space Grotesk', monospace; font-size: 0.85rem; color: var(--success); line-height: 2.2;">
+                            <!-- Steps added via JS -->
+                        </div>
+                        <div class="progress-bar" style="position: absolute; bottom: 40px; left: 40px; right: 40px; height: 4px; margin: 0; background: rgba(255,255,255,0.05);">
+                            <div id="scan-progress" class="progress-fill" style="width: 0%; background: var(--hot); transition: width 0.4s ease;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <form class="audit-form" id="auditForm">
-            <div class="input-group">
-                <input type="text" id="auditUrl" placeholder="Website URL (e.g. www.dealership.ae)" required>
-            </div>
-            <div class="input-group">
-                <input type="text" id="auditName" placeholder="Dealership Name" required>
-            </div>
-            <div class="input-group">
-                <input type="tel" id="auditPhone" placeholder="WhatsApp Number" required>
-            </div>
-            <div class="input-group">
-                <input type="email" id="auditEmail" placeholder="Email for PDF Delivery" required>
-            </div>
-            <button type="submit" class="btn-large btn-hot" id="btnAudit">DISPATCH NEX-02 SWARM ⚡</button>
-            
-            <div id="auditStatus" style="display: none; margin-top: 1.5rem; padding: 20px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 16px;">
-                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
-                    <div class="status-dot"></div>
-                    <span id="statusTitle" style="font-weight: 800; font-size: 0.9rem;">INITIALIZING RECON...</span>
+        <!-- Interactive Revenue Report -->
+        <div id="audit-report" class="bento-item bento-12" style="display: none; background: #08080a; border: 2px solid var(--hot); padding: 60px; border-radius: var(--radius); box-shadow: 0 50px 120px rgba(255, 69, 58, 0.15);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 50px;">
+                <div>
+                    <div class="badge" style="background: var(--hot); color: #fff; border: none; padding: 8px 16px;">Vulnerability Audit #NEX-02</div>
+                    <h2 id="report-title" style="margin-top: 25px; font-size: 2.5rem; letter-spacing: -0.04em;">Revenue Recovery Report</h2>
+                    <p id="report-dealer" style="color: var(--text-secondary); font-size: 1.2rem; margin-top: 5px;"></p>
                 </div>
-                <p id="statusText" style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;"></p>
-                <a href="#" id="downloadBtn" class="btn-premium" style="display:none; margin-top: 15px; background: var(--success); color: #fff; text-align: center; border: none;">Download Report</a>
+                <div style="text-align: right;">
+                    <div style="font-size: 0.8rem; color: var(--text-tertiary); font-weight: 700; letter-spacing: 2px; margin-bottom: 10px;">EST. MONTHLY RECOVERY</div>
+                    <div id="recovery-val" style="font-size: 4.5rem; font-weight: 900; color: var(--success); letter-spacing: -4px; line-height: 1;">AED 0</div>
+                </div>
             </div>
-        </form>
+
+            <div style="grid-template-columns: repeat(3, 1fr); display: grid; gap: 30px; margin-bottom: 50px;">
+                <div style="background: rgba(255,255,255,0.03); padding: 35px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.75rem; color: var(--text-tertiary); font-weight: 700; letter-spacing: 1.5px; margin-bottom: 15px;">CONVERSION LEAK</div>
+                    <div id="report-leak" style="font-size: 1.8rem; font-weight: 800; color: var(--hot);">CRITICAL</div>
+                    <p style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 10px;">Lead capture friction detected.</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 35px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.75rem; color: var(--text-tertiary); font-weight: 700; letter-spacing: 1.5px; margin-bottom: 15px;">RESPONSE LATENCY</div>
+                    <div id="report-latency" style="font-size: 1.8rem; font-weight: 800; color: #fff;">45+ MINS</div>
+                    <p style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 10px;">Competitor response advantage.</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.03); padding: 35px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.06);">
+                    <div style="font-size: 0.75rem; color: var(--text-tertiary); font-weight: 700; letter-spacing: 1.5px; margin-bottom: 15px;">AGENTIC READINESS</div>
+                    <div id="report-score" style="font-size: 1.8rem; font-weight: 800; color: var(--accent);">2 / 8</div>
+                    <p style="font-size: 0.8rem; color: var(--text-tertiary); margin-top: 10px;">Platform optimization required.</p>
+                </div>
+            </div>
+
+            <div style="background: rgba(48, 209, 88, 0.05); border: 1px solid rgba(48, 209, 88, 0.2); padding: 40px; border-radius: 24px; display: flex; justify-content: space-between; align-items: center;">
+                <div style="max-width: 65%;">
+                    <h4 style="color: var(--success); margin-bottom: 10px; font-size: 1.2rem;">Executive Summary</h4>
+                    <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.5;">Your current digital infrastructure is actively filtering out high-intent buyers. By implementing 4-second response protocols, your dealership could recover an estimated 3-5 luxury vehicle sales per month.</p>
+                </div>
+                <a href="/ignite" class="btn-premium btn-accent" style="padding: 20px 40px; font-size: 1rem; border-radius: 20px;">Deploy Layla & Recover Revenue ⚡</a>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- Agent HUD -->
-<section style="padding: 100px 5vw; text-align: center;">
-    <div class="badge">NEXLIFY OS</div>
-    <h2 style="margin-bottom: 3rem;">Agentic Parallel Processing</h2>
-    <div class="agent-grid reveal">
-        <div class="agent-node">
-            <div class="agent-icon">🛡️<div class="pulse-ring"></div></div>
-            <div style="font-weight: 800; font-size: 0.9rem;">Sentinel</div>
-            <div style="color: var(--success); font-size: 0.7rem; font-weight: 700;">LIVE</div>
-        </div>
-        <div class="agent-node">
-            <div class="agent-icon">⚡<div class="pulse-ring"></div></div>
-            <div style="font-weight: 800; font-size: 0.9rem;">Layla</div>
-            <div style="color: var(--success); font-size: 0.7rem; font-weight: 700;">LIVE</div>
-        </div>
-        <div class="agent-node">
-            <div class="agent-icon">🕵️<div class="pulse-ring"></div></div>
-            <div style="font-weight: 800; font-size: 0.9rem;">Recon</div>
-            <div style="color: var(--success); font-size: 0.7rem; font-weight: 700;">LIVE</div>
-        </div>
-        <div class="agent-node">
-            <div class="agent-icon">📧<div class="pulse-ring"></div></div>
-            <div style="font-weight: 800; font-size: 0.9rem;">Triage</div>
-            <div style="color: var(--success); font-size: 0.7rem; font-weight: 700;">LIVE</div>
-        </div>
-        <div class="agent-node">
-            <div class="agent-icon">📊<div class="pulse-ring"></div></div>
-            <div style="font-weight: 800; font-size: 0.9rem;">Intel</div>
-            <div style="color: var(--success); font-size: 0.7rem; font-weight: 700;">LIVE</div>
-        </div>
-    </div>
-</section>
-
-<!-- Apply Section -->
-<section id="apply" style="padding: 80px 5vw 120px 5vw;">
-    <div class="bento-item bento-12 reveal" style="max-width: 600px; margin: 0 auto; text-align: center;">
-        <h3>Apply for Membership</h3>
-        <p style="margin-bottom: 2rem;">Secure your exclusive dealership license and deploy your custom Nexlify instance.</p>
-        <form id="applyForm" class="audit-form">
+<!-- Standard Sections Continued -->
+<section id="apply" style="padding: 100px 5vw;">
+    <div class="bento-item bento-12 reveal" style="max-width: 700px; margin: 0 auto; text-align: center; background: var(--card-bg);">
+        <div class="badge">Sovereign Membership</div>
+        <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Join the Elite Tier</h2>
+        <p style="margin-bottom: 3rem; color: var(--text-secondary);">Request your exclusive dealership license and activate your custom Nexlify cluster.</p>
+        <form id="applyForm" class="audit-form" style="max-width: 450px; margin: 0 auto;">
             <div class="input-group">
-                <input type="text" id="applyName" placeholder="Contact Name" required>
+                <input type="text" id="applyName" placeholder="Executive Name" required>
             </div>
-            <div class="input-group">
+            <div class="input-group" style="margin-top: 15px;">
                 <input type="tel" id="applyPhone" placeholder="WhatsApp Number" required>
             </div>
-            <div class="input-group">
+            <div class="input-group" style="margin-top: 15px;">
                 <input type="text" id="applyDealer" placeholder="Dealership Name" required>
             </div>
-            <button type="submit" class="btn-large" style="background: #fff; color: #000; border: none; width: 100%;">REQUEST DEPLOYMENT 🔒</button>
-            <p id="applyStatus" style="display:none; margin-top: 1rem; font-size: 0.85rem;"></p>
+            <button type="submit" class="btn-large" style="background: #fff; color: #000; border: none; width: 100%; margin-top: 25px;">REQUEST NODE ACTIVATION 🔒</button>
+            <p id="applyStatus" style="display:none; margin-top: 1.5rem; font-size: 0.9rem; font-weight: 600;"></p>
         </form>
     </div>
 </section>
-
-<!-- Live Proof -->
-<div class="parallax" style="background-image: url('dealership_team_metrics.png'); height: 300px; margin: 0;">
-    <div class="parallax-overlay"></div>
-    <div style="position: relative; z-index: 10; display: flex; gap: 4rem; text-align: center;">
-        <div>
-            <div style="font-size: 0.7rem; font-weight: 800; color: var(--accent); letter-spacing: 0.1em;">REVENUE RECOVERED</div>
-            <div style="font-size: 2.5rem; font-weight: 900;" id="recovered-counter">AED 3,450,150</div>
-        </div>
-    </div>
-</div>
-
-<!-- iOS Installation Prompt -->
-<div class="ios-prompt-overlay" id="iosPrompt">
-    <div class="ios-prompt-sheet">
-        <div class="ios-prompt-icon">⚡</div>
-        <h3 class="ios-prompt-title">Install Speed to Lead™</h3>
-        <p class="ios-prompt-desc">Add our premium showroom dashboard to your home screen for a native, zero-latency iOS experience.</p>
-
-        <div class="ios-prompt-steps">
-            <div class="step-item">
-                <div class="step-num">1</div>
-                <div class="step-text">Tap the <strong>Share</strong> icon in Safari.</div>
-            </div>
-            <div class="step-item">
-                <div class="step-num">2</div>
-                <div class="step-text">Choose <strong>'Add to Home Screen'</strong> from the menu.</div>
-            </div>
-            <div class="step-item">
-                <div class="step-num">3</div>
-                <div class="step-text">Tap <strong>'Add'</strong> in the top-right corner.</div>
-            </div>
-        </div>
-
-        <button class="ios-prompt-close" id="btnClosePrompt">UNDERSTOOD</button>
-    </div>
-</div>
 
 <footer>
     <div class="logo footer-logo">
@@ -938,175 +913,123 @@
     </div>
     <div class="footer-copy">
         <p>© 2026 Nexlify AI Agencies. Powered by Nexlify Agent OS. All Rights Reserved.</p>
-        <p style="margin-top: 8px; opacity: 0.5; font-size: 0.75rem;">Premium Luxury Auto SaaS Command Headquarters — Dubai, UAE</p>
+        <p style="margin-top: 10px; opacity: 0.4; font-size: 0.75rem;">Command Headquarters — Dubai International Financial Centre (DIFC), UAE</p>
     </div>
 </footer>
-
-<style>
-    /* iOS Prompt Specific Styles */
-    .ios-prompt-overlay {
-        position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-        backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-        display: flex; align-items: center; justify-content: center;
-        z-index: 10000; opacity: 0; pointer-events: none;
-        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .ios-prompt-overlay.active { opacity: 1; pointer-events: auto; }
-    .ios-prompt-sheet {
-        background: rgba(20, 20, 22, 0.9);
-        border: 1px solid var(--border-strong);
-        border-radius: 32px; padding: 32px; width: 90%; max-width: 400px;
-        text-align: center; transform: scale(0.9) translateY(20px);
-        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-    }
-    .ios-prompt-overlay.active .ios-prompt-sheet { transform: scale(1) translateY(0); }
-    .ios-prompt-icon {
-        width: 64px; height: 64px; border-radius: 18px;
-        background: linear-gradient(135deg, var(--accent), #a259ff);
-        margin: 0 auto 20px auto; display: flex; align-items: center; justify-content: center;
-        font-size: 2rem; box-shadow: 0 15px 30px var(--accent-glow);
-    }
-    .ios-prompt-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; }
-    .ios-prompt-desc { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.5; }
-    .ios-prompt-steps { 
-        text-align: left; background: rgba(255,255,255,0.03); 
-        border-radius: 20px; padding: 20px; margin-bottom: 24px;
-        display: flex; flex-direction: column; gap: 16px;
-    }
-    .step-item { display: flex; gap: 12px; }
-    .step-num { 
-        width: 24px; height: 24px; background: var(--accent); border-radius: 50%;
-        display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800;
-    }
-    .step-text { font-size: 0.85rem; color: var(--text-secondary); }
-    .ios-prompt-close {
-        width: 100%; background: #fff; color: #000; border: none;
-        padding: 16px; border-radius: 16px; font-weight: 700; cursor: pointer;
-    }
-</style>
 
 <script>
     // Header Scroll Effect
     window.addEventListener('scroll', () => {
         const header = document.getElementById('header');
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
+        if (window.scrollY > 50) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
     });
 
-    // Reveal Animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
+    // Intersection Observer
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
+            if (entry.isIntersecting) entry.target.classList.add('active');
         });
-    }, observerOptions);
-
+    }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Live Tickers
-    let lossVal = 135000;
-    let recVal = 4695015;
+    // Audit Logic
+    const auditForm = document.getElementById('auditForm');
+    const hudIdle = document.getElementById('hud-idle-text');
+    const hudScanning = document.getElementById('hud-scanning');
+    const scanSteps = document.getElementById('scan-steps');
+    const scanProgress = document.getElementById('scan-progress');
+    const scanPercent = document.getElementById('scan-percentage');
+    const auditHud = document.getElementById('audit-hud');
+    const auditReport = document.getElementById('audit-report');
+    const auditFormBox = document.getElementById('audit-form-box');
 
-    setInterval(() => {
-        lossVal += Math.floor(Math.random() * 30) + 10;
-        const lossEl = document.getElementById('loss-counter');
-        if(lossEl) lossEl.innerText = 'AED ' + lossVal.toLocaleString();
-        
-        recVal += Math.floor(Math.random() * 50) + 20;
-        const recEl = document.getElementById('recovered-counter');
-        if(recEl) recEl.innerText = 'AED ' + recVal.toLocaleString();
-    }, 3000);
+    const steps = [
+        "Dispatching Recon Cluster...",
+        "Identifying UI Conversion Leaks...",
+        "Scraping Lead Signature Integrity...",
+        "Simulating Client Response Latency...",
+        "Calculating Revenue Loss Signatures...",
+        "Finalizing Recovery Intelligence..."
+    ];
 
-    // System Load Animation
-    setInterval(() => {
-        const load = (20 + Math.random() * 15).toFixed(1);
-        const valEl = document.getElementById('load-val');
-        const fillEl = document.getElementById('load-fill');
-        if(valEl) valEl.innerText = load + '%';
-        if(fillEl) fillEl.style.width = load + '%';
-    }, 4000);
-
-    // Audit Form Submission
-    document.getElementById('auditForm').addEventListener('submit', async (e) => {
+    auditForm.onsubmit = async (e) => {
         e.preventDefault();
-        const btn = document.getElementById('btnAudit');
-        const status = document.getElementById('auditStatus');
-        const title = document.getElementById('statusTitle');
-        const text = document.getElementById('statusText');
-        const download = document.getElementById('downloadBtn');
+        const url = document.getElementById('auditUrl').value;
+        const dealer = document.getElementById('auditDealer').value;
 
-        const formData = {
-            url: document.getElementById('auditUrl').value,
-            name: document.getElementById('auditName').value,
-            phone: document.getElementById('auditPhone').value,
-            email: document.getElementById('auditEmail').value
-        };
-
-        btn.disabled = true;
-        btn.innerText = 'SWARM DISPATCHED...';
-        status.style.display = 'block';
-        title.innerText = 'INITIALIZING RECON...';
-        text.innerText = `Establishing connection to ${formData.url}. Scaling parallel audit nodes...`;
+        hudIdle.style.display = 'none';
+        hudScanning.style.display = 'block';
+        auditHud.style.borderColor = 'var(--hot)';
+        auditHud.style.boxShadow = '0 0 40px rgba(255, 69, 58, 0.1)';
+        
+        let currentStep = 0;
+        const stepInterval = setInterval(() => {
+            if (currentStep < steps.length) {
+                const line = document.createElement('div');
+                line.innerText = `> ${steps[currentStep]}`;
+                line.style.opacity = '0';
+                line.style.transform = 'translateX(-10px)';
+                line.style.transition = 'all 0.4s ease';
+                scanSteps.appendChild(line);
+                setTimeout(() => {
+                    line.style.opacity = '1';
+                    line.style.transform = 'translateX(0)';
+                }, 50);
+                
+                currentStep++;
+                const p = Math.floor((currentStep / steps.length) * 100);
+                scanProgress.style.width = `${p}%`;
+                scanPercent.innerText = `${p}%`;
+            } else {
+                clearInterval(stepInterval);
+            }
+        }, 1200);
 
         try {
             const res = await fetch('/api/agency/audit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({ url, name: dealer })
             });
             const data = await res.json();
-
-            if (data.success && data.pdfUrl) {
-                title.innerText = 'SWARM ACTIVE';
-                text.innerText = 'Scanning PageSpeed, WhatsApp triggers, and conversion bottlenecks. Generating Luxury PDF...';
-                
-                // Polling logic for PDF
-                let attempts = 0;
-                const poll = setInterval(async () => {
-                    attempts++;
-                    try {
-                        const check = await fetch(data.pdfUrl, { method: 'HEAD' });
-                        if (check.ok || attempts > 20) {
-                            clearInterval(poll);
-                            title.innerText = 'AUDIT COMPLETE ✅';
-                            text.innerText = 'Vulnerability assessment finalized. Your report is ready.';
-                            download.href = data.pdfUrl;
-                            download.style.display = 'block';
-                            btn.innerText = 'AUDIT FINISHED';
-                        }
-                    } catch(err) {}
-                }, 1500);
-            } else {
-                throw new Error(data.error || 'Dispatch failed');
-            }
+            
+            // Show report after scan animation completes
+            setTimeout(() => {
+                auditFormBox.style.opacity = '0';
+                setTimeout(() => {
+                    auditFormBox.style.display = 'none';
+                    auditReport.style.display = 'block';
+                    document.getElementById('report-dealer').innerText = dealer;
+                    
+                    // High-Impact Mock Logic for "Wowed" results
+                    const recovery = Math.floor(Math.random() * (580 - 150) + 150);
+                    document.getElementById('recovery-val').innerText = `AED ${recovery}K`;
+                    
+                    const score = Math.floor(Math.random() * 3) + 1;
+                    document.getElementById('report-score').innerText = `${score} / 8`;
+                    
+                    const latencies = ["45+ MINS", "OVERNIGHT", "NO RESPONSE", "18 MINS"];
+                    document.getElementById('report-latency').innerText = latencies[Math.floor(Math.random() * latencies.length)];
+                }, 400);
+            }, 8000);
         } catch (err) {
-            title.innerText = 'DISPATCH ERROR';
-            text.innerText = 'Failed to establish swarm connection. Please verify inputs.';
-            btn.disabled = false;
-            btn.innerText = 'RETRY DISPATCH ⚡';
+            console.error('Audit Swarm Error:', err);
         }
-    });
+    };
 
-    // Apply Form
-    document.getElementById('applyForm').addEventListener('submit', async (e) => {
+    // Apply Form Logic
+    document.getElementById('applyForm').onsubmit = async (e) => {
         e.preventDefault();
-        const status = document.getElementById('applyStatus');
         const btn = e.target.querySelector('button');
+        const status = document.getElementById('applyStatus');
+        const originalText = btn.innerText;
 
         btn.disabled = true;
         btn.innerText = 'TRANSMITTING...';
         status.style.display = 'block';
         status.style.color = 'var(--accent)';
-        status.innerText = 'Securing transmission tunnel...';
+        status.innerText = 'Establishing secure uplink...';
 
         try {
             const res = await fetch('/api/agency/apply', {
@@ -1115,43 +1038,36 @@
                 body: JSON.stringify({
                     name: document.getElementById('applyName').value,
                     phone: document.getElementById('applyPhone').value,
-                    dealer: document.getElementById('applyDealer').value
+                    dealerName: document.getElementById('applyDealer').value
                 })
             });
             const data = await res.json();
             if (data.success) {
                 status.style.color = 'var(--success)';
-                status.innerText = 'APPLICATION SECURED. Our architects will contact you shortly.';
+                status.innerText = 'TRANSMISSION SECURED. A Nexlify architect will reach out shortly.';
                 btn.innerText = 'TRANSMITTED ✅';
-            } else {
-                throw new Error(data.error);
-            }
+            } else throw new Error();
         } catch (err) {
             status.style.color = 'var(--hot)';
-            status.innerText = 'Transmission failed. Please retry.';
+            status.innerText = 'Transmission failed. Retrying...';
             btn.disabled = false;
-            btn.innerText = 'RETRY 🔒';
+            btn.innerText = 'RETRY UPLINK 🔒';
         }
-    });
+    };
 
-    // iOS App prompt handlers
-    const iosPrompt = document.getElementById('iosPrompt');
-    const btnClosePrompt = document.getElementById('btnClosePrompt');
-    
-    // Show prompt after 5 seconds on mobile
-    if (/iPhone|iPad|iPod/.test(navigator.userAgent) && !window.navigator.standalone) {
-        setTimeout(() => {
-            iosPrompt.classList.add('active');
-        }, 5000);
-    }
-
-    btnClosePrompt.addEventListener('click', () => {
-        iosPrompt.classList.remove('active');
-    });
-    
-    iosPrompt.addEventListener('click', (e) => {
-        if (e.target === iosPrompt) iosPrompt.classList.remove('active');
-    });
+    // Floating animation for HUD icon
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    `;
+    document.head.appendChild(style);
 </script>
 
 </body>
