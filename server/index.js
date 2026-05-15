@@ -58,18 +58,17 @@ const auditLimiter = rateLimit({
 const path = require('path')
 app.use(express.static(path.join(__dirname, 'agency-public')))
 
-// 🏠 Explicit Root Route (Prevents "Cannot GET /" on some environments)
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'agency-public', 'index.html'), (err) => {
+// 🏛️ IGNITION PORTAL (Decentralized Onboarding)
+app.get('/ignite', (req, res) => {
+  const filePath = path.join(__dirname, 'agency-public', 'ignite.html');
+  res.sendFile(filePath, (err) => {
     if (err) {
-      console.error('❌ [SERVER] Error serving index.html:', err.message);
-      res.status(404).send('Nexlify Agency Page Not Found');
+      console.error('❌ [SERVER] Error serving ignite.html:', err.message);
+      res.status(404).send('Ignition Portal Not Found. Please ensure ignite.html exists in agency-public.');
     }
   });
 })
 
-// 📱 Decoupled Standalone iOS App Route deep-linking support
-// Literal Regex is the most rigid way to bypass path-to-regexp parsing errors in Express 5
 app.get(/^\/dealer-pulse/, (req, res) => {
   res.sendFile(path.join(__dirname, 'agency-public', 'dealer-pulse', 'index.html'), (err) => {
     if (err) {
@@ -78,9 +77,14 @@ app.get(/^\/dealer-pulse/, (req, res) => {
   });
 })
 
-// 🏛️ IGNITION PORTAL (Decentralized Onboarding)
-app.get('/ignite', (req, res) => {
-  res.sendFile(path.join(__dirname, 'agency-public', 'ignite.html'));
+// 🏠 Explicit Root Route (Prevents "Cannot GET /" on some environments)
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'agency-public', 'index.html'), (err) => {
+    if (err) {
+      console.error('❌ [SERVER] Error serving index.html:', err.message);
+      res.status(404).send('Nexlify Agency Page Not Found');
+    }
+  });
 })
 
 app.post('/api/onboard/dealer', async (req, res) => {
