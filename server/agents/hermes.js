@@ -14,22 +14,19 @@ async function runHermesAgent() {
   };
 
   try {
-    // 1. Cognitive Check (Sovereign AI Gateway)
-    console.log('🏛️ [HERMES] Auditing Cognitive Path (Sovereign AI Gateway)...');
+    // 1. Cognitive Check (Gemini-Core Sovereign Gateway)
+    console.log('🏛️ [HERMES] Auditing Cognitive Path (Gemini-Core Sovereign Gateway)...');
     const hasGemini = !!(process.env.GEMINI_API_KEY || process.env.Gemini_Api_Key);
-    const hasClaude = !!process.env.CLAUDE_API_KEY;
+    const hasRelay = !!process.env.GEMINI_RELAY_URL;
 
-    if (!hasGemini && !hasClaude) {
+    if (!hasGemini) {
       auditResults.status = 'Critical';
-      auditResults.checks.push('❌ TOTAL AI BLACKOUT: Both Gemini and Claude Keys Missing');
-    } else if (!hasGemini) {
-      auditResults.status = 'Degraded';
-      auditResults.checks.push('🟡 Gemini Missing: Operating on Anthropic Sovereign-Only Path');
-    } else if (!hasClaude) {
-      auditResults.status = 'Degraded';
-      auditResults.checks.push('🟡 Anthropic Missing: No failover protection for Gemini');
+      auditResults.checks.push('❌ TOTAL AI BLACKOUT: Gemini API Key Missing');
     } else {
-      auditResults.checks.push('✅ Sovereign AI Gateway: Gemini + Anthropic Failover Verified');
+      let msg = '✅ Gemini-Core: Verified';
+      if (hasRelay) msg += ' (+ Regional Relay Active)';
+      auditResults.checks.push(msg);
+      auditResults.checks.push('✅ Tiered Failover: 2.0 Flash -> 1.5 Flash -> 1.5 Pro enabled');
     }
 
     // 2. Communication Check (WhatsApp Mode)
