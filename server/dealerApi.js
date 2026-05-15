@@ -727,7 +727,7 @@ app.post('/api/subscribe', async (req, res) => {
   try {
     const { saveLeadToAirtable } = require('./airtable')
     const token = `dl_${dealerName.replace(/[^a-zA-Z0-9]/g, '')}_${Date.now().toString().slice(-4)}`
-    const accessLink = `https://ainexlifyagencies.com/dealer-pulse?token=${token}`
+    const accessLink = `https://ainexlifyagencies.com/ignite?token=${token}`
 
     // 1. Persist Subscription to Airtable Leads
     await saveLeadToAirtable({
