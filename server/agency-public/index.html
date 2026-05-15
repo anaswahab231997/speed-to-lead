@@ -399,13 +399,89 @@
             font-weight: 700;
             letter-spacing: -0.03em;
             margin-bottom: 1rem;
-            color: #fff;
         }
 
         .bento-item p {
             color: var(--text-secondary);
             font-size: 1rem;
             line-height: 1.6;
+        }
+
+        /* Fluid Typography & Spacing Optimization */
+        @media (max-width: 1200px) {
+            .hero { gap: 2rem; }
+            .bento-4 { grid-column: span 6; }
+        }
+
+        @media (max-width: 1024px) {
+            header { padding: 0 40px; }
+            nav { display: none; } /* Hide desktop nav on tablet/mobile */
+            .hero { 
+                grid-template-columns: 1fr; 
+                text-align: center; 
+                padding-top: 140px;
+                gap: 3rem;
+            }
+            .hero-content p { margin: 0 auto 2.5rem auto; }
+            .hero-actions { justify-content: center; }
+            .ios-device { transform: none !important; }
+            .bento-6 { grid-column: span 12; }
+            .bento-8 { grid-column: span 12; }
+        }
+
+        @media (max-width: 768px) {
+            :root { --radius: 20px; }
+            header { padding: 0 20px; height: 64px; }
+            .section-header h2 { font-size: 2.2rem; }
+            .bento-container { gap: 16px; padding: 0 20px; }
+            .bento-item { padding: 30px 20px; }
+            .bento-4 { grid-column: span 12; }
+            
+            /* Audit Section Mobile Fixes */
+            #audit-form-box { padding: 30px 20px !important; }
+            #audit-form-box > div { grid-template-columns: 1fr !important; gap: 2rem !important; }
+            #audit-hud { height: 300px !important; padding: 20px !important; }
+            
+            /* Report Mobile Fixes */
+            #audit-report { padding: 30px 20px !important; }
+            #audit-report > div:first-child { flex-direction: column; gap: 20px; text-align: center; }
+            #audit-report > div:first-child > div:last-child { text-align: center !important; margin: 0 auto; }
+            #audit-report > div:nth-child(2) { grid-template-columns: 1fr !important; }
+            #audit-report > div:last-child { flex-direction: column; gap: 20px; text-align: center; }
+            #audit-report > div:last-child p { max-width: 100% !important; }
+            #recovery-val { font-size: 3.5rem !important; }
+        }
+
+        /* Interaction & Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Audit Components */
+        .audit-form .input-group input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 18px 24px;
+            border-radius: 16px;
+            color: #fff;
+            font-family: var(--font);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .audit-form .input-group input:focus {
+            outline: none;
+            border-color: var(--hot);
+            background: rgba(255, 69, 58, 0.05);
+            box-shadow: 0 0 20px rgba(255, 69, 58, 0.1);
         }
 
         /* Parallax Sections */
@@ -1090,6 +1166,36 @@
         }
     };
 
+    // Reveal on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.bento-item, .section-header, #audit-form-box').forEach(el => {
+        el.classList.add('reveal');
+        revealObserver.observe(el);
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
     // Floating animation for HUD icon
     const style = document.createElement('style');
     style.innerHTML = `
@@ -1100,6 +1206,15 @@
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     `;
     document.head.appendChild(style);
