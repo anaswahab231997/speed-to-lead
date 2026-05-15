@@ -193,11 +193,88 @@ function generateVulnerabilityPDF(data, outputPath) {
          .text(`${data.name} is letting high-ticket commissions slip through their fingers every hour. Based on an average vehicle value of AED 150,000 and a conservative close rate of 5%, your current digital setup is actively losing high-value buyers. Converting just one additional sale pays for 20 years of your Nexlify Monthly Subscription.`, 65, 695, { width: 460, lineGap: 2 });
       doc.fillOpacity(1);
 
+      // --- PAGE 2: THE SPEED TO LEAD SOLUTION ---
+      doc.addPage();
+      doc.rect(0, 0, 595.28, 841.89).fill('#020202');
+
+      doc.fillColor('#ff453a')
+         .font('Helvetica-Bold')
+         .fontSize(24)
+         .text('SPEED TO LEAD™', 50, 60);
+      
+      doc.fillColor('#ffffff')
+         .fontSize(14)
+         .text('The Autonomy Layer for Luxury Showrooms', 50, 95);
+
+      doc.strokeColor('#ffffff').strokeOpacity(0.1)
+         .moveTo(50, 125).lineTo(545, 125).stroke();
+      doc.strokeOpacity(1);
+
+      const features = [
+        {
+          title: '24/7 Autonomous Closer (Layla)',
+          desc: 'Our flagship AI Closer engages every lead across WhatsApp, Web, and Social in 4 seconds. She qualifies, overcomes objections, and schedules viewings while your team sleeps.'
+        },
+        {
+          title: 'The Sentinel Dashboard',
+          desc: 'A high-status command center for management. Real-time telemetry on revenue-at-risk, agent response times, and sales pipeline velocity.'
+        },
+        {
+          title: 'Zero-Friction WhatsApp Capture',
+          desc: 'Replace static forms with our premium WhatsApp trigger. 85% higher conversion rate by meeting luxury buyers where they are most comfortable.'
+        },
+        {
+          title: 'Competitive Recon Swarm',
+          desc: 'Our intelligence agents continuously monitor regional pricing and inventory trends, keeping your dealership ahead of the market in real-time.'
+        }
+      ];
+
+      let featY = 160;
+      features.forEach(f => {
+        doc.fillColor('#ff453a').circle(60, featY + 10, 4).fill();
+        
+        doc.fillColor('#ffffff')
+           .font('Helvetica-Bold')
+           .fontSize(12)
+           .text(f.title, 80, featY);
+        
+        doc.fillColor('#ffffff').fillOpacity(0.6)
+           .font('Helvetica')
+           .fontSize(10)
+           .text(f.desc, 80, featY + 20, { width: 450, lineGap: 3 });
+        doc.fillOpacity(1);
+        
+        featY += 80;
+      });
+
+      doc.roundedRect(50, 520, 495, 120, 15)
+         .fillColor('#ffffff').fillOpacity(0.03)
+         .fill()
+         .strokeColor('#ff453a').strokeOpacity(0.3)
+         .stroke();
+      doc.fillOpacity(1).strokeOpacity(1);
+
+      doc.fillColor('#ffffff')
+         .font('Helvetica-Bold')
+         .fontSize(13)
+         .text('EXCLUSIVE INVITATION', 75, 545);
+
+      doc.fillColor('#ffffff').fillOpacity(0.7)
+         .font('Helvetica')
+         .fontSize(11)
+         .text('Your dealership has been flagged as a high-recovery candidate. We invite you to activate your private Speed to Lead node and stop the revenue leak today.', 75, 570, { width: 440, lineGap: 3 });
+      doc.fillOpacity(1);
+
+      doc.fillColor('#ff453a')
+         .font('Helvetica-Bold')
+         .fontSize(11)
+         .text('ACTIVATE AT: ainexlifyagencies.com/ignite', 75, 615);
+
       // Footer
       doc.fillColor('#ffffff').fillOpacity(0.25)
          .font('Helvetica')
          .fontSize(8)
-         .text('Nexlify Intelligence Report. All rights reserved.', 50, 780, { align: 'center' });
+         .text('Speed to Lead™ is a proprietary technology of Nexlify AI Agencies.', 50, 780, { align: 'center' });
       doc.fillOpacity(1);
 
       doc.end();

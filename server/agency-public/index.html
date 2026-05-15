@@ -1030,9 +1030,21 @@
                     document.getElementById('report-latency').innerText = latencyVal;
                     
                     // Leak Status
-                    const leakStatus = leakPct >= 0.3 ? "CRITICAL" : (leakPct > 0.1 ? "MODERATE" : "STABLE");
                     document.getElementById('report-leak').innerText = leakStatus;
                     document.getElementById('report-leak').style.color = leakPct >= 0.3 ? 'var(--hot)' : 'var(--success)';
+
+                    // --- PDF AUTO-OPEN ON READY ---
+                    let attempts = 0;
+                    const poll = setInterval(async () => {
+                        attempts++;
+                        try {
+                            const check = await fetch(data.pdfUrl, { method: 'HEAD' });
+                            if (check.ok || attempts > 20) {
+                                clearInterval(poll);
+                                if (check.ok) window.open(data.pdfUrl, '_blank');
+                            }
+                        } catch(err) {}
+                    }, 2000);
 
                 }, 400);
             }, 8000);
