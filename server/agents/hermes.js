@@ -14,19 +14,15 @@ async function runHermesAgent() {
   };
 
   try {
-    // 1. Cognitive Check (Gemini-Core Sovereign Gateway)
-    console.log('🏛️ [HERMES] Auditing Cognitive Path (Gemini-Core Sovereign Gateway)...');
+    // 1. Cognitive Check (Gemini-Sovereign Prime Gateway)
+    console.log('🏛️ [HERMES] Auditing Cognitive Path (Gemini-Sovereign Prime Gateway)...');
     const hasGemini = !!(process.env.GEMINI_API_KEY || process.env.Gemini_Api_Key);
-    const hasRelay = !!process.env.GEMINI_RELAY_URL;
 
     if (!hasGemini) {
       auditResults.status = 'Critical';
       auditResults.checks.push('❌ TOTAL AI BLACKOUT: Gemini API Key Missing');
     } else {
-      let msg = '✅ Gemini-Core: Verified';
-      if (hasRelay) msg += ' (+ Regional Relay Active)';
-      auditResults.checks.push(msg);
-      auditResults.checks.push('✅ Tiered Failover: 2.0 Flash -> 1.5 Flash -> 1.5 Pro enabled');
+      auditResults.checks.push('✅ Gemini-Sovereign Prime: Verified (Model: Gemini 2.5 Flash)');
     }
 
     // 2. Communication Check (WhatsApp Mode)
