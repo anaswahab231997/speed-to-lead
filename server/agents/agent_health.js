@@ -1,3 +1,4 @@
+const Airtable = require('airtable');
 const { sendWhatsAppMessage } = require('../whatsapp');
 const { sendEmail } = require('./google_auth');
 const { generateResponse } = require('../ai_gateway');
