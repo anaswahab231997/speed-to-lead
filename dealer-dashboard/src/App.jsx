@@ -11,6 +11,7 @@ import Login from './components/Login'
 import SettingsTab from './components/SettingsTab'
 import SaaSStatusCard from './components/SaaSStatusCard'
 import SubscriptionFlow from './components/SubscriptionFlow'
+import PulseHeader from './components/PulseHeader'
 
 export default function App() {
   const { user, token, loading, logout } = useAuth()
@@ -190,7 +191,12 @@ export default function App() {
         <div className="page-content" style={{ paddingTop: '10px' }}>
           {view === 'dealer' && <SaaSStatusCard />}
           {tab === 'inventory' && <InventoryTab />}
-          {tab === 'leads' && <LeadsTab />}
+          {tab === 'leads' && (
+            <>
+              <PulseHeader leadCount={leadCount} hotCount={hotCount} />
+              <LeadsTab />
+            </>
+          )}
           {tab === 'agents' && <AgentOS onSimulateFailover={handleSimulateFailoverLogs} />}
           {tab === 'settings' && <SettingsTab />}
         </div>

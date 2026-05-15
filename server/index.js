@@ -258,6 +258,14 @@ app.post('/webhook/whatsapp', async (req, res) => {
     }
   } catch (err) {
     console.error('[WEBHOOK ERROR]', err.message)
+    try {
+      await logSystemHealth({
+        project: 'Speed To Lead',
+        status: 'Fail',
+        error_message: `WhatsApp Webhook crash: ${err.message}`,
+        last_module: 'WHATSAPP_WEBHOOK'
+      })
+    } catch (e) {}
   }
 })
 
@@ -322,7 +330,17 @@ app.post('/webhook/make', async (req, res) => {
     }
     registerInbound(mid)
     try { await handleInboundMessage({ from, text, messageId: messageId || Date.now().toString() }) }
-    catch (err) { console.error('[MAKE ERROR]', err.message) }
+    catch (err) { 
+      console.error('[MAKE ERROR]', err.message)
+      try {
+        await logSystemHealth({
+          project: 'Speed To Lead',
+          status: 'Fail',
+          error_message: `Make Webhook crash: ${err.message}`,
+          last_module: 'MAKE_WEBHOOK'
+        })
+      } catch (e) {}
+    }
   }
 })
 

@@ -5,7 +5,8 @@ const POSITIVE_SIGNALS = [
   { pattern: /test drive|test-drive|testdrive|come see|visit|showroom/i, score: 2.5, label: 'Test drive request' },
   { pattern: /this week|tomorrow|today|asap|urgent|as soon as/i, score: 2, label: 'Urgent timeline' },
   { pattern: /hold it|reserve|i'll take|i want it|book it|deal/i, score: 2, label: 'Reservation intent' },
-  { pattern: /ready to buy|want to buy|looking to buy|buying|purchase/i, score: 2, label: 'Purchase intent' },
+  { pattern: /ready to buy|want to buy|looking to buy|buying|purchase|planning to buy|planning on buying/i, score: 3, label: 'Purchase intent' },
+  { pattern: /looking for|interested in|do you have|search for|want a|need a/i, score: 2, label: 'Active interest' },
   { pattern: /best price|final price|lowest|negotiate|discount|offer/i, score: 1.5, label: 'Price negotiation' },
   { pattern: /warranty|service history|inspection|carfax|report/i, score: 1, label: 'Due diligence' },
   { pattern: /love it|perfect|exactly what|this is the one|looks great/i, score: 1.5, label: 'Strong positive' },
@@ -33,7 +34,7 @@ const EMOTIONAL_PATTERNS = {
     /better than|difference between|compared to|alternative/i,
   ],
   'Ready To Buy': [
-    /ready|when can i|book|test drive|tomorrow|this week|deal|let's do it|take it/i,
+    /ready|when can i|book|test drive|tomorrow|this week|deal|let's do it|take it|planning to|looking for|interested in/i,
     /payment|finance|bank|transfer|deposit|down payment/i,
   ],
 }
@@ -55,7 +56,7 @@ function detectEmotionalState(history) {
 }
 
 function scoreLeadFull(history) {
-  let score = 2 // base score
+  let score = 3 // base score (Safe Zone)
   const buyerMessages = history.filter(m => m.role === 'user')
   const allText = buyerMessages.map(m => m.content).join(' ')
 

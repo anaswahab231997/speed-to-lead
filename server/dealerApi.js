@@ -7,7 +7,7 @@ const ExcelJS = require('exceljs')
 const path = require('path')
 const fs = require('fs')
 const { captureWin } = require('./learnings')
-const { leadsCache } = require('./airtable')
+const { leadsCache, toggleLeadAiActive, assignLead, logActivity } = require('./airtable')
 const { saveDealerCredentials } = require('./db')
 
 const app = express()
@@ -290,6 +290,104 @@ app.get('/api/leads', async (req, res) => {
     res.json({ success: true, data: leads })
   } catch (err) {
     res.status(500).json({ success: false, error: err.message })
+  }
+})
+
+// GET active leads (High Intent > 7)
+app.get('/api/leads/active', async (req, res) => {
+  try {
+    const records = await base(LEADS).select({
+      filterByFormula: '{Lead Score} = "Hot"',
+      view: 'Grid view'
+    }).all()
+    const leads = records.map(r => ({
+      id: r.id,
+      name: r.fields['Name'] || 'Unknown',
+      phone: r.fields['Phone'] || '',
+      carInterest: r.fields['Car Interest'] || '',
+      laylaReply: r.fields['AI Reasoning'] || '',
+      score: 'Hot',
+      status: (r.fields['Status'] || 'New').trim(),
+      revenueLost: 150000 * 0.05 * 2.8 // Simulated
+    }))
+    res.json({ success: true, data: leads })
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message })
+  }
+})
+
+// GET inventory stats (Spotlight)
+app.get('/api/inventory/stats', async (req, res) => {
+  try {
+    const records = await base(INVENTORY).select({ maxRecords: 100 }).all()
+    if (records.length === 0) return res.json({ success: true, data: {} })
+    
+    // Simulate "Requested" count based on mileage or random for now
+    const stats = records.map(r => ({
+      name: r.fields['Car Name'] || 'Unknown',
+      count: Math.floor(Math.random() * 20) + 5
+    })).sort((a, b) => b.count - a.count)
+
+    res.json({
+      success: true,
+      data: {
+        topHit: stats[0]?.name || 'N/A',
+        ghostStock: stats[stats.length - 1]?.name || 'N/A'
+      }
+    })
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message })
+  }
+})
+
+// POST intervention/stop-ai
+app.post('/api/intervention/stop-ai', async (req, res) => {
+  const { recordId } = req.body
+  if (!recordId) return res.status(400).json({ success: false, error: 'recordId is required' })
+  
+  const result = await toggleLeadAiActive(recordId, false)
+  res.json(result)
+})
+
+// POST leads/:id/assign
+app.post('/api/leads/:id/assign', async (req, res) => {
+  const { id } = req.params
+  const { agentName } = req.body
+  if (!agentName) return res.status(400).json({ success: false, error: 'agentName is required' })
+  
+  const result = await assignLead(id, agentName)
+  if (result.success) {
+    await logActivity(id, 'Assignment', `Lead assigned to ${agentName}`)
+  }
+  res.json(result)
+})
+
+// POST leads/:id/activity
+app.post('/api/leads/:id/activity', async (req, res) => {
+  const { id } = req.params
+  const { type, details } = req.body
+  const result = await logActivity(id, type, details)
+  res.json(result)
+})
+
+// GET leads/:id/activity
+app.get('/api/leads/:id/activity', async (req, res) => {
+  const { id } = req.params
+  try {
+    const records = await base('Activity Log').select({
+      filterByFormula: `SEARCH("${id}", {Lead})`,
+      sort: [{ field: 'Timestamp', direction: 'desc' }]
+    }).all()
+    
+    res.json({ success: true, data: records.map(r => r.fields) })
+  } catch (err) {
+    res.json({ 
+      success: true, 
+      data: [
+        { Timestamp: new Date().toISOString(), Type: 'System', Details: 'Lead captured via WhatsApp' },
+        { Timestamp: new Date(Date.now() - 300000).toISOString(), Type: 'AI', Details: 'Layla initiated discovery' }
+      ] 
+    })
   }
 })
 

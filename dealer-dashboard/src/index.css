@@ -1,28 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --bg: #000000;
-  --bg-secondary: #1c1c1e;
-  --surface: rgba(28,28,30,0.72);
-  --surface-solid: #1c1c1e;
-  --surface-elevated: rgba(44,44,46,0.65);
-  --border: rgba(255,255,255,0.08);
-  --border-strong: rgba(255,255,255,0.14);
-  --text: #f5f5f7;
-  --text-secondary: rgba(235,235,245,0.6);
-  --text-tertiary: rgba(235,235,245,0.3);
-  --accent: #ff3b30;
-  --accent-glow: rgba(255,59,48,0.25);
-  --hot: #ff453a;
-  --hot-glow: rgba(255,69,58,0.3);
-  --warm: #ff9f0a;
-  --warm-glow: rgba(255,159,10,0.25);
-  --cold: #636366;
+  --bg: #09090b;
+  --bg-secondary: #121214;
+  --surface: rgba(22, 22, 24, 0.75);
+  --surface-solid: #121214;
+  --surface-elevated: rgba(32, 32, 35, 0.8);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.1);
+  --text: #fdfdfd;
+  --text-secondary: rgba(245, 245, 250, 0.65);
+  --text-tertiary: rgba(245, 245, 250, 0.35);
+  --accent: #30d158; /* Electric Green */
+  --accent-glow: rgba(48, 209, 88, 0.25);
+  --hot: #ff3b30;
+  --hot-glow: rgba(255, 59, 48, 0.3);
+  --warm: #ff9f0a; /* Amber */
+  --warm-glow: rgba(255, 159, 10, 0.25);
+  --cold: #48484a;
   --success: #30d158;
-  --success-glow: rgba(48,209,88,0.25);
+  --success-glow: rgba(48, 209, 88, 0.25);
   --purple: #bf5af2;
   --teal: #64d2ff;
-  --radius: 20px;
+  --radius: 24px;
   --radius-sm: 14px;
   --radius-xs: 10px;
   --blur: 20px;
@@ -1063,3 +1063,19 @@ textarea { resize: vertical; min-height: 70px; }
   }
 }
 
+
+.hot-lead-pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--hot);
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px var(--hot-glow);
+  animation: pulse-hot 1.5s infinite;
+}
+
+@keyframes pulse-hot {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.4; }
+  100% { transform: scale(1); opacity: 1; }
+}

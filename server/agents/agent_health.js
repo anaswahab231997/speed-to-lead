@@ -1,6 +1,6 @@
-const Airtable = require('airtable');
 const { sendWhatsAppMessage } = require('../whatsapp');
 const { sendEmail } = require('./google_auth');
+const { generateResponse } = require('../ai_gateway');
 
 const apiKey = process.env.AIRTABLE_API_KEY;
 if (!apiKey) console.warn('⚠️ [AIRTABLE] Missing API Key in server/agents/agent_health.js');
@@ -39,7 +39,12 @@ async function runHealthAgent() {
       const total = allToday.length;
       const successRate = total > 0 ? (((total - fails) / total) * 100).toFixed(1) : 100;
       
-      const summary = `Speed To Lead - Daily Health Summary\n\nTotal Executions: ${total}\nFailures: ${fails}\nSuccess Rate: ${successRate}%\n\nSystem is operating optimally.`;
+      const summary = await generateResponse({
+        systemPrompt: "You are the Nexlify System Health Officer. Generate a professional, high-fidelity daily summary of system operations.",
+        history: [{ role: 'user', content: `Generate a summary for these stats: Total Executions=${total}, Failures=${fails}, Success Rate=${successRate}%. Mention that the system is operating optimally and focus on reliability.` }],
+        maxTokens: 300,
+        temperature: 0.7
+      }) || `Speed To Lead - Daily Health Summary\n\nTotal Executions: ${total}\nFailures: ${fails}\nSuccess Rate: ${successRate}%`;
       
       await sendEmail('nexlifyhq@gmail.com', 'nexlifyhq@gmail.com', 'Daily System Health Summary', summary);
     }

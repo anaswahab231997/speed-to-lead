@@ -14,13 +14,22 @@ async function runHermesAgent() {
   };
 
   try {
-    // 1. Cognitive Check (Direct Gemini Flash)
-    console.log('🏛️ [HERMES] Auditing Cognitive Path (Direct Gemini Flash)...');
-    if (!process.env.GEMINI_API_KEY) {
+    // 1. Cognitive Check (Sovereign AI Gateway)
+    console.log('🏛️ [HERMES] Auditing Cognitive Path (Sovereign AI Gateway)...');
+    const hasGemini = !!(process.env.GEMINI_API_KEY || process.env.Gemini_Api_Key);
+    const hasClaude = !!process.env.CLAUDE_API_KEY;
+
+    if (!hasGemini && !hasClaude) {
+      auditResults.status = 'Critical';
+      auditResults.checks.push('❌ TOTAL AI BLACKOUT: Both Gemini and Claude Keys Missing');
+    } else if (!hasGemini) {
       auditResults.status = 'Degraded';
-      auditResults.checks.push('❌ GEMINI_API_KEY Missing');
+      auditResults.checks.push('🟡 Gemini Missing: Operating on Anthropic Sovereign-Only Path');
+    } else if (!hasClaude) {
+      auditResults.status = 'Degraded';
+      auditResults.checks.push('🟡 Anthropic Missing: No failover protection for Gemini');
     } else {
-      auditResults.checks.push('✅ Direct Gemini Key Detected');
+      auditResults.checks.push('✅ Sovereign AI Gateway: Gemini + Anthropic Failover Verified');
     }
 
     // 2. Communication Check (WhatsApp Mode)

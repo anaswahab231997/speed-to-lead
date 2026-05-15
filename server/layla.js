@@ -1,10 +1,23 @@
 require('dotenv').config({ path: require('path').join(__dirname, '.env') })
 const { saveLeadToAirtable, getLeadByPhone, updateLeadScore, getInventorySummaryForLayla, logUrgentNotification } = require('./airtable')
+const { generateResponse } = require('./ai_gateway')
 const { scoreLeadFull } = require('./scorer')
 const { sendWhatsAppMessage } = require('./whatsapp')
 const { getCurrentTactics } = require('./learnings')
 
+const MAX_HISTORY_THREADS = 500;
 const conversationHistory = new Map() // phone → message history
+
+/**
+ * Memory Sentinel: Prunes old threads to ensure 24/7 stability for 10+ busy dealers.
+ */
+function pruneMemory() {
+  if (conversationHistory.size > MAX_HISTORY_THREADS) {
+    const oldestKey = conversationHistory.keys().next().value;
+    conversationHistory.delete(oldestKey);
+    console.log(`🧹 [MEMORY SENTINEL] Pruned oldest thread to maintain performance: ${oldestKey}`);
+  }
+}
 
 function cleanDealerName(dealerField) {
   if (!dealerField) return 'Elite Cars UAE'
@@ -33,7 +46,6 @@ async function buildLaylaSystem(dealerNameOverride, tenantDealer = null) {
     workingHours = tenantDealer.business_hours || '9:00 AM to 9:00 PM'
     const invList = tenantDealer.inventory_data || []
     inventory = invList.map(car => `- ${car.name} (${car.price}, Stock: ${car.stock})`).join('\n')
-    console.log(`📦 [LAAS PROMPT] Mapped 1:1 Inventory for Tenant ${dealerName}:\n${inventory}`)
   } else {
     inventory = await getInventorySummaryForLayla() || 'No cars currently available.'
     dealerName = cleanDealerName(dealerNameOverride)
@@ -41,36 +53,41 @@ async function buildLaylaSystem(dealerNameOverride, tenantDealer = null) {
 
   const learnedTactics = getCurrentTactics() || ''
 
-  return `You are Layla, an elite senior sales closer at ${dealerName}, a premier luxury car dealership. You speak with high-end confidence, absolute brevity, and a white-glove tone. You are powered by the Speed To Lead™ system but NEVER reveal you are an AI or automated. You are a human luxury car expert.
+  return `You are Layla, an elite Senior Sales Closer at ${dealerName}. You are a human luxury car expert with a "white-glove" psychological approach to selling.
 
-Assume we have an exclusive, curated inventory. Every message must build intense desire for a specific vehicle and push to schedule a private showroom viewing, private consultation, or a test drive.
+MISSION:
+Transform inquiries into showroom appointments with absolute brevity and elite sales psychology.
 
-DEALERSHIP INFO:
-- Name: ${dealerName}
-- Working Hours: ${workingHours}
+PSYCHOLOGICAL LEAD MAPPING (Identify & Pivot):
+1. THE EGO BUYER (Luxury/Sports): Focus on prestige, "one-of-one" status, and unmatched road presence.
+2. THE UTILITY BUYER (SUVs/Patrol/Pajero): Focus on heritage, reliability, and commanding the terrain.
+3. THE FAMILY BUYER (Safe/Spacious): Focus on security, comfort, and peace of mind.
 
-HOW YOU SELL:
-- Speak with ultimate conviction and absolute brevity. Keep messages under 50 words. No bullet points, no lists, no generic filler.
-- Build desire: Select a vehicle from the inventory below and present it with premium allure. If the user asks for a car not in stock, suggest a similar luxury alternative from the list.
-- Move fast: Every message must push to secure a VIP showroom viewing or a test drive.
-- End with a sharp, clear commitment.
+SALES VOCABULARY (Use these sparingly but with impact):
+- Refined, Pedigree, Uncompromising, Visceral, Pristine, Effortless, Tailored, Pinnacle, Rare, Legacy, Exclusivity.
 
-TONE RULES:
-- High-end confidence, white-glove tone. Sophisticated, warm, extremely professional.
-- Short messages. Under 50 words.
-- No filler: never say "Certainly", "Absolutely", "Great question", etc.
-- Never reveal or hint that you are automated or AI. 
-- If they write in Arabic → reply in Arabic with the same luxury tone.
+HUMAN WHATSAPP FORMATTING (Replicate a top-tier agent):
+- NO CORPORATE FILLER (Delete: "I hope this finds you well", "Certainly", "I would be happy to").
+- Use natural line breaks.
+- Occasional use of ellipses (...) to mimic human thought process.
+- Polite but authoritative. You lead the conversation; they follow.
+- Keep responses under 40 words. Absolute brevity is high-status.
+
+STRATEGIC TACTICS:
+- Scarcity: "I have two viewings on this unit tomorrow morning..."
+- Ownership: "It would look incredible in your driveway."
+- The Assumptive Close: "Should we hold the keys for a private viewing this afternoon, or would tomorrow suit your schedule better?"
 
 CURRENT INVENTORY:
 ${inventory}
 
 ${learnedTactics}
 
-Every message ends with a clear call-to-action or commitment step.`
+Every response must be a masterclass in luxury sales. End with a sharp, high-value commitment step.`
 }
 
 async function handleInboundMessage({ from, text, messageId, dealerNameOverride = null, tenantDealer = null }) {
+  pruneMemory()
   console.log(`\n[LAYLA] ← ${from}: "${text}"`)
 
   if (!conversationHistory.has(from)) conversationHistory.set(from, [])
@@ -91,53 +108,24 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
   
   console.log(`📡 [LAYLA] Checking Key Status: ${GEMINI_API_KEY ? 'FOUND (MASKED)' : 'MISSING'}`)
 
-  if (!reply && GEMINI_API_KEY) {
-    try {
-      const relayBase = process.env.GEMINI_RELAY_URL ? process.env.GEMINI_RELAY_URL.replace(/\/$/, '') : 'https://generativelanguage.googleapis.com';
-      console.log(`📡 [LAYLA] Dispatching to ${process.env.GEMINI_RELAY_URL ? 'Sovereign Relay' : 'Direct Google'} Gemini 2.5 Flash (v1beta)...`);
-      const url = `${relayBase}/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-      
-      const payload = {
-        system_instruction: {
-          parts: [{ text: systemPrompt }]
-        },
-        contents: history.map(h => ({
-          role: h.role === 'assistant' ? 'model' : 'user',
-          parts: [{ text: h.content }]
-        })),
-        generationConfig: {
-          maxOutputTokens: 1000,
-          temperature: 0.7
-        }
-      };
-
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (reply) {
-          console.log(`✅ [LAYLA] Direct Google Flash response received.`);
-        }
-      } else {
-        const errJson = await response.json().catch(() => ({}));
-        console.error(`🚨 [LAYLA] Direct Google Flash failed:`, errJson.error?.message || response.status);
-      }
-    } catch (err) {
-      console.error(`🚨 [LAYLA] Direct Google Flash exception:`, err.message);
-    }
+  if (!reply) {
+    // 🧠 The AI Gateway now handles failover internally with high-performance timeouts
+    reply = await generateResponse({
+      systemPrompt,
+      history: history.map(h => ({ role: h.role, content: h.content })),
+      maxTokens: 1000,
+      temperature: 0.7
+    });
   }
 
-  // ─── Emergency Local Fallback ──────────────────────────────────────────────
+  // ─── Emergency Total Blackout Fallback ──────────────────────────────────────────────
   if (!reply) {
+    console.error(`🚨 [LAYLA CRITICAL] TOTAL AI BLACKOUT for ${from}. Both Gemini and Anthropic failed.`);
     reply = "Hey, give me just a sec — having a small technical moment. I'll be right back with you!"
+    
     if (from === '+917977441599' || from === '+917439379780') {
       try {
-        await logUrgentNotification(`🚨 CRITICAL DEMO ALERT: Direct Gemini Flash failed for ${from}. Key Present: ${!!GEMINI_API_KEY}`)
+        await logUrgentNotification(`🚨 TOTAL AI BLACKOUT: Both Providers failed for ${from}. Check API quotas/keys immediately.`)
       } catch (logErr) {}
     }
   }
@@ -148,10 +136,10 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
   
   // ─── KILL SWITCH INTERVENTION LOGIC ─────────────────────────────────────────
   const humanRequestPatterns = [
-    /human/i, /operator/i, /manager/i, /person/i, /real agent/i, /scam/i, /fake/i, /bot/i, /ai/i, /robot/i, /stop texting/i, /unsubscribe/i, /wrong number/i
+    /\bhuman\b/i, /\boperator\b/i, /\bmanager\b/i, /\bperson\b/i, /\breal agent\b/i, /\bscam\b/i, /\bfake\b/i, /\bbot\b/i, /\bai\b/i, /\brobot\b/i, /\bstop texting\b/i, /\bunsubscribe\b/i, /\bwrong number\b/i
   ]
   const wantsHuman = humanRequestPatterns.some(pat => pat.test(text))
-  const isInterventionRequired = score <= 2 || wantsHuman
+  const isInterventionRequired = score <= 1 || wantsHuman
   const targetStatus = isInterventionRequired ? 'Needs Intervention' : 'active'
 
   const leadData = {

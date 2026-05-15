@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getInventory, addCar, updateCar, markSold } from '../api'
 import UploadModal from './UploadModal'
+import InventorySpotlight from './InventorySpotlight'
 
 const BLANK = { name: '', year: '', make: '', model: '', colour: '', price: '', mileage: '', condition: 'Excellent', description: '' }
 const CONDITIONS = ['Excellent', 'Good', 'Fair']
@@ -139,6 +140,7 @@ export default function InventoryTab() {
 
   return (
     <div className="page">
+      {!loading && <InventorySpotlight />}
       {/* Action buttons */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem' }}>
         <button className="btn btn-primary" style={{ justifyContent: 'center', padding: '0.9rem', fontSize: '0.92rem', borderRadius: 10 }} onClick={() => setModal('add')}>

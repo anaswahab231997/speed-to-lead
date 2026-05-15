@@ -1,5 +1,6 @@
 const Airtable = require('airtable');
 const { sendEmail } = require('./google_auth');
+const { generateResponse } = require('../ai_gateway');
 
 const apiKey = process.env.AIRTABLE_API_KEY;
 if (!apiKey) console.warn('⚠️ [AIRTABLE] Missing API Key in server/agents/agent_dealer.js');
@@ -30,33 +31,13 @@ async function runDealerAgent() {
         
         // 🧠 Antigravity Direct-Flash Protocol: High-Availability Outreach
         let draft = '';
-        if (process.env.GEMINI_API_KEY) {
-          try {
-            console.log(`📡 [AGENT 3: DEALER] Dispatching to Direct Gemini 2.5 Flash...`);
-            const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
-            
-            const response = await fetch(url, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                system_instruction: {
-                  parts: [{ text: "You are Anas Wahab from Nexlify. Write high-conversion sales outreach." }]
-                },
-                contents: [{
-                  role: 'user',
-                  parts: [{ text: `Write a short, highly personalized cold email draft to pitch our Speed To Lead AI service to a used car dealer named ${dealerName} located in ${emirate}. Keep it under 100 words and focus on missed lead revenue.` }]
-                }],
-                generationConfig: { maxOutputTokens: 1000, temperature: 0.7 }
-              })
-            });
-
-            if (response.ok) {
-              const data = await response.json();
-              draft = data.candidates?.[0]?.content?.parts?.[0]?.text;
-            }
-          } catch (e) {
-            console.error('[AGENT 3: DEALER DIRECT AI ERROR]', e.message);
-          }
+        if (process.env.GEMINI_API_KEY || process.env.CLAUDE_API_KEY) {
+          draft = await generateResponse({
+            systemPrompt: "You are Anas Wahab from Nexlify. Write high-conversion sales outreach.",
+            history: [{ role: 'user', content: `Write a short, highly personalized cold email draft to pitch our Speed To Lead AI service to a used car dealer named ${dealerName} located in ${emirate}. Keep it under 100 words and focus on missed lead revenue.` }],
+            maxTokens: 1000,
+            temperature: 0.7
+          });
         }
 
         if (!draft && process.env.OPENROUTER_API_KEY) {

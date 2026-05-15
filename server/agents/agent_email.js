@@ -1,7 +1,5 @@
 const { getGmailClient, sendEmail } = require('./google_auth');
-const Anthropic = require('@anthropic-ai/sdk');
-
-const client = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
+const { generateResponse } = require('../ai_gateway');
 
 async function runEmailAgent() {
   console.log('📧 [AGENT 2: EMAIL] Triaging Inboxes (nexlifyhq & anaswahab97)...');
@@ -26,17 +24,13 @@ async function runEmailAgent() {
         const msgData = await gmail.users.messages.get({ userId: 'me', id: msg.id });
         const snippet = msgData.data.snippet;
         
-        // Use Claude to classify
-        const claudeRes = await client.messages.create({
-          model: 'claude-sonnet-4-6',
-          max_tokens: 50,
-          messages: [{
-            role: 'user',
-            content: `Classify this email snippet into exactly ONE of these categories: Client, Lead, Supplier, Junk. Snippet: "${snippet}"`
-          }]
-        });
-        
-        const category = claudeRes.content[0].text.trim();
+        // Use AI Gateway for triage classification
+        const category = await generateResponse({
+          systemPrompt: "You are an elite triage agent. Classify emails with extreme precision.",
+          history: [{ role: 'user', content: `Classify this email snippet into exactly ONE of these categories: Client, Lead, Supplier, Junk. Snippet: "${snippet}"` }],
+          maxTokens: 50,
+          temperature: 0
+        }) || 'Junk';
         console.log(`[AGENT 2: EMAIL] Classified as ${category}: "${snippet.slice(0, 30)}..."`);
         
         if (category.includes('Client') || category.includes('Lead')) {
