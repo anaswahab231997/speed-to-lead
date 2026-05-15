@@ -11,7 +11,10 @@ const { leadsCache, toggleLeadAiActive, assignLead, logActivity } = require('./a
 const { saveDealerCredentials } = require('./db')
 
 const app = express()
-app.use(cors())
+const ONBOARDING_DOMAIN = 'https://onboard.ainexlifyagencies.com'
+app.use(cors({
+  origin: ['https://ainexlifyagencies.com', 'http://localhost:5173', ONBOARDING_DOMAIN]
+}))
 app.use(express.json())
 
 // File upload — store in memory, max 10MB
@@ -1018,6 +1021,61 @@ app.get('/api/sentinel/report', (req, res) => {
     res.status(500).json({ success: false, error: err.message })
   }
 })
+
+// POST /api/onboard/dealer — Decentralized Meta Credential Vault
+app.post('/api/onboard/dealer', async (req, res) => {
+  const { dealerName, phoneNumberId, wabaId, metaAccessToken } = req.body;
+
+  // 1. Strict Payload Validation
+  if (!dealerName || !phoneNumberId || !wabaId || !metaAccessToken) {
+    return res.status(400).json({ 
+      success: false, 
+      error: 'Missing required credentials: dealerName, phoneNumberId, wabaId, and metaAccessToken are required.' 
+    });
+  }
+
+  try {
+    // 2. Airtable Injection (Admin_Dealerships Vault)
+    const TABLE_NAME = 'Admin_Dealerships';
+    
+    console.log(`📡 [ONBOARDING] Vaulting Meta credentials for Dealer: ${dealerName}`);
+    
+    await base(TABLE_NAME).create([
+      {
+        fields: {
+          'Dealership Name': dealerName,
+          'Phone Number ID': String(phoneNumberId),
+          'WABA ID': String(wabaId),
+          'Meta Access Token': metaAccessToken,
+          'Status': 'Provisioned',
+          'Onboarded At': new Date().toISOString()
+        }
+      }
+    ]);
+
+    // 3. Sentinel Alert (Twilio Emergency Channel)
+    const twilio = require('twilio');
+    const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+    const emergencyNumber = '+917439379780';
+    
+    await client.messages.create({
+      body: `🟢 [NODE ACTIVATED] New dealership [${dealerName}] has submitted Meta credentials. Ready for cognitive sync.`,
+      from: process.env.TWILIO_SENDER_NUMBER,
+      to: emergencyNumber
+    });
+
+    console.log(`✅ [SENTINEL] Emergency alert dispatched to Founder for dealer: ${dealerName}`);
+
+    res.json({ 
+      success: true, 
+      message: 'Credentials vaulted successfully. Activation in progress.' 
+    });
+
+  } catch (err) {
+    console.error('❌ [ONBOARDING ERROR]', err.message);
+    res.status(500).json({ success: false, error: 'Vault injection failed: ' + err.message });
+  }
+});
 
 const PORT = process.env.DEALER_API_PORT || 3002
 app.listen(PORT, () => {
