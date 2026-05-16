@@ -425,8 +425,8 @@
             .hero-content p { margin: 0 auto 2.5rem auto; }
             .hero-actions { justify-content: center; }
             .ios-device { transform: none !important; }
-            .bento-6 { grid-column: span 12; }
-            .bento-8 { grid-column: span 12; }
+            .bento-6, .bento-8, .bento-12 { grid-column: span 12 !important; }
+            .grid-stack { grid-template-columns: 1fr !important; gap: 2rem !important; }
         }
 
         @media (max-width: 768px) {
@@ -435,11 +435,10 @@
             .section-header h2 { font-size: 2.2rem; }
             .bento-container { gap: 16px; padding: 0 20px; }
             .bento-item { padding: 30px 20px; }
-            .bento-4 { grid-column: span 12; }
+            .bento-4 { grid-column: span 12 !important; }
             
             /* Audit Section Mobile Fixes */
             #audit-form-box { padding: 30px 20px !important; }
-            #audit-form-box > div { grid-template-columns: 1fr !important; gap: 2rem !important; }
             #audit-hud { height: 300px !important; padding: 20px !important; }
             
             /* Report Mobile Fixes */
@@ -450,6 +449,32 @@
             #audit-report > div:last-child { flex-direction: column; gap: 20px; text-align: center; }
             #audit-report > div:last-child p { max-width: 100% !important; }
             #recovery-val { font-size: 3.5rem !important; }
+        }
+
+        /* Utility Classes */
+        .grid-stack {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .flex-stack {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-3 { grid-template-columns: 1fr !important; }
+            .flex-stack { flex-direction: column !important; text-align: center !important; }
         }
 
         /* Interaction & Reveal */
@@ -828,7 +853,7 @@
             <p>Synchronized with your stock sheets. Layla knows every car's condition, trim, mileage, and pricing instantly.</p>
         </div>
         <div class="bento-item bento-12 reveal">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;">
+            <div class="grid-stack" style="gap: 2rem;">
                 <div>
                     <h3>VIP Hand-off to Human Closer</h3>
                     <p>Once Layla qualifies the budget and verifies interest, she delivers a silver-platter dossier to your sales manager to sign the contract.</p>
@@ -847,7 +872,7 @@
 <!-- Philosophy -->
 <section id="human-loop" style="padding: 100px 5vw;">
     <div class="bento-item bento-12 reveal" style="border-color: rgba(10, 132, 255, 0.3); background: linear-gradient(135deg, rgba(10, 132, 255, 0.05), rgba(13, 13, 15, 0.9));">
-        <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center;">
+        <div class="grid-stack">
             <div>
                 <div class="badge">Human Core</div>
                 <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">Your Ultimate Accelerator.</h2>
@@ -877,7 +902,7 @@
 
     <div class="audit-container reveal" style="max-width: 1100px; margin: 60px auto; position: relative; z-index: 10;">
         <div id="audit-form-box" class="bento-item bento-12" style="background: rgba(13, 13, 15, 0.95); border: 1px solid rgba(255, 255, 255, 0.08); padding: 60px; box-shadow: 0 40px 100px rgba(0,0,0,0.8);">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <div class="grid-stack">
                 <div>
                     <h3 style="font-size: 2rem; margin-bottom: 20px; letter-spacing: -0.02em;">Initiate Recon Swarm</h3>
                     <p style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 40px; line-height: 1.6;">Dispatch our agentic cluster to analyze lead capture failures, response latency, and missed revenue opportunities in real-time.</p>
@@ -919,7 +944,7 @@
 
         <!-- Interactive Revenue Report -->
         <div id="audit-report" class="bento-item bento-12" style="display: none; background: #08080a; border: 2px solid var(--hot); padding: 60px; border-radius: var(--radius); box-shadow: 0 50px 120px rgba(255, 69, 58, 0.15);">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 50px;">
+            <div class="flex-stack" style="align-items: flex-start; margin-bottom: 50px;">
                 <div>
                     <div class="badge" style="background: var(--hot); color: #fff; border: none; padding: 8px 16px;">Vulnerability Audit #NEX-02</div>
                     <h2 id="report-title" style="margin-top: 25px; font-size: 2.5rem; letter-spacing: -0.04em;">Revenue Recovery Report</h2>
@@ -931,7 +956,7 @@
                 </div>
             </div>
 
-            <div style="grid-template-columns: repeat(3, 1fr); display: grid; gap: 30px; margin-bottom: 50px;">
+            <div class="grid-3" style="margin-bottom: 50px;">
                 <div style="background: rgba(255,255,255,0.03); padding: 35px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.06);">
                     <div style="font-size: 0.75rem; color: var(--text-tertiary); font-weight: 700; letter-spacing: 1.5px; margin-bottom: 15px;">CONVERSION LEAK</div>
                     <div id="report-leak" style="font-size: 1.8rem; font-weight: 800; color: var(--hot);">CRITICAL</div>
@@ -949,7 +974,7 @@
                 </div>
             </div>
 
-            <div style="background: rgba(48, 209, 88, 0.05); border: 1px solid rgba(48, 209, 88, 0.2); padding: 40px; border-radius: 24px; display: flex; justify-content: space-between; align-items: center;">
+            <div class="flex-stack" style="background: rgba(48, 209, 88, 0.05); border: 1px solid rgba(48, 209, 88, 0.2); padding: 40px; border-radius: 24px;">
                 <div style="max-width: 65%;">
                     <h4 style="color: var(--success); margin-bottom: 10px; font-size: 1.2rem;">Executive Summary</h4>
                     <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.5;">Your current digital infrastructure is actively filtering out high-intent buyers. By implementing 4-second response protocols, your dealership could recover an estimated 3-5 luxury vehicle sales per month.</p>
