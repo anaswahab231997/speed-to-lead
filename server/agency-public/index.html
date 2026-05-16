@@ -149,15 +149,21 @@
         }
 
         .btn-premium {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background: #fff;
             color: #000;
-            padding: 10px 22px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.85rem;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
             text-decoration: none;
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             border: 1px solid #fff;
+            white-space: nowrap;
+            cursor: pointer;
+            gap: 10px;
         }
 
         .btn-premium:hover {
@@ -170,14 +176,20 @@
             background: var(--accent);
             color: #fff;
             border-color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            box-shadow: 0 10px 25px var(--accent-glow);
         }
 
         .btn-accent:hover {
             background: #148aff;
-            box-shadow: 0 0 25px var(--accent-glow);
+            box-shadow: 0 15px 35px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-hot {
+            background: var(--hot);
+            color: #fff;
+            border-color: var(--hot);
+            box-shadow: 0 10px 25px var(--hot-glow);
         }
 
         /* Hero Section */
@@ -573,24 +585,31 @@
         }
 
         .btn-large {
-            padding: 18px;
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 40px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            text-decoration: none;
+            letter-spacing: 1px;
+            border: 1px solid transparent;
         }
 
         .btn-hot {
             background: var(--hot);
             color: #fff;
-            border: none;
+            border-color: var(--hot);
             box-shadow: 0 10px 30px rgba(255, 69, 58, 0.3);
         }
 
         .btn-hot:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 40px rgba(255, 69, 58, 0.5);
+            transform: scale(1.02) translateY(-2px);
+            box-shadow: 0 20px 50px rgba(255, 69, 58, 0.5);
+            background: #ff5e52;
         }
 
         /* Agent HUD */
@@ -886,7 +905,7 @@
                             <label style="font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; color: var(--hot); margin-bottom: 12px; display: block; font-weight: 800;">Dealership Name</label>
                             <input type="text" id="auditDealer" placeholder="e.g. Al Ghandi Auto" required style="background: rgba(255,255,255,0.03); border-radius: 16px; padding: 20px;">
                         </div>
-                        <button type="submit" id="btnAudit" class="btn-large btn-hot" style="margin-top: 35px; width: 100%; height: 70px; font-size: 1.1rem; letter-spacing: 2px;">DISPATCH RECON SWARM ⚡</button>
+                        <button type="submit" id="btnAudit" class="btn-large btn-hot" style="margin-top: 35px; width: 100%;">DISPATCH RECON SWARM ⚡</button>
                     </form>
                 </div>
                 
@@ -944,12 +963,12 @@
                 </div>
             </div>
 
-            <div class="flex-stack" style="background: rgba(48, 209, 88, 0.05); border: 1px solid rgba(48, 209, 88, 0.2); padding: 40px; border-radius: 24px;">
-                <div style="max-width: 65%;">
-                    <h4 style="color: var(--success); margin-bottom: 10px; font-size: 1.2rem;">Executive Summary</h4>
-                    <p style="font-size: 1rem; color: var(--text-secondary); line-height: 1.5;">Your current digital infrastructure is actively filtering out high-intent buyers. By implementing 4-second response protocols, your dealership could recover an estimated 3-5 luxury vehicle sales per month.</p>
+            <div style="background: rgba(48, 209, 88, 0.05); border: 1px solid rgba(48, 209, 88, 0.2); padding: 45px; border-radius: 30px; text-align: center;">
+                <div style="max-width: 800px; margin: 0 auto 35px auto;">
+                    <h4 style="color: var(--success); margin-bottom: 15px; font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em;">EXECUTIVE RECOVERY STRATEGY</h4>
+                    <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.6;">Your current digital infrastructure is actively filtering out high-intent buyers. By implementing 4-second response protocols, your dealership could recover an estimated 3-5 luxury vehicle sales per month.</p>
                 </div>
-                <a href="/ignite" class="btn-premium btn-accent" style="padding: 20px 40px; font-size: 1rem; border-radius: 20px;">Deploy Layla & Recover Revenue ⚡</a>
+                <a href="/ignite" class="btn-premium btn-accent" style="height: 65px; min-width: 320px; font-size: 1.1rem;">Deploy Layla & Recover Revenue ⚡</a>
             </div>
         </div>
     </div>
