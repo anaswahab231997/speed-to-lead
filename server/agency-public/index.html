@@ -407,51 +407,7 @@
             line-height: 1.6;
         }
 
-        /* Fluid Typography & Spacing Optimization */
-        @media (max-width: 1200px) {
-            .hero { gap: 2rem; }
-            .bento-4 { grid-column: span 6; }
-        }
-
-        @media (max-width: 1024px) {
-            header { padding: 0 40px; }
-            nav { display: none; } /* Hide desktop nav on tablet/mobile */
-            .hero { 
-                grid-template-columns: 1fr; 
-                text-align: center; 
-                padding-top: 140px;
-                gap: 3rem;
-            }
-            .hero-content p { margin: 0 auto 2.5rem auto; }
-            .hero-actions { justify-content: center; }
-            .ios-device { transform: none !important; }
-            .bento-6, .bento-8, .bento-12 { grid-column: span 12 !important; }
-            .grid-stack { grid-template-columns: 1fr !important; gap: 2rem !important; }
-        }
-
-        @media (max-width: 768px) {
-            :root { --radius: 20px; }
-            header { padding: 0 20px; height: 64px; }
-            .section-header h2 { font-size: 2.2rem; }
-            .bento-container { gap: 16px; padding: 0 20px; }
-            .bento-item { padding: 30px 20px; }
-            .bento-4 { grid-column: span 12 !important; }
-            
-            /* Audit Section Mobile Fixes */
-            #audit-form-box { padding: 30px 20px !important; }
-            #audit-hud { height: 300px !important; padding: 20px !important; }
-            
-            /* Report Mobile Fixes */
-            #audit-report { padding: 30px 20px !important; }
-            #audit-report > div:first-child { flex-direction: column; gap: 20px; text-align: center; }
-            #audit-report > div:first-child > div:last-child { text-align: center !important; margin: 0 auto; }
-            #audit-report > div:nth-child(2) { grid-template-columns: 1fr !important; }
-            #audit-report > div:last-child { flex-direction: column; gap: 20px; text-align: center; }
-            #audit-report > div:last-child p { max-width: 100% !important; }
-            #recovery-val { font-size: 3.5rem !important; }
-        }
-
-        /* Utility Classes */
+        /* Utility Classes (Base) */
         .grid-stack {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -472,10 +428,46 @@
             gap: 20px;
         }
 
+        /* --- CONSOLIDATED RESPONSIVE SYSTEM --- */
         @media (max-width: 1024px) {
-            .grid-3 { grid-template-columns: 1fr !important; }
-            .flex-stack { flex-direction: column !important; text-align: center !important; }
+            header { padding: 0 40px; }
+            nav { display: none; }
+            .hero, .audit-box { 
+                grid-template-columns: 1fr !important; 
+                text-align: center; 
+                padding-top: 140px;
+                gap: 3rem;
+            }
+            .hero-content p, .hero-actions { margin-left: auto; margin-right: auto; justify-content: center; }
+            .ios-device { transform: none !important; }
+            .bento-4, .bento-6, .bento-8, .bento-12 { grid-column: span 12 !important; }
+            .grid-stack, .grid-3 { grid-template-columns: 1fr !important; gap: 2rem !important; }
+            .flex-stack { flex-direction: column !important; text-align: center !important; gap: 30px !important; }
+            .flex-stack > div { max-width: 100% !important; text-align: center !important; }
+            .agent-grid { grid-template-columns: repeat(3, 1fr); }
         }
+
+        @media (max-width: 768px) {
+            :root { --radius: 20px; }
+            header { padding: 0 20px; height: 64px; }
+            .section-header h2 { font-size: 2.2rem; }
+            .bento-container { gap: 16px; padding: 0 20px; }
+            .bento-item { padding: 30px 20px; overflow: hidden; }
+            .agent-grid { grid-template-columns: repeat(2, 1fr); }
+            
+            #audit-form-box { padding: 30px 20px !important; }
+            #audit-hud { height: 300px !important; padding: 20px !important; }
+            #recovery-val { font-size: 3rem !important; }
+        }
+
+        @media (max-width: 412px) {
+            /* Hardening for S24 and small devices */
+            .hero-content h1 { font-size: 2.4rem !important; }
+            .hero-content p { font-size: 0.95rem !important; }
+            .btn-premium { width: 100%; text-align: center; }
+            .hero-actions { flex-direction: column; width: 100%; }
+        }
+
 
         /* Interaction & Reveal */
         .reveal {
@@ -688,29 +680,7 @@
             font-size: 0.85rem;
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 1024px) {
-            .hero, .audit-box {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .hero-content p, .hero-actions {
-                margin-left: auto;
-                margin-right: auto;
-                justify-content: center;
-            }
-            .bento-4, .bento-6, .bento-8 {
-                grid-column: span 12;
-            }
-            .agent-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            header nav { display: none; }
-            .agent-grid { grid-template-columns: repeat(2, 1fr); }
-        }
+        /* --- END RESPONSIVE SYSTEM --- */
 
         /* Intersection Observer Animations */
         .reveal {
