@@ -508,14 +508,34 @@
 
     <!-- 5.5. AUTONOMOUS SEO ENGINE -->
     <section class="section">
+        <style>
+            .cyber-matrix-container { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 0 40px rgba(16, 185, 129, 0.1); }
+            .hyper-image { width: 100%; height: auto; display: block; filter: contrast(1.1) brightness(0.9); transform: scale(1.05); }
+            .laser-scanner { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--emerald); box-shadow: 0 0 20px var(--emerald), 0 0 40px var(--emerald); opacity: 0.8; animation: scan 3s ease-in-out infinite; z-index: 5; }
+            @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 98%; opacity: 0; } }
+            .data-stream-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(3,3,3,0.1) 0%, rgba(3,3,3,0.8) 100%); z-index: 2; pointer-events: none; }
+            .ticker-tape { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.9); border-top: 1px solid var(--emerald); padding: 8px 0; overflow: hidden; z-index: 10; }
+            .ticker-content { display: inline-block; white-space: nowrap; color: var(--emerald); font-family: monospace; font-size: 0.8rem; animation: ticker 20s linear infinite; text-shadow: 0 0 5px var(--emerald); }
+            @keyframes ticker { 0% { transform: translateX(500px); } 100% { transform: translateX(-100%); } }
+            .floating-node { position: absolute; width: 8px; height: 8px; background: var(--text-main); border-radius: 50%; box-shadow: 0 0 15px var(--text-main); z-index: 6; animation: floatNode 3s ease-in-out infinite alternate; }
+            @keyframes floatNode { 0% { transform: translateY(0px) scale(1); opacity: 0.5; } 100% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
+        </style>
         <div class="container">
             <div class="concierge-grid">
                 <div class="scroll-reveal" style="order: 1;">
-                    <div class="glass-panel" style="padding: 1rem; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.05); position: relative;">
-                        <img src="seo_agent_matrix.png" alt="SEO Agent Matrix Dashboard" style="width: 100%; height: auto; border-radius: 12px; display: block; filter: contrast(1.1) saturate(1.2);">
-                        <div style="position: absolute; bottom: 30px; right: -10px; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--emerald); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                            <div style="font-size: 0.75rem; color: var(--text-silver); text-transform: uppercase;">Node Status</div>
-                            <div style="color: var(--emerald); font-family: monospace; font-weight: bold; font-size: 0.9rem;">Indexing 42 Articles...</div>
+                    <div class="glass-panel" style="padding: 1rem; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.05);">
+                        <div class="cyber-matrix-container">
+                            <img src="hyper_seo_matrix.png" alt="8k Hyperrealistic SEO Agent" class="hyper-image">
+                            <div class="data-stream-overlay"></div>
+                            <div class="laser-scanner"></div>
+                            <div class="floating-node" style="top: 30%; left: 40%; animation-delay: 0s;"></div>
+                            <div class="floating-node" style="top: 60%; left: 70%; animation-delay: 1s;"></div>
+                            <div class="floating-node" style="top: 45%; left: 20%; animation-delay: 2s; background: var(--emerald); box-shadow: 0 0 15px var(--emerald);"></div>
+                            <div class="ticker-tape">
+                                <div class="ticker-content">
+                                    [SYS.LOG] INITIATING DEEP CRAWL... [NODE 04] COMPETITOR KEYWORDS EXTRACTED... [LLM] GENERATING 2,500 WORD ASSET... [CMS] PUSHING TO PRODUCTION... [INDEX] RANKING POSITION #1 SECURED.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
