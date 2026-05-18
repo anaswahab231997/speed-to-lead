@@ -78,6 +78,9 @@ app.get(/^\/dealer-pulse/, (req, res) => {
 })
 
 // 🏠 Explicit Root Route (Prevents "Cannot GET /" on some environments)
+app.get('/terms', (req, res) => {
+  res.sendFile(path.join(__dirname, 'agency-public', 'terms', 'index.html'))
+})
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'agency-public', 'index.html'), (err) => {
     if (err) {

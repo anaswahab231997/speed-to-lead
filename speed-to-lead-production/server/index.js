@@ -22,6 +22,11 @@ app.get('/dealer-pulse*splat', (req, res) => {
   res.sendFile(path.join(__dirname, 'agency-public', 'dealer-pulse', 'index.html'))
 })
 
+// ─── Legal Pages ───────────────────────────────────────────────────────────────
+app.get('/terms', (req, res) => {
+  res.sendFile(path.join(__dirname, 'agency-public', 'terms', 'index.html'))
+})
+
 // ─── Health ───────────────────────────────────────────────────────────────────
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', layla: 'active', timestamp: new Date().toISOString() })
