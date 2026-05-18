@@ -1,1490 +1,691 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexlify — Speed to Lead — The 4-Second Advantage</title>
-  <meta name="description" content="Nexlify Speed to Lead is an elite conversational engine and autonomous reconnaissance system for luxury auto dealers. Disarm digital leaks in 4 seconds flat.">
-  
-  <!-- Premium Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2.1">
+    <meta charset="UTF-8">
+    <!-- Mobile-first viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>AI Nexlify Agencies | Cyber-Luxury Enterprise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #030303;
+            --emerald: #10b981;
+            --emerald-glow: rgba(16, 185, 129, 0.3);
+            --red-bleed: #ef4444;
+            --red-glow: rgba(239, 68, 68, 0.3);
+            --text-main: #ffffff;
+            --text-silver: #a1a1aa;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
 
-  <style>
-    :root {
-      --bg: #020202;
-      --card-bg: rgba(10, 10, 12, 0.75);
-      --border: rgba(255, 255, 255, 0.08);
-      --border-strong: rgba(255, 255, 255, 0.16);
-      --text: #f5f5f7;
-      --text-secondary: rgba(245, 245, 247, 0.65);
-      --text-tertiary: rgba(245, 245, 247, 0.4);
-      --accent: #0a84ff;
-      --accent-glow: rgba(10, 132, 255, 0.25);
-      --hot: #ff453a;
-      --hot-glow: rgba(255, 69, 58, 0.35);
-      --success: #30d158;
-      --success-glow: rgba(48, 209, 88, 0.3);
-      --radius: 24px;
-      --font: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        html { scroll-behavior: smooth; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+        body {
+            background-color: var(--obsidian);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
-      overflow-x: hidden;
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-    }
+        /* Animated Engineering Grid */
+        .grid-overlay {
+            position: fixed;
+            top: -50px; left: 0; width: 100vw; height: calc(100vh + 100px);
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveGrid 20s linear infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
 
-    /* Subtle Grain Texture Overlay */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      opacity: 0.015;
-      pointer-events: none;
-      z-index: 9999;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    }
+        @keyframes moveGrid {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(50px); }
+        }
 
-    /* Apple Parallax Styling */
-    .parallax-section {
-      position: relative;
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    
-    .parallax-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(180deg, rgba(2,2,2,0.95) 0%, rgba(2,2,2,0.6) 50%, rgba(2,2,2,0.95) 100%);
-      z-index: 1;
-    }
+        /* Glassmorphism Utility */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+        }
 
-    /* Radial Backlight Glows */
-    .glow-bg {
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(10, 132, 255, 0.08) 0%, rgba(2, 2, 2, 0) 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .glow-1 { top: -200px; right: -100px; }
-    .glow-2 { top: 800px; left: -200px; background: radial-gradient(circle, rgba(255, 69, 58, 0.05) 0%, rgba(2, 2, 2, 0) 70%); }
+        /* -------------------------------------------
+           BASE STYLES (MOBILE-FIRST)
+           ------------------------------------------- */
+        
+        /* Fluid Typography optimized for smaller screens */
+        h1 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; }
+        h2 { font-size: clamp(1.75rem, 6vw, 3.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; }
+        h3 { font-size: clamp(1.125rem, 3vw, 1.5rem); font-weight: 600; }
+        p { font-size: clamp(1rem, 2vw, 1.125rem); color: var(--text-silver); }
 
-    /* Frosted Glassmorphism Header */
-    header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 74px;
-      background: rgba(2, 2, 2, 0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 40px;
-      z-index: 1000;
-    }
+        .container { width: 100%; margin: 0 auto; padding: 0 1.5rem; }
+        .section { padding: 80px 0; position: relative; }
+        .section-header { margin-bottom: 3rem; max-width: 800px; }
 
-    .logo {
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .logo span {
-      background: linear-gradient(135deg, #fff, rgba(255,255,255,0.4));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .logo-icon {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 10px var(--accent);
-    }
+        /* Buttons */
+        .hero-actions { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
 
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-    }
-    nav a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      transition: color 0.2s;
-    }
-    nav a:hover {
-      color: #ffffff;
-    }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--emerald); color: #000;
+            font-weight: 700; font-size: 1rem;
+            padding: 1rem 1.5rem; border-radius: 4px;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            text-decoration: none; border: none;
+            box-shadow: 0 0 20px var(--emerald-glow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer; position: relative; overflow: hidden;
+            width: 100%; /* Mobile full width by default */
+            text-align: center;
+        }
+        .btn::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .btn:not(.btn-ghost):hover { background: #34d399; box-shadow: 0 0 40px var(--emerald-glow); transform: translateY(-2px); }
+            .btn:hover::after { left: 100%; }
+            input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        }
+        .btn:active { transform: scale(0.98); }
 
-    .btn-header {
-      background: #ffffff;
-      color: #000000;
-      padding: 8px 18px;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 0.85rem;
-      text-decoration: none;
-      border: 1px solid #ffffff;
-      transition: all 0.2s;
-    }
-    .btn-header:hover {
-      background: transparent;
-      color: #ffffff;
-    }
+        .btn-pulse { animation: pulseBtn 2s infinite; }
+        @keyframes pulseBtn { 0% { box-shadow: 0 0 0 0 var(--emerald-glow); } 70% { box-shadow: 0 0 0 20px rgba(16,185,129,0); } 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
 
-    /* Hero Section with Kinetic Typography */
-    .hero-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 160px 40px 80px 40px;
-      display: grid;
-      grid-template-columns: 1fr 0.8fr;
-      gap: 80px;
-      align-items: center;
-      position: relative;
-      z-index: 10;
-    }
+        .btn-ghost {
+            background: transparent; color: var(--text-main);
+            border: 1px solid var(--glass-border); box-shadow: none;
+        }
+        @media (hover: hover) and (pointer: fine) {
+            .btn-ghost:hover { background: rgba(255,255,255,0.05); border-color: var(--text-silver); box-shadow: none; transform: translateY(-2px); }
+        }
+        .btn-ghost::after { display: none; }
+        .btn-sm { padding: 0.75rem 1.25rem; font-size: 0.85rem; width: auto; }
 
-    /* Kinetic Typography Text Block */
-    .kinetic-text {
-      font-size: 4.2rem;
-      font-weight: 900;
-      line-height: 1.05;
-      letter-spacing: -0.05em;
-      margin-bottom: 24px;
-    }
-    
-    .kinetic-word-static {
-      color: #ffffff;
-    }
-    
-    .kinetic-word-dynamic {
-      display: block;
-      background: linear-gradient(135deg, var(--accent) 0%, #a259ff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 40px rgba(10, 132, 255, 0.15);
-      animation: tracking-expand 2s cubic-bezier(0.215, 0.610, 0.355, 1.000) infinite alternate,
-                 neon-pulse-blue 1.8s ease-in-out infinite alternate;
-    }
+        /* Scroll Animation Utility */
+        .scroll-reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
 
-    @keyframes neon-pulse-blue {
-      0% { text-shadow: 0 0 10px rgba(10, 132, 255, 0.4), 0 0 20px rgba(10, 132, 255, 0.2); }
-      100% { text-shadow: 0 0 20px rgba(10, 132, 255, 0.6), 0 0 30px rgba(10, 132, 255, 0.4); }
-    }
+        /* --- 1. HERO --- */
+        .hero { min-height: auto; padding: 120px 0 80px; display: flex; align-items: center; }
+        .hero-content { display: flex; flex-direction: column; gap: 1.5rem; max-width: 1000px; }
+        .hero h1 {
+            background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { max-width: 800px; }
 
-    @keyframes tracking-expand {
-      0% { letter-spacing: -0.05em; }
-      100% { letter-spacing: 0.02em; }
-    }
+        /* --- 2. INTERACTIVE ROI CALCULATOR --- */
+        .calculator-dashboard { padding: 1.5rem; display: flex; flex-direction: column; gap: 2.5rem; }
+        .calc-inputs { display: flex; flex-direction: column; gap: 2rem; }
+        .calc-group { display: flex; flex-direction: column; gap: 1rem; }
+        .calc-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+        .calc-header label { font-size: 0.9rem; }
+        .calc-val { font-family: monospace; font-size: 1.1rem; color: var(--emerald); font-weight: 700; background: rgba(16,185,129,0.1); padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid rgba(16,185,129,0.2); }
+        
+        /* Custom Range Slider */
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; touch-action: pan-y; }
+        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none; height: 32px; width: 32px; border-radius: 50%;
+            background: var(--text-main); cursor: pointer; margin-top: -14px;
+            box-shadow: 0 0 15px rgba(255,255,255,0.5); border: 2px solid var(--obsidian);
+            transition: transform 0.1s;
+        }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: var(--glass-border); border-radius: 2px; }
 
-    .hero-text p {
-      font-size: 1.15rem;
-      color: var(--text-secondary);
-      margin-bottom: 40px;
-      max-width: 500px;
-      font-weight: 400;
-    }
+        .calc-outputs { display: flex; flex-direction: column; gap: 1.5rem; border-top: 1px solid var(--glass-border); padding-top: 2rem; }
+        .output-box { display: flex; flex-direction: column; gap: 0.25rem; }
+        .output-label { font-size: 0.85rem; color: var(--text-silver); text-transform: uppercase; letter-spacing: 0.05em; }
+        .output-val { font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 800; font-family: monospace; line-height: 1; }
+        .val-red { color: var(--red-bleed); text-shadow: 0 0 15px var(--red-glow); }
+        .val-green { color: var(--emerald); text-shadow: 0 0 15px var(--emerald-glow); }
 
-    /* Ultra-Realistic Floating iOS Dashboard Frame */
-    .mockup-container {
-      perspective: 1200px;
-    }
-    .ios-dashboard {
-      background: linear-gradient(145deg, #161618, #070708);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 44px;
-      width: 100%;
-      max-width: 380px;
-      margin: 0 auto;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.85), inset 0 1px 2px rgba(255,255,255,0.15);
-      padding: 26px;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      transform: rotateY(-10deg) rotateX(6deg) translateY(-10px);
-      transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
-      position: relative;
-    }
-    .ios-dashboard:hover {
-      transform: rotateY(0deg) rotateX(0deg) translateY(0);
-    }
+        /* --- 3. MULTI-LINGUAL CONCIERGE --- */
+        .concierge-grid { display: flex; flex-direction: column; gap: 3rem; }
+        .smartphone {
+            width: 100%; max-width: 100%; margin: 0 auto;
+            border-radius: 30px; padding: 0.75rem;
+            background: rgba(255,255,255,0.02); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.05);
+            position: relative;
+        }
+        .phone-screen { background: #0b141a; border-radius: 20px; height: 500px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+        
+        .toggle-container {
+            display: flex; background: rgba(255,255,255,0.1); padding: 4px; border-radius: 100px; margin-bottom: 1.5rem; width: 100%;
+        }
+        .toggle-btn {
+            flex: 1; text-align: center; padding: 0.8rem 0.5rem; border-radius: 100px; cursor: pointer;
+            font-size: 0.85rem; font-weight: 600; color: var(--text-silver); transition: all 0.3s ease;
+            touch-action: manipulation;
+        }
+        .toggle-btn.active { background: var(--text-main); color: var(--obsidian); }
 
-    /* Dynamic Island */
-    .di-header {
-      width: 115px;
-      height: 30px;
-      background: #000;
-      border-radius: 20px;
-      margin: 0 auto 22px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 0.5px solid rgba(255,255,255,0.08);
-    }
-    .di-green-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--success);
-      box-shadow: 0 0 8px var(--success);
-      animation: pulse-green 1.5s infinite;
-    }
+        .chat-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.02"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="1.5" fill="%23ffffff"/></svg>'); }
+        .chat-view.active { opacity: 1; pointer-events: auto; }
+        
+        .msg { max-width: 85%; padding: 0.75rem 1rem; border-radius: 12px; font-size: 0.9rem; }
+        .msg.in { background: #202c33; color: #e9edef; align-self: flex-start; border-top-left-radius: 4px; }
+        .msg.out { background: #005c4b; color: #e9edef; align-self: flex-end; border-top-right-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .msg-sender { font-size: 0.65rem; font-weight: 600; margin-bottom: 0.25rem; color: rgba(255,255,255,0.5); }
+        .msg.out .msg-sender { color: var(--emerald); }
 
-    /* Live Stat Dashboard Cards inside Frame */
-    .mock-stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-    .mock-stat-card {
-      background: rgba(255,255,255,0.03);
-      border: 0.5px solid var(--border);
-      border-radius: 14px;
-      padding: 10px;
-      text-align: center;
-    }
-    .msc-val {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #ffffff;
-    }
-    .msc-lbl {
-      font-size: 0.55rem;
-      color: var(--text-tertiary);
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-top: 2px;
-    }
+        /* --- 4. INVISIBLE ARCHITECTURE --- */
+        .flowchart-container { 
+            width: 100%; overflow-x: auto; padding: 2rem 0; scrollbar-width: none; 
+            -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; 
+        }
+        .flowchart-container::-webkit-scrollbar { display: none; }
+        .flowchart { display: flex; align-items: center; min-width: 800px; padding: 0 1.5rem; }
+        
+        .fc-node {
+            scroll-snap-align: center;
+            padding: 1rem; font-size: 0.85rem; background: var(--glass-bg); border: 1px solid var(--glass-border);
+            backdrop-filter: blur(16px); border-radius: 12px; font-weight: 600; text-align: center;
+            position: relative; z-index: 2; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .fc-node span { display: block; font-size: 0.7rem; color: var(--emerald); text-transform: uppercase; margin-bottom: 0.25rem; }
+        
+        .fc-line {
+            flex-grow: 1; height: 2px; position: relative; z-index: 1; margin: 0 -0.5rem;
+            background: linear-gradient(90deg, rgba(16,185,129,0.1), var(--emerald));
+        }
+        .fc-line::after {
+            content: ''; position: absolute; top: -4px; right: 0; width: 10px; height: 10px;
+            background: var(--emerald); border-radius: 50%; box-shadow: 0 0 15px var(--emerald);
+        }
 
-    /* CPO Revenue Lost Counter */
-    .leak-widget {
-      background: linear-gradient(135deg, rgba(255,69,58,0.15), rgba(28,28,30,0.9));
-      border: 1px solid rgba(255,69,58,0.4);
-      border-radius: var(--radius);
-      padding: 18px;
-      margin-bottom: 16px;
-      box-shadow: 0 10px 20px rgba(255,69,58,0.05);
-    }
-    .leak-widget-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.65rem;
-      font-weight: 800;
-      color: var(--hot);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 4px;
-    }
-    .leak-val {
-      font-size: 1.9rem;
-      font-weight: 900;
-      color: #ffffff;
-      letter-spacing: -0.04em;
-    }
-    .leak-label {
-      font-size: 0.72rem;
-      color: var(--text-secondary);
-      margin-top: 2px;
-    }
+        /* --- 5. INFINITE VISUAL PIPELINE --- */
+        .slider-wrapper { position: relative; width: 100%; height: 350px; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); cursor: ew-resize; -webkit-user-select: none; user-select: none; touch-action: pan-y; }
+        .slider-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; }
+        .img-before { background-image: url('https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=2000&auto=format&fit=crop'); filter: grayscale(80%) contrast(1.2); }
+        .img-after { background-image: url('https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop'); }
+        
+        .slider-foreground { position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden; border-right: 2px solid #fff; }
+        .slider-foreground .img-after { width: 100vw; max-width: 1400px; /* Adjust via JS */ }
+        
+        .slider-overlay { position: absolute; bottom: 1rem; padding: 1rem; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); border-radius: 8px; border-left: 3px solid; font-size: 0.8rem; }
+        .slider-overlay h4 { font-size: 0.9rem; margin-bottom: 4px; }
+        .overlay-red { right: 1rem; border-color: var(--red-bleed); color: var(--red-bleed); max-width: 150px; }
+        .overlay-green { left: 1rem; border-color: var(--emerald); color: var(--emerald); max-width: 150px; }
+        
+        .slider-handle { position: absolute; top: 50%; left: 50%; width: 50px; height: 50px; background: #fff; border-radius: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; color: #000; font-weight: 800; font-size: 0.8rem; box-shadow: 0 0 20px rgba(0,0,0,0.5); pointer-events: none; }
 
-    /* Notification Lead Stack */
-    .mock-notif {
-      background: rgba(28, 28, 30, 0.95);
-      border: 1px solid var(--border-strong);
-      border-radius: 18px;
-      padding: 12px 14px;
-      margin-bottom: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    .mock-notif-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.65rem;
-      color: var(--text-tertiary);
-      margin-bottom: 4px;
-    }
-    .mock-notif-title {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: #ffffff;
-    }
-    .mock-notif-desc {
-      font-size: 0.72rem;
-      color: var(--text-secondary);
-      margin-top: 2px;
-    }
-    .mock-notif-badge {
-      background: rgba(255,69,58,0.15);
-      color: var(--hot);
-      padding: 2px 6px;
-      border-radius: 8px;
-      font-size: 0.58rem;
-      font-weight: 700;
-    }
+        /* --- 6. DEPLOYMENT PROTOCOL --- */
+        .timeline-grid { display: flex; flex-direction: column; gap: 3rem; position: relative; margin-top: 3rem; }
+        .timeline-grid::before {
+            content: ''; position: absolute; left: 25px; top: 0; bottom: 0; width: 2px;
+            background: linear-gradient(180deg, var(--emerald), rgba(16,185,129,0.1)); z-index: 0; transform: translateX(-50%);
+        }
+        .phase-card { position: relative; padding-left: 4rem; z-index: 1; }
+        .phase-card::before {
+            content: ''; position: absolute; left: 25px; top: 32px; width: 16px; height: 16px;
+            background: var(--obsidian); border: 2px solid var(--emerald); border-radius: 50%;
+            box-shadow: 0 0 15px var(--emerald); transform: translate(-50%, -50%);
+        }
+        .phase-content { padding: 1.5rem; }
+        .phase-content h3 { color: var(--emerald); margin-bottom: 1.5rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .phase-content ul { list-style: none; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+        .phase-content ul li { position: relative; padding-left: 1.5rem; font-size: 0.9rem; color: var(--text-silver); }
+        .phase-content ul li::before { content: '>'; position: absolute; left: 0; color: var(--emerald); font-family: monospace; font-weight: bold; }
+        .outcome-text { font-size: 0.9rem; font-style: italic; border-top: 1px solid var(--glass-border); padding-top: 1rem; color: var(--text-main); }
 
-    /* Bento Grid Feature Section */
-    .section-title {
-      text-align: center;
-      max-width: 800px;
-      margin: 80px auto 40px auto;
-      padding: 0 20px;
-    }
-    .section-title h2 {
-      font-size: 2.8rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 12px;
-    }
-    .section-title p {
-      color: var(--text-secondary);
-      font-size: 1.05rem;
-    }
+        /* --- 7. FOOTER & COMPLIANCE --- */
+        .footer-cta { text-align: center; padding: 80px 0; background: radial-gradient(circle at center, rgba(16,185,129,0.05) 0%, transparent 70%); border-top: 1px solid var(--glass-border); }
+        .footer-cta p { max-width: 600px; margin: 0 auto 2rem; }
 
-    .bento-grid {
-      max-width: 1200px;
-      margin: 0 auto 80px auto;
-      padding: 0 40px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
+        .legal-footer { background: #000; padding: 4rem 0 2rem; font-size: 0.85rem; color: var(--text-silver); border-top: 1px solid var(--glass-border); }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; margin-bottom: 3rem; }
+        .footer-col h4 { color: var(--text-main); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem; }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+        .footer-col ul a { color: var(--text-silver); text-decoration: none; transition: color 0.3s; }
+        .footer-col ul a:hover { color: var(--emerald); }
+        
+        .ip-disclaimer {
+            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+            padding: 1.5rem; border-radius: 8px; font-family: monospace; font-size: 0.75rem;
+            line-height: 1.6; color: rgba(255,255,255,0.6);
+        }
+        .ip-disclaimer strong { color: var(--text-main); }
+        .copyright { text-align: center; border-top: 1px solid var(--glass-border); padding-top: 2rem; font-size: 0.8rem; }
 
-    .bento-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 40px;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      overflow: hidden;
-      position: relative;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.8s forwards;
-    }
+        /* --- COOKIE BANNER --- */
+        .cookie-banner {
+            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            width: calc(100% - 3rem); max-width: 800px; padding: 1.5rem; z-index: 1000;
+            display: flex; flex-direction: column; gap: 1rem;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+        }
+        .cookie-banner.hidden { opacity: 0; pointer-events: none; transform: translate(-50%, 20px); }
+        .cookie-banner p { font-size: 0.85rem; margin: 0; line-height: 1.5; color: var(--text-main); }
+        .cookie-actions { display: flex; gap: 1rem; width: 100%; }
 
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .bento-card:hover {
-      border-color: var(--border-strong);
-      transform: translateY(-4px);
-    }
+        /* -------------------------------------------
+           TABLET STYLES (min-width: 768px)
+           ------------------------------------------- */
+        @media (min-width: 768px) {
+            .section { padding: 120px 0; }
+            .hero { min-height: 80vh; padding: 150px 0 100px; }
+            
+            .hero-actions { flex-direction: row; width: auto; }
+            .btn { width: auto; padding: 1.25rem 2.5rem; font-size: 1.125rem; }
+            
+            .calculator-dashboard { padding: 3rem; }
+            
+            .concierge-grid { align-items: center; }
+            .smartphone { max-width: 400px; padding: 1rem; border-radius: 40px; }
+            .phone-screen { height: 600px; border-radius: 30px; }
+            
+            .slider-wrapper { height: 500px; border-radius: 16px; }
+            .slider-overlay { bottom: 2rem; padding: 1.5rem; font-size: 0.9rem; border-left: 4px solid; }
+            .slider-overlay h4 { font-size: 1rem; margin-bottom: 8px; }
+            .overlay-red { right: 2rem; max-width: none; }
+            .overlay-green { left: 2rem; max-width: none; }
+            .slider-handle { width: 48px; height: 48px; font-size: 1rem; }
 
-    .bento-wide {
-      grid-column: span 2;
-    }
+            .timeline-grid { gap: 4rem; }
+            .phase-content { padding: 2rem; }
+            
+            .footer-grid { grid-template-columns: 1fr 1fr 2fr; }
+            .cookie-banner { flex-direction: row; align-items: center; justify-content: space-between; }
+            .cookie-actions { width: auto; }
+        }
 
-    .bento-card h3 {
-      font-size: 1.7rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 12px;
-      color: #ffffff;
-    }
-    .bento-card p {
-      color: var(--text-secondary);
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
+        /* -------------------------------------------
+           LAPTOP / DESKTOP STYLES (min-width: 1024px)
+           ------------------------------------------- */
+        @media (min-width: 1024px) {
+            .container { max-width: 1400px; padding: 0 5%; }
+            .section { padding: 150px 0; }
+            .section-header { margin-bottom: 4rem; }
+            
+            .hero { min-height: 100vh; padding-top: 80px; }
+            
+            .calculator-dashboard { flex-direction: row; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; padding: 4rem; }
+            .calc-outputs { border-top: none; border-left: 1px solid var(--glass-border); padding-top: 0; padding-left: 4rem; justify-content: center; }
+            .output-val { text-shadow: 0 0 20px var(--red-glow); }
+            .val-green { text-shadow: 0 0 20px var(--emerald-glow); }
+            
+            .concierge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+            .toggle-container { max-width: 300px; margin-bottom: 2rem; }
+            .chat-view { padding: 1.5rem; gap: 1rem; }
+            .msg { font-size: 0.95rem; }
+            
+            .flowchart-container { padding: 4rem 0; }
+            .fc-node { padding: 1.5rem 2rem; font-size: 1rem; }
+            .fc-line { margin: 0 -1rem; }
+            
+            .slider-wrapper { height: 600px; }
+            
+            .timeline-grid::before { left: 50%; transform: translateX(-50%); }
+            .phase-card { width: 50%; padding-left: 0; }
+            .phase-card:nth-child(odd) { padding-right: 4rem; text-align: right; }
+            .phase-card:nth-child(even) { left: 50%; padding-left: 4rem; }
+            .phase-card:nth-child(odd)::before { left: 100%; top: 32px; transform: translate(50%, -50%); }
+            .phase-card:nth-child(even)::before { left: 0; top: 32px; transform: translate(-50%, -50%); }
+            
+            .phase-card:nth-child(odd) ul { align-items: flex-end; }
+            .phase-card:nth-child(odd) ul li { padding-left: 0; padding-right: 1.5rem; }
+            .phase-card:nth-child(odd) ul li::before { left: auto; right: 0; content: '<'; }
 
-    .card-meta {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Agentic Transparency & Parallel Processing OS */
-    .orchestration-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-      width: 100%;
-    }
-    @media (min-width: 768px) {
-      .orchestration-grid {
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 40px;
-      }
-    }
-
-    .agent-transparency-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 16px;
-      margin-top: 30px;
-    }
-    
-    .agent-trans-card {
-      background: rgba(255,255,255,0.015);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-      transition: all 0.2s;
-    }
-    .agent-trans-card:hover {
-      background: rgba(255,255,255,0.03);
-      border-color: var(--border-strong);
-    }
-
-    .agent-trans-icon {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      display: inline-block;
-      position: relative;
-    }
-    
-    .agent-pulse-ring {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      border: 2px solid var(--success);
-      opacity: 0;
-      animation: agent-ring-pulse 2s infinite;
-    }
-    
-    @keyframes agent-ring-pulse {
-      0% { width: 32px; height: 32px; opacity: 0.8; }
-      100% { width: 56px; height: 56px; opacity: 0; }
-    }
-
-    .agent-trans-name {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 4px;
-    }
-    .agent-trans-status {
-      font-size: 0.65rem;
-      color: var(--success);
-      font-weight: 600;
-    }
-
-    /* System Load Monitor Card */
-    .sys-load-box {
-      border-left: 1px solid var(--border);
-      padding-left: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    
-    .sys-load-bar-bg {
-      width: 100%; height: 6px;
-      background: rgba(255,255,255,0.05);
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 10px 0;
-    }
-    .sys-load-bar-fill {
-      height: 100%; width: 28%;
-      background: var(--accent);
-      border-radius: 10px;
-      transition: width 1s ease;
-    }
-
-    /* Silent Leak Diagnostic Prominent Form */
-    .diagnostic-cta-banner {
-      background: linear-gradient(135deg, rgba(255, 69, 58, 0.08) 0%, rgba(2, 2, 2, 0.95) 100%);
-      border: 1px solid rgba(255, 69, 58, 0.25);
-      border-radius: var(--radius);
-      padding: 40px;
-      max-width: 1120px;
-      margin: 60px auto;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 40px;
-      align-items: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-    }
-    
-    .diag-text h3 {
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 8px;
-    }
-    .diag-text p {
-      font-size: 0.92rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    /* Elegant Audit Inputs */
-    .audit-form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .audit-input {
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px 18px;
-      color: #ffffff;
-      font-size: 0.92rem;
-      font-family: var(--font);
-      transition: all 0.2s;
-    }
-    .audit-input:focus {
-      outline: none;
-      border-color: var(--hot);
-      background: rgba(255,255,255,0.07);
-    }
-    .audit-btn {
-      width: 100%;
-      background: var(--hot);
-      color: #ffffff;
-      border: none;
-      border-radius: 30px;
-      padding: 14px;
-      font-weight: 700;
-      font-size: 0.92rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      box-shadow: 0 0 15px rgba(255,69,58,0.25);
-    }
-    .audit-btn:hover {
-      background: #ff544a;
-      box-shadow: 0 0 25px rgba(255,69,58,0.45);
-    }
-
-    /* Human-in-the-Loop Philosopy Section */
-    .human-enablement-banner {
-      background: linear-gradient(135deg, rgba(10, 132, 255, 0.08) 0%, rgba(10, 10, 12, 0.95) 100%);
-      border: 1px solid rgba(10, 132, 255, 0.25);
-      border-radius: var(--radius);
-      padding: 50px;
-      max-width: 1120px;
-      margin: 80px auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 50px;
-      align-items: center;
-    }
-    
-    .human-text h2 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-      margin-bottom: 16px;
-      line-height: 1.1;
-    }
-    
-    .human-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
-    }
-    
-    .human-card {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-    }
-    .human-card h4 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 8px;
-    }
-    .human-card p {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    /* Live Proof Banner */
-    .live-proof-banner {
-      background: radial-gradient(ellipse at center, rgba(10, 132, 255, 0.12) 0%, rgba(2, 2, 2, 0.8) 100%);
-      border: 1px solid rgba(10, 132, 255, 0.2);
-      border-radius: var(--radius);
-      padding: 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1120px;
-      margin: 0 auto 60px auto;
-    }
-    .proof-val {
-      font-size: 2.6rem;
-      font-weight: 900;
-      color: #ffffff;
-      letter-spacing: -0.04em;
-    }
-
-    /* General Apply Form Section */
-    .bento-forms-container {
-      max-width: 1200px;
-      margin: 0 auto 100px auto;
-      padding: 0 40px;
-    }
-
-    .form-box {
-      background: rgba(10, 10, 12, 0.85);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 40px;
-      max-width: 600px;
-      margin: 0 auto;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: 0 25px 50px rgba(0,0,0,0.7);
-    }
-
-    .form-box h3 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
-    }
-    .form-box p {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: var(--text-tertiary);
-      letter-spacing: 0.05em;
-      margin-bottom: 6px;
-    }
-    .form-group input {
-      width: 100%;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px 16px;
-      color: #ffffff;
-      font-size: 0.9rem;
-      font-family: var(--font);
-      transition: all 0.2s;
-    }
-    .form-group input:focus {
-      outline: none;
-      border-color: var(--accent);
-      background: rgba(255,255,255,0.06);
-    }
-
-    .btn-submit {
-      width: 100%;
-      background: #ffffff;
-      color: #000000;
-      border: none;
-      border-radius: 30px;
-      padding: 14px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-    .btn-submit:hover {
-      background: var(--accent);
-      color: #ffffff;
-      box-shadow: 0 0 20px rgba(10, 132, 255, 0.4);
-    }
-    .btn-submit:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    /* Keyframe Animations */
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); opacity: 0.3; }
-      50% { transform: scale(1.15); opacity: 1; }
-    }
-    @keyframes pulse-green {
-      0%, 100% { box-shadow: 0 0 4px var(--success-glow); }
-      50% { box-shadow: 0 0 12px var(--success); }
-    }
-
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--hot);
-      box-shadow: 0 0 8px var(--hot-glow);
-      animation: heartbeat 2s ease infinite;
-    }
-
-    /* Loading animation for report builder */
-    .loader-wheel {
-      border: 3px solid rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      border-top: 3px solid var(--hot);
-      width: 24px;
-      height: 24px;
-      animation: spin 1s linear infinite;
-      display: inline-block;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px;
-      text-align: center;
-      font-size: 0.78rem;
-      color: var(--text-tertiary);
-      letter-spacing: 0.02em;
-    }
-
-    @media (max-width: 900px) {
-      .hero-container, .bento-grid, .diagnostic-cta-banner, .human-enablement-banner {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-      .hero-container {
-        padding: 120px 20px 60px 20px;
-      }
-      .mockup-container {
-        display: none;
-      }
-      .bento-card {
-        grid-column: span 1 !important;
-      }
-      .agent-transparency-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      .sys-load-box {
-        border-left: none;
-        padding-left: 0;
-        margin-top: 20px;
-      }
-    }
-    @media (max-width: 768px) {
-      header {
-        height: 64px;
-        padding: 0 16px;
-      }
-      .logo {
-        font-size: 1.05rem;
-        gap: 6px;
-      }
-      .logo span {
-        display: inline-block;
-        transform: translateY(0.5px);
-      }
-      .logo-icon {
-        width: 10px;
-        height: 10px;
-      }
-      nav {
-        gap: 12px;
-      }
-      nav a:not([href*="wa.me"]) {
-        display: none !important;
-      }
-      nav a[href*="wa.me"] {
-        padding: 6px 12px !important;
-        font-size: 0.75rem !important;
-      }
-      nav a[href*="wa.me"] span {
-        font-size: 0.75rem !important;
-      }
-      .bento-card {
-        padding: 24px 16px !important;
-      }
-    }
-    @media (max-width: 600px) {
-      .agent-transparency-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-      }
-    }
-    @media (max-width: 400px) {
-      .agent-transparency-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-      }
-    }
-
-    /* iOS Installation Prompt Styles */
-    .ios-prompt-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 100000; opacity: 0; pointer-events: none;
-      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .ios-prompt-overlay.active {
-      opacity: 1; pointer-events: auto;
-    }
-    .ios-prompt-sheet {
-      background: rgba(18, 18, 20, 0.85);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 28px; padding: 28px; width: 90%; max-width: 400px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
-      text-align: center; transform: scale(0.9);
-      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .ios-prompt-overlay.active .ios-prompt-sheet {
-      transform: scale(1);
-    }
-    .ios-prompt-icon {
-      width: 58px; height: 58px; border-radius: 14px;
-      background: linear-gradient(135deg, var(--accent), #a259ff);
-      margin: 0 auto 16px auto;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem; box-shadow: 0 0 15px var(--accent-glow);
-    }
-    .ios-prompt-title {
-      font-size: 1.35rem; font-weight: 800; color: #ffffff;
-      letter-spacing: -0.02em; margin-bottom: 8px;
-    }
-    .ios-prompt-desc {
-      font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 24px;
-      line-height: 1.45;
-    }
-    .ios-prompt-steps {
-      display: flex; flex-direction: column; gap: 14px; text-align: left;
-      margin-bottom: 24px; background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.05); border-radius: 16px;
-      padding: 16px;
-    }
-    .step-item {
-      display: flex; gap: 12px; align-items: flex-start;
-    }
-    .step-num {
-      background: rgba(255,255,255,0.06); width: 22px; height: 22px;
-      border-radius: 50%; display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 700; color: var(--accent); flex-shrink: 0;
-    }
-    .step-text {
-      font-size: 0.82rem; color: var(--text-secondary); line-height: 1.4;
-    }
-    .step-text strong {
-      color: #ffffff;
-    }
-    .ios-prompt-close {
-      background: #ffffff; color: #000000; border: none;
-      border-radius: 30px; padding: 12px 28px; font-weight: 700;
-      font-size: 0.88rem; width: 100%; cursor: pointer;
-      transition: all 0.2s;
-    }
-    .ios-prompt-close:hover {
-      background: var(--accent); color: #ffffff;
-    }
-  </style>
+            .footer-cta { padding: 150px 0; }
+            .footer-cta p { margin: 0 auto 3rem; }
+        }
+    </style>
 </head>
 <body>
+    <div class="grid-overlay"></div>
 
-  <!-- Header -->
-  <header>
-    <div class="logo">
-      <div class="logo-icon"></div>
-      <span>AI NEXLIFY</span>
-    </div>
-    <nav>
-      <a href="#problem">The Challenge</a>
-      <a href="#solution">The Solution</a>
-      <a href="#human-loop">Our Philosophy</a>
-      <a href="https://wa.me/917439379780" class="btn-header" style="background: var(--accent); color: #ffffff; border-color: var(--accent); display: flex; align-items: center; gap: 6px; padding: 8px 16px;">
-        <span>Deploy Layla - Instant ROI</span> ⚡
-      </a>
-    </nav>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero-container">
-    <div class="hero-text">
-      <div class="kinetic-text" style="font-size: 3.8rem;">
-        <span class="kinetic-word-static" style="display: block; line-height: 1.1;">While Your Competitors Sleep,</span>
-        <span class="kinetic-word-dynamic" style="display: inline-block; line-height: 1.1;">We Close in 4 Seconds.</span>
-      </div>
-      <p style="font-weight: 600; color: #ffffff; font-size: 1.4rem; margin-bottom: 12px; letter-spacing: -0.02em;">AI Nexlify Agencies — Speed to Lead™</p>
-      <p>Luxury buyers bounce in 15 seconds if ignored. Layla is your elite 24/7 digital closer. She engages, qualifies, and schedules viewings for high-net-worth clients in 4 seconds flat—perfectly synchronized with your premium inventory.</p>
-      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-        <a href="#audit" class="btn-header" style="padding: 14px 28px; font-size: 0.95rem; background: var(--hot); color: #fff; border-color: var(--hot);">Find Your Leak</a>
-        <a href="https://wa.me/917439379780" class="btn-header" style="padding: 14px 28px; font-size: 0.95rem; background: var(--accent); color: #ffffff; border-color: var(--accent); display: flex; align-items: center; gap: 8px;">
-          <span>Deploy Layla - Instant ROI</span> ⚡
-        </a>
-      </div>
-    </div>
-    
-    <div class="mockup-container">
-      <div class="ios-dashboard">
-        <!-- Dynamic Island -->
-        <div class="di-header">
-          <div style="display: flex; align-items: center; gap: 6px;">
-            <div class="di-green-dot"></div>
-            <span style="font-size: 0.52rem; color: #fff; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;">Layla Core Active</span>
-          </div>
+    <!-- COOKIE BANNER -->
+    <div class="cookie-banner glass-panel" id="cookie-banner">
+        <p>We use proprietary tracking and AI analytics to optimize enterprise experiences. By continuing, you agree to our data protocols.</p>
+        <div class="cookie-actions">
+            <button class="btn btn-sm" onclick="dismissCookie()">Accept All</button>
+            <button class="btn btn-ghost btn-sm" onclick="dismissCookie()">Essential Only</button>
         </div>
+    </div>
 
-        <!-- Real-time WhatsApp Mockup -->
-        <div class="whatsapp-mockup" style="background: #0f0f10; border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 14px; margin-bottom: 14px; text-align: left;">
-          <div style="display: flex; align-items: center; gap: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; margin-bottom: 10px;">
-            <div style="background: var(--accent); color: #fff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">L</div>
-            <div>
-              <div style="font-size: 0.75rem; font-weight: 700; color: #fff;">Layla (Senior closer)</div>
-              <div style="font-size: 0.55rem; color: var(--success); display: flex; align-items: center; gap: 3px;">
-                <span style="width: 5px; height: 5px; background: var(--success); border-radius: 50%; display: inline-block;"></span> Active Now
-              </div>
+    <!-- 1. THE HERO -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content scroll-reveal">
+                <h1>Stop Losing High-Ticket Deals While You Sleep.</h1>
+                <p>We build automated digital infrastructure for high-friction global businesses. We replace slow, human-led sales floors with custom AI Concierges that qualify leads, generate content, and close deals 24/7.</p>
+                <div class="hero-actions">
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anas@ainexlifyagencies.com&su=Custom%20Architecture%20Review%20Inquiry" target="_blank" rel="noopener noreferrer" class="btn btn-pulse">Schedule a Custom Architecture Review</a>
+                    <a href="#deployment" class="btn btn-ghost">View Our Deployment Protocol</a>
+                </div>
             </div>
-          </div>
-          <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px 12px 12px 0px; padding: 8px 10px; font-size: 0.72rem; align-self: flex-start; max-width: 85%; color: var(--text-secondary);">
-              Do you have a 2024 Nissan Patrol in stock?
+        </div>
+    </section>
+
+    <!-- 2. INTERACTIVE ROI CALCULATOR -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <h2>The Bleed Engine</h2>
+                <p>Stop guessing how much your response times are costing you. Calculate your exact operational bleed.</p>
             </div>
-            <div style="background: var(--accent); border-radius: 12px 12px 0px 12px; padding: 8px 10px; font-size: 0.72rem; align-self: flex-end; max-width: 85%; color: #fff; line-height: 1.4;">
-              We have a pristine Pearl White 2024 Nissan Patrol V8 in the showroom available for AED 215,000. Want to schedule a VIP viewing tomorrow morning?
+            <div class="glass-panel calculator-dashboard scroll-reveal">
+                <div class="calc-inputs">
+                    <div class="calc-group">
+                        <div class="calc-header">
+                            <label>Monthly Inquiries (Leads)</label>
+                            <span class="calc-val" id="val-leads">1,000</span>
+                        </div>
+                        <input type="range" id="slider-leads" min="100" max="10000" step="100" value="1000">
+                    </div>
+                    <div class="calc-group">
+                        <div class="calc-header">
+                            <label>Average Ticket Size (₹)</label>
+                            <span class="calc-val" id="val-ticket">₹ 50,000</span>
+                        </div>
+                        <input type="range" id="slider-ticket" min="5000" max="500000" step="5000" value="50000">
+                    </div>
+                </div>
+                <div class="calc-outputs">
+                    <div class="output-box">
+                        <div class="output-label">Monthly Bleed (30% drop-off)</div>
+                        <div class="output-val val-red" id="out-bleed">₹ 1,50,00,000</div>
+                    </div>
+                    <div class="output-box" style="margin-top: 1rem;">
+                        <div class="output-label">AI Recovered Revenue</div>
+                        <div class="output-val val-green" id="out-recovered">₹ 1,50,00,000</div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
+    </section>
 
-        <!-- Revenue Lost Card -->
-        <div class="leak-widget" style="margin-bottom: 0;">
-          <div class="leak-widget-header">
-            <span>🚨 Live Showroom Leak Tracker</span>
-            <div class="pulse-dot"></div>
-          </div>
-          <div class="leak-val" id="loss-counter">AED 135,000</div>
-          <div class="leak-label">unanswered leads loss today</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Luxury Showroom Cinematic Render with Parallax Scrolling -->
-  <section class="parallax-section" style="background-image: url('showroom_handshake_deal.png?v=2.1'); min-height: 450px;">
-    <div class="parallax-overlay"></div>
-    <div style="position: relative; z-index: 10; text-align: center; max-width: 700px; padding: 0 20px;">
-      <h2 style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 16px;">Luxury Deserves Instant Response</h2>
-      <p style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">High-net-worth clients shopping for AED 150,000+ luxury vehicles bounce within 15 seconds. If your response time isn't instant, your commission belongs to a competitor.</p>
-    </div>
-  </section>
-
-  <!-- The Problem Section (Grid) -->
-  <section id="problem" class="section-title" style="margin-top: 100px;">
-    <div class="card-meta" style="color: var(--hot);">The Epidemic</div>
-    <h2>The Silent Revenue Leak</h2>
-    <p>Luxury dealers lose up to 45% of high-intent commissions because of latency and resource drain.</p>
-  </section>
-
-  <section class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 80px;">
-    <div class="bento-card" style="border-color: rgba(255, 69, 58, 0.15);">
-      <div>
-        <div class="card-meta" style="color: var(--hot);">Leak 01</div>
-        <h3>The Tire-Kicker Swamp</h3>
-        <p>Human sales managers spend 80% of their working hours answering basic questions (specifications, dimensions, colors) for low-intent buyers, completely draining focus from actual hot deals.</p>
-      </div>
-    </div>
-    <div class="bento-card" style="border-color: rgba(255, 69, 58, 0.15);">
-      <div>
-        <div class="card-meta" style="color: var(--hot);">Leak 02</div>
-        <h3>The 15-Second Competitor Jump</h3>
-        <p>Luxury buyers enquire at 3 dealerships simultaneously. If your response time is 5 minutes, your competitor who responds in 30 seconds has already booked the viewings and won the relationship.</p>
-      </div>
-    </div>
-    <div class="bento-card" style="border-color: rgba(255, 69, 58, 0.15);">
-      <div>
-        <div class="card-meta" style="color: var(--hot);">Leak 03</div>
-        <h3>The Off-Hours Black Hole</h3>
-        <p>62% of high-ticket luxury vehicle web enquiries occur after 8:00 PM when your showroom doors are locked and sales staff are offline. These leads freeze and bounce by morning.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- The Solution Section -->
-  <section id="solution" class="section-title">
-    <div class="card-meta">The Antidote</div>
-    <h2>Meet Layla: Your Relentless, 24/7 Digital Closer</h2>
-    <p>A sophisticated luxury car expert representing your dealership live on WhatsApp around the clock.</p>
-  </section>
-
-  <section class="bento-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-bottom: 100px;">
-    <div class="bento-card" style="border-color: rgba(10, 132, 255, 0.15);">
-      <div>
-        <div class="card-meta">Capability 01</div>
-        <h3>White-Glove Conversational Allure</h3>
-        <p>Layla speaks with high-end confidence, absolute brevity, and impeccable luxury automobile knowledge. Zero robotic lines. Zero clunky AI jargon. She represents your showroom with pure premium class.</p>
-      </div>
-    </div>
-    <div class="bento-card" style="border-color: rgba(10, 132, 255, 0.15);">
-      <div>
-        <div class="card-meta">Capability 02</div>
-        <h3>1:1 Live Inventory Synchronicity</h3>
-        <p>Directly synchronized with your dealership stock sheets. Layla knows every car's exact condition, color, trim, mileage, and showroom pricing (e.g. confidently offering our Pearl White 2024 Nissan Patrol for AED 215,000) instantly.</p>
-      </div>
-    </div>
-    <div class="bento-card" style="border-color: rgba(10, 132, 255, 0.15);">
-      <div>
-        <div class="card-meta">Capability 03</div>
-        <h3>VIP Hand-off to Human Closer</h3>
-        <p>Once Layla qualifies the budget, verifies trade-in interest, and scores the lead hot (score 8/10+), she delivers a clean, silver-platter dossier to your human sales floor manager to sign the final contract.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Human-in-the-Loop Philosophy Section (NOT A REPLACEMENT. AN ACCELERATOR) -->
-  <section id="human-loop" class="human-enablement-banner">
-    <div class="human-text">
-      <div class="card-meta">🛡️ Human Core Philosophy</div>
-      <h2>Not a replacement.<br>Your ultimate sales accelerator.</h2>
-      <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.6; margin-top: 14px;">
-        Nexlify Speed to Lead™ is <strong>not built to replace your human sales agents or dealership owners</strong>. We believe high-ticket luxury vehicle transactions always require a human's emotional touch, relationship-building skills, and negotiation artistry.
-        <br><br>
-        Instead, Speed to Lead™ acts as an intelligent, relentless 24/7 filter. It manages 95% of initial cold queries, collects vehicle interest specifications, analyzes trade-in values, and filters out low-intent tire-kickers.
-      </p>
-    </div>
-    
-    <div class="human-grid">
-      <div class="human-card">
-        <h4>1. Tire-Kicker Filter</h4>
-        <p>The system interacts with hundreds of cold web queries, answering specification and pricing questions instantly. Low-intent leads are auto-dismissed without taking a single second of your team's time.</p>
-      </div>
-      <div class="human-card" style="border-color: rgba(48, 209, 88, 0.25);">
-        <h4>2. Silver-Platter Routing 🟢</h4>
-        <p>When a lead demonstrates high purchase intent (intent score 8/8), they are instantly routed directly to your human sales agent or owner on WhatsApp and Airtable CRM. Your human closers step in only when the client is at their absolute hottest.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Prominent "Silent Leak" Diagnostic Audit Tool -->
-  <section id="audit" class="diagnostic-cta-banner">
-    <div class="diag-text">
-      <h3>DISCOVER YOUR HIDDEN REVENUE LEAK</h3>
-      <p>Enter your website URL. Our autonomous NEX-02 Recon Specialist Agent will perform a live diagnostic check (PageSpeed index, WhatsApp routing, social links) and compile your custom Luxury PDF Vulnerability Report in real-time.</p>
-    </div>
-    
-    <div class="audit-form-group">
-      <form id="auditForm" style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
-        <input type="text" id="auditUrl" class="audit-input" placeholder="e.g. www.rmamotors.com" required>
-        <input type="text" id="auditName" class="audit-input" placeholder="Dealership Name" required>
-        <input type="tel" id="auditPhone" class="audit-input" placeholder="WhatsApp (e.g. +971501234567)" required>
-        <input type="email" id="auditEmail" class="audit-input" placeholder="Email Address for PDF delivery" required>
-        <button type="submit" class="audit-btn" id="btnAudit">
-          DISPATCH NEX-02 SWARM ⚡
-        </button>
-      </form>
-      
-      <!-- Real-Time Report Generation Showroom Widget -->
-      <div id="auditStatusBox" style="display: none; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-top: 10px;">
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
-          <div class="loader-wheel" id="auditLoader"></div>
-          <span id="auditStatusTitle" style="font-size: 0.9rem; font-weight: 700; color: #ffffff;">DISPATCHING AUDIT SENSORS...</span>
-        </div>
-        <p id="auditStatusText" style="font-size: 0.78rem; color: var(--text-secondary); line-height: 1.4;"></p>
-        <div id="pdfDownloadSection" style="display: none; margin-top: 14px; border-top: 0.5px solid var(--border); paddingTop: 14px;">
-          <a href="#" id="pdfDownloadBtn" class="audit-btn" style="background: var(--success); text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px;" download>
-            📥 DOWNLOAD LUXURY PDF REPORT
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Live Proof -->
-  <div class="live-proof-banner">
-    <div>
-      <div class="card-meta">🟢 Live Operations</div>
-      <div style="font-size: 1.1rem; font-weight: 700;">Revenue Saved This Month</div>
-    </div>
-    <div class="proof-val" id="recovered-counter">AED 3,450,150</div>
-  </div>
-
-  <!-- Agentic Transparency Section -->
-  <section id="features" class="section-title">
-    <h2>NEXLIFY OS: AGENTIC TRANSPARENCY</h2>
-    <p>Five specialized autonomous agents executing in parallel. Absolute workflow transparency, 24/7/365.</p>
-  </section>
-
-  <div class="bento-grid" style="grid-template-columns: 1fr; max-width: 1120px; margin-bottom: 60px;">
-    <div class="bento-card bento-wide" style="padding: 36px;">
-      <div class="orchestration-grid">
-        <div>
-          <div class="card-meta">🤖 Multi-Agent Orchestration</div>
-          <h3>Parallel Agent Node Health</h3>
-          <p>Unlike simple bots, Nexlify OS coordinates five distinct autonomous processes to capture, verify, nurture, and log high-ticket commission targets simultaneously.</p>
-          
-          <div class="agent-transparency-grid">
-            <div class="agent-trans-card">
-              <div class="agent-trans-icon">🛡️<div class="agent-pulse-ring"></div></div>
-              <div class="agent-trans-name">Sentinel</div>
-              <div class="agent-trans-status">🟢 Live</div>
-            </div>
-            <div class="agent-trans-card">
-              <div class="agent-trans-icon">⚡<div class="agent-pulse-ring"></div></div>
-              <div class="agent-trans-name">Layla</div>
-              <div class="agent-trans-status">🟢 Live</div>
-            </div>
-            <div class="agent-trans-card">
-              <div class="agent-trans-icon">🕵️<div class="agent-pulse-ring"></div></div>
-              <div class="agent-trans-name">Recon</div>
-              <div class="agent-trans-status">🟢 Live</div>
-            </div>
-            <div class="agent-trans-card">
-              <div class="agent-trans-icon">📧<div class="agent-pulse-ring"></div></div>
-              <div class="agent-trans-name">Triage</div>
-              <div class="agent-trans-status">🟢 Live</div>
-            </div>
-            <div class="agent-trans-card">
-              <div class="agent-trans-icon">📊<div class="agent-pulse-ring"></div></div>
-              <div class="agent-trans-name">Intel</div>
-              <div class="agent-trans-status">🟢 Live</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="sys-load-box">
-          <div class="card-meta">⚡ Real-Time Load</div>
-          <h3 style="font-size: 2.2rem; font-weight: 800; color: #ffffff;" id="sysLoadVal">24.5%</h3>
-          <div class="sys-load-bar-bg">
-            <div class="sys-load-bar-fill" id="sysLoadFill"></div>
-          </div>
-          <div style="font-size: 0.72rem; color: var(--text-tertiary); display: flex; justify-content: space-between;">
-            <span>Threads Active: 5</span>
-            <span>Uptime: 100%</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tech HUD Cinematic Render with Parallax Scrolling -->
-  <section class="parallax-section" style="background-image: url('dealership_team_metrics.png?v=2.1'); min-height: 40vh;">
-    <div class="parallax-overlay"></div>
-    <div style="position: relative; z-index: 10; text-align: center; max-width: 650px; padding: 0 20px;">
-      <h2 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px;">Data-Driven Revenue Recovery</h2>
-      <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.5;">Every single interaction is automatically captured, scored, and securely synced with Airtable database tbly7iJArFklrO8yd, ensuring full pipeline traceability.</p>
-    </div>
-  </section>
-
-  <!-- Complete Speed to Lead Selling Points bento grid -->
-  <section class="section-title">
-    <h2>Why Luxury Dealers Deploy Speed to Lead™</h2>
-    <p>Constructed specifically for UAE high-ticket auto retailers who expect nothing less than absolute perfection.</p>
-  </section>
-
-  <section class="bento-grid" style="margin-bottom: 100px;">
-    <div class="bento-card">
-      <div>
-        <div class="card-meta">⚡ The 4-Second Closing Closer</div>
-        <h3>Relentless Conversational Intel</h3>
-        <p>Answering clients within 5 minutes multiplies your close rate by 8x. Layla, our central conversational core, answers in 4 seconds flat. She is pre-trained on complex luxury automotive catalogs, financing rates, and custom vehicle specs, answering prospects instantly on WhatsApp.</p>
-      </div>
-    </div>
-
-    <div class="bento-card">
-      <div>
-        <div class="card-meta">📈 High-Performance ROI</div>
-        <h3>Tire-Kicker Elimination</h3>
-        <p>Your elite human sales agents should only speak to buyers who have money in hand. Speed to Lead™ qualifies inbound web and social traffic, filtering out tire-kickers and low-value requests automatically. When a qualified lead emerges, your sales team receives a structured brief.</p>
-      </div>
-    </div>
-
-    <div class="bento-card">
-      <div>
-        <div class="card-meta">📦 Automated Inventory Synchronization</div>
-        <h3>Live Catalog Mapping</h3>
-        <p>No manual input required. The system links directly with your active stock sheets, auto-synchronizing car models, model years, specs, colors, condition grades, and prices. If a car is sold or reserved, Layla automatically updates her conversational database.</p>
-      </div>
-    </div>
-
-    <div class="bento-card">
-      <div>
-        <div class="card-meta">🕵️ Swarm Reconnaissance Diagnostics</div>
-        <h3>Digital Vulnerability Scanning</h3>
-        <p>Nexlify's Recon swarm sweeps your dealer channels, diagnosing broken chat buttons, loading latencies, un-optimized SEO tags, and unreplied reviews. Any failure instantly alerts the system to dispatch automated follow-ups.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Forms Section: Membership application -->
-  <section id="apply" class="bento-forms-container" style="margin-top: 80px;">
-    <div class="form-box">
-      <h3>Apply for Nexlify Membership</h3>
-      <p>Secure your exclusive dealership license. We setup and deploy your custom instance of Nexlify OS with a hardened, local inventory database.</p>
-      
-      <form id="applyForm">
-        <div class="form-group">
-          <label for="applyName">Contact Name</label>
-          <input type="text" id="applyName" placeholder="e.g. Salim Al Maktoum" required>
-        </div>
-        <div class="form-group">
-          <label for="applyPhone">WhatsApp Number</label>
-          <input type="tel" id="applyPhone" placeholder="e.g. +971509998888" required>
-        </div>
-        <div class="form-group">
-          <label for="applyEmail">Email Address</label>
-          <input type="email" id="applyEmail" placeholder="e.g. info@yourdealership.ae" required>
-        </div>
-        <div class="form-group">
-          <label for="applyDealer">Dealership Name</label>
-          <input type="text" id="applyDealer" placeholder="e.g. Al Aram Used Cars" required>
-        </div>
-        <button type="submit" class="btn-submit" id="btnApply" style="background: var(--accent); color: #fff;">
-          <span>APPLY FOR MEMBERSHIP</span> 🔒
-        </button>
-      </form>
-      <div id="applyStatus" style="margin-top: 12px; font-size: 0.85rem; display: none;"></div>
-    </div>
-  </section>
-
-  <!-- iOS Installation Instructions Sheet overlay -->
-  <div class="ios-prompt-overlay" id="iosPrompt">
-    <div class="ios-prompt-sheet">
-      <div class="ios-prompt-icon">⚡</div>
-      <h3 class="ios-prompt-title">Install Speed to Lead™</h3>
-      <p class="ios-prompt-desc">Add our premium showrooms tracker and closer dashboard to your phone for a native, zero-latency iOS experience.</p>
-      
-      <div class="ios-prompt-steps">
-        <div class="step-item">
-          <div class="step-num">1</div>
-          <div class="step-text">Tap the <strong>Share</strong> icon in Safari (at the bottom toolbar).</div>
-        </div>
-        <div class="step-item">
-          <div class="step-num">2</div>
-          <div class="step-text">Scroll down the menu and choose <strong>'Add to Home Screen'</strong>.</div>
-        </div>
-        <div class="step-item">
-          <div class="step-num">3</div>
-          <div class="step-text">Tap <strong>'Add'</strong> in the top-right to lock your AI Showroom live link.</div>
-        </div>
-      </div>
-      
-      <button class="ios-prompt-close" id="btnClosePrompt">UNDERSTOOD</button>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2026 Nexlify AI Agencies. Powered by Nexlify Agent OS. All Rights Secured.</p>
-    <p style="margin-top: 6px; opacity: 0.5;">Ainexlifyagencies.com — Luxury Auto SaaS Command Headquarters</p>
-  </footer>
-
-  <script>
-    // Live Tickers
-    let lossVal = 135000;
-    let recVal = 3450150;
-
-    setInterval(() => {
-      // Revenue Lost counter ticking live
-      lossVal += Math.floor(Math.random() * 25) + 5;
-      document.getElementById('loss-counter').innerText = 'AED ' + lossVal.toLocaleString();
-
-      // Revenue Recovered counter ticking live
-      recVal += Math.floor(Math.random() * 45) + 15;
-      document.getElementById('recovered-counter').innerText = 'AED ' + recVal.toLocaleString();
-    }, 3000);
-
-    // Dynamic System Load Ticker
-    setInterval(() => {
-      const load = (20 + Math.random() * 15).toFixed(1);
-      document.getElementById('sysLoadVal').innerText = load + '%';
-      document.getElementById('sysLoadFill').style.width = load + '%';
-    }, 4000);
-
-    // Form Submissions - NEX-02 Recon Audit with Polling Loop
-    document.getElementById('auditForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('btnAudit');
-      const statusBox = document.getElementById('auditStatusBox');
-      const loader = document.getElementById('auditLoader');
-      const statusTitle = document.getElementById('auditStatusTitle');
-      const statusText = document.getElementById('auditStatusText');
-      const downloadSection = document.getElementById('pdfDownloadSection');
-      const downloadBtn = document.getElementById('pdfDownloadBtn');
-      
-      const url = document.getElementById('auditUrl').value;
-      const name = document.getElementById('auditName').value;
-      const phone = document.getElementById('auditPhone').value;
-      const email = document.getElementById('auditEmail').value;
-
-      btn.disabled = true;
-      btn.innerHTML = 'NEX-02 SPECIALIST ACTIVE... 🟢';
-      
-      statusBox.style.display = 'block';
-      statusTitle.innerText = 'DISPATCHING AUDIT SENSORS...';
-      statusText.innerText = 'NEX-02 Instance spawned. Attempting connection to ' + url + '. Measuring response performance, testing WhatsApp accessibility, and analyzing reputation parameters...';
-      downloadSection.style.display = 'none';
-
-      try {
-        const res = await fetch('/api/agency/audit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url, name, phone, email })
-        });
-        const data = await res.json();
-        
-        if (data.success && data.pdfUrl) {
-          const pdfUrl = data.pdfUrl;
-          
-          // Poll for PDF generation in the background
-          statusTitle.innerText = 'NEX-02 SWARM IN PROGRESS...';
-          statusText.innerText = 'Audit parameters successfully ingested. Simulating PageSpeed Lighthouse test, measuring TTFB, scanning homepage anchor links. Generating customized luxury PDF audit report... (May take 5-15 seconds)';
-          
-          let checkCount = 0;
-          const pollInterval = setInterval(async () => {
-            checkCount++;
-            
-            // Check if file exists via a HEAD request
-            try {
-              const fileCheck = await fetch(pdfUrl, { method: 'HEAD' });
-              if (fileCheck.status === 200) {
-                // PDF generated successfully!
-                clearInterval(pollInterval);
-                loader.style.display = 'none';
-                statusTitle.innerText = 'AUDIT COMPLETE. CLEAN SUMMARY COMPILED. ✅';
-                statusText.innerText = '🟢 NEX-02 specialist completed the live scan of ' + url + '. The diagnostic metrics have been verified. An email with the attached PDF report has been dispatched to ' + email + ' and logged in tbly7iJArFklrO8yd.';
+    <!-- 3. MULTI-LINGUAL CONCIERGE -->
+    <section class="section">
+        <div class="container">
+            <div class="concierge-grid">
+                <div class="scroll-reveal">
+                    <h2>Speaks Your Customer's Exact Language.</h2>
+                    <p style="margin-top: 1.5rem; margin-bottom: 2rem;">Whether your buyers speak corporate English or street-smart Hinglish, we train the neural network to match their exact bargaining style.</p>
+                    
+                    <div class="toggle-container">
+                        <div class="toggle-btn active" onclick="switchLanguage('en')">Global English</div>
+                        <div class="toggle-btn" onclick="switchLanguage('hi')">Native Hinglish</div>
+                    </div>
+                </div>
                 
-                downloadBtn.href = pdfUrl;
-                downloadSection.style.display = 'block';
-                btn.innerHTML = 'AUDIT COMPLETED ✅';
-              } else if (checkCount > 30) {
-                // Timeout after 30 checks (30 seconds)
-                clearInterval(pollInterval);
-                loader.style.display = 'none';
-                statusTitle.innerText = 'AUDIT ARCHIVED SUCCESFULLY';
-                statusText.innerText = '🟢 The audit completed. Your PDF report is queued for final compilation. It has been processed for email delivery to ' + email + '. Check your inbox shortly!';
-                btn.disabled = false;
-                btn.innerHTML = 'RUN ANOTHER AUDIT ⚡';
-              }
-            } catch (err) {
-              // Ignore network check errors during polling
-            }
-          }, 1000);
-          
-        } else {
-          throw new Error(data.error || 'Swarm dispatch failed.');
+                <div class="smartphone scroll-reveal">
+                    <div class="phone-screen">
+                        <!-- English View -->
+                        <div class="chat-view active" id="chat-en">
+                            <div class="msg in">
+                                <div class="msg-sender">Customer</div>
+                                Looking for a 4BHK investment property.
+                            </div>
+                            <div class="msg out">
+                                <div class="msg-sender">AI Nexlify Concierge</div>
+                                Hello! The 4BHKs offer a 60/40 plan projecting a 6.5% yield. Shall I send the brochure?
+                            </div>
+                        </div>
+                        <!-- Hinglish View -->
+                        <div class="chat-view" id="chat-hi">
+                            <div class="msg in">
+                                <div class="msg-sender">Customer</div>
+                                Bhaiya, yeh premium bridal lehenga available hai?
+                            </div>
+                            <div class="msg out">
+                                <div class="msg-sender">AI Nexlify Concierge</div>
+                                Haan ji, bilkul in-stock hai! Agar budget tight hai, toh ek similar semi-silk variant dikha doon jo ₹5,000 sasta padega?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. INVISIBLE ARCHITECTURE -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <h2>The Invisible Architecture</h2>
+                <p>We engineer a closed-loop digital ecosystem that connects your inventory directly to your customer's wallet.</p>
+            </div>
+            <div class="flowchart-container scroll-reveal">
+                <div class="flowchart">
+                    <div class="fc-node"><span>2:00 AM</span>Customer Message</div>
+                    <div class="fc-line"></div>
+                    <div class="fc-node"><span>Neural Engine</span>AI Analyzes Intent</div>
+                    <div class="fc-line"></div>
+                    <div class="fc-node"><span>Database</span>AI Retrieves Data</div>
+                    <div class="fc-line"></div>
+                    <div class="fc-node"><span>Gateway</span>AI Captures Payment</div>
+                    <div class="fc-line"></div>
+                    <div class="fc-node"><span>Sync</span>CRM Updated</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. INFINITE VISUAL PIPELINE -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <h2>The Infinite Visual Pipeline</h2>
+                <p>Send a raw smartphone photo, get 50 hyper-realistic composites overnight.</p>
+            </div>
+            <div class="slider-wrapper scroll-reveal" id="visual-slider">
+                <div class="slider-img img-before">
+                    <div class="slider-overlay overlay-red">
+                        <h4>HUMAN STUDIO</h4>
+                        Cost: ₹25,000<br>Wait Time: 3 Weeks
+                    </div>
+                </div>
+                <div class="slider-foreground" id="slider-foreground">
+                    <div class="slider-img img-after" id="img-after-el">
+                        <div class="slider-overlay overlay-green">
+                            <h4>AI VISION ENGINE</h4>
+                            Cost: Included<br>Wait Time: 45 Seconds
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-handle" id="slider-handle">&lt;&gt;</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. NEW: DEPLOYMENT PROTOCOL -->
+    <section id="deployment" class="section">
+        <div class="container">
+            <div class="section-header scroll-reveal">
+                <h2>The Deployment Protocol</h2>
+                <p>We do not install software; we architect an entirely new operational ecosystem. To ensure absolute precision and zero disruption to your revenue, deployment is divided into two strict phases.</p>
+            </div>
+            <div class="timeline-grid scroll-reveal">
+                <!-- Phase 1 -->
+                <div class="phase-card">
+                    <div class="glass-panel phase-content">
+                        <h3>Phase 1: The Foundation <span style="font-size:0.8rem; color:var(--text-silver); font-weight:normal;">(Days 1 - 30)</span></h3>
+                        <ul>
+                            <li>UI/UX Front-End Optimization</li>
+                            <li>Custom LoRA Avatar Training & ComfyUI Pipeline Setup</li>
+                            <li>"Zoya/Layla" LLM Concierge Conversational Training (Hinglish/Global)</li>
+                            <li>Structural Technical SEO Foundation</li>
+                        </ul>
+                        <div class="outcome-text">
+                            "Your digital storefront is rebuilt, and the AI neural networks are trained specifically on your catalog and brand voice."
+                        </div>
+                    </div>
+                </div>
+                <!-- Phase 2 -->
+                <div class="phase-card">
+                    <div class="glass-panel phase-content">
+                        <h3>Phase 2: The Engine <span style="font-size:0.8rem; color:var(--text-silver); font-weight:normal;">(Ongoing Retainer)</span></h3>
+                        <ul>
+                            <li>24/7 WhatsApp AI Sales Concierge Hosting</li>
+                            <li>40-50 Daily Hyper-Realistic Visual Assets Generated</li>
+                            <li>2x Weekly Automated SEO Blog Publications</li>
+                            <li>Full Server & API Infrastructure Maintenance</li>
+                        </ul>
+                        <div class="outcome-text">
+                            "Your digital department runs on autopilot. We handle the cloud hosting, API tokens, and continuous model iterations."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FOOTER CTA & LEGAL -->
+    <section class="section footer-cta">
+        <div class="container scroll-reveal">
+            <h2>Engineered for High-Friction Industries</h2>
+            <p>Real Estate • Fine Jewelry • Luxury Fashion<br><br>We do not offer off-the-shelf pricing. Every deployment is a custom build.</p>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anas@ainexlifyagencies.com&su=Request%20a%20Custom%20Proposal" target="_blank" rel="noopener noreferrer" class="btn btn-pulse">Request a Custom Proposal</a>
+        </div>
+    </section>
+
+    <footer class="legal-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Deployment Protocol</a></li>
+                        <li><a href="#">Visual Pipeline</a></li>
+                        <li><a href="#">Bleed Engine</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Data Processing Agreement (DPA)</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <div class="ip-disclaimer">
+                        <strong>Intellectual Property Notice:</strong><br><br>
+                        All underlying conversational logic, prompt engineering, LoRA (Low-Rank Adaptation) models, and node-based generative pipelines deployed for clients remain the exclusive intellectual property of AI Nexlify Agencies.<br><br>
+                        Clients retain full ownership of the generated output assets and customer data.
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 AI Nexlify Agencies. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- EMBEDDED JAVASCRIPT -->
+    <script>
+        // 0. Cookie Banner Dismissal
+        function dismissCookie() {
+            document.getElementById('cookie-banner').classList.add('hidden');
         }
-      } catch (err) {
-        loader.style.display = 'none';
-        statusTitle.innerText = 'NEX-02 RECON SWARM OFFLINE';
-        statusText.innerText = '🔴 Audit failed: ' + err.message + '. Please ensure your inputs are valid and try again.';
-        btn.disabled = false;
-        btn.innerHTML = 'DISPATCH NEX-02 SWARM ⚡';
-      }
-    });
 
-    // Membership Application Submission
-    document.getElementById('applyForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('btnApply');
-      const status = document.getElementById('applyStatus');
+        // 1. Scroll Animations (IntersectionObserver)
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 
-      const name = document.getElementById('applyName').value;
-      const phone = document.getElementById('applyPhone').value;
-      const email = document.getElementById('applyEmail').value;
-      const website = document.getElementById('applyDealer').value;
+        // 2. Interactive ROI Calculator Logic
+        const sliderLeads = document.getElementById('slider-leads');
+        const sliderTicket = document.getElementById('slider-ticket');
+        const valLeads = document.getElementById('val-leads');
+        const valTicket = document.getElementById('val-ticket');
+        const outBleed = document.getElementById('out-bleed');
+        const outRecovered = document.getElementById('out-recovered');
 
-      btn.disabled = true;
-      btn.innerHTML = 'TRANSMITTING APPLICATION... 🔒';
-      status.style.display = 'block';
-      status.style.color = 'var(--accent)';
-      status.innerText = 'Securing transmission tunnel. Syncing to Leads table tbly7iJArFklrO8yd...';
-
-      try {
-        const res = await fetch('/api/agency/apply', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, phone, email, website })
-        });
-        const data = await res.json();
-        if (data.success) {
-          status.style.color = 'var(--success)';
-          status.innerText = '🔒 APPLICATION TRANSMITTED SECURELY! A confirmation WhatsApp message has been dispatched to ' + phone + '. One of our core system architects will contact you for deployment verification.';
-          btn.innerHTML = 'APPLICATION SECURED ✅';
-        } else {
-          throw new Error(data.error);
+        function formatINR(num) {
+            return '₹ ' + num.toLocaleString('en-IN');
         }
-      } catch (err) {
-      status.style.color = 'var(--hot)';
-      status.innerText = '🔴 Transmission failed: ' + err.message + '. Please retry.';
-      btn.disabled = false;
-      btn.innerHTML = 'APPLY FOR MEMBERSHIP 🔒';
-    }
-  });
 
-  // iOS App prompt handlers
-  const prompt = document.getElementById('iosPrompt');
-  const btnNav = document.getElementById('btnNavInstall');
-  const btnHero = document.getElementById('btnHeroInstall');
-  const btnClose = document.getElementById('btnClosePrompt');
+        function calculateROI() {
+            const leads = parseInt(sliderLeads.value);
+            const ticket = parseInt(sliderTicket.value);
+            
+            // Update Labels
+            valLeads.textContent = leads.toLocaleString('en-IN');
+            valTicket.textContent = formatINR(ticket);
+            
+            // Calculate: Revenue = leads * ticket. Bleed = 30% of Revenue.
+            const totalRevenue = leads * ticket;
+            const bleed = totalRevenue * 0.30;
+            
+            // Update Outputs
+            outBleed.textContent = formatINR(bleed);
+            outRecovered.textContent = formatINR(bleed); // Recovered is theoretically the bleed amount
+        }
 
-  const openPrompt = (e) => {
-    e.preventDefault();
-    prompt.classList.add('active');
-  };
+        sliderLeads.addEventListener('input', calculateROI);
+        sliderTicket.addEventListener('input', calculateROI);
+        calculateROI(); // Init
 
-  const closePrompt = () => {
-    prompt.classList.remove('active');
-  };
+        // 3. Multi-Lingual Toggle Logic
+        function switchLanguage(lang) {
+            // Update Buttons
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update Chat Views
+            document.querySelectorAll('.chat-view').forEach(view => view.classList.remove('active'));
+            document.getElementById('chat-' + lang).classList.add('active');
+        }
 
-  if (btnNav) btnNav.addEventListener('click', openPrompt);
-  if (btnHero) btnHero.addEventListener('click', openPrompt);
-  if (btnClose) btnClose.addEventListener('click', closePrompt);
-  prompt.addEventListener('click', (e) => {
-    if (e.target === prompt) closePrompt();
-  });
-</script>
+        // 4. Infinite Visual Pipeline Slider Logic
+        const sliderContainer = document.getElementById('visual-slider');
+        const sliderForeground = document.getElementById('slider-foreground');
+        const sliderHandle = document.getElementById('slider-handle');
+        const imgAfterEl = document.getElementById('img-after-el');
+        
+        let isDragging = false;
+
+        function updateSliderSizes() {
+            imgAfterEl.style.width = sliderContainer.offsetWidth + 'px';
+        }
+        window.addEventListener('resize', updateSliderSizes);
+        updateSliderSizes();
+
+        function moveVisualSlider(e) {
+            if (!isDragging) return;
+            const rect = sliderContainer.getBoundingClientRect();
+            let x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+            let percent = (x / rect.width) * 100;
+            if (percent < 0) percent = 0;
+            if (percent > 100) percent = 100;
+            
+            sliderForeground.style.width = percent + '%';
+            sliderHandle.style.left = percent + '%';
+        }
+
+        sliderContainer.addEventListener('mousedown', () => isDragging = true);
+        sliderContainer.addEventListener('touchstart', () => isDragging = true, {passive: true});
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('mousemove', moveVisualSlider);
+        window.addEventListener('touchmove', moveVisualSlider, {passive: true});
+    </script>
 </body>
 </html>
