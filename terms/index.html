@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Terms of Service | AI Nexlify Agencies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #030303;
+            --emerald: #10b981;
+            --text-main: #ffffff;
+            --text-ash: #d1d5db;
+            --text-silver: #71717a;
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(12px);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--obsidian);
+            color: var(--text-ash);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.75;
+            position: relative;
+        }
+
+        /* Technical Grid Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Layout Architecture */
+        .legal-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* Navigation Menu */
+        .nav-container {
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .nav-menu {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nav-header {
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--emerald);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-silver);
+            font-size: 0.85rem;
+            transition: color 0.3s ease;
+            display: block;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--emerald);
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            padding-bottom: 80px;
+        }
+
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--text-main);
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+
+        .meta {
+            color: var(--emerald);
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px; /* Offset for smooth scroll */
+        }
+
+        h2 {
+            color: var(--text-main);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        /* IP Glassmorphic Modules */
+        .glass-module {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .ip-accent-line {
+            border-left: 3px solid var(--emerald);
+            padding-left: 20px;
+        }
+
+        .glass-module h3 {
+            color: var(--text-main);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .highlight-text {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .contact-footer {
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+            color: var(--text-silver);
+        }
+
+        .contact-footer a {
+            color: var(--emerald);
+            text-decoration: none;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 991px) {
+            .mobile-toggle {
+                display: block;
+            }
+            .nav-links {
+                max-height: 0;
+                opacity: 0;
+                overflow: hidden;
+            }
+            .nav-links.open {
+                max-height: 500px; /* Arbitrary large height */
+                opacity: 1;
+                margin-top: 10px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .legal-wrapper {
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 80px 40px;
+                gap: 60px;
+            }
+            .nav-container {
+                width: 300px;
+                flex-shrink: 0;
+                top: 80px;
+            }
+            .nav-header {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+            .nav-links {
+                gap: 15px;
+            }
+            .nav-links a {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+
+    <div class="legal-wrapper">
+        <!-- Interactive Navigator -->
+        <aside class="nav-container">
+            <nav class="nav-menu">
+                <div class="nav-header">
+                    Legal Index
+                    <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Toggle Menu">☰</button>
+                </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#sec-1" class="active">1. Acceptance of Terms</a></li>
+                    <li><a href="#sec-2">2. Description of Services</a></li>
+                    <li><a href="#sec-3">3. Intellectual Property</a></li>
+                    <li><a href="#sec-4">4. Fees & Payments</a></li>
+                    <li><a href="#sec-5">5. Third-Party Dependencies</a></li>
+                    <li><a href="#sec-6">6. Limitation of Liability</a></li>
+                    <li><a href="#sec-7">7. Termination</a></li>
+                    <li><a href="#sec-8">8. Confidentiality</a></li>
+                    <li><a href="#sec-9">9. Governing Law</a></li>
+                    <li><a href="#sec-10">10. Amendments</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Content Architecture -->
+        <main class="content-area">
+            <header>
+                <h1>TERMS OF SERVICE</h1>
+                <p class="meta">AI Nexlify Agencies | Effective Date: May 18, 2026</p>
+            </header>
+
+            <article>
+                <section id="sec-1">
+                    <h2>Section 1: Acceptance of Terms</h2>
+                    <p>By deploying the AI Nexlify Agencies ("Agency") infrastructure, utilizing our proprietary LoRA models, or executing a custom Service Agreement, you agree to these Terms of Service. These terms constitute a legally binding enterprise agreement between you and the Agency. If you do not agree with any part of these terms, you are prohibited from utilizing our autonomous architectures.</p>
+                </section>
+
+                <section id="sec-2">
+                    <h2>Section 2: Description of Services</h2>
+                    <p>The Agency engineers and provisions bespoke AI infrastructure, including but not limited to conversational AI sales concierges (Zoya/Layla), dynamic image generation pipelines, and SEO matrices. These are deployed as an ongoing operational ecosystem, not traditional software as a service (SaaS) or a one-time product delivery. The ecosystem is continuously monitored and updated.</p>
+                </section>
+
+                <section id="sec-3">
+                    <h2>Section 3: Intellectual Property & Ownership</h2>
+                    
+                    <div class="glass-module ip-accent-line">
+                        <h3>3.1 The Engine (Agency Property)</h3>
+                        <p>We do not sell our core technology; we license its operational capacity. All underlying conversational logic, prompt engineering, LoRA (Low-Rank Adaptation) models, autonomous workflows, node-based generative pipelines, and proprietary algorithms <span class="highlight-text">remain the exclusive intellectual property of AI Nexlify Agencies</span>. The Client is granted a revoked-at-will, non-exclusive license to utilize the Engine solely for the intended operational deployment.</p>
+                    </div>
+
+                    <div class="glass-module">
+                        <h3>3.2 The Output (Client License)</h3>
+                        <p>Clients retain full ownership of the generated output assets, finalized marketing media, and captured customer data (leads). The Agency claims no ownership over the final deliverables produced by the Engine on your behalf. All data processed by the Engine remains strictly siloed and belongs to your respective corporate entity.</p>
+                    </div>
+                </section>
+
+                <section id="sec-4">
+                    <h2>Section 4: Fees, Retainers, and Payments</h2>
+                    <p>Deployment fees and ongoing structural retainers are strictly non-refundable due to the high-friction custom architecture required for each environment. Failure to remit payment within 7 days of invoicing will result in the immediate suspension of the neural engine. Reactivation requires full settlement of arrears plus a standard reactivation fee.</p>
+                </section>
+
+                <section id="sec-5">
+                    <h2>Section 5: Third-Party Dependencies & UPTIME</h2>
+                    <p>Our sovereign-switch architecture integrates with critical third-party APIs (OpenAI, Anthropic, Meta, Stripe). While we architect for maximum resilience and implement failover redundancies, the Agency is not liable for upstream outages from these global providers. Uptime guarantees apply exclusively to the infrastructure directly managed and hosted by AI Nexlify Agencies.</p>
+                </section>
+
+                <section id="sec-6">
+                    <h2>Section 6: AI Behavior & Limitation of Liability</h2>
+                    <p>While our models undergo rigorous fine-tuning, generative AI is inherently probabilistic. The Agency is not liable for edge-case conversational anomalies, hallucinations, or unintended outputs interacting with live traffic. It is the Client's responsibility to periodically monitor the Sentinel Dashboard. Under no circumstances shall the Agency's liability exceed the total amount paid by the Client in the three (3) months preceding the claim.</p>
+                </section>
+
+                <section id="sec-7">
+                    <h2>Section 7: Termination and the "Kill Switch"</h2>
+                    <p>The Agency reserves the right to execute an operational "Kill Switch," immediately terminating all services and API relays, in the event of a breach of contract, unauthorized reverse engineering attempts, hostile use of our AI infrastructure, or failure to pay. The Client may terminate the agreement with 30 days written notice; however, any upfront deployment fees remain non-refundable.</p>
+                </section>
+
+                <section id="sec-8">
+                    <h2>Section 8: Confidentiality</h2>
+                    <p>Both parties agree to strict confidentiality regarding the structural mechanics of the deployment, API keys, strategic pricing agreements, and proprietary customer data. Disclosing the technical specificities of the AI Nexlify pipeline to direct competitors or unauthorized third parties constitutes a material breach of this agreement.</p>
+                </section>
+
+                <section id="sec-9">
+                    <h2>Section 9: Governing Law and Jurisdiction</h2>
+                    <p>This agreement shall be governed by and construed in accordance with the laws of the jurisdiction specified in your master service agreement. Any disputes arising from this deployment protocol shall be resolved exclusively through binding corporate arbitration.</p>
+                </section>
+
+                <section id="sec-10">
+                    <h2>Section 10: Amendments</h2>
+                    <p>The Agency reserves the right to update these Terms of Service to reflect shifts in AI compliance law, platform policies (e.g., Meta WhatsApp limits), or internal architecture upgrades. Continued use of the ecosystem after modifications constitutes explicit acceptance of the updated protocols.</p>
+                </section>
+            </article>
+
+            <div class="contact-footer">
+                For legal inquiries, architecture audits, or DPA requests: <a href="mailto:legal@ainexlifyagencies.com">legal@ainexlifyagencies.com</a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('open');
+        }
+
+        // Active State Scroll Spy
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                // Add offset to trigger active state accurately
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href').includes(current) && current !== '') {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Close mobile menu on click
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (window.innerWidth < 992) {
+                    document.getElementById('navLinks').classList.remove('open');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
