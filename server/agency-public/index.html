@@ -2,737 +2,903 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Mobile-first viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>AI Nexlify Agencies | Cyber-Luxury Enterprise</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Nexlify Agencies | Global Enterprise Infrastructure</title>
     <style>
+        /* CSS Variables */
         :root {
-            --obsidian: #030303;
+            --bg-obsidian: #030303;
+            --text-white: #ffffff;
+            --text-muted: #d4d4d8;
             --emerald: #10b981;
-            --emerald-glow: rgba(16, 185, 129, 0.3);
-            --red-bleed: #ef4444;
-            --red-glow: rgba(239, 68, 68, 0.3);
-            --text-main: #ffffff;
-            --text-silver: #a1a1aa;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --bleed-red: #ef4444;
+            --font-stack: 'Inter', system-ui, -apple-system, sans-serif;
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-fallback: rgba(20, 20, 25, 0.9);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-        html { scroll-behavior: smooth; }
+        /* Reset & Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
-            background-color: var(--obsidian);
-            color: var(--text-main);
-            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-obsidian);
+            color: var(--text-white);
+            font-family: var(--font-stack);
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Animated Engineering Grid */
-        .grid-overlay {
-            position: fixed;
-            top: -50px; left: 0; width: 100vw; height: calc(100vh + 100px);
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveGrid 20s linear infinite;
-            pointer-events: none;
-            z-index: -1;
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        @keyframes moveGrid {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(50px); }
-        }
-
-        /* Glassmorphism Utility */
-        .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-        }
-
-        /* -------------------------------------------
-           BASE STYLES (MOBILE-FIRST)
-           ------------------------------------------- */
-        
-        /* Fluid Typography optimized for smaller screens */
-        h1 { font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; }
-        h2 { font-size: clamp(1.75rem, 6vw, 3.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; }
-        h3 { font-size: clamp(1.125rem, 3vw, 1.5rem); font-weight: 600; }
-        p { font-size: clamp(1rem, 2vw, 1.125rem); color: var(--text-silver); }
-
-        .container { width: 100%; margin: 0 auto; padding: 0 1.5rem; }
-        .section { padding: 80px 0; position: relative; }
-        .section-header { margin-bottom: 3rem; max-width: 800px; }
-
-        /* Buttons */
-        .hero-actions { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
-
-        .btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            background: var(--emerald); color: #000;
-            font-weight: 700; font-size: 1rem;
-            padding: 1rem 1.5rem; border-radius: 4px;
-            text-transform: uppercase; letter-spacing: 0.05em;
-            text-decoration: none; border: none;
-            box-shadow: 0 0 20px var(--emerald-glow);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer; position: relative; overflow: hidden;
-            width: 100%; /* Mobile full width by default */
-            text-align: center;
-        }
-        .btn::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s ease;
-        }
-        @media (hover: hover) and (pointer: fine) {
-            .btn:not(.btn-ghost):hover { background: #34d399; box-shadow: 0 0 40px var(--emerald-glow); transform: translateY(-2px); }
-            .btn:hover::after { left: 100%; }
-            input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
-        }
-        .btn:active { transform: scale(0.98); }
-
-        .btn-pulse { animation: pulseBtn 2s infinite; }
-        @keyframes pulseBtn { 0% { box-shadow: 0 0 0 0 var(--emerald-glow); } 70% { box-shadow: 0 0 0 20px rgba(16,185,129,0); } 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
-
-        .btn-ghost {
-            background: transparent; color: var(--text-main);
-            border: 1px solid var(--glass-border); box-shadow: none;
-        }
-        @media (hover: hover) and (pointer: fine) {
-            .btn-ghost:hover { background: rgba(255,255,255,0.05); border-color: var(--text-silver); box-shadow: none; transform: translateY(-2px); }
-        }
-        .btn-ghost::after { display: none; }
-        .btn-sm { padding: 0.75rem 1.25rem; font-size: 0.85rem; width: auto; }
-
-        /* Scroll Animation Utility */
-        .scroll-reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-        .scroll-reveal.visible { opacity: 1; transform: translateY(0); }
-
-        /* --- 1. HERO --- */
-        .hero { min-height: auto; padding: 120px 0 80px; display: flex; align-items: center; }
-        .hero-content { display: flex; flex-direction: column; gap: 1.5rem; max-width: 1000px; }
-        .hero h1 {
-            background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-        .hero p { max-width: 800px; }
-
-        /* --- 2. INTERACTIVE ROI CALCULATOR --- */
-        .calculator-dashboard { padding: 1.5rem; display: flex; flex-direction: column; gap: 2.5rem; }
-        .calc-inputs { display: flex; flex-direction: column; gap: 2rem; }
-        .calc-group { display: flex; flex-direction: column; gap: 1rem; }
-        .calc-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
-        .calc-header label { font-size: 0.9rem; }
-        .calc-val { font-family: monospace; font-size: 1.1rem; color: var(--emerald); font-weight: 700; background: rgba(16,185,129,0.1); padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid rgba(16,185,129,0.2); }
-        
-        /* Custom Range Slider */
-        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; touch-action: pan-y; }
-        input[type=range]:focus { outline: none; }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none; height: 32px; width: 32px; border-radius: 50%;
-            background: var(--text-main); cursor: pointer; margin-top: -14px;
-            box-shadow: 0 0 15px rgba(255,255,255,0.5); border: 2px solid var(--obsidian);
-            transition: transform 0.1s;
-        }
-        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: var(--glass-border); border-radius: 2px; }
-
-        .calc-outputs { display: flex; flex-direction: column; gap: 1.5rem; border-top: 1px solid var(--glass-border); padding-top: 2rem; }
-        .output-box { display: flex; flex-direction: column; gap: 0.25rem; }
-        .output-label { font-size: 0.85rem; color: var(--text-silver); text-transform: uppercase; letter-spacing: 0.05em; }
-        .output-val { font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 800; font-family: monospace; line-height: 1; }
-        .val-red { color: var(--red-bleed); text-shadow: 0 0 15px var(--red-glow); }
-        .val-green { color: var(--emerald); text-shadow: 0 0 15px var(--emerald-glow); }
-
-        /* --- 3. MULTI-LINGUAL CONCIERGE --- */
-        .concierge-grid { display: flex; flex-direction: column; gap: 3rem; }
-        .smartphone {
-            width: 100%; max-width: 100%; margin: 0 auto;
-            border-radius: 30px; padding: 0.75rem;
-            background: rgba(255,255,255,0.02); backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.05);
+        section {
+            padding: 8rem 0;
             position: relative;
         }
-        .phone-screen { background: #0b141a; border-radius: 20px; height: 500px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
-        
-        .toggle-container {
-            display: flex; background: rgba(255,255,255,0.1); padding: 4px; border-radius: 100px; margin-bottom: 1.5rem; width: 100%;
+
+        /* Typography */
+        h1 {
+            font-size: clamp(2rem, 5vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
         }
+
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .sub-headline {
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            color: var(--text-muted);
+            max-width: 800px;
+            margin-bottom: 2.5rem;
+        }
+
+        .text-emerald { color: var(--emerald); }
+        .text-red { color: var(--bleed-red); }
+
+        /* Glassmorphism with Graceful Degradation */
+        .glass-card {
+            background: var(--glass-fallback);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        @supports (backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px)) {
+            @media (min-width: 768px) {
+                .glass-card {
+                    background: var(--glass-bg);
+                    backdrop-filter: blur(16px);
+                    -webkit-backdrop-filter: blur(16px);
+                }
+            }
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem 2.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary {
+            background-color: var(--emerald);
+            color: var(--bg-obsidian);
+            border: none;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 35px rgba(16, 185, 129, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 6rem;
+            background: radial-gradient(circle at 50% -20%, rgba(16, 185, 129, 0.15), transparent 60%);
+        }
+
+        /* Calculator */
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .input-group {
+            margin-bottom: 2.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+        
+        .input-controls {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        input[type="range"] {
+            flex-grow: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 32px;
+            height: 32px;
+            background: var(--emerald);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 32px;
+            height: 32px;
+            background: var(--emerald);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+            border: none;
+        }
+
+        input[type="number"] {
+            width: 140px;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--text-white);
+            font-size: 1.1rem;
+            font-family: monospace;
+            text-align: right;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: var(--emerald);
+        }
+
+        .calc-outputs {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .output-box {
+            padding: 2rem;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--glass-border);
+        }
+
+        .output-box.red-box {
+            border-color: rgba(239, 68, 68, 0.4);
+            box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.1);
+        }
+
+        .output-box.green-box {
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.1);
+        }
+        
+        .output-label {
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .output-value {
+            font-family: monospace;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 800;
+        }
+
+        /* Concierge Section */
+        .concierge-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .language-toggle {
+            display: inline-flex;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            background: rgba(0,0,0,0.6);
+            padding: 0.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
         .toggle-btn {
-            flex: 1; text-align: center; padding: 0.8rem 0.5rem; border-radius: 100px; cursor: pointer;
-            font-size: 0.85rem; font-weight: 600; color: var(--text-silver); transition: all 0.3s ease;
-            touch-action: manipulation;
+            padding: 0.85rem 1.75rem;
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        .toggle-btn.active { background: var(--text-main); color: var(--obsidian); }
 
-        .chat-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 1rem; display: flex; flex-direction: column; gap: 0.75rem; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.02"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="1.5" fill="%23ffffff"/></svg>'); }
-        .chat-view.active { opacity: 1; pointer-events: auto; }
+        .toggle-btn:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--text-white);
+        }
+
+        .toggle-btn.active {
+            background: var(--emerald);
+            color: var(--bg-obsidian);
+            border-color: var(--emerald);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
+            border: 12px solid #1a1a1a;
+            border-radius: 40px;
+            background: #000;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            overflow: hidden;
+        }
+
+        .phone-header {
+            background: #075e54;
+            padding: 1.5rem 1rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .phone-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--emerald);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .phone-chat {
+            height: 480px;
+            padding: 1.5rem 1rem;
+            background: #0b141a;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .chat-bubble-container {
+            min-height: 180px; /* Prevents CLS on language swap */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .chat-bubble {
+            max-width: 85%;
+            padding: 0.85rem 1.25rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            line-height: 1.5;
+            transition: opacity 0.2s ease;
+        }
+
+        .bubble-customer {
+            background: #202c33;
+            color: #e9edef;
+            align-self: flex-start;
+            border-top-left-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .bubble-ai {
+            background: #005c4b;
+            color: #e9edef;
+            align-self: flex-end;
+            border-top-right-radius: 4px;
+        }
+
+        /* Protocol Section */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-top: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--glass-border);
+        }
+
+        .timeline-step {
+            position: relative;
+            padding-left: 70px;
+            margin-bottom: 3rem;
+        }
         
-        .msg { max-width: 85%; padding: 0.75rem 1rem; border-radius: 12px; font-size: 0.9rem; }
-        .msg.in { background: #202c33; color: #e9edef; align-self: flex-start; border-top-left-radius: 4px; }
-        .msg.out { background: #005c4b; color: #e9edef; align-self: flex-end; border-top-right-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .msg-sender { font-size: 0.65rem; font-weight: 600; margin-bottom: 0.25rem; color: rgba(255,255,255,0.5); }
-        .msg.out .msg-sender { color: var(--emerald); }
-
-        /* --- 4. INVISIBLE ARCHITECTURE --- */
-        .flowchart-container { 
-            width: 100%; overflow-x: auto; padding: 2rem 0; scrollbar-width: none; 
-            -webkit-overflow-scrolling: touch; scroll-snap-type: x mandatory; 
+        .timeline-step:last-child {
+            margin-bottom: 0;
         }
-        .flowchart-container::-webkit-scrollbar { display: none; }
-        .flowchart { display: flex; align-items: center; min-width: 800px; padding: 0 1.5rem; }
+
+        .step-indicator {
+            position: absolute;
+            left: 11px;
+            top: 0;
+            width: 28px;
+            height: 28px;
+            background: var(--bg-obsidian);
+            border: 2px solid var(--emerald);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+            z-index: 2;
+        }
+
+        .step-title {
+            color: var(--emerald);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .timeline-step h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .timeline-step p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Image Slider */
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1000px;
+            height: 600px;
+            margin: 4rem auto 0;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            user-select: none;
+            background: #111;
+        }
+
+        /* Optimized placeholders using CSS gradients for max performance */
+        .slider-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.05);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .img-before {
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+        }
+
+        .img-after {
+            background: linear-gradient(135deg, #0f2b20, #001a11);
+            clip-path: inset(0 0 0 50%);
+        }
+
+        .slider-divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: var(--text-white);
+            transform: translateX(-50%);
+            cursor: ew-resize;
+            z-index: 10;
+        }
+
+        .slider-divider::before {
+            content: '⟷';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 48px;
+            height: 48px;
+            background: var(--text-white);
+            color: var(--bg-obsidian);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        }
+
+        .slider-overlay {
+            position: absolute;
+            bottom: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            z-index: 5;
+            background: rgba(0,0,0,0.85);
+            border: 1px solid;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .overlay-left {
+            left: 2rem;
+            border-color: rgba(239, 68, 68, 0.5);
+            color: var(--text-white);
+        }
+
+        .overlay-right {
+            right: 2rem;
+            border-color: rgba(16, 185, 129, 0.5);
+            color: var(--text-white);
+        }
+
+        /* Footer & Mobile CTA */
+        .footer {
+            border-top: 1px solid var(--glass-border);
+            padding: 5rem 0;
+            text-align: center;
+            background: #000;
+        }
+
+        .footer-cta {
+            margin-bottom: 4rem;
+        }
+
+        .footer-cta h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .footer-ip {
+            color: #71717a;
+            font-size: 0.9rem;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
         
-        .fc-node {
-            scroll-snap-align: center;
-            padding: 1rem; font-size: 0.85rem; background: var(--glass-bg); border: 1px solid var(--glass-border);
-            backdrop-filter: blur(16px); border-radius: 12px; font-weight: 600; text-align: center;
-            position: relative; z-index: 2; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        .mobile-sticky-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid rgba(16, 185, 129, 0.3);
+            z-index: 999;
+            text-align: center;
         }
-        .fc-node span { display: block; font-size: 0.7rem; color: var(--emerald); text-transform: uppercase; margin-bottom: 0.25rem; }
+
+        .mobile-sticky-cta .btn {
+            width: 100%;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .concierge-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            .slider-wrapper {
+                height: 400px;
+            }
+        }
         
-        .fc-line {
-            flex-grow: 1; height: 2px; position: relative; z-index: 1; margin: 0 -0.5rem;
-            background: linear-gradient(90deg, rgba(16,185,129,0.1), var(--emerald));
-        }
-        .fc-line::after {
-            content: ''; position: absolute; top: -4px; right: 0; width: 10px; height: 10px;
-            background: var(--emerald); border-radius: 50%; box-shadow: 0 0 15px var(--emerald);
-        }
-
-        /* --- 5. INFINITE VISUAL PIPELINE --- */
-        .slider-wrapper { position: relative; width: 100%; height: 350px; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); cursor: ew-resize; -webkit-user-select: none; user-select: none; touch-action: pan-y; }
-        .slider-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; }
-        .img-before { background-image: url('https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=2000&auto=format&fit=crop'); filter: grayscale(80%) contrast(1.2); }
-        .img-after { background-image: url('https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop'); }
-        
-        .slider-foreground { position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden; border-right: 2px solid #fff; }
-        .slider-foreground .img-after { width: 100vw; max-width: 1400px; /* Adjust via JS */ }
-        
-        .slider-overlay { position: absolute; bottom: 1rem; padding: 1rem; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); border-radius: 8px; border-left: 3px solid; font-size: 0.8rem; }
-        .slider-overlay h4 { font-size: 0.9rem; margin-bottom: 4px; }
-        .overlay-red { right: 1rem; border-color: var(--red-bleed); color: var(--red-bleed); max-width: 150px; }
-        .overlay-green { left: 1rem; border-color: var(--emerald); color: var(--emerald); max-width: 150px; }
-        
-        .slider-handle { position: absolute; top: 50%; left: 50%; width: 50px; height: 50px; background: #fff; border-radius: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; color: #000; font-weight: 800; font-size: 0.8rem; box-shadow: 0 0 20px rgba(0,0,0,0.5); pointer-events: none; }
-
-        /* --- 6. DEPLOYMENT PROTOCOL --- */
-        .timeline-grid { display: flex; flex-direction: column; gap: 3rem; position: relative; margin-top: 3rem; }
-        .timeline-grid::before {
-            content: ''; position: absolute; left: 25px; top: 0; bottom: 0; width: 2px;
-            background: linear-gradient(180deg, var(--emerald), rgba(16,185,129,0.1)); z-index: 0; transform: translateX(-50%);
-        }
-        .phase-card { position: relative; padding-left: 4rem; z-index: 1; }
-        .phase-card::before {
-            content: ''; position: absolute; left: 25px; top: 32px; width: 16px; height: 16px;
-            background: var(--obsidian); border: 2px solid var(--emerald); border-radius: 50%;
-            box-shadow: 0 0 15px var(--emerald); transform: translate(-50%, -50%);
-        }
-        .phase-content { padding: 1.5rem; }
-        .phase-content h3 { color: var(--emerald); margin-bottom: 1.5rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        .phase-content ul { list-style: none; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
-        .phase-content ul li { position: relative; padding-left: 1.5rem; font-size: 0.9rem; color: var(--text-silver); }
-        .phase-content ul li::before { content: '>'; position: absolute; left: 0; color: var(--emerald); font-family: monospace; font-weight: bold; }
-        .outcome-text { font-size: 0.9rem; font-style: italic; border-top: 1px solid var(--glass-border); padding-top: 1rem; color: var(--text-main); }
-
-        /* --- 7. FOOTER & COMPLIANCE --- */
-        .footer-cta { text-align: center; padding: 80px 0; background: radial-gradient(circle at center, rgba(16,185,129,0.05) 0%, transparent 70%); border-top: 1px solid var(--glass-border); }
-        .footer-cta p { max-width: 600px; margin: 0 auto 2rem; }
-
-        .legal-footer { background: #000; padding: 4rem 0 2rem; font-size: 0.85rem; color: var(--text-silver); border-top: 1px solid var(--glass-border); }
-        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; margin-bottom: 3rem; }
-        .footer-col h4 { color: var(--text-main); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem; }
-        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
-        .footer-col ul a { color: var(--text-silver); text-decoration: none; transition: color 0.3s; }
-        .footer-col ul a:hover { color: var(--emerald); }
-        
-        .ip-disclaimer {
-            background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
-            padding: 1.5rem; border-radius: 8px; font-family: monospace; font-size: 0.75rem;
-            line-height: 1.6; color: rgba(255,255,255,0.6);
-        }
-        .ip-disclaimer strong { color: var(--text-main); }
-        .copyright { text-align: center; border-top: 1px solid var(--glass-border); padding-top: 2rem; font-size: 0.8rem; }
-
-        /* --- COOKIE BANNER --- */
-        .cookie-banner {
-            position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
-            width: calc(100% - 3rem); max-width: 800px; padding: 1.5rem; z-index: 1000;
-            display: flex; flex-direction: column; gap: 1rem;
-            transition: opacity 0.5s ease, transform 0.5s ease;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-        }
-        .cookie-banner.hidden { opacity: 0; pointer-events: none; transform: translate(-50%, 20px); }
-        .cookie-banner p { font-size: 0.85rem; margin: 0; line-height: 1.5; color: var(--text-main); }
-        .cookie-actions { display: flex; gap: 1rem; width: 100%; }
-
-        /* -------------------------------------------
-           TABLET STYLES (min-width: 768px)
-           ------------------------------------------- */
-        @media (min-width: 768px) {
-            .section { padding: 120px 0; }
-            .hero { min-height: 80vh; padding: 150px 0 100px; }
+        @media (max-width: 768px) {
+            section { padding: 5rem 0; }
+            .glass-card { padding: 2rem; }
+            .btn-group { flex-direction: column; }
+            .btn { width: 100%; }
+            .overlay-left, .overlay-right {
+                font-size: 0.9rem;
+                padding: 0.75rem 1rem;
+                bottom: 1rem;
+            }
+            .overlay-left { left: 1rem; }
+            .overlay-right { right: 1rem; }
+            .input-controls { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+            input[type="number"] { width: 100%; text-align: left; }
             
-            .hero-actions { flex-direction: row; width: auto; }
-            .btn { width: auto; padding: 1.25rem 2.5rem; font-size: 1.125rem; }
-            
-            .calculator-dashboard { padding: 3rem; }
-            
-            .concierge-grid { align-items: center; }
-            .smartphone { max-width: 400px; padding: 1rem; border-radius: 40px; }
-            .phone-screen { height: 600px; border-radius: 30px; }
-            
-            .slider-wrapper { height: 500px; border-radius: 16px; }
-            .slider-overlay { bottom: 2rem; padding: 1.5rem; font-size: 0.9rem; border-left: 4px solid; }
-            .slider-overlay h4 { font-size: 1rem; margin-bottom: 8px; }
-            .overlay-red { right: 2rem; max-width: none; }
-            .overlay-green { left: 2rem; max-width: none; }
-            .slider-handle { width: 48px; height: 48px; font-size: 1rem; }
-
-            .timeline-grid { gap: 4rem; }
-            .phase-content { padding: 2rem; }
-            
-            .footer-grid { grid-template-columns: 1fr 1fr 2fr; }
-            .cookie-banner { flex-direction: row; align-items: center; justify-content: space-between; }
-            .cookie-actions { width: auto; }
-        }
-
-        /* -------------------------------------------
-           LAPTOP / DESKTOP STYLES (min-width: 1024px)
-           ------------------------------------------- */
-        @media (min-width: 1024px) {
-            .container { max-width: 1400px; padding: 0 5%; }
-            .section { padding: 150px 0; }
-            .section-header { margin-bottom: 4rem; }
-            
-            .hero { min-height: 100vh; padding-top: 80px; }
-            
-            .calculator-dashboard { flex-direction: row; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; padding: 4rem; }
-            .calc-outputs { border-top: none; border-left: 1px solid var(--glass-border); padding-top: 0; padding-left: 4rem; justify-content: center; }
-            .output-val { text-shadow: 0 0 20px var(--red-glow); }
-            .val-green { text-shadow: 0 0 20px var(--emerald-glow); }
-            
-            .concierge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-            .toggle-container { max-width: 300px; margin-bottom: 2rem; }
-            .chat-view { padding: 1.5rem; gap: 1rem; }
-            .msg { font-size: 0.95rem; }
-            
-            .flowchart-container { padding: 4rem 0; }
-            .fc-node { padding: 1.5rem 2rem; font-size: 1rem; }
-            .fc-line { margin: 0 -1rem; }
-            
-            .slider-wrapper { height: 600px; }
-            
-            .timeline-grid::before { left: 50%; transform: translateX(-50%); }
-            .phase-card { width: 50%; padding-left: 0; }
-            .phase-card:nth-child(odd) { padding-right: 4rem; text-align: right; }
-            .phase-card:nth-child(even) { left: 50%; padding-left: 4rem; }
-            .phase-card:nth-child(odd)::before { left: 100%; top: 32px; transform: translate(50%, -50%); }
-            .phase-card:nth-child(even)::before { left: 0; top: 32px; transform: translate(-50%, -50%); }
-            
-            .phase-card:nth-child(odd) ul { align-items: flex-end; }
-            .phase-card:nth-child(odd) ul li { padding-left: 0; padding-right: 1.5rem; }
-            .phase-card:nth-child(odd) ul li::before { left: auto; right: 0; content: '<'; }
-
-            .footer-cta { padding: 150px 0; }
-            .footer-cta p { margin: 0 auto 3rem; }
+            /* Enable Sticky CTA on mobile */
+            .mobile-sticky-cta { display: block; }
+            body { padding-bottom: 90px; }
         }
     </style>
 </head>
 <body>
-    <div class="grid-overlay"></div>
 
-    <!-- COOKIE BANNER -->
-    <div class="cookie-banner glass-panel" id="cookie-banner">
-        <p>We use proprietary tracking and AI analytics to optimize enterprise experiences. By continuing, you agree to our data protocols.</p>
-        <div class="cookie-actions">
-            <button class="btn btn-sm" onclick="dismissCookie()">Accept All</button>
-            <button class="btn btn-ghost btn-sm" onclick="dismissCookie()">Essential Only</button>
-        </div>
-    </div>
-
-    <!-- 1. THE HERO -->
+    <!-- SECTION 1: THE HERO -->
     <section class="hero">
         <div class="container">
-            <div class="hero-content scroll-reveal">
-                <h1>Stop Losing High-Ticket Deals While You Sleep.</h1>
-                <p>We build automated digital infrastructure for high-friction global businesses. We replace slow, human-led sales floors with custom AI Concierges that qualify leads, generate content, and close deals 24/7.</p>
-                <div class="hero-actions">
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anas@ainexlifyagencies.com&su=Custom%20Architecture%20Review%20Inquiry" target="_blank" rel="noopener noreferrer" class="btn btn-pulse">Schedule a Custom Architecture Review</a>
-                    <a href="#deployment" class="btn btn-ghost">View Our Deployment Protocol</a>
-                </div>
+            <h1>Stop Losing High-Ticket<br>Deals While You Sleep.</h1>
+            <p class="sub-headline">We build automated digital infrastructure for high-friction global businesses. We replace slow, human-led sales floors with custom AI Concierges that qualify leads and close deals 24/7.</p>
+            <div class="btn-group">
+                <a href="https://wa.me/YOURNUMBER" target="_blank" class="btn btn-primary">Get a Custom AI Blueprint</a>
+                <a href="#protocol" class="btn btn-secondary">See How It Works</a>
             </div>
         </div>
     </section>
 
-    <!-- 2. INTERACTIVE ROI CALCULATOR -->
-    <section class="section">
+    <!-- SECTION 2: THE INTERACTIVE ROI CALCULATOR -->
+    <section id="calculator">
         <div class="container">
-            <div class="section-header scroll-reveal">
-                <h2>The Bleed Engine</h2>
-                <p>Stop guessing how much your response times are costing you. Calculate your exact operational bleed.</p>
-            </div>
-            <div class="glass-panel calculator-dashboard scroll-reveal">
-                <div class="calc-inputs">
-                    <div class="calc-group">
-                        <div class="calc-header">
-                            <label>Monthly Inquiries (Leads)</label>
-                            <span class="calc-val" id="val-leads">1,000</span>
-                        </div>
-                        <input type="range" id="slider-leads" min="100" max="10000" step="100" value="1000">
-                    </div>
-                    <div class="calc-group">
-                        <div class="calc-header">
-                            <label>Average Ticket Size (₹)</label>
-                            <span class="calc-val" id="val-ticket">₹ 50,000</span>
-                        </div>
-                        <input type="range" id="slider-ticket" min="5000" max="500000" step="5000" value="50000">
-                    </div>
-                </div>
-                <div class="calc-outputs">
-                    <div class="output-box">
-                        <div class="output-label">Monthly Bleed (30% drop-off)</div>
-                        <div class="output-val val-red" id="out-bleed">₹ 1,50,00,000</div>
-                    </div>
-                    <div class="output-box" style="margin-top: 1rem;">
-                        <div class="output-label">AI Recovered Revenue</div>
-                        <div class="output-val val-green" id="out-recovered">₹ 1,50,00,000</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. MULTI-LINGUAL CONCIERGE -->
-    <section class="section">
-        <div class="container">
-            <div class="concierge-grid">
-                <div class="scroll-reveal">
-                    <h2>Speaks Your Customer's Exact Language.</h2>
-                    <p style="margin-top: 1.5rem; margin-bottom: 2rem;">Whether your buyers speak corporate English or street-smart Hinglish, we train the neural network to match their exact bargaining style.</p>
+            <div class="glass-card calculator-grid">
+                <div>
+                    <h2>Interactive ROI Calculator</h2>
+                    <p class="sub-headline">Visualize the capital bleeding from your current human-led pipeline.</p>
                     
-                    <div class="toggle-container">
-                        <div class="toggle-btn active" onclick="switchLanguage('en')">Global English</div>
-                        <div class="toggle-btn" onclick="switchLanguage('hi')">Native Hinglish</div>
+                    <div class="input-group">
+                        <label>Monthly Leads</label>
+                        <div class="input-controls">
+                            <input type="range" id="leads-range" min="100" max="10000" step="100" value="1000">
+                            <input type="number" id="leads-number" min="100" max="10000" value="1000">
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Average Ticket Size (₹)</label>
+                        <div class="input-controls">
+                            <input type="range" id="ticket-range" min="5000" max="500000" step="5000" value="50000">
+                            <input type="number" id="ticket-number" min="5000" max="500000" value="50000">
+                        </div>
                     </div>
                 </div>
-                
-                <div class="smartphone scroll-reveal">
-                    <div class="phone-screen">
-                        <!-- English View -->
-                        <div class="chat-view active" id="chat-en">
-                            <div class="msg in">
-                                <div class="msg-sender">Customer</div>
-                                Looking for a 4BHK investment property.
-                            </div>
-                            <div class="msg out">
-                                <div class="msg-sender">AI Nexlify Concierge</div>
-                                Hello! The 4BHKs offer a 60/40 plan projecting a 6.5% yield. Shall I send the brochure?
-                            </div>
-                        </div>
-                        <!-- Hinglish View -->
-                        <div class="chat-view" id="chat-hi">
-                            <div class="msg in">
-                                <div class="msg-sender">Customer</div>
-                                Bhaiya, yeh premium bridal lehenga available hai?
-                            </div>
-                            <div class="msg out">
-                                <div class="msg-sender">AI Nexlify Concierge</div>
-                                Haan ji, bilkul in-stock hai! Agar budget tight hai, toh ek similar semi-silk variant dikha doon jo ₹5,000 sasta padega?
-                            </div>
-                        </div>
+
+                <div class="calc-outputs">
+                    <div class="output-box red-box">
+                        <div class="output-label text-red">Estimated Revenue Lost to Human Delay:</div>
+                        <div class="output-value text-red" id="bleed-output">₹0</div>
+                    </div>
+                    <div class="output-box green-box">
+                        <div class="output-label text-emerald">Revenue Recovered by AI Nexlify:</div>
+                        <div class="output-value text-emerald" id="recovered-output">₹0</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 4. INVISIBLE ARCHITECTURE -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header scroll-reveal">
-                <h2>The Invisible Architecture</h2>
-                <p>We engineer a closed-loop digital ecosystem that connects your inventory directly to your customer's wallet.</p>
-            </div>
-            <div class="flowchart-container scroll-reveal">
-                <div class="flowchart">
-                    <div class="fc-node"><span>2:00 AM</span>Customer Message</div>
-                    <div class="fc-line"></div>
-                    <div class="fc-node"><span>Neural Engine</span>AI Analyzes Intent</div>
-                    <div class="fc-line"></div>
-                    <div class="fc-node"><span>Database</span>AI Retrieves Data</div>
-                    <div class="fc-line"></div>
-                    <div class="fc-node"><span>Gateway</span>AI Captures Payment</div>
-                    <div class="fc-line"></div>
-                    <div class="fc-node"><span>Sync</span>CRM Updated</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5. INFINITE VISUAL PIPELINE -->
-    <section class="section">
-        <div class="container">
-            <div class="section-header scroll-reveal">
-                <h2>The Infinite Visual Pipeline</h2>
-                <p>Send a raw smartphone photo, get 50 hyper-realistic composites overnight.</p>
-            </div>
-            <div class="slider-wrapper scroll-reveal" id="visual-slider">
-                <div class="slider-img img-before">
-                    <div class="slider-overlay overlay-red">
-                        <h4>HUMAN STUDIO</h4>
-                        Cost: ₹25,000<br>Wait Time: 3 Weeks
-                    </div>
-                </div>
-                <div class="slider-foreground" id="slider-foreground">
-                    <div class="slider-img img-after" id="img-after-el">
-                        <div class="slider-overlay overlay-green">
-                            <h4>AI VISION ENGINE</h4>
-                            Cost: Included<br>Wait Time: 45 Seconds
-                        </div>
-                    </div>
-                </div>
-                <div class="slider-handle" id="slider-handle">&lt;&gt;</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5.5. AUTONOMOUS SEO ENGINE -->
-    <section class="section">
-        <style>
-            .cyber-matrix-container { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 0 40px rgba(16, 185, 129, 0.1); }
-            .hyper-image { width: 100%; height: auto; display: block; filter: contrast(1.1) brightness(0.9); transform: scale(1.05); }
-            .laser-scanner { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--emerald); box-shadow: 0 0 20px var(--emerald), 0 0 40px var(--emerald); opacity: 0.8; animation: scan 3s ease-in-out infinite; z-index: 5; }
-            @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 98%; opacity: 0; } }
-            .data-stream-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(3,3,3,0.1) 0%, rgba(3,3,3,0.8) 100%); z-index: 2; pointer-events: none; }
-            .ticker-tape { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.9); border-top: 1px solid var(--emerald); padding: 8px 0; overflow: hidden; z-index: 10; }
-            .ticker-content { display: inline-block; white-space: nowrap; color: var(--emerald); font-family: monospace; font-size: 0.8rem; animation: ticker 20s linear infinite; text-shadow: 0 0 5px var(--emerald); }
-            @keyframes ticker { 0% { transform: translateX(500px); } 100% { transform: translateX(-100%); } }
-            .floating-node { position: absolute; width: 8px; height: 8px; background: var(--text-main); border-radius: 50%; box-shadow: 0 0 15px var(--text-main); z-index: 6; animation: floatNode 3s ease-in-out infinite alternate; }
-            @keyframes floatNode { 0% { transform: translateY(0px) scale(1); opacity: 0.5; } 100% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
-        </style>
+    <!-- SECTION 3: THE UNIVERSAL CONCIERGE -->
+    <section>
         <div class="container">
             <div class="concierge-grid">
-                <div class="scroll-reveal" style="order: 1;">
-                    <div class="glass-panel" style="padding: 1rem; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.05);">
-                        <div class="cyber-matrix-container">
-                            <img src="hyper_seo_matrix.png" alt="8k Hyperrealistic SEO Agent" class="hyper-image">
-                            <div class="data-stream-overlay"></div>
-                            <div class="laser-scanner"></div>
-                            <div class="floating-node" style="top: 30%; left: 40%; animation-delay: 0s;"></div>
-                            <div class="floating-node" style="top: 60%; left: 70%; animation-delay: 1s;"></div>
-                            <div class="floating-node" style="top: 45%; left: 20%; animation-delay: 2s; background: var(--emerald); box-shadow: 0 0 15px var(--emerald);"></div>
-                            <div class="ticker-tape">
-                                <div class="ticker-content">
-                                    [SYS.LOG] INITIATING DEEP CRAWL... [NODE 04] COMPETITOR KEYWORDS EXTRACTED... [LLM] GENERATING 2,500 WORD ASSET... [CMS] PUSHING TO PRODUCTION... [INDEX] RANKING POSITION #1 SECURED.
-                                </div>
+                <div>
+                    <h2>Speaks Your Customer's Exact Language.</h2>
+                    <p class="sub-headline">Whether your buyers speak corporate English or street-smart Hinglish, we train the neural network to match their exact bargaining style.</p>
+                    
+                    <div class="language-toggle">
+                        <button class="toggle-btn active" data-lang="en">Global English</button>
+                        <button class="toggle-btn" data-lang="hi">Native Hinglish</button>
+                    </div>
+                </div>
+
+                <div class="phone-container">
+                    <div class="phone-header">
+                        <div class="phone-avatar">AI</div>
+                        <div>
+                            <div style="font-weight: 600; font-size: 1.1rem; color: #fff;">Enterprise Concierge</div>
+                            <div style="color: rgba(255,255,255,0.7); font-size: 0.85rem;">typing...</div>
+                        </div>
+                    </div>
+                    <div class="phone-chat">
+                        <div class="chat-bubble-container">
+                            <div class="chat-bubble bubble-customer" id="chat-customer">
+                                Looking for a 4BHK investment.
+                            </div>
+                            <div class="chat-bubble bubble-ai" id="chat-ai">
+                                The 4BHKs project a 6.5% yield. Shall I schedule a broker call to view the property?
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="scroll-reveal" style="order: 2;">
-                    <h2>The Autonomous SEO Engine</h2>
-                    <p style="margin-top: 1.5rem; margin-bottom: 2rem;">Our proprietary SEO nodes don't just write blogs; they analyze search volume, generate high-intent articles, deploy them directly to your CMS, and index them—while you sleep.</p>
-                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
-                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> 2x Weekly Automated Publications</li>
-                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> Real-time SERP Data Processing</li>
-                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> Semantic Keyword Matrix Injection</li>
-                    </ul>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- 6. NEW: DEPLOYMENT PROTOCOL -->
-    <section id="deployment" class="section">
+    <!-- SECTION 4: THE DEPLOYMENT PROTOCOL -->
+    <section id="protocol">
         <div class="container">
-            <div class="section-header scroll-reveal">
-                <h2>The Deployment Protocol</h2>
-                <p>We do not install software; we architect an entirely new operational ecosystem. To ensure absolute precision and zero disruption to your revenue, deployment is divided into two strict phases.</p>
-            </div>
-            <div class="timeline-grid scroll-reveal">
-                <!-- Phase 1 -->
-                <div class="phase-card">
-                    <div class="glass-panel phase-content">
-                        <h3>Phase 1: The Foundation <span style="font-size:0.8rem; color:var(--text-silver); font-weight:normal;">(Days 1 - 30)</span></h3>
-                        <ul>
-                            <li>UI/UX Front-End Optimization</li>
-                            <li>Custom LoRA Avatar Training & ComfyUI Pipeline Setup</li>
-                            <li>"Zoya/Layla" LLM Concierge Conversational Training (Hinglish/Global)</li>
-                            <li>Structural Technical SEO Foundation</li>
-                        </ul>
-                        <div class="outcome-text">
-                            "Your digital storefront is rebuilt, and the AI neural networks are trained specifically on your catalog and brand voice."
-                        </div>
-                    </div>
+            <h2 style="text-align: center;">The Deployment Protocol</h2>
+            <p class="sub-headline" style="text-align: center; margin: 0 auto 4rem;">A surgical implementation framework designed for zero operational downtime.</p>
+
+            <div class="timeline">
+                <div class="timeline-step glass-card">
+                    <div class="step-indicator"></div>
+                    <div class="step-title">Phase 1 (Days 1-30)</div>
+                    <h3>The Foundation</h3>
+                    <p>Custom LoRA Training, Conversational LLM setup, Technical SEO structure.</p>
                 </div>
-                <!-- Phase 2 -->
-                <div class="phase-card">
-                    <div class="glass-panel phase-content">
-                        <h3>Phase 2: The Engine <span style="font-size:0.8rem; color:var(--text-silver); font-weight:normal;">(Ongoing Retainer)</span></h3>
-                        <ul>
-                            <li>24/7 WhatsApp AI Sales Concierge Hosting</li>
-                            <li>40-50 Daily Hyper-Realistic Visual Assets Generated</li>
-                            <li>2x Weekly Automated SEO Blog Publications</li>
-                            <li>Full Server & API Infrastructure Maintenance</li>
-                        </ul>
-                        <div class="outcome-text">
-                            "Your digital department runs on autopilot. We handle the cloud hosting, API tokens, and continuous model iterations."
-                        </div>
-                    </div>
+
+                <div class="timeline-step glass-card">
+                    <div class="step-indicator"></div>
+                    <div class="step-title">Phase 2 (Month 2 Onward)</div>
+                    <h3>Autonomous Operations</h3>
+                    <p>24/7 WhatsApp AI Hosting, Daily Visual Asset Generation, Automated Content Publishing.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 7. FOOTER CTA & LEGAL -->
-    <section class="section footer-cta">
-        <div class="container scroll-reveal">
-            <h2>Engineered for High-Friction Industries</h2>
-            <p>Real Estate • Fine Jewelry • Luxury Fashion<br><br>We do not offer off-the-shelf pricing. Every deployment is a custom build.</p>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=anas@ainexlifyagencies.com&su=Request%20a%20Custom%20Proposal" target="_blank" rel="noopener noreferrer" class="btn btn-pulse">Request a Custom Proposal</a>
-        </div>
-    </section>
-
-    <footer class="legal-footer">
+    <!-- SECTION 5: THE VISUAL PIPELINE -->
+    <section>
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#">Deployment Protocol</a></li>
-                        <li><a href="#">Visual Pipeline</a></li>
-                        <li><a href="#">Bleed Engine</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="/terms/">Terms of Service</a></li>
-                        <li><a href="/terms/#sec-8">Privacy Policy</a></li>
-                        <li><a href="/terms/#sec-8">Data Processing Agreement (DPA)</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <div class="ip-disclaimer">
-                        <strong>Intellectual Property Notice:</strong><br><br>
-                        All underlying conversational logic, prompt engineering, LoRA (Low-Rank Adaptation) models, and node-based generative pipelines deployed for clients remain the exclusive intellectual property of AI Nexlify Agencies.<br><br>
-                        Clients retain full ownership of the generated output assets and customer data.
-                    </div>
-                </div>
+            <h2 style="text-align: center;">The Visual Pipeline</h2>
+            <p class="sub-headline" style="text-align: center; margin: 0 auto;">Stop paying for studios. Send a raw smartphone photo, get hyper-realistic composites overnight.</p>
+
+            <div class="slider-wrapper" id="slider">
+                <!-- Optimized CSS gradient placeholders for immediate load & high performance -->
+                <div class="slider-img img-before">Raw Asset</div>
+                <div class="slider-img img-after" id="slider-after">Hyper-Realistic</div>
+                
+                <div class="slider-divider" id="slider-divider"></div>
+
+                <div class="slider-overlay overlay-left"><span class="text-red">Cost: High. Wait: 3 Weeks.</span></div>
+                <div class="slider-overlay overlay-right"><span class="text-emerald">Cost: Included. Wait: 45 Seconds.</span></div>
             </div>
-            <div class="copyright">
-                &copy; 2026 AI Nexlify Agencies. All rights reserved.
+        </div>
+    </section>
+
+    <!-- SECTION 6: UNIVERSAL FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-cta">
+                <h3>Engineered for High-Friction Industries Globally: Real Estate, Fine Jewelry, Luxury Fashion, Premium B2B.</h3>
+                <a href="https://wa.me/YOURNUMBER" target="_blank" class="btn btn-primary" style="margin-top: 1rem;">Start Your Custom Build</a>
+            </div>
+            
+            <div class="footer-ip">
+                Intellectual Property Notice: All underlying conversational logic, prompt engineering, LoRA models, and node-based generative pipelines remain the exclusive intellectual property of AI Nexlify Agencies. Clients retain full ownership of generated outputs.
             </div>
         </div>
     </footer>
 
-    <!-- EMBEDDED JAVASCRIPT -->
+    <!-- PERSISTENT MOBILE CTA -->
+    <div class="mobile-sticky-cta">
+        <a href="https://wa.me/YOURNUMBER" target="_blank" class="btn btn-primary">Chat on WhatsApp</a>
+    </div>
+
+    <!-- JavaScript Interactions -->
     <script>
-        // 0. Cookie Banner Dismissal
-        function dismissCookie() {
-            document.getElementById('cookie-banner').classList.add('hidden');
-        }
+        // 1. Calculator Logic with Syncing Inputs
+        const formatINR = (num) => {
+            return new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                maximumFractionDigits: 0
+            }).format(num);
+        };
 
-        // 1. Scroll Animations (IntersectionObserver)
-        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
+        const leadsRange = document.getElementById('leads-range');
+        const leadsNumber = document.getElementById('leads-number');
+        const ticketRange = document.getElementById('ticket-range');
+        const ticketNumber = document.getElementById('ticket-number');
+        
+        const bleedOutput = document.getElementById('bleed-output');
+        const recoveredOutput = document.getElementById('recovered-output');
+
+        const calculateROI = (leads, ticket) => {
+            const potentialRevenue = leads * ticket;
+            const bleed = potentialRevenue * 0.30; // 30% drop off
+
+            bleedOutput.textContent = formatINR(bleed);
+            recoveredOutput.textContent = formatINR(bleed);
+        };
+
+        const syncInputs = (source, target, isLeads) => {
+            let val = parseInt(source.value, 10);
+            
+            // Constrain number inputs
+            const min = parseInt(source.min, 10);
+            const max = parseInt(source.max, 10);
+            if (source.type === 'number') {
+                if (val < min) val = min;
+                if (val > max) val = max;
+            }
+            
+            target.value = val;
+            
+            const leads = isLeads ? val : parseInt(leadsNumber.value, 10);
+            const ticket = !isLeads ? val : parseInt(ticketNumber.value, 10);
+            
+            calculateROI(leads, ticket);
+        };
+
+        leadsRange.addEventListener('input', (e) => syncInputs(e.target, leadsNumber, true));
+        leadsNumber.addEventListener('change', (e) => syncInputs(e.target, leadsRange, true));
+        
+        ticketRange.addEventListener('input', (e) => syncInputs(e.target, ticketNumber, false));
+        ticketNumber.addEventListener('change', (e) => syncInputs(e.target, ticketRange, false));
+
+        // Initial Calculation
+        calculateROI(parseInt(leadsRange.value, 10), parseInt(ticketRange.value, 10));
+
+        // 2. Multi-lingual Toggle
+        const chats = {
+            en: {
+                customer: "Looking for a 4BHK investment.",
+                ai: "The 4BHKs project a 6.5% yield. Shall I schedule a broker call to view the property?"
+            },
+            hi: {
+                customer: "Bhaiya, yeh premium bridal lehenga available hai?",
+                ai: "Haan ji, bilkul in-stock hai! Agar budget tight hai, toh ek similar semi-silk variant dikha doon jo ₹5,000 sasta padega?"
+            }
+        };
+
+        const chatCustomer = document.getElementById('chat-customer');
+        const chatAi = document.getElementById('chat-ai');
+        const langBtns = document.querySelectorAll('.toggle-btn');
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                langBtns.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+
+                const lang = e.target.getAttribute('data-lang');
+                
+                // Fade out
+                chatCustomer.style.opacity = 0;
+                chatAi.style.opacity = 0;
+
+                setTimeout(() => {
+                    chatCustomer.textContent = chats[lang].customer;
+                    chatAi.textContent = chats[lang].ai;
+                    
+                    // Fade in
+                    chatCustomer.style.opacity = 1;
+                    chatAi.style.opacity = 1;
+                }, 200);
             });
-        }, observerOptions);
-        
-        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        });
 
-        // 2. Interactive ROI Calculator Logic
-        const sliderLeads = document.getElementById('slider-leads');
-        const sliderTicket = document.getElementById('slider-ticket');
-        const valLeads = document.getElementById('val-leads');
-        const valTicket = document.getElementById('val-ticket');
-        const outBleed = document.getElementById('out-bleed');
-        const outRecovered = document.getElementById('out-recovered');
+        // 3. Optimized Image Slider
+        const slider = document.getElementById('slider');
+        const divider = document.getElementById('slider-divider');
+        const imgAfter = document.getElementById('slider-after');
 
-        function formatINR(num) {
-            return '₹ ' + num.toLocaleString('en-IN');
-        }
-
-        function calculateROI() {
-            const leads = parseInt(sliderLeads.value);
-            const ticket = parseInt(sliderTicket.value);
+        const doSlide = (e) => {
+            // Support both mouse and touch events
+            let clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const rect = slider.getBoundingClientRect();
+            let x = clientX - rect.left;
             
-            // Update Labels
-            valLeads.textContent = leads.toLocaleString('en-IN');
-            valTicket.textContent = formatINR(ticket);
+            // Constrain
+            if (x < 0) x = 0;
+            if (x > rect.width) x = rect.width;
             
-            // Calculate: Revenue = leads * ticket. Bleed = 30% of Revenue.
-            const totalRevenue = leads * ticket;
-            const bleed = totalRevenue * 0.30;
+            const percent = (x / rect.width) * 100;
             
-            // Update Outputs
-            outBleed.textContent = formatINR(bleed);
-            outRecovered.textContent = formatINR(bleed); // Recovered is theoretically the bleed amount
-        }
+            // Request animation frame for smooth performance
+            requestAnimationFrame(() => {
+                divider.style.left = `${percent}%`;
+                imgAfter.style.clipPath = `inset(0 0 0 ${percent}%)`;
+            });
+        };
 
-        sliderLeads.addEventListener('input', calculateROI);
-        sliderTicket.addEventListener('input', calculateROI);
-        calculateROI(); // Init
+        const stopSlide = () => {
+            window.removeEventListener('mousemove', doSlide);
+            window.removeEventListener('touchmove', doSlide);
+            window.removeEventListener('mouseup', stopSlide);
+            window.removeEventListener('touchend', stopSlide);
+        };
 
-        // 3. Multi-Lingual Toggle Logic
-        function switchLanguage(lang) {
-            // Update Buttons
-            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Update Chat Views
-            document.querySelectorAll('.chat-view').forEach(view => view.classList.remove('active'));
-            document.getElementById('chat-' + lang).classList.add('active');
-        }
+        const startSlide = (e) => {
+            window.addEventListener('mousemove', doSlide);
+            window.addEventListener('touchmove', doSlide, { passive: false });
+            window.addEventListener('mouseup', stopSlide);
+            window.addEventListener('touchend', stopSlide);
+            // Fire once initially to snap to exact click location
+            doSlide(e); 
+        };
 
-        // 4. Infinite Visual Pipeline Slider Logic
-        const sliderContainer = document.getElementById('visual-slider');
-        const sliderForeground = document.getElementById('slider-foreground');
-        const sliderHandle = document.getElementById('slider-handle');
-        const imgAfterEl = document.getElementById('img-after-el');
-        
-        let isDragging = false;
+        slider.addEventListener('mousedown', startSlide);
+        slider.addEventListener('touchstart', startSlide, { passive: true });
 
-        function updateSliderSizes() {
-            imgAfterEl.style.width = sliderContainer.offsetWidth + 'px';
-        }
-        window.addEventListener('resize', updateSliderSizes);
-        updateSliderSizes();
-
-        function moveVisualSlider(e) {
-            if (!isDragging) return;
-            const rect = sliderContainer.getBoundingClientRect();
-            let x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
-            let percent = (x / rect.width) * 100;
-            if (percent < 0) percent = 0;
-            if (percent > 100) percent = 100;
-            
-            sliderForeground.style.width = percent + '%';
-            sliderHandle.style.left = percent + '%';
-        }
-
-        sliderContainer.addEventListener('mousedown', () => isDragging = true);
-        sliderContainer.addEventListener('touchstart', () => isDragging = true, {passive: true});
-        window.addEventListener('mouseup', () => isDragging = false);
-        window.addEventListener('touchend', () => isDragging = false);
-        window.addEventListener('mousemove', moveVisualSlider);
-        window.addEventListener('touchmove', moveVisualSlider, {passive: true});
     </script>
 </body>
 </html>
