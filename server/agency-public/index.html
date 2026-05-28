@@ -660,6 +660,35 @@
     </style>
 </head>
 <body>
+    <!-- UPGRADE 1: INTRO SEQUENCE -->
+    <div id="sys-intro">
+        <div style="font-size: 0.8rem; margin-bottom: 2rem;">[SYS.INIT] BOOT SEQUENCE START...</div>
+        <div class="glitch" style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">AI NEXLIFY_AGENCIES v4.0</div>
+        <div id="boot-text" style="font-size: 0.9rem; max-width: 600px; line-height: 1.5; color: var(--text-muted);">
+            > Authenticating secure connection... <br>
+            > Establishing neural handshake with client... <br>
+            > WARNING: High-ticket infrastructure detected.
+        </div>
+        <div style="margin-top: 2rem; width: 200px; height: 2px; background: rgba(16,185,129,0.2); position: relative;">
+            <div id="boot-progress" style="width: 0%; height: 100%; background: var(--emerald); box-shadow: 0 0 10px var(--emerald);"></div>
+        </div>
+    </div>
+
+    <!-- UPGRADE 2: RUTHLESS QUALIFICATION MODAL -->
+    <div class="qual-modal" id="qual-modal">
+        <div class="qual-box">
+            <h3>Enterprise Qualification Check</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">We strictly partner with businesses generating ₹15L+ monthly revenue. Select your current bracket:</p>
+            <select class="qual-select" id="qual-bracket">
+                <option value="" disabled selected>Select Monthly Revenue...</option>
+                <option value="low">Under ₹5 Lakhs (Not Qualified)</option>
+                <option value="mid">₹5 Lakhs - ₹15 Lakhs</option>
+                <option value="high">₹15 Lakhs - ₹50 Lakhs+</option>
+            </select>
+            <button class="btn btn-primary" id="btn-qualify" style="width: 100%; padding: 1rem;">Verify Status</button>
+            <div id="qual-status"></div>
+        </div>
+    </div>
 
     <!-- SECTION 1: THE HERO -->
     <section class="hero">
@@ -680,6 +709,13 @@
                 <div>
                     <h2>Interactive ROI Calculator</h2>
                     <p class="sub-headline">Visualize the capital bleeding from your current human-led pipeline.</p>
+                    
+                    <!-- UPGRADE 3: CURRENCY SELECTOR -->
+                    <div class="currency-toggles">
+                        <button class="curr-btn active" data-curr="INR" data-rate="1">INR (₹)</button>
+                        <button class="curr-btn" data-curr="AED" data-rate="0.044">AED (د.إ)</button>
+                        <button class="curr-btn" data-curr="USD" data-rate="0.012">USD ($)</button>
+                    </div>
                     
                     <div class="input-group">
                         <label>Monthly Leads</label>
@@ -728,7 +764,10 @@
 
                 <div class="phone-container">
                     <div class="phone-header">
-                        <div class="phone-avatar">AI</div>
+                        <!-- UPGRADE 4: NEUROLOGICAL AVATAR -->
+                        <div class="phone-avatar" style="background: transparent;">
+                            <div class="avatar-icon" id="ai-avatar"></div>
+                        </div>
                         <div>
                             <div style="font-weight: 600; font-size: 1.1rem; color: #fff;">Enterprise Concierge</div>
                             <div style="color: rgba(255,255,255,0.7); font-size: 0.85rem;">typing...</div>
@@ -781,7 +820,16 @@
 
             <div class="slider-wrapper" id="slider">
                 <!-- Optimized CSS gradient placeholders for immediate load & high performance -->
-                <div class="slider-img img-before">Raw Asset</div>
+                <!-- UPGRADE 5: SVG WIREFRAME REVEAL -->
+                <div class="slider-img img-before img-before-svg">
+                    <svg class="wireframe-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M0 50 Q 25 25, 50 50 T 100 50 M25 0 L25 100 M75 0 L75 100" />
+                        <circle cx="50" cy="50" r="10" />
+                        <rect x="10" y="10" width="80" height="80" />
+                    </svg>
+                    <div class="laser-line"></div>
+                    <div style="position: absolute; color: var(--emerald); font-family: monospace; font-size: 1rem; background: rgba(0,0,0,0.8); padding: 0.5rem; border: 1px solid var(--emerald);">RAW_WIRE_MESH</div>
+                </div>
                 <div class="slider-img img-after" id="slider-after">Hyper-Realistic</div>
                 
                 <div class="slider-divider" id="slider-divider"></div>
@@ -946,6 +994,87 @@
 
         slider.addEventListener('mousedown', startSlide);
         slider.addEventListener('touchstart', startSlide, { passive: true });
+
+        // --- UPGRADE INJECTIONS JS ---
+        // 1. Intro Sequence
+        window.addEventListener('load', () => {
+            const progress = document.getElementById('boot-progress');
+            const intro = document.getElementById('sys-intro');
+            let w = 0;
+            const int = setInterval(() => {
+                w += Math.random() * 15;
+                if(w >= 100) {
+                    w = 100;
+                    clearInterval(int);
+                    setTimeout(() => { intro.classList.add('hidden-intro'); }, 400);
+                }
+                progress.style.width = w + '%';
+            }, 100);
+        });
+
+        // 2. Qual Modal Logic
+        const qBtn = document.getElementById('btn-qualify');
+        const qSel = document.getElementById('qual-bracket');
+        const qStat = document.getElementById('qual-status');
+        if(qBtn) {
+            qBtn.addEventListener('click', () => {
+                if(!qSel.value) { qStat.textContent = "> ERROR: INPUT REQUIRED"; qStat.classList.add('shake-red'); setTimeout(() => qStat.classList.remove('shake-red'), 400); return; }
+                if(qSel.value === 'low') {
+                    qStat.style.color = '#ef4444';
+                    qStat.textContent = "> ACCESS DENIED. REVENUE BELOW ENTERPRISE THRESHOLD.";
+                    qStat.classList.add('shake-red');
+                    setTimeout(() => qStat.classList.remove('shake-red'), 400);
+                } else {
+                    qStat.style.color = '#10b981';
+                    qStat.textContent = "> AUTHORIZED. WELCOME TO THE PLATFORM.";
+                    setTimeout(() => { document.getElementById('qual-modal').classList.remove('active'); }, 800);
+                }
+            });
+            document.querySelector('a[href="#protocol"]').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('qual-modal').classList.add('active');
+                qStat.textContent = "";
+            });
+        }
+
+        // 3. Currency Toggle Logic
+        const currBtns = document.querySelectorAll('.curr-btn');
+        let currentRate = 1;
+        let currentSym = '₹';
+        const rawFormatINR = (num, sym) => {
+            return sym + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(num);
+        };
+        currBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                currBtns.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentRate = parseFloat(e.target.getAttribute('data-rate'));
+                const curr = e.target.getAttribute('data-curr');
+                currentSym = curr === 'INR' ? '₹' : (curr === 'AED' ? 'د.إ ' : '$');
+                // Re-calculate
+                calculateROI(parseInt(leadsNumber.value, 10), parseInt(ticketNumber.value, 10));
+            });
+        });
+        
+        // Override CalculateROI for Currency
+        window.calculateROI = (leads, ticket) => {
+            const potentialRevenue = leads * ticket;
+            const bleed = potentialRevenue * 0.30;
+            const convertedBleed = bleed * currentRate;
+            bleedOutput.textContent = rawFormatINR(convertedBleed, currentSym);
+            recoveredOutput.textContent = rawFormatINR(convertedBleed, currentSym);
+        };
+        // Initial call after override
+        calculateROI(parseInt(leadsRange.value, 10), parseInt(ticketRange.value, 10));
+
+        // 4. Neurological Avatar Animation
+        const avatar = document.getElementById('ai-avatar');
+        if(avatar) {
+            setInterval(() => {
+                avatar.classList.add('computing');
+                setTimeout(() => avatar.classList.remove('computing'), 800 + Math.random() * 1000);
+            }, 3000);
+        }
 
     </script>
 </body>

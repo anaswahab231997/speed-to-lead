@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zevarly - Deployment Phases Breakdown</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-cream: #FCFBF8;
+            --bg-accent: #F4EFE6;
+            --text-charcoal: #1C1C1C;
+            --text-light: #5A5A5A;
+            --accent-gold: #B89047;
+            --accent-gold-light: rgba(184, 144, 71, 0.15);
+            --border-gold: rgba(184, 144, 71, 0.3);
+            
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: #E0E0E0;
+            margin: 0;
+            padding: 40px 0;
+            font-family: var(--font-sans);
+            color: var(--text-charcoal);
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Page Container */
+        .page {
+            background-color: var(--bg-cream);
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto 40px auto;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+            padding: 25mm 25mm;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-cover {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-accent) 100%);
+        }
+
+        /* Header & Footer Decorators */
+        .page-header {
+            position: absolute;
+            top: 12mm;
+            left: 25mm;
+            right: 25mm;
+            display: flex;
+            justify-content: space-between;
+            font-size: 7.5pt;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-light);
+            border-bottom: 1px solid var(--border-gold);
+            padding-bottom: 10px;
+        }
+
+        .page-footer {
+            position: absolute;
+            bottom: 12mm;
+            left: 25mm;
+            right: 25mm;
+            display: flex;
+            justify-content: space-between;
+            font-size: 7.5pt;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-light);
+            border-top: 1px solid var(--border-gold);
+            padding-top: 10px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5 {
+            margin: 0;
+            font-weight: normal;
+        }
+
+        /* Cover Typography */
+        .cover-content {
+            padding: 30mm;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid var(--accent-gold);
+            margin: 20mm;
+            background-color: rgba(252, 251, 248, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        h1.cover-title {
+            font-family: var(--font-serif);
+            font-size: 50pt;
+            letter-spacing: 16px;
+            color: var(--text-charcoal);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        h2.cover-subtitle {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 24pt;
+            color: var(--accent-gold);
+            margin-bottom: 40px;
+        }
+
+        h3.cover-h3 {
+            font-family: var(--font-sans);
+            font-size: 10pt;
+            font-weight: 500;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--text-charcoal);
+            line-height: 1.8;
+        }
+
+        .divider {
+            width: 80px;
+            height: 2px;
+            background-color: var(--accent-gold);
+            margin: 40px 0;
+        }
+
+        /* Section Typography */
+        .section-h2 {
+            font-family: var(--font-serif);
+            font-size: 32pt;
+            color: var(--text-charcoal);
+            margin-bottom: 35px;
+        }
+
+        .phase-label {
+            font-family: var(--font-sans);
+            font-size: 9pt;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        p {
+            font-size: 10.5pt;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        /* Deliverables Grid */
+        .deliverable-block {
+            margin-bottom: 25px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-gold);
+            padding: 20px;
+            position: relative;
+        }
+
+        .deliverable-block::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--accent-gold);
+        }
+
+        .d-title {
+            font-family: var(--font-serif);
+            font-size: 18pt;
+            color: var(--text-charcoal);
+            margin-bottom: 15px;
+        }
+
+        .d-sub {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+            background-color: var(--bg-accent);
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .d-sub h5 {
+            font-family: var(--font-sans);
+            font-size: 8pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            margin-bottom: 10px;
+        }
+
+        .d-sub p {
+            font-size: 9.5pt;
+            margin-bottom: 0;
+            text-align: left;
+        }
+
+        /* Timeline specific */
+        .timeline-container {
+            position: relative;
+            padding-left: 30px;
+            margin-top: 40px;
+        }
+        .timeline-container::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: var(--accent-gold-light);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -35px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--accent-gold);
+            border: 3px solid var(--bg-cream);
+        }
+
+        /* Print Media Queries */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+            .page:last-child {
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1: COVER -->
+    <div class="page page-cover">
+        <div class="cover-content">
+            <h1 class="cover-title">ZEVARLY</h1>
+            <h2 class="cover-subtitle">The Evolution Plan</h2>
+            <div class="divider"></div>
+            <h3 class="cover-h3">A Detailed Blueprint of Phase 1 & Phase 2<br>Architecture Deployments</h3>
+        </div>
+    </div>
+
+    <!-- PAGE 2: EXECUTIVE SUMMARY -->
+    <div class="page">
+        <div class="page-header">
+            <span>The Evolution Plan</span>
+            <span>01 // Executive Summary</span>
+        </div>
+        
+        <span class="phase-label">Strategic Overview</span>
+        <h2 class="section-h2">Engineering a Digital Boutique</h2>
+        <p>The transformation of Zevarly from a standard e-commerce storefront into an AI-powered digital luxury boutique is a surgical process. We do not simply install software; we architect an entirely new operational ecosystem. To ensure absolute precision and zero disruption to your current revenue streams, the deployment is divided into two distinct phases.</p>
+        
+        <p><strong>Phase 1: Architecture & Setup (The Foundation)</strong> is focused on infrastructure. We redesign the visual touchpoints, construct the neural networks for asset generation, and train the brain of your new sales concierge, Zoya.</p>
+        
+        <p><strong>Phase 2: Ongoing Retainer (The Engine)</strong> is where the infrastructure goes live and begins to scale. This phase represents the continuous heartbeat of the new Zevarly—generating daily content, closing sales autonomously, and capturing organic market share on autopilot.</p>
+
+        <div style="background-color: var(--bg-accent); padding: 30px; margin-top: 40px; border-left: 4px solid var(--accent-gold);">
+            <h4 style="font-family: var(--font-serif); font-size: 16pt; color: var(--text-charcoal); margin-bottom: 15px;">The Goal</h4>
+            <p style="margin-bottom: 0;">To drastically reduce the manual operational bandwidth of the Zevarly team while simultaneously increasing conversion rates, content output, and customer lifetime value through invisible, premium technology.</p>
+        </div>
+        
+        <div class="page-footer">
+            <span>AI Nexlify Agencies</span>
+            <span>Page 2</span>
+        </div>
+    </div>
+
+    <!-- PAGE 3: PHASE 1 DEEP DIVE -->
+    <div class="page">
+        <div class="page-header">
+            <span>The Evolution Plan</span>
+            <span>02 // Phase 1 Details</span>
+        </div>
+        
+        <span class="phase-label">Phase 1: Architecture & Setup</span>
+        <h2 class="section-h2">Building The Foundation</h2>
+        <p>Over the first 30 days, our engineering and design teams work in tandem to build the core systems. The objective is to have the aesthetic facelift and the AI pipelines fully tested and ready for launch.</p>
+
+        <div class="deliverable-block">
+            <h3 class="d-title">1. Shopify UI Face-lift</h3>
+            <p>We elevate the existing Shopify theme to match a high-end fashion magazine aesthetic. This involves overhauling typography, adjusting color palettes (warm ivory and rich golds), optimizing spacing, and ensuring the mobile experience feels like a native luxury app.</p>
+            <div class="d-sub">
+                <div>
+                    <h5>What You Will See</h5>
+                    <p>Figma wireframes, staging environment links, and a noticeable drop in page load times during the review process.</p>
+                </div>
+                <div>
+                    <h5>The Business Impact</h5>
+                    <p>Higher perceived brand value, leading to increased trust and a higher willingness from customers to pay premium prices.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="deliverable-block">
+            <h3 class="d-title">2. Zoya Custom Training</h3>
+            <p>We build the "brain" of Zoya, your AI Stylist. We ingest your product catalog, brand history, and styling guidelines into our LLM architecture. We fine-tune her persona to speak fluent "Hinglish" and act as a warm, culturally-attuned Indian jewelry expert.</p>
+            <div class="d-sub">
+                <div>
+                    <h5>What You Will See</h5>
+                    <p>Transcripts of simulated conversations, edge-case testing logs, and a sandbox environment to test chatting with Zoya.</p>
+                </div>
+                <div>
+                    <h5>The Business Impact</h5>
+                    <p>A sales agent capable of handling hundreds of inquiries simultaneously, qualifying leads, and driving them to checkout 24/7.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-footer">
+            <span>AI Nexlify Agencies</span>
+            <span>Page 3</span>
+        </div>
+    </div>
+
+    <!-- PAGE 4: PHASE 1 CONTINUED -->
+    <div class="page">
+        <div class="page-header">
+            <span>The Evolution Plan</span>
+            <span>03 // Phase 1 Details</span>
+        </div>
+
+        <div class="deliverable-block" style="margin-top: 20px;">
+            <h3 class="d-title">3. LoRA Avatar & ComfyUI Pipeline</h3>
+            <p>We solve the content bottleneck. We select a digital avatar that perfectly represents the Zevarly brand and train a bespoke LoRA model on her features. We then construct a ComfyUI node architecture that can ingest basic photos of your jewelry and output stunning, photorealistic lifestyle composites on this avatar.</p>
+            <div class="d-sub">
+                <div>
+                    <h5>What You Will See</h5>
+                    <p>The initial dataset curation, avatar selection options, and the first batch of generated high-fashion assets for approval.</p>
+                </div>
+                <div>
+                    <h5>The Business Impact</h5>
+                    <p>Elimination of expensive, time-consuming physical photoshoots. You gain the ability to generate infinite high-end marketing assets instantly.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="deliverable-block">
+            <h3 class="d-title">4. SEO Foundation</h3>
+            <p>We reconstruct the technical backend of the store for Google's crawlers. This includes implementing advanced JSON-LD structured data for products, optimizing liquid rendering for speed, and setting up the architecture for the automated blog pipeline.</p>
+            <div class="d-sub">
+                <div>
+                    <h5>What You Will See</h5>
+                    <p>Comprehensive technical SEO audit reports, Core Web Vitals before/after metrics, and schema validation screenshots.</p>
+                </div>
+                <div>
+                    <h5>The Business Impact</h5>
+                    <p>Immediate improvement in organic search visibility, enabling products to appear in Google's rich shopping snippets.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-footer">
+            <span>AI Nexlify Agencies</span>
+            <span>Page 4</span>
+        </div>
+    </div>
+
+    <!-- PAGE 5: PHASE 2 DEEP DIVE -->
+    <div class="page">
+        <div class="page-header">
+            <span>The Evolution Plan</span>
+            <span>04 // Phase 2 Details</span>
+        </div>
+        
+        <span class="phase-label">Phase 2: Ongoing Retainer</span>
+        <h2 class="section-h2">Turning On The Engine</h2>
+        <p>With the infrastructure deployed, Phase 2 shifts focus to operational scale and continuous optimization. This is where Zevarly runs on autopilot, supported by our agency's active maintenance and content generation.</p>
+
+        <div class="deliverable-block">
+            <h3 class="d-title">1. Zoya WhatsApp Hosting & Iteration</h3>
+            <p>Zoya goes live on WhatsApp and the website. But AI must learn. We actively monitor her conversation logs, refining her prompts, handling new product injections, and ensuring 99.9% uptime on our enterprise-grade servers.</p>
+            <div class="d-sub">
+                <div>
+                    <h5>What You Will See</h5>
+                    <p>Monthly analytics on conversations held, average response times, conversion rates via chat, and objection-handling reports.</p>
+                </div>
+                <div>
+                    <h5>The Business Impact</h5>
+                    <p>Zero missed sales opportunities. Customers receive instant gratification and styling advice, drastically reducing drop-off rates.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="deliverable-block">
+            <h3 class="d-title">2. 40-50 Daily Avatar-Consistent Assets</h3>
+            <p>Our ComfyUI pipeline goes into full production. You simply provide us with basic flat-lay images of your new inventory, and our pipeline processes them overnight, delivering a steady stream of lifestyle images.</p>
+            <div class="d-sub">
+                <div>
+                    <h5>What You Will See</h5>
+                    <p>A shared cloud drive updated daily with 40-50 fresh, ready-to-post, high-resolution lifestyle composites featuring your jewelry.</p>
+                </div>
+                <div>
+                    <h5>The Business Impact</h5>
+                    <p>Infinite social media content. You can run aggressive, visually stunning ad campaigns and Instagram feeds without ever running out of creative material.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-footer">
+            <span>AI Nexlify Agencies</span>
+            <span>Page 5</span>
+        </div>
+    </div>
+
+    <!-- PAGE 6: PHASE 2 CONTINUED -->
+    <div class="page">
+        <div class="page-header">
+            <span>The Evolution Plan</span>
+            <span>05 // Phase 2 Details</span>
+        </div>
+
+        <div class="deliverable-block" style="margin-top: 20px;">
+            <h3 class="d-title">3. 2x Weekly SEO Blogs</h3>
+            <p>Domain authority requires fresh, relevant content. Our automated SEO agent researches trending keywords in the Indian imitation jewelry space and publishes two highly optimized, culturally relevant articles per week directly to your Shopify blog.</p>
+            <div class="d-sub">
+                <div>
+                    <h5>What You Will See</h5>
+                    <p>Two new articles automatically appearing on your site weekly, along with monthly Google Search Console ranking reports.</p>
+                </div>
+                <div>
+                    <h5>The Business Impact</h5>
+                    <p>Compounding organic traffic. Over months, Zevarly will rank for long-tail keywords (e.g., "Best Kundan set for Haldi ceremony"), acquiring customers for free.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="deliverable-block">
+            <h3 class="d-title">4. Full Infrastructure Maintenance</h3>
+            <p>AI infrastructure requires constant tending. APIs deprecate, models need updating, and servers require load balancing. Our retainer covers all cloud hosting costs, API token usages (OpenAI/Anthropic), ComfyUI GPU compute costs, and technical troubleshooting.</p>
+            <div class="d-sub">
+                <div>
+                    <h5>What You Will See</h5>
+                    <p>Absolute peace of mind. A direct Slack/WhatsApp channel with our engineering lead for immediate support.</p>
+                </div>
+                <div>
+                    <h5>The Business Impact</h5>
+                    <p>You run a multi-million dollar technology stack without needing an in-house engineering team or paying unpredictable server bills.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-footer">
+            <span>AI Nexlify Agencies</span>
+            <span>Page 6</span>
+        </div>
+    </div>
+
+</body>
+</html>

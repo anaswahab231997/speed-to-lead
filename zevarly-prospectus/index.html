@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zevarly - Brand Prospectus</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-cream: #FDFBF7;
+            --text-charcoal: #2A2A2A;
+            --text-light: #5A5A5A;
+            --accent-gold: #C5A059;
+            --accent-gold-light: rgba(197, 160, 89, 0.2);
+            --border-gold: rgba(197, 160, 89, 0.4);
+            
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'Lato', sans-serif;
+        }
+
+        body {
+            background-color: #E5E5E5; /* Dark background for browser viewing */
+            margin: 0;
+            padding: 40px 0;
+            font-family: var(--font-sans);
+            color: var(--text-charcoal);
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        /* Page Container */
+        .page {
+            background-color: var(--bg-cream);
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto 40px auto;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+            padding: 35mm 25mm; /* Inner padding for content */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Cover Page Adjustments */
+        .page-cover {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header & Footer Decorators */
+        .page-header {
+            position: absolute;
+            top: 15mm;
+            left: 25mm;
+            right: 25mm;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8pt;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #999;
+            border-bottom: 1px solid var(--border-gold);
+            padding-bottom: 8px;
+        }
+
+        .page-footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 25mm;
+            right: 25mm;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8pt;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #999;
+            border-top: 1px solid var(--border-gold);
+            padding-top: 8px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            margin: 0;
+            font-weight: normal;
+        }
+
+        /* Cover Typography */
+        h1.cover-title {
+            font-family: var(--font-serif);
+            font-size: 56pt;
+            letter-spacing: 14px;
+            color: var(--text-charcoal);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        h2.cover-subtitle {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 26pt;
+            color: var(--accent-gold);
+            margin-bottom: 35px;
+        }
+
+        h3.cover-h3 {
+            font-family: var(--font-sans);
+            font-size: 11pt;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        h4.cover-h4 {
+            font-family: var(--font-sans);
+            font-size: 9pt;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            margin-top: 50px;
+        }
+
+        .cover-content {
+            padding: 25mm;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Section Typography */
+        .section-h2 {
+            font-family: var(--font-serif);
+            font-size: 34pt;
+            color: var(--text-charcoal);
+            margin-bottom: 35px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            height: 2px;
+            background-color: var(--accent-gold);
+        }
+
+        .section-h3 {
+            font-family: var(--font-serif);
+            font-size: 22pt;
+            color: var(--text-charcoal);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        p {
+            font-size: 11.5pt;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        /* Image Placeholders */
+        .img-placeholder {
+            background-color: #F3EFE9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-style: italic;
+            font-family: var(--font-serif);
+            text-align: center;
+            border: 1px dashed var(--accent-gold);
+            box-sizing: border-box;
+            padding: 20px;
+        }
+
+        .cover-image {
+            width: 100%;
+            height: 155mm;
+            border-bottom: 2px solid var(--accent-gold);
+            border-left: none;
+            border-right: none;
+            border-top: none;
+        }
+
+        .vision-img {
+            width: 100%;
+            height: 110mm;
+            margin-bottom: 40px;
+        }
+
+        .side-by-side {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .side-img {
+            flex: 1;
+            height: 100mm;
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            background-color: #ffffff;
+            border: 1px solid var(--border-gold);
+            padding: 35px;
+            border-radius: 4px;
+            margin-top: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            margin-bottom: 25px;
+            padding: 18px 24px;
+            font-size: 11pt;
+            line-height: 1.6;
+            clear: both;
+        }
+
+        .chat-user {
+            background-color: #F8F6F2;
+            color: var(--text-charcoal);
+            float: right;
+            border-radius: 16px 16px 0 16px;
+            border: 1px solid #EBE6DF;
+        }
+
+        .chat-zoya {
+            background-color: #ffffff;
+            border: 1px solid var(--accent-gold-light);
+            color: var(--text-charcoal);
+            float: left;
+            border-radius: 16px 16px 16px 0;
+            box-shadow: 0 2px 10px rgba(197, 160, 89, 0.05);
+        }
+
+        .zoya-label {
+            display: block;
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--accent-gold);
+            margin-bottom: 6px;
+            font-size: 10pt;
+            font-weight: 600;
+        }
+        
+        .user-label {
+            display: block;
+            font-family: var(--font-sans);
+            font-weight: 700;
+            color: #999;
+            margin-bottom: 6px;
+            font-size: 9pt;
+            text-transform: uppercase;
+            text-align: right;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        /* Pricing Table */
+        .pricing-table {
+            width: 100%;
+            margin-top: 40px;
+            border-collapse: collapse;
+        }
+
+        .pricing-table th, .pricing-table td {
+            padding: 30px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-gold);
+        }
+        
+        .pricing-table tr:last-child th,
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pricing-table th {
+            font-family: var(--font-serif);
+            font-size: 18pt;
+            color: var(--accent-gold);
+            font-weight: normal;
+            width: 45%;
+            vertical-align: top;
+            border-right: 1px solid var(--border-gold);
+        }
+
+        .pricing-table td {
+            vertical-align: top;
+            font-size: 11pt;
+            line-height: 1.7;
+            color: var(--text-light);
+        }
+
+        .price {
+            font-family: var(--font-serif);
+            font-size: 22pt;
+            color: var(--text-charcoal);
+            display: block;
+            margin-top: 20px;
+        }
+
+        .footer-note {
+            font-size: 10pt;
+            font-style: italic;
+            color: var(--text-light);
+            margin-top: 30px;
+            text-align: right;
+            opacity: 0.8;
+        }
+
+        .cta {
+            margin-top: 60px;
+            text-align: center;
+            font-family: var(--font-serif);
+            font-size: 24pt;
+            color: var(--text-charcoal);
+            padding: 40px;
+            border: 1px solid var(--accent-gold);
+            background-color: #ffffff;
+            box-shadow: 0 10px 30px rgba(197, 160, 89, 0.1);
+        }
+
+        /* Print Media Queries */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+                page-break-inside: avoid;
+            }
+            .page:last-child {
+                page-break-after: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1: COVER -->
+    <div class="page page-cover">
+        <div class="img-placeholder cover-image">
+            [Insert Full-Width Image Placeholder: Heavy Kundan and Emerald Necklace]
+        </div>
+        <div class="cover-content">
+            <h1 class="cover-title">ZEVARLY</h1>
+            <h2 class="cover-subtitle">The Next Evolution</h2>
+            <h3 class="cover-h3">A STRATEGIC BRAND & SALES<br>TRANSFORMATION PROPOSAL</h3>
+            <h4 class="cover-h4">PREPARED BY AI NEXLIFY AGENCIES</h4>
+        </div>
+    </div>
+
+    <!-- PAGE 2: THE VISION -->
+    <div class="page">
+        <div class="page-header">
+            <span>Zevarly Prospectus</span>
+            <span>01 // The Vision</span>
+        </div>
+        
+        <div class="img-placeholder vision-img">
+            [Insert Image Placeholder: Model wearing Kundan Choker with red saree]
+        </div>
+        
+        <h2 class="section-h2">The Vision</h2>
+        <p>At Zevarly, true luxury lies in the experience. As the imitation jewelry market becomes increasingly commoditized, the brands that win will be those that offer bespoke, high-touch interactions effortlessly.</p>
+        
+        <h3 class="section-h3">Invisible Technology, Human Connection</h3>
+        <p>Our philosophy is simple: technology should amplify the human element, never replace it. We are not just building a store; we are engineering a digital boutique. By embedding advanced AI invisibly into the customer journey, we create an environment where every visitor feels personally attended to, guided, and valued.</p>
+        
+        <div class="page-footer">
+            <span>AI Nexlify Agencies</span>
+            <span>Page 2</span>
+        </div>
+    </div>
+
+    <!-- PAGE 3: VISUAL TRANSFORMATION -->
+    <div class="page">
+        <div class="page-header">
+            <span>Zevarly Prospectus</span>
+            <span>02 // Architecture</span>
+        </div>
+        
+        <h2 class="section-h2">Visual Transformation</h2>
+        <p>Aesthetics are the currency of trust in digital retail. We are implementing an automated visual pipeline powered by a custom ComfyUI node architecture to elevate Zevarly's visual identity from standard e-commerce to haute couture.</p>
+        
+        <div class="side-by-side">
+            <div class="img-placeholder side-img">
+                [Insert Side-by-Side Image Placeholders:<br><br>Left - Basic Flat Lay of Necklace]
+            </div>
+            <div class="img-placeholder side-img">
+                [Right - Stunning Lifestyle composite of the same necklace on a culturally resonant model]
+            </div>
+        </div>
+        
+        <p>Absolute brand consistency is our priority. We train a bespoke LoRA (Low-Rank Adaptation) model on a singular, culturally authentic digital avatar. Whether generating 10 images or 10,000, your brand ambassador's face, aesthetic, and vibe remain mathematically identical.</p>
+        <p>Producing 40-50 high-fashion composites daily, your catalog will reflect the grandeur of traditional Indian jewelry, scaled effortlessly across web and social channels without the bottleneck of traditional photoshoots.</p>
+        
+        <div class="page-footer">
+            <span>AI Nexlify Agencies</span>
+            <span>Page 3</span>
+        </div>
+    </div>
+
+    <!-- PAGE 4: THE CONCIERGE EXPERIENCE -->
+    <div class="page">
+        <div class="page-header">
+            <span>Zevarly Prospectus</span>
+            <span>03 // AI Sales</span>
+        </div>
+        
+        <h2 class="section-h2">The Concierge Experience</h2>
+        <p>Meet Zoya—Zevarly's dedicated Indian Stylist. Standard web chats are cold and transactional. Zoya is programmed with deep cultural context. She is warm, culturally attuned, and speaks fluent "Hinglish," matching the exact cadence and stylistic needs of the Indian retail consumer.</p>
+        
+        <div class="chat-container clearfix">
+            <div class="chat-bubble chat-user">
+                <span class="user-label">User</span>
+                Hi! Do you have something to match a dark green silk saree for a sangeet?
+            </div>
+            
+            <div class="chat-bubble chat-zoya">
+                <span class="zoya-label">Zoya (Zevarly Stylist)</span>
+                Hi babe! Dark green silk sounds gorgeous. For a sangeet, you definitely want something that pops but isn't too heavy. I have this stunning gold-plated antique choker set with emerald accents. It will complement the saree perfectly without overpowering it. Let me send you a quick video of how it looks!
+            </div>
+            
+            <div class="chat-bubble chat-user">
+                <span class="user-label">User</span>
+                Omg yes please! Kitne ka hai?
+            </div>
+            
+            <div class="chat-bubble chat-zoya">
+                <span class="zoya-label">Zoya (Zevarly Stylist)</span>
+                It's for 2,499, completely tarnish-free. Should I reserve this piece for you in your cart?
+            </div>
+        </div>
+        
+        <div class="page-footer">
+            <span>AI Nexlify Agencies</span>
+            <span>Page 4</span>
+        </div>
+    </div>
+
+    <!-- PAGE 5: THE GOOGLE RANKING ENGINE -->
+    <div class="page">
+        <div class="page-header">
+            <span>Zevarly Prospectus</span>
+            <span>04 // SEO Strategy</span>
+        </div>
+        
+        <h2 class="section-h2">The Google Ranking Engine</h2>
+        <p>Beautiful storefronts need foot traffic. We are outfitting Zevarly with a silent but incredibly powerful SEO architecture designed to capture high-intent search traffic organically.</p>
+        
+        <h3 class="section-h3" style="font-size: 18pt; margin-top: 30px;">1. Lightning-Fast Site Speed</h3>
+        <p>Optimized Liquid assets and intelligent image delivery ensure the site loads instantly, a critical factor for both Google rankings and mobile conversions.</p>
+        
+        <h3 class="section-h3" style="font-size: 18pt; margin-top: 30px;">2. Structural Schema Markup</h3>
+        <p>We translate your product data into a language search engines understand perfectly, increasing the chances of rich snippets, visual catalog displays, and higher visibility.</p>
+        
+        <h3 class="section-h3" style="font-size: 18pt; margin-top: 30px;">3. Fresh Content Authority</h3>
+        <p>Our automated SEO agent publishes 2 highly optimized, culturally relevant blog posts a week about Indian imitation jewelry trends. This builds compounding domain authority without any manual effort from your team.</p>
+        
+        <div class="page-footer">
+            <span>AI Nexlify Agencies</span>
+            <span>Page 5</span>
+        </div>
+    </div>
+
+    <!-- PAGE 6: TIMELINE & INVESTMENT -->
+    <div class="page">
+        <div class="page-header">
+            <span>Zevarly Prospectus</span>
+            <span>05 // Deployment</span>
+        </div>
+        
+        <h2 class="section-h2">Timeline & Investment</h2>
+        <p>We believe in transparent, value-driven partnerships. The architecture is deployed in two distinct phases: Foundation and Growth.</p>
+        
+        <table class="pricing-table">
+            <tr>
+                <th>Phase 1: Architecture & Setup</th>
+                <td>
+                    Shopify UI Face-lift, Zoya Custom Training, LoRA Avatar & ComfyUI Pipeline Setup, SEO Foundation
+                    <span class="price">Investment: 1,50,000</span>
+                </td>
+            </tr>
+            <tr>
+                <th>Phase 2: Ongoing Retainer</th>
+                <td>
+                    Zoya WhatsApp Hosting & Iteration, 40-50 Daily Avatar-Consistent Assets, 2x Weekly SEO Blogs, Full Infrastructure Maintenance
+                    <span class="price">Investment: 85,000/month</span>
+                </td>
+            </tr>
+        </table>
+        
+        <div class="footer-note">
+            *Strategic subsidized pricing based on portfolio partnership.
+        </div>
+        
+        <div class="cta">
+            Ready to Evolve? Upon approval, Phase 1 deployment commences within 48 hours.
+        </div>
+        
+        <div class="page-footer">
+            <span>AI Nexlify Agencies</span>
+            <span>Page 6</span>
+        </div>
+    </div>
+
+</body>
+</html>
