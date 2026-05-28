@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Nexlify Agencies | Global Enterprise Infrastructure</title>
+    <meta name="description" content="AI Nexlify Agencies builds automated digital infrastructure for high-friction global businesses. Replace slow human-led sales floors with custom AI Concierges.">
+    <meta property="og:title" content="AI Nexlify Agencies | Enterprise Infrastructure">
+    <meta property="og:description" content="Automated digital infrastructure for high-friction global businesses.">
+    <meta property="og:image" content="https://ainexlifyagencies.com/hyper_seo_matrix.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "AI Nexlify Agencies",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
     <style>
         /* CSS Variables */
         :root {
@@ -458,11 +476,15 @@
         }
 
         .img-before {
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            background-image: url('showroom_raw.png');
+            background-size: cover;
+            background-position: center;
         }
 
         .img-after {
-            background: linear-gradient(135deg, #0f2b20, #001a11);
+            background-image: url('showroom_ai_enhanced.png');
+            background-size: cover;
+            background-position: center;
             clip-path: inset(0 0 0 50%);
         }
 
@@ -674,19 +696,17 @@
         </div>
     </div>
 
-    <!-- UPGRADE 2: RUTHLESS QUALIFICATION MODAL -->
+    <!-- UPGRADE 2: APPLICATION MODAL -->
     <div class="qual-modal" id="qual-modal">
         <div class="qual-box">
-            <h3>Enterprise Qualification Check</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">We strictly partner with businesses generating ₹15L+ monthly revenue. Select your current bracket:</p>
-            <select class="qual-select" id="qual-bracket">
-                <option value="" disabled selected>Select Monthly Revenue...</option>
-                <option value="low">Under ₹5 Lakhs (Not Qualified)</option>
-                <option value="mid">₹5 Lakhs - ₹15 Lakhs</option>
-                <option value="high">₹15 Lakhs - ₹50 Lakhs+</option>
-            </select>
-            <button class="btn btn-primary" id="btn-qualify" style="width: 100%; padding: 1rem;">Verify Status</button>
+            <h3>Enterprise Application</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Due to extreme computational demand, we onboard limited clients. Submit your architecture details.</p>
+            <input type="text" id="app-name" class="qual-select" placeholder="Full Name" style="background: rgba(0,0,0,0.5); color: white;">
+            <input type="text" id="app-phone" class="qual-select" placeholder="WhatsApp Number" style="background: rgba(0,0,0,0.5); color: white;">
+            <input type="text" id="app-url" class="qual-select" placeholder="Business URL" style="background: rgba(0,0,0,0.5); color: white;">
+            <button class="btn btn-primary" id="btn-qualify" style="width: 100%; padding: 1rem;">Initiate System Review</button>
             <div id="qual-status"></div>
+            <button id="close-modal" style="background: transparent; border: none; color: var(--text-muted); width: 100%; margin-top: 1rem; cursor: pointer;">Close</button>
         </div>
     </div>
 
@@ -696,7 +716,7 @@
             <h1>Stop Losing High-Ticket<br>Deals While You Sleep.</h1>
             <p class="sub-headline">We build automated digital infrastructure for high-friction global businesses. We replace slow, human-led sales floors with custom AI Concierges that qualify leads and close deals 24/7.</p>
             <div class="btn-group">
-                <a href="https://wa.me/YOURNUMBER" target="_blank" class="btn btn-primary">Get a Custom AI Blueprint</a>
+                <button class="btn btn-primary open-modal-btn">Get a Custom AI Blueprint</button>
                 <a href="#protocol" class="btn btn-secondary">See How It Works</a>
             </div>
         </div>
@@ -840,14 +860,67 @@
         </div>
     </section>
 
+    <!-- 5.5. AUTONOMOUS SEO ENGINE -->
+    <section class="section">
+        <style>
+            .cyber-matrix-container { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 0 40px rgba(16, 185, 129, 0.1); }
+            .hyper-image { width: 100%; height: auto; display: block; filter: contrast(1.1) brightness(0.9); transform: scale(1.05); }
+            .laser-scanner { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--emerald); box-shadow: 0 0 20px var(--emerald), 0 0 40px var(--emerald); opacity: 0.8; animation: scan 3s ease-in-out infinite; z-index: 5; }
+            @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 98%; opacity: 0; } }
+            .data-stream-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(3,3,3,0.1) 0%, rgba(3,3,3,0.8) 100%); z-index: 2; pointer-events: none; }
+            .ticker-tape { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.9); border-top: 1px solid var(--emerald); padding: 8px 0; overflow: hidden; z-index: 10; }
+            .ticker-content { display: inline-block; white-space: nowrap; color: var(--emerald); font-family: monospace; font-size: 0.8rem; animation: ticker 20s linear infinite; text-shadow: 0 0 5px var(--emerald); }
+            @keyframes ticker { 0% { transform: translateX(500px); } 100% { transform: translateX(-100%); } }
+            .floating-node { position: absolute; width: 8px; height: 8px; background: var(--text-main); border-radius: 50%; box-shadow: 0 0 15px var(--text-main); z-index: 6; animation: floatNode 3s ease-in-out infinite alternate; }
+            @keyframes floatNode { 0% { transform: translateY(0px) scale(1); opacity: 0.5; } 100% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
+        </style>
+        <div class="container">
+            <div class="concierge-grid">
+                <div class="scroll-reveal" style="order: 1;">
+                    <div class="glass-panel" style="padding: 1rem; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.05);">
+                        <div class="cyber-matrix-container">
+                            <img src="hyper_seo_matrix.png" alt="8k Hyperrealistic SEO Agent" class="hyper-image">
+                            <div class="data-stream-overlay"></div>
+                            <div class="laser-scanner"></div>
+                            <div class="floating-node" style="top: 30%; left: 40%; animation-delay: 0s;"></div>
+                            <div class="floating-node" style="top: 60%; left: 70%; animation-delay: 1s;"></div>
+                            <div class="floating-node" style="top: 45%; left: 20%; animation-delay: 2s; background: var(--emerald); box-shadow: 0 0 15px var(--emerald);"></div>
+                            <div class="ticker-tape">
+                                <div class="ticker-content">
+                                    [SYS.LOG] INITIATING DEEP CRAWL... [NODE 04] COMPETITOR KEYWORDS EXTRACTED... [LLM] GENERATING 2,500 WORD ASSET... [CMS] PUSHING TO PRODUCTION... [INDEX] RANKING POSITION #1 SECURED.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scroll-reveal" style="order: 2;">
+                    <h2>The Autonomous SEO Engine</h2>
+                    <p style="margin-top: 1.5rem; margin-bottom: 2rem;">Our proprietary SEO nodes don't just write blogs; they analyze search volume, generate high-intent articles, deploy them directly to your CMS, and index them—while you sleep.</p>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
+                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> 2x Weekly Automated Publications</li>
+                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> Real-time SERP Data Processing</li>
+                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> Semantic Keyword Matrix Injection</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- SECTION 6: UNIVERSAL FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-cta">
                 <h3>Engineered for High-Friction Industries Globally: Real Estate, Fine Jewelry, Luxury Fashion, Premium B2B.</h3>
-                <a href="https://wa.me/YOURNUMBER" target="_blank" class="btn btn-primary" style="margin-top: 1rem;">Start Your Custom Build</a>
+                <button class="btn btn-primary open-modal-btn" style="margin-top: 1rem;">Start Your Custom Build</button>
             </div>
             
+            <div style="margin-top: 2rem; margin-bottom: 2rem; display: flex; justify-content: center; gap: 2rem;">
+                <a href="/terms/" style="color: var(--emerald); text-decoration: none;">Terms of Service</a>
+                <a href="/terms/#sec-8" style="color: var(--emerald); text-decoration: none;">Privacy Policy</a>
+                <a href="/terms/#sec-8" style="color: var(--emerald); text-decoration: none;">Data Processing Agreement (DPA)</a>
+            </div>
+
             <div class="footer-ip">
                 Intellectual Property Notice: All underlying conversational logic, prompt engineering, LoRA models, and node-based generative pipelines remain the exclusive intellectual property of AI Nexlify Agencies. Clients retain full ownership of generated outputs.
             </div>
@@ -856,7 +929,7 @@
 
     <!-- PERSISTENT MOBILE CTA -->
     <div class="mobile-sticky-cta">
-        <a href="https://wa.me/YOURNUMBER" target="_blank" class="btn btn-primary">Chat on WhatsApp</a>
+        <button class="btn btn-primary open-modal-btn">Initiate Neural Link</button>
     </div>
 
     <!-- JavaScript Interactions -->
@@ -1014,26 +1087,63 @@
 
         // 2. Qual Modal Logic
         const qBtn = document.getElementById('btn-qualify');
-        const qSel = document.getElementById('qual-bracket');
+        const appName = document.getElementById('app-name');
+        const appPhone = document.getElementById('app-phone');
+        const appUrl = document.getElementById('app-url');
         const qStat = document.getElementById('qual-status');
+        const qModal = document.getElementById('qual-modal');
+        const closeBtn = document.getElementById('close-modal');
+
         if(qBtn) {
-            qBtn.addEventListener('click', () => {
-                if(!qSel.value) { qStat.textContent = "> ERROR: INPUT REQUIRED"; qStat.classList.add('shake-red'); setTimeout(() => qStat.classList.remove('shake-red'), 400); return; }
-                if(qSel.value === 'low') {
+            qBtn.addEventListener('click', async () => {
+                if(!appName.value || !appPhone.value) { 
+                    qStat.textContent = "> ERROR: NAME & PHONE REQUIRED"; 
                     qStat.style.color = '#ef4444';
-                    qStat.textContent = "> ACCESS DENIED. REVENUE BELOW ENTERPRISE THRESHOLD.";
-                    qStat.classList.add('shake-red');
-                    setTimeout(() => qStat.classList.remove('shake-red'), 400);
-                } else {
-                    qStat.style.color = '#10b981';
-                    qStat.textContent = "> AUTHORIZED. WELCOME TO THE PLATFORM.";
-                    setTimeout(() => { document.getElementById('qual-modal').classList.remove('active'); }, 800);
+                    qStat.classList.add('shake-red'); 
+                    setTimeout(() => qStat.classList.remove('shake-red'), 400); 
+                    return; 
+                }
+                
+                qStat.style.color = '#10b981';
+                qStat.textContent = "> PROCESSING ARCHITECTURE REQUEST...";
+                
+                try {
+                    const res = await fetch('/api/agency/apply', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ name: appName.value, phone: appPhone.value, website: appUrl.value })
+                    });
+                    
+                    if (res.ok) {
+                        qStat.textContent = "> APPLICATION SECURED. AWAITING NEURAL HANDSHAKE.";
+                        setTimeout(() => { 
+                            qModal.classList.remove('active'); 
+                            window.location.href = `https://wa.me/+971501234567?text=Hi,%20I%20just%20submitted%20an%20application%20for%20Nexlify%20Agency.%20Name:%20${appName.value}`;
+                        }, 1500);
+                    } else {
+                        throw new Error('Failed');
+                    }
+                } catch (e) {
+                    qStat.style.color = '#ef4444';
+                    qStat.textContent = "> API ERROR. ROUTING DIRECTLY TO WHATSAPP...";
+                    setTimeout(() => { 
+                        window.location.href = `https://wa.me/+971501234567?text=Hi,%20I%20want%20to%20apply.%20Name:%20${appName.value}`;
+                    }, 1000);
                 }
             });
-            document.querySelector('a[href="#protocol"]').addEventListener('click', (e) => {
-                e.preventDefault();
-                document.getElementById('qual-modal').classList.add('active');
-                qStat.textContent = "";
+            
+            if(closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    qModal.classList.remove('active');
+                });
+            }
+            
+            document.querySelectorAll('.open-modal-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    qModal.classList.add('active');
+                    qStat.textContent = "";
+                });
             });
         }
 
