@@ -8,6 +8,11 @@
 ## 🏗️ Core Architecture: The Sovereign-Switch
 The pipeline has been hardened to eliminate third-party gateway dependencies (OpenRouter/Make.com) for core AI processing and delivery, achieving zero-latency and maximum resilience.
 
+### 1. Frontend Layer (Cyber-Luxe Agency Platform)
+- **Status**: Live on `www.ainexlifyagencies.com` (`/server/agency-public/index.html`)
+- **Key Modules**: Touch-optimized Mobile-first UI, Bleed Engine ROI Calculator, "How We Work" Deployment timeline, Fortified Legal & Cookie compliance.
+- **Leads**: Direct mailto triggers to `anas@ainexlifyagencies.com`.
+
 ### 1. Cognitive Layer (Brain)
 - **Primary Engine**: Google Gemini 2.5 Flash (`v1beta`).
 - **Connection**: Direct native API calls (Bypassing OpenRouter).
