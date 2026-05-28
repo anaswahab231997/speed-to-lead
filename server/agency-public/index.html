@@ -609,6 +609,54 @@
             .mobile-sticky-cta { display: block; }
             body { padding-bottom: 90px; }
         }
+        /* 1. Intro Sequence */
+        #sys-intro {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #000; color: #10b981; font-family: monospace;
+            z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+            padding: 2rem;
+        }
+        .glitch { animation: glitch 0.2s linear infinite; }
+        @keyframes glitch { 0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) } 40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) } 80% { transform: translate(2px, -2px) } 100% { transform: translate(0) } }
+        .hidden-intro { opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+        /* 2. Qualification Modal */
+        .qual-modal {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            z-index: 9000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: all 0.4s ease;
+        }
+        .qual-modal.active { opacity: 1; pointer-events: auto; }
+        .qual-box {
+            background: var(--obsidian); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 2rem; width: 90%; max-width: 450px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9); transform: translateY(20px); transition: all 0.4s ease;
+        }
+        .qual-modal.active .qual-box { transform: translateY(0); }
+        .qual-box h3 { color: var(--emerald); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 1rem;}
+        .qual-select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
+        .qual-select option { background: var(--obsidian); color: white; }
+        #qual-status { margin-top: 1rem; font-family: monospace; font-size: 0.8rem; color: var(--emerald); min-height: 20px; }
+        /* 3. Currency & Response Time */
+        .currency-toggles { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+        .curr-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-silver); padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease; }
+        .curr-btn.active { background: var(--text-main); color: var(--obsidian); font-weight: bold; }
+        .shake-red { animation: shakeRed 0.4s ease-in-out; }
+        @keyframes shakeRed { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); color: #ef4444; } 40%, 80% { transform: translateX(5px); color: #ef4444; } }
+        /* 4. Neurological Avatar */
+        .avatar-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--emerald); border: 2px solid #fff; margin-right: 0.5rem; display: inline-block; vertical-align: middle; box-shadow: 0 0 10px var(--emerald-glow); animation: avatarBreathe 3s infinite ease-in-out; }
+        .avatar-icon.computing { animation: avatarCompute 0.5s infinite linear; border-style: dashed; }
+        @keyframes avatarBreathe { 0%, 100% { transform: scale(1); box-shadow: 0 0 10px var(--emerald-glow); } 50% { transform: scale(1.1); box-shadow: 0 0 20px var(--emerald); } }
+        @keyframes avatarCompute { 100% { transform: rotate(360deg); } }
+        /* 5. SVG Wireframe & SLA */
+        .img-before-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .wireframe-svg { width: 150%; height: 150%; stroke: var(--emerald); stroke-width: 1px; fill: none; opacity: 0.5; }
+        .laser-line { position: absolute; left: -1px; top: 0; width: 2px; height: 100%; background: var(--emerald); box-shadow: 0 0 20px var(--emerald), 0 0 40px var(--emerald); z-index: 10; pointer-events: none; }
+        .sla-banner { background: #000; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); padding: 1.5rem 0; text-align: center; font-family: monospace; font-size: 0.85rem; color: var(--text-silver); }
+        .sla-items { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; align-items: center; }
+        .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--emerald); border: 1px solid var(--emerald); padding: 0.4rem 1rem; border-radius: 100px; background: rgba(16,185,129,0.05); }
+        .status-dot { width: 8px; height: 8px; background: var(--emerald); border-radius: 50%; box-shadow: 0 0 8px var(--emerald); animation: pulseDot 1.5s infinite; }
+        @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     </style>
 </head>
 <body>
