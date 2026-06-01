@@ -1,0 +1,35 @@
+{
+  "hero": {
+    "title": "From concept to completion. We design, build, and renovate.",
+    "subtitle": "Building legacy estates across Springbank, Aspen Woods, and Greater Calgary with over 20 years of architectural expertise.",
+    "buttonText": "Request Private Consultation"
+  },
+  "design": {
+    "title": "Architectural & Interior Design.",
+    "description": "We turn your ideas into 3D models, drawings, and permit-ready plans — integrating natural rundle stone and heavy timber accents perfect for the Calgary landscape.",
+    "boxTitle": "Permit-Ready Blueprints",
+    "boxDesc": "Flawless 3D renderings to eliminate guesswork."
+  },
+  "build": {
+    "title": "Construction & Custom Homes.",
+    "description": "From new builds in Aspen Woods to legal basement suites — we handle full construction with clarity and care. Precision engineering meets Mountain Modern aesthetics.",
+    "boxTitle": "Flawless Execution",
+    "boxDesc": "In-house project management for total quality control."
+  },
+  "renovation": {
+    "title": "Home Renovation & Remodeling.",
+    "description": "We transform kitchens, bathrooms, basements, and entire homes across Alberta. Design-driven renovations that maximize equity and elevate your daily living experience against the cold winters."
+  },
+  "pricing": {
+    "title": "Investment Tiers.",
+    "description": "Transparent starting figures for uncompromising quality. Every project is uniquely scoped after initial consultation."
+  },
+  "team": {
+    "title": "Built on <br/>Integrity.",
+    "quote": "\"Every home we create is a reflection of our clients — thoughtfully planned, professionally built, and truly one of a kind.\""
+  },
+  "contact": {
+    "title": "Let's build something exceptional.",
+    "description": "Provide your details below to schedule a private feasibility consultation with our lead Calgary designers."
+  }
+}

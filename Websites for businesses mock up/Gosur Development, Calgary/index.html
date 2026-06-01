@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gosur Development | Design-Build Calgary | Custom Homes & Renovation</title>
+    <meta name="description" content="Gosur Development is a Calgary-based design-build company specializing in smart renovations, custom homes, architectural design, permit-ready drawings, basement development, and residential construction services.">
+    <link rel="icon" href="data:,">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        cursive: ['"Great Vibes"', 'cursive'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.4) 100%);
+        }
+        .soft-shadow {
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+        .hover-lift {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+        /* Kinesthetic Animations */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-fade {
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+        .reveal-fade.active {
+            opacity: 1;
+        }
+        /* Stagger delays */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        .delay-400 { transition-delay: 400ms; }
+        
+        .fluid-hero {
+            font-size: clamp(3.5rem, 8vw, 6.5rem);
+            line-height: 1.1;
+        }
+        
+        /* Form glassmorphism */
+        .glass-form {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="font-sans bg-white text-gray-800 antialiased overflow-x-hidden leading-relaxed pb-20 md:pb-0">
+
+    <!-- HEADER -->
+    <header id="main-header" class="absolute top-0 w-full z-50 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between">
+            <a href="#" class="flex items-center text-white mb-4 md:mb-0">
+                <svg class="w-8 h-8 mr-3 text-white fill-current opacity-90" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>
+                <span class="font-sans font-bold tracking-wide leading-tight text-lg drop-shadow-sm">Gosur<br/>Development Inc</span>
+            </a>
+            
+            <nav class="flex flex-wrap justify-center space-x-6 text-sm font-medium text-white drop-shadow-sm">
+                <a href="#" class="hover:text-gray-300 transition-colors">Home</a>
+                <a href="#services" class="hover:text-gray-300 transition-colors">Design</a>
+                <a href="#services" class="hover:text-gray-300 transition-colors">Build</a>
+                <a href="#services" class="hover:text-gray-300 transition-colors">Renovation Services</a>
+                <a href="#contact" class="hover:text-gray-300 transition-colors hidden md:block">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative h-[90vh] md:h-screen w-full flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0 h-[120%] -top-[10%]" id="hero-bg-container">
+            <img id="hero-bg" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2850&q=80" alt="Bright interior with Eames chairs" class="absolute inset-0 w-full h-full object-cover scale-105" />
+            <div class="absolute inset-0 hero-gradient z-10"></div>
+        </div>
+
+        <div class="relative z-20 max-w-6xl mx-auto px-4 text-center mt-12 reveal-up active">
+            <h1 id="cms-hero-title" class="font-cursive fluid-hero text-white drop-shadow-lg px-4 md:px-0">
+                From concept to completion — we design, build, and renovate homes tailored to your lifestyle.
+            </h1>
+            <p id="cms-hero-subtitle" class="hidden text-white mt-4"></p>
+            
+            <a href="#contact" class="hidden md:inline-flex mt-12 items-center justify-center px-8 py-4 bg-white text-black rounded-full font-bold uppercase tracking-wider text-sm hover:bg-gray-100 transition-transform transform hover:scale-105 shadow-xl">
+                Get Your Free Sketch
+            </a>
+        </div>
+    </section>
+
+    <!-- WHAT WE DO -->
+    <section id="services" class="py-24 bg-white text-center">
+        <h2 class="font-sans text-4xl md:text-5xl font-bold text-black mb-16 tracking-tight reveal-up">What We Do</h2>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-[#FAFAFA] rounded-2xl p-10 flex flex-col items-center hover-lift soft-shadow reveal-up delay-100">
+                <h3 id="cms-design-title" class="text-xl font-bold text-black mb-4 h-14 flex items-center justify-center text-center">Architectural & Interior Design</h3>
+                <p id="cms-design-desc" class="text-gray-600 mb-8 text-sm leading-relaxed flex-grow">We turn your ideas into 3D models, drawings, and permit-ready plans — everything you need to build with confidence.</p>
+                <a href="#contact" class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 rounded-full text-sm font-medium text-gray-800 hover:bg-black hover:text-white hover:border-black transition-all w-full">
+                    Explore Design
+                </a>
+            </div>
+            
+            <div class="bg-[#FAFAFA] rounded-2xl p-10 flex flex-col items-center hover-lift soft-shadow reveal-up delay-200">
+                <h3 id="cms-build-title" class="text-xl font-bold text-black mb-4 h-14 flex items-center justify-center text-center">Construction & Custom Homes</h3>
+                <p id="cms-build-desc" class="text-gray-600 mb-8 text-sm leading-relaxed flex-grow">From new builds and additions to legal basement suites — we handle full construction with clarity and care.</p>
+                <a href="#contact" class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 rounded-full text-sm font-medium text-gray-800 hover:bg-black hover:text-white hover:border-black transition-all w-full">
+                    See Our Builds
+                </a>
+            </div>
+            
+            <div class="bg-[#FAFAFA] rounded-2xl p-10 flex flex-col items-center hover-lift soft-shadow reveal-up delay-300">
+                <h3 id="cms-reno-title" class="text-xl font-bold text-black mb-4 h-14 flex items-center justify-center text-center">Home Renovation & Remodeling</h3>
+                <p id="cms-reno-desc" class="text-gray-600 mb-8 text-sm leading-relaxed flex-grow">We transform kitchens, bathrooms, basements, and entire homes. Design-driven renovations that last.</p>
+                <a href="#contact" class="inline-flex items-center justify-center px-6 py-3 border border-gray-300 rounded-full text-sm font-medium text-gray-800 hover:bg-black hover:text-white hover:border-black transition-all w-full">
+                    View Renovation Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE GOSUR (Graphical SEO Upgrade) -->
+    <section class="py-24 bg-[#F9F9F9] text-center border-t border-gray-100">
+        <h2 class="font-sans text-4xl md:text-5xl font-bold text-black mb-16 tracking-tight reveal-up">Why Choose GOSUR</h2>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+            
+            <!-- Card 1 -->
+            <div class="relative h-[340px] rounded-2xl overflow-hidden group hover-lift soft-shadow reveal-up delay-100">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Calgary custom home architectural sketch and design" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-300 group-hover:opacity-90"></div>
+                <div class="absolute bottom-0 left-0 p-8 w-full z-10 transform transition-transform duration-300 group-hover:-translate-y-2">
+                    <h3 class="font-bold text-white mb-3 text-xl drop-shadow-lg leading-tight">Complimentary Custom Home Sketch</h3>
+                    <p class="text-sm text-gray-200 leading-relaxed drop-shadow-md">Get your luxury home project started risk-free with our expert architectural sketch and initial design consultation.</p>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="relative h-[340px] rounded-2xl overflow-hidden group hover-lift soft-shadow reveal-up delay-200">
+                <img src="https://images.unsplash.com/photo-1542621334-a254cf47733d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Calgary permit-ready architectural drawings and blueprints" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-300 group-hover:opacity-90"></div>
+                <div class="absolute bottom-0 left-0 p-8 w-full z-10 transform transition-transform duration-300 group-hover:-translate-y-2">
+                    <h3 class="font-bold text-white mb-3 text-xl drop-shadow-lg leading-tight">Calgary Permit-Ready Drawings</h3>
+                    <p class="text-sm text-gray-200 leading-relaxed drop-shadow-md">Our custom home blueprints rigorously meet all Alberta building codes, city requirements, and engineering standards.</p>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="relative h-[340px] rounded-2xl overflow-hidden group hover-lift soft-shadow reveal-up delay-300">
+                <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Local Calgary custom home builders and contractors" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-300 group-hover:opacity-90"></div>
+                <div class="absolute bottom-0 left-0 p-8 w-full z-10 transform transition-transform duration-300 group-hover:-translate-y-2">
+                    <h3 class="font-bold text-white mb-3 text-xl drop-shadow-lg leading-tight">Local Premier Calgary Builders</h3>
+                    <p class="text-sm text-gray-200 leading-relaxed drop-shadow-md">We are a dedicated local design-build firm operating in Greater Calgary—no outsourcing to unknown subcontractors.</p>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="relative h-[340px] rounded-2xl overflow-hidden group hover-lift soft-shadow reveal-up delay-100">
+                <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dedicated project management and transparent communication" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-300 group-hover:opacity-90"></div>
+                <div class="absolute bottom-0 left-0 p-8 w-full z-10 transform transition-transform duration-300 group-hover:-translate-y-2">
+                    <h3 class="font-bold text-white mb-3 text-xl drop-shadow-lg leading-tight">Dedicated Project Management</h3>
+                    <p class="text-sm text-gray-200 leading-relaxed drop-shadow-md">Stay informed through every phase of your luxury renovation. Transparent communication with absolutely no hidden fees.</p>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="relative h-[340px] rounded-2xl overflow-hidden group hover-lift soft-shadow reveal-up delay-200">
+                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Full-service in-house design and construction team" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-300 group-hover:opacity-90"></div>
+                <div class="absolute bottom-0 left-0 p-8 w-full z-10 transform transition-transform duration-300 group-hover:-translate-y-2">
+                    <h3 class="font-bold text-white mb-3 text-xl drop-shadow-lg leading-tight">Full-Service In-House Team</h3>
+                    <p class="text-sm text-gray-200 leading-relaxed drop-shadow-md">Our unified team expertly manages your entire custom estate build, from initial architectural plans to the final luxury finishes.</p>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="relative h-[340px] rounded-2xl overflow-hidden group hover-lift soft-shadow reveal-up delay-300">
+                <img src="https://images.unsplash.com/photo-1628624747186-a941c476b7ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="On-time and on-budget luxury home renovations" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-110">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-300 group-hover:opacity-90"></div>
+                <div class="absolute bottom-0 left-0 p-8 w-full z-10 transform transition-transform duration-300 group-hover:-translate-y-2">
+                    <h3 class="font-bold text-white mb-3 text-xl drop-shadow-lg leading-tight">Guaranteed Timeline & Budget</h3>
+                    <p class="text-sm text-gray-200 leading-relaxed drop-shadow-md">We respect your investment, delivering high-end home additions and luxury remodels strictly on schedule and within budget.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- IMAGE SHOWCASE STRIP -->
+    <section class="w-full flex flex-col md:flex-row overflow-hidden h-[400px] md:h-[450px] reveal-fade">
+        <div class="w-full md:w-1/4 h-full relative group overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" alt="Modern exterior">
+        </div>
+        <div class="w-full md:w-1/4 h-full relative group overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" alt="Twilight modern home">
+        </div>
+        <div class="w-full md:w-1/4 h-full relative group overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" alt="Evening luxury home">
+        </div>
+        <div class="w-full md:w-1/4 h-full relative group overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" alt="Bright craftsman home">
+        </div>
+    </section>
+
+    <!-- CONTACT INTAKE FORM (CRO Optimized) -->
+    <section id="contact" class="py-24 bg-white border-t border-gray-100 relative overflow-hidden">
+        <!-- Subtle decorative background element -->
+        <div class="absolute -top-[20%] -right-[10%] w-[50%] h-[50%] rounded-full bg-gray-50 blur-[100px] pointer-events-none"></div>
+        <div class="absolute -bottom-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gray-50 blur-[100px] pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div class="reveal-up">
+                <h2 id="cms-contact-title" class="font-sans text-4xl md:text-5xl font-bold text-black mb-6 tracking-tight">Let's build something exceptional.</h2>
+                <p id="cms-contact-desc" class="text-gray-600 text-lg mb-12 leading-relaxed">Provide your details below to schedule a private feasibility consultation with our lead Calgary designers. Discover what's possible for your property.</p>
+                
+                <!-- CRO Trust Badges placed right next to the value proposition -->
+                <div class="hidden lg:flex items-center space-x-6 pt-8 border-t border-gray-100">
+                    <img src="https://seal-calgary.bbb.org/logo/sevtbus/bbb-132771.png" alt="BBB Accredited" class="h-14">
+                    <div class="flex items-center space-x-2">
+                        <i data-lucide="shield-check" class="w-8 h-8 text-green-500"></i>
+                        <div class="flex flex-col">
+                            <span class="font-bold text-sm">TrustedPros</span>
+                            <span class="text-xs text-gray-500">Verified Contractor</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal-up delay-200">
+                <form action="#" method="POST" class="glass-form border border-gray-100 p-8 md:p-12 rounded-3xl shadow-[0_30px_60px_rgba(0,0,0,0.08)] relative">
+                    <!-- Conversion arrow pointing down to form on mobile -->
+                    <div class="lg:hidden absolute -top-8 left-1/2 transform -translate-x-1/2 text-black animate-bounce">
+                        <i data-lucide="arrow-down" class="w-6 h-6"></i>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div>
+                            <label for="fullName" class="block text-sm font-semibold text-gray-800 mb-2">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" autocomplete="name" class="block w-full border border-gray-200 rounded-xl bg-gray-50 px-4 py-4 focus:ring-2 focus:ring-black focus:border-black transition-all outline-none" placeholder="John Doe" required>
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-semibold text-gray-800 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" autocomplete="tel" class="block w-full border border-gray-200 rounded-xl bg-gray-50 px-4 py-4 focus:ring-2 focus:ring-black focus:border-black transition-all outline-none" placeholder="(403) 000-0000" required>
+                        </div>
+                        <div>
+                            <label for="projectType" class="block text-sm font-semibold text-gray-800 mb-2">Project Type</label>
+                            <select id="projectType" name="projectType" class="block w-full border border-gray-200 rounded-xl bg-gray-50 px-4 py-4 focus:ring-2 focus:ring-black focus:border-black transition-all outline-none appearance-none" required>
+                                <option value="" disabled selected>Select Project Type</option>
+                                <option value="Custom Build">Custom Build</option>
+                                <option value="Luxury Remodel">Luxury Remodel</option>
+                                <option value="Architectural Design">Architectural Design</option>
+                            </select>
+                        </div>
+                        <div class="pt-6">
+                            <button type="submit" class="w-full bg-black text-white font-bold text-lg px-8 py-5 rounded-xl transition-all transform hover:scale-[1.02] hover:shadow-xl flex items-center justify-center space-x-2 group">
+                                <span>Request Consultation</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs text-center text-gray-400 mt-4"><i data-lucide="lock" class="w-3 h-3 inline mr-1 -mt-0.5"></i> Your information is secure and confidential.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#111111] text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-16">
+            <div>
+                <h3 class="font-serif text-4xl mb-8 font-normal italic">Menu</h3>
+                <ul class="space-y-4 text-sm font-sans text-gray-400">
+                    <li><a href="#" class="hover:text-white transition-colors">Home</a></li>
+                    <li><a href="#services" class="hover:text-white transition-colors">Design</a></li>
+                    <li><a href="#services" class="hover:text-white transition-colors">Build</a></li>
+                    <li><a href="#services" class="hover:text-white transition-colors">Renovation Services</a></li>
+                    <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-serif text-4xl mb-8 font-normal italic">Contacts</h3>
+                <ul class="space-y-4 text-sm font-sans text-gray-400">
+                    <li class="flex items-center"><i data-lucide="mail" class="w-4 h-4 mr-3"></i> gosur.build@gmail.com</li>
+                    <li class="flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-3"></i> 825-747-3737</li>
+                    <li class="pt-6 flex flex-wrap items-center gap-4 lg:hidden">
+                        <!-- Mobile Trust Badges in Footer -->
+                        <img src="https://seal-calgary.bbb.org/logo/sevtbus/bbb-132771.png" alt="BBB" class="h-10 bg-white p-1 rounded">
+                        <div class="h-10 bg-white text-black text-xs font-bold px-3 py-1 flex items-center rounded">TrustedPros</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 pt-8 border-t border-gray-800 text-xs text-gray-500 text-center md:text-left flex flex-col md:flex-row justify-between items-center">
+            <span>&copy; 2026 Gosur Development Inc. All rights reserved.</span>
+            <span class="mt-4 md:mt-0">Calgary, Alberta</span>
+        </div>
+    </footer>
+
+    <!-- STICKY MOBILE CTA -->
+    <div class="fixed bottom-0 left-0 w-full z-50 md:hidden bg-white/90 backdrop-blur-md border-t border-gray-200 p-4 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] transform transition-transform duration-300 translate-y-full" id="sticky-cta">
+        <a href="#contact" class="w-full flex items-center justify-center bg-black text-white font-bold py-4 rounded-xl shadow-lg active:scale-95 transition-transform">
+            Book Free Consultation
+        </a>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // 1. KINESTHETIC INTERSECTION OBSERVER (Scroll Reveals)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-up, .reveal-fade').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 2. PARALLAX HERO SCROLL
+        const heroBg = document.getElementById('hero-bg');
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.pageYOffset;
+            if (scrollPos < window.innerHeight && heroBg) {
+                // Move background down at half the speed of the scroll
+                heroBg.style.transform = `translateY(${scrollPos * 0.4}px) scale(1.05)`;
+            }
+        });
+
+        // 3. STICKY MOBILE CTA LOGIC
+        // Show the sticky button only after scrolling past the hero section
+        const stickyCta = document.getElementById('sticky-cta');
+        const heroSectionHeight = window.innerHeight * 0.8;
+        
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth < 768) { // Mobile only
+                if (window.pageYOffset > heroSectionHeight) {
+                    stickyCta.classList.remove('translate-y-full');
+                } else {
+                    stickyCta.classList.add('translate-y-full');
+                }
+            }
+        });
+
+        // 4. CMS CONTENT FETCHER
+        fetch('content.json')
+            .then(res => res.json())
+            .then(data => {
+                if(data.hero) {
+                    if(data.hero.title) document.getElementById('cms-hero-title').innerHTML = data.hero.title;
+                    if(data.hero.subtitle) document.getElementById('cms-hero-subtitle').innerHTML = data.hero.subtitle;
+                }
+                if(data.design) {
+                    if(data.design.title) document.getElementById('cms-design-title').innerHTML = data.design.title.replace('&', '&amp;');
+                    if(data.design.description) document.getElementById('cms-design-desc').innerHTML = data.design.description;
+                }
+                if(data.build) {
+                    if(data.build.title) document.getElementById('cms-build-title').innerHTML = data.build.title.replace('&', '&amp;');
+                    if(data.build.description) document.getElementById('cms-build-desc').innerHTML = data.build.description;
+                }
+                if(data.renovation) {
+                    if(data.renovation.title) document.getElementById('cms-reno-title').innerHTML = data.renovation.title.replace('&', '&amp;');
+                    if(data.renovation.description) document.getElementById('cms-reno-desc').innerHTML = data.renovation.description;
+                }
+                if(data.contact) {
+                    if(data.contact.title) document.getElementById('cms-contact-title').innerHTML = data.contact.title;
+                    if(data.contact.description) document.getElementById('cms-contact-desc').innerHTML = data.contact.description;
+                }
+            })
+            .catch(err => console.error("CMS load error:", err));
+
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

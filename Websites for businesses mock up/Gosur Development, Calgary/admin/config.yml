@@ -1,0 +1,61 @@
+backend:
+  name: git-gateway
+  branch: main
+local_backend: true
+media_folder: "assets/images"
+public_folder: "/assets/images"
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "content.json"
+        label: "Landing Page Content"
+        name: "landing"
+        fields:
+          - label: "Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Subtitle", name: "subtitle", widget: "text"}
+              - {label: "Button Text", name: "buttonText", widget: "string"}
+          - label: "Design"
+            name: "design"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Box Title", name: "boxTitle", widget: "string"}
+              - {label: "Box Description", name: "boxDesc", widget: "string"}
+          - label: "Build"
+            name: "build"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+              - {label: "Box Title", name: "boxTitle", widget: "string"}
+              - {label: "Box Description", name: "boxDesc", widget: "string"}
+          - label: "Renovation"
+            name: "renovation"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+          - label: "Pricing"
+            name: "pricing"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
+          - label: "Team"
+            name: "team"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Quote", name: "quote", widget: "text"}
+          - label: "Contact"
+            name: "contact"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string"}
+              - {label: "Description", name: "description", widget: "text"}
