@@ -97,3 +97,11 @@ The only thing I do is describe, approve results, and send the next prompt.
 ### Final Rule:
 Never tell me something cannot be done. Never tell me to hire a developer. Never tell me to learn something technical. Never ask me to do something manually.
 If there is a wall, go through it, around it, or build a door. Just get to the other side and show me the result.
+
+## Netlify Deployment Standards
+- ALWAYS inject a 
+etlify.toml file into the root of any repository containing both static HTML sites and a package.json.
+- Netlify auto-detects package.json and silently attempts a Node.js build (
+pm run build). If the repository is just static HTML/CSS, the build will fail silently in the background and Netlify will NOT deploy the updated code, instead serving the last cached version indefinitely.
+- The 
+etlify.toml bypasses this by explicitly overriding the build command (e.g., command = "echo 'Deploying static site...'") and forcing the publish directory to exactly match the location of index.html.
