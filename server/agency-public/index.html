@@ -502,27 +502,66 @@
             <div class="glass-card" style="max-width: 700px; margin: 0 auto; padding: 4rem;">
                 <h2 style="text-align: center; margin-bottom: 1rem;">Deploy Your System</h2>
                 <p style="text-align: center; margin-bottom: 3rem; color: var(--text-muted);">Fill out the form below. We will review your clinic's digital presence and contact you to schedule an integration call.</p>
-                <form action="mailto:anas@ainexlifyagencies.com" method="POST" enctype="text/plain" onsubmit="alert('Redirecting to email client...');">
+                <form id="deploymentForm">
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                         <div>
                             <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-white);">Your Name</label>
-                            <input type="text" name="Name" required placeholder="Dr. John Doe">
+                            <input type="text" name="name" required placeholder="Dr. John Doe">
                         </div>
                         <div>
                             <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-white);">Clinic Name</label>
-                            <input type="text" name="Clinic" required placeholder="Toronto Dental Center">
+                            <input type="text" name="clinicName" required placeholder="Toronto Dental Center">
                         </div>
                     </div>
                     <div style="margin-bottom: 1.5rem;">
                         <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-white);">Direct Phone Number</label>
-                        <input type="tel" name="Phone" required placeholder="(555) 123-4567">
+                        <input type="tel" name="phone" required placeholder="(555) 123-4567">
                     </div>
                     <div style="margin-bottom: 3rem;">
                         <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-white);">Current Website</label>
-                        <input type="url" name="Website" placeholder="https://yourclinic.com">
+                        <input type="url" name="website" placeholder="https://yourclinic.com">
                     </div>
-                    <button type="submit" class="btn" style="width: 100%;">DEPLOY LAYLA TODAY</button>
+                    <button type="submit" id="submitBtn" class="btn" style="width: 100%;">DEPLOY LAYLA TODAY</button>
                 </form>
+                <div id="formSuccess" style="display:none; text-align:center; padding: 2rem; background: rgba(39, 201, 63, 0.1); border: 1px solid #27c93f; border-radius: 12px; margin-top: 1rem;">
+                    <h3 style="color: #27c93f; margin-bottom: 0.5rem;">Request Received!</h3>
+                    <p style="color: var(--text-muted);">One of our engineers will contact you shortly.</p>
+                </div>
+                
+                <script>
+                    document.getElementById('deploymentForm').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+                        const btn = document.getElementById('submitBtn');
+                        btn.innerText = 'INITIALIZING...';
+                        btn.style.opacity = '0.7';
+                        btn.style.pointerEvents = 'none';
+
+                        const formData = new FormData(e.target);
+                        const data = Object.fromEntries(formData);
+
+                        try {
+                            const response = await fetch('/api/contact', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(data),
+                            });
+                            if (response.ok) {
+                                e.target.style.display = 'none';
+                                document.getElementById('formSuccess').style.display = 'block';
+                            } else {
+                                alert('Failed to send request. Please try again or call us directly.');
+                                btn.innerText = 'DEPLOY LAYLA TODAY';
+                                btn.style.opacity = '1';
+                                btn.style.pointerEvents = 'auto';
+                            }
+                        } catch (err) {
+                            alert('Network error. Please check your connection and try again.');
+                            btn.innerText = 'DEPLOY LAYLA TODAY';
+                            btn.style.opacity = '1';
+                            btn.style.pointerEvents = 'auto';
+                        }
+                    });
+                </script>
             </div>
         </div>
     </section>

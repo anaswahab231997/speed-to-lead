@@ -2,389 +2,469 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Terms of Service | AI Nexlify Agencies</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - AI Nexlify Agencies</title>
+    <meta name="description" content="Terms of Service for AI Nexlify Agencies.">
+    <meta property="og:title" content="Terms of Service - AI Nexlify Agencies">
+    <meta property="og:description" content="Terms of Service for AI Nexlify Agencies.">
+    <meta property="og:image" content="https://ainexlifyagencies.com/assets/phase3_asset.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { corePlugins: { preflight: false } }</script>
     <style>
+        /* CSS Variables */
         :root {
-            --obsidian: #030303;
-            --emerald: #10b981;
-            --text-main: #ffffff;
-            --text-ash: #d1d5db;
-            --text-silver: #71717a;
-            --glass-bg: rgba(255, 255, 255, 0.02);
+            --bg-obsidian: #050505;
+            --text-white: #ffffff;
+            --text-muted: #a1a1aa;
+            --gold: #c49f3b; /* Matte Architectural Gold */
+            --bleed-red: #ef4444;
+            --font-stack: 'Satoshi', system-ui, -apple-system, sans-serif;
+            --font-heading: 'Clash Display', sans-serif;
+            --glass-bg: rgba(255, 255, 255, 0.04);
             --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-blur: blur(12px);
+            --glass-fallback: rgba(20, 20, 25, 0.9);
         }
 
+        /* Micro-Animations & Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Reset & Base */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--obsidian);
-            color: var(--text-ash);
-            font-family: 'Inter', sans-serif;
-            line-height: 1.75;
-            position: relative;
+            background-color: var(--bg-obsidian);
+            color: var(--text-white);
+            font-family: var(--font-stack);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Technical Grid Overlay */
-        .grid-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: 
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        /* Layout Architecture */
-        .legal-wrapper {
-            max-width: 1400px;
+        .container {
+            width: 100%;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        /* Navigation Menu */
-        .nav-container {
-            position: sticky;
-            top: 20px;
-            z-index: 100;
-        }
-
-        .nav-menu {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .nav-header {
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .mobile-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--emerald);
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            transition: max-height 0.3s ease, opacity 0.3s ease;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-silver);
-            font-size: 0.85rem;
-            transition: color 0.3s ease;
-            display: block;
-        }
-
-        .nav-links a:hover, .nav-links a.active {
-            color: var(--emerald);
-        }
-
-        /* Content Area */
-        .content-area {
-            flex: 1;
-            padding-bottom: 80px;
-        }
-
-        header {
-            margin-bottom: 60px;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 30px;
-        }
-
-        h1 {
-            color: var(--text-main);
-            font-size: clamp(2rem, 5vw, 4rem);
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 10px;
-        }
-
-        .meta {
-            color: var(--emerald);
-            font-family: monospace;
-            font-size: 0.9rem;
+            padding: 0 2rem;
         }
 
         section {
-            margin-bottom: 60px;
-            scroll-margin-top: 100px; /* Offset for smooth scroll */
-        }
-
-        h2 {
-            color: var(--text-main);
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            letter-spacing: -0.01em;
-        }
-
-        p {
-            margin-bottom: 20px;
-        }
-
-        /* IP Glassmorphic Modules */
-        .glass-module {
-            background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 30px;
-            margin: 30px 0;
+            padding: 8rem 0;
             position: relative;
         }
 
-        .ip-accent-line {
-            border-left: 3px solid var(--emerald);
-            padding-left: 20px;
-        }
-
-        .glass-module h3 {
-            color: var(--text-main);
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .highlight-text {
-            color: var(--text-main);
+        /* Typography */
+        h1 {
+            font-family: var(--font-heading);
             font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .contact-footer {
-            margin-top: 80px;
-            padding-top: 40px;
-            border-top: 1px solid var(--glass-border);
-            font-size: 0.9rem;
-            color: var(--text-silver);
+        h2 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 1rem;
         }
 
-        .contact-footer a {
-            color: var(--emerald);
+        .sub-headline {
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            color: var(--text-muted);
+            font-weight: 400;
+            max-width: 800px;
+            margin-bottom: 2.5rem;
+        }
+
+        .text-gold { color: var(--gold); }
+        .text-red { color: var(--bleed-red); }
+
+        /* Premium Minimalist UI (Borderless Deep Shadow) */
+        .glass-card {
+            background: #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: inset 0 2px 10px rgba(255,255,255,0.02), 0 20px 50px rgba(0, 0, 0, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: inset 0 2px 15px rgba(255,255,255,0.04), 0 30px 60px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Bento Box Architecture */
+        .bento-box {
+            background: rgba(10, 10, 12, 0.8);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02), 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            margin-bottom: 2rem;
+        }
+        
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem 2.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
             text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Responsive Breakpoints */
-        @media (max-width: 991px) {
-            .mobile-toggle {
-                display: block;
-            }
-            .nav-links {
-                max-height: 0;
-                opacity: 0;
-                overflow: hidden;
-            }
-            .nav-links.open {
-                max-height: 500px; /* Arbitrary large height */
-                opacity: 1;
-                margin-top: 10px;
-            }
+        .btn-primary {
+            background-color: var(--gold);
+            color: var(--bg-obsidian);
+            border: none;
+            box-shadow: 0 0 20px rgba(196, 159, 59, 0.3);
         }
 
-        @media (min-width: 992px) {
-            .legal-wrapper {
-                flex-direction: row;
-                align-items: flex-start;
-                padding: 80px 40px;
-                gap: 60px;
-            }
-            .nav-container {
-                width: 300px;
-                flex-shrink: 0;
-                top: 80px;
-            }
-            .nav-header {
-                font-size: 1rem;
-                margin-bottom: 20px;
-            }
-            .nav-links {
-                gap: 15px;
-            }
-            .nav-links a {
-                font-size: 0.95rem;
-            }
+        .btn-primary:hover {
+            box-shadow: 0 0 35px rgba(196, 159, 59, 0.5);
+            transform: translateY(-2px);
         }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            padding-top: 6rem;
+            background: linear-gradient(rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.95)), url('/assets/hero_bg.png');
+            background-size: cover;
+            background-position: center;
+            
+        }
+
+        /* Footer & Mobile CTA */
+        .footer {
+            border-top: 1px solid var(--glass-border);
+            padding: 5rem 0;
+            text-align: center;
+            background: #000;
+        }
+
+        .footer-cta {
+            margin-bottom: 4rem;
+        }
+
+        .footer-cta h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .footer-ip {
+            color: #71717a;
+            font-size: 0.9rem;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .mobile-sticky-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid rgba(196, 159, 59, 0.3);
+            z-index: 999;
+            text-align: center;
+        }
+
+        .mobile-sticky-cta .btn {
+            width: 100%;
+            box-shadow: 0 0 20px rgba(196, 159, 59, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(196, 159, 59, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(196, 159, 59, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(196, 159, 59, 0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            section { padding: 5rem 0; }
+            .glass-card { padding: 2rem; }
+            .btn-group { flex-direction: column; }
+            .btn { width: 100%; }
+            /* Enable Sticky CTA on mobile */
+            .mobile-sticky-cta { display: block; }
+            body { padding-bottom: 90px; }
+        }
+
+        /* 2. Qualification Modal */
+        .qual-modal {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+            z-index: 9000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: all 0.4s ease;
+        }
+        .qual-modal.active { opacity: 1; pointer-events: auto; }
+        .qual-box {
+            background: var(--bg-obsidian); border: 1px solid var(--glass-border);
+            border-radius: 16px; padding: 2rem; width: 90%; max-width: 450px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9); transform: translateY(20px); transition: all 0.4s ease;
+        }
+        .qual-modal.active .qual-box { transform: translateY(0); }
+        .qual-box h3 { color: var(--gold); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 1rem;}
+        .qual-select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
+        .qual-select option { background: var(--bg-obsidian); color: white; }
+        #qual-status { margin-top: 1rem; font-family: monospace; font-size: 0.8rem; color: var(--gold); min-height: 20px; }
+        /* 3. Validation Animations */
+        .shake-red { animation: shakeRed 0.4s ease-in-out; }
+        @keyframes shakeRed { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); color: #ef4444; } 40%, 80% { transform: translateX(5px); color: #ef4444; } }
+        /* 5. SVG Wireframe & SLA */
+        .cyber-matrix-container { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 0 40px rgba(196, 159, 59, 0.1); }
+        .hyper-image { width: 100%; height: auto; display: block; filter: contrast(1.1) brightness(0.9); transform: scale(1.05); }
+        .laser-scanner { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold); box-shadow: 0 0 20px var(--gold), 0 0 40px var(--gold); opacity: 0.8; animation: scan 3s ease-in-out infinite; z-index: 5; }
+        @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 98%; opacity: 0; } }
+        .data-stream-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(3,3,3,0.1) 0%, rgba(3,3,3,0.8) 100%); z-index: 2; pointer-events: none; }
+        .ticker-tape { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.9); border-top: 1px solid var(--gold); padding: 8px 0; overflow: hidden; z-index: 10; }
+        .ticker-content { display: inline-block; white-space: nowrap; color: var(--gold); font-family: monospace; font-size: 0.8rem; animation: ticker 20s linear infinite; text-shadow: 0 0 5px var(--gold); }
+        @keyframes ticker { 0% { transform: translateX(500px); } 100% { transform: translateX(-100%); } }
+        .floating-node { position: absolute; width: 8px; height: 8px; background: var(--text-white); border-radius: 50%; box-shadow: 0 0 15px var(--text-white); z-index: 6; animation: floatNode 3s ease-in-out infinite alternate; }
+        @keyframes floatNode { 0% { transform: translateY(0px) scale(1); opacity: 0.5; } 100% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
+        .snap-x { scroll-padding-inline: 1rem; }
+        .hero { position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.95)), url('/assets/hero_bg.png'); background-size: cover; background-position: center; background-attachment: fixed; z-index: -1; }
     </style>
 </head>
 <body>
-    <div class="grid-overlay"></div>
-
-    <div class="legal-wrapper">
-        <!-- Interactive Navigator -->
-        <aside class="nav-container">
-            <nav class="nav-menu">
-                <div class="nav-header">
-                    Legal Index
-                    <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Toggle Menu">☰</button>
-                </div>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#sec-1" class="active">1. Acceptance of Terms</a></li>
-                    <li><a href="#sec-2">2. Description of Services</a></li>
-                    <li><a href="#sec-3">3. Intellectual Property</a></li>
-                    <li><a href="#sec-4">4. Fees & Payments</a></li>
-                    <li><a href="#sec-5">5. Third-Party Dependencies</a></li>
-                    <li><a href="#sec-6">6. Limitation of Liability</a></li>
-                    <li><a href="#sec-7">7. Termination</a></li>
-                    <li><a href="#sec-8">8. Confidentiality</a></li>
-                    <li><a href="#sec-9">9. Governing Law</a></li>
-                    <li><a href="#sec-10">10. Amendments</a></li>
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Content Architecture -->
-        <main class="content-area">
-            <header>
-                <h1>TERMS OF SERVICE</h1>
-                <p class="meta">AI Nexlify Agencies | Effective Date: May 18, 2026</p>
-            </header>
-
-            <article>
-                <section id="sec-1">
-                    <h2>Section 1: Acceptance of Terms</h2>
-                    <p>By deploying the AI Nexlify Agencies ("Agency") infrastructure, utilizing our proprietary LoRA models, or executing a custom Service Agreement, you agree to these Terms of Service. These terms constitute a legally binding enterprise agreement between you and the Agency. If you do not agree with any part of these terms, you are prohibited from utilizing our autonomous architectures.</p>
-                </section>
-
-                <section id="sec-2">
-                    <h2>Section 2: Description of Services</h2>
-                    <p>The Agency engineers and provisions bespoke AI infrastructure, including but not limited to conversational AI sales concierges (Zoya/Layla), dynamic image generation pipelines, and SEO matrices. These are deployed as an ongoing operational ecosystem, not traditional software as a service (SaaS) or a one-time product delivery. The ecosystem is continuously monitored and updated.</p>
-                </section>
-
-                <section id="sec-3">
-                    <h2>Section 3: Intellectual Property & Ownership</h2>
-                    
-                    <div class="glass-module ip-accent-line">
-                        <h3>3.1 The Engine (Agency Property)</h3>
-                        <p>We do not sell our core technology; we license its operational capacity. All underlying conversational logic, prompt engineering, LoRA (Low-Rank Adaptation) models, autonomous workflows, node-based generative pipelines, and proprietary algorithms <span class="highlight-text">remain the exclusive intellectual property of AI Nexlify Agencies</span>. The Client is granted a revoked-at-will, non-exclusive license to utilize the Engine solely for the intended operational deployment.</p>
+    <!-- BRANDED HEADER -->
+    <header class="fixed top-0 left-0 w-full z-[100] bg-[#050505]/80 backdrop-blur-md border-b border-[rgba(255,255,255,0.05)] transition-all duration-300">
+        <div class="container mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <a href="/" class="flex items-center gap-2" style="text-decoration: none;">
+                    <div class="w-8 h-8 rounded bg-gradient-to-br from-[#c49f3b] to-[#8a6d20] flex items-center justify-center shadow-[0_0_15px_rgba(196,159,59,0.4)]">
+                        <span class="text-[#050505] font-bold tracking-tighter" style="font-family: var(--font-heading);">AI</span>
                     </div>
-
-                    <div class="glass-module">
-                        <h3>3.2 The Output (Client License)</h3>
-                        <p>Clients retain full ownership of the generated output assets, finalized marketing media, and captured customer data (leads). The Agency claims no ownership over the final deliverables produced by the Engine on your behalf. All data processed by the Engine remains strictly siloed and belongs to your respective corporate entity.</p>
-                    </div>
-                </section>
-
-                <section id="sec-4">
-                    <h2>Section 4: Fees, Retainers, and Payments</h2>
-                    <p>Deployment fees and ongoing structural retainers are strictly non-refundable due to the high-friction custom architecture required for each environment. Failure to remit payment within 7 days of invoicing will result in the immediate suspension of the neural engine. Reactivation requires full settlement of arrears plus a standard reactivation fee.</p>
-                </section>
-
-                <section id="sec-5">
-                    <h2>Section 5: Third-Party Dependencies & UPTIME</h2>
-                    <p>Our sovereign-switch architecture integrates with critical third-party APIs (OpenAI, Anthropic, Meta, Stripe). While we architect for maximum resilience and implement failover redundancies, the Agency is not liable for upstream outages from these global providers. Uptime guarantees apply exclusively to the infrastructure directly managed and hosted by AI Nexlify Agencies.</p>
-                </section>
-
-                <section id="sec-6">
-                    <h2>Section 6: AI Behavior & Limitation of Liability</h2>
-                    <p>While our models undergo rigorous fine-tuning, generative AI is inherently probabilistic. The Agency is not liable for edge-case conversational anomalies, hallucinations, or unintended outputs interacting with live traffic. It is the Client's responsibility to periodically monitor the Sentinel Dashboard. Under no circumstances shall the Agency's liability exceed the total amount paid by the Client in the three (3) months preceding the claim.</p>
-                </section>
-
-                <section id="sec-7">
-                    <h2>Section 7: Termination and the "Kill Switch"</h2>
-                    <p>The Agency reserves the right to execute an operational "Kill Switch," immediately terminating all services and API relays, in the event of a breach of contract, unauthorized reverse engineering attempts, hostile use of our AI infrastructure, or failure to pay. The Client may terminate the agreement with 30 days written notice; however, any upfront deployment fees remain non-refundable.</p>
-                </section>
-
-                <section id="sec-8">
-                    <h2>Section 8: Confidentiality</h2>
-                    <p>Both parties agree to strict confidentiality regarding the structural mechanics of the deployment, API keys, strategic pricing agreements, and proprietary customer data. Disclosing the technical specificities of the AI Nexlify pipeline to direct competitors or unauthorized third parties constitutes a material breach of this agreement.</p>
-                </section>
-
-                <section id="sec-9">
-                    <h2>Section 9: Governing Law and Jurisdiction</h2>
-                    <p>This agreement shall be governed by and construed in accordance with the laws of the jurisdiction specified in your master service agreement. Any disputes arising from this deployment protocol shall be resolved exclusively through binding corporate arbitration.</p>
-                </section>
-
-                <section id="sec-10">
-                    <h2>Section 10: Amendments</h2>
-                    <p>The Agency reserves the right to update these Terms of Service to reflect shifts in AI compliance law, platform policies (e.g., Meta WhatsApp limits), or internal architecture upgrades. Continued use of the ecosystem after modifications constitutes explicit acceptance of the updated protocols.</p>
-                </section>
-            </article>
-
-            <div class="contact-footer">
-                For legal inquiries, architecture audits, or DPA requests: <a href="mailto:legal@ainexlifyagencies.com">legal@ainexlifyagencies.com</a>
+                    <span class="text-xl font-bold tracking-widest text-[#c49f3b] uppercase" style="font-family: var(--font-heading);">Nexlify</span>
+                </a>
             </div>
-        </main>
+            <div class="hidden md:block">
+                <button class="btn btn-primary open-modal-btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Apply For Partnership</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- UPGRADE 2: APPLICATION MODAL -->
+    <div class="qual-modal" id="qual-modal">
+        <div class="qual-box">
+            <h3>Secure Infrastructure Allocation</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Compute bandwidth is strictly reserved for apex operators. Submit your architectural parameters for immediate system evaluation.</p>
+            <input type="text" id="app-name" class="qual-select" placeholder="Architect Identity (Full Name)" style="background: rgba(0,0,0,0.5); color: white;">
+            <input type="text" id="app-phone" class="qual-select" placeholder="Secure Comms (WhatsApp)" style="background: rgba(0,0,0,0.5); color: white;">
+            <input type="text" id="app-url" class="qual-select" placeholder="Enterprise Framework (URL)" style="background: rgba(0,0,0,0.5); color: white;">
+            <button class="btn btn-primary" id="btn-qualify" style="width: 100%; padding: 1rem;">Execute System Review</button>
+            <div id="qual-status"></div>
+            <button id="close-modal" style="background: transparent; border: none; color: var(--text-muted); width: 100%; margin-top: 1rem; cursor: pointer;">Close</button>
+        </div>
     </div>
 
+    <!-- MAIN TERMS CONTENT -->
+    <section class="py-24 relative z-10">
+        <div class="container mx-auto">
+            <h1 class="reveal text-4xl md:text-5xl lg:text-6xl text-center mb-4 mt-8">TERMS OF SERVICE: AINEXLIFY AGENCIES</h1>
+            <p class="reveal sub-headline text-center mb-12" style="margin-left: auto; margin-right: auto;"><strong>EFFECTIVE DATE:</strong> June 10, 2026</p>
+
+            <div class="bento-box reveal">
+                <p class="mb-4">Welcome to the vanguard of architectural acceleration. Ainexlify Agencies ("Ainexlify," "We," "Us," or "Our") engineers elite, AI-driven growth infrastructures exclusively for high-ticket Custom Home Builders, elite Roofing Enterprises, and premium construction brands. We do not provide commodities; we build bespoke, high-velocity acquisition pipelines.</p>
+                <p>By engaging Ainexlify, accessing our proprietary systems, or leveraging our autonomous nodes, you ("Client," "You," "Your") agree to be bound by these Terms of Service ("Terms"). These Terms constitute a legally binding, uncompromising B2B agreement. If you cannot operate at this standard, do not engage our services.</p>
+            </div>
+
+            <div class="bento-box reveal">
+                <h2 class="text-gold text-2xl md:text-3xl mb-4">1. ARCHITECTURAL LUXURY & CONSULTATIVE ENGAGEMENT</h2>
+                <p>We operate on a consultative, architectural luxury model. Our engagement is a strategic partnership designed to dominate your market sector. You agree to provide timely approvals, necessary brand assets, and decisive feedback. Delays on your end will not stall our billing, nor do they reflect a deficiency in our infrastructure. We build the engine; you must provide the fuel.</p>
+            </div>
+
+            <div class="bento-box reveal">
+                <h2 class="text-gold text-2xl md:text-3xl mb-4">2. INTELLECTUAL PROPERTY: THE DIVIDE</h2>
+                <p class="mb-4">We build the machine; you keep your brand.</p>
+                <ul class="list-disc pl-6 space-y-4">
+                    <li><strong class="text-white">Client IP:</strong> You retain full, unencumbered ownership of all pre-existing brand assets, logos, customer lists, and proprietary trade secrets you provide to us ("Client Materials").</li>
+                    <li><strong class="text-white">Ainexlify IP:</strong> Ainexlify retains absolute, exclusive ownership of all underlying AI generative pipelines, autonomous nodes, machine learning models, workflows, custom algorithms, software architectures, and strategic frameworks deployed during the engagement ("Ainexlify Infrastructure"). You are granted a limited, revocable, non-exclusive license to benefit from the outputs of this infrastructure solely during the term of our active engagement. Upon termination, access to the Ainexlify Infrastructure ceases immediately.</li>
+                </ul>
+            </div>
+
+            <div class="bento-box reveal">
+                <h2 class="text-gold text-2xl md:text-3xl mb-4">3. AI LIABILITY, HALLUCINATIONS, AND OUTPUT INTEGRITY</h2>
+                <p class="mb-4">We leverage bleeding-edge Artificial Intelligence to outpace your competition. However, AI is inherently probabilistic, not deterministic.</p>
+                <ul class="list-disc pl-6 space-y-4">
+                    <li><strong class="text-white">Hallucinations & Accuracy:</strong> Ainexlify explicitly disclaims any liability for AI "hallucinations," factual inaccuracies, or misquotes generated by our automated systems or conversational agents.</li>
+                    <li><strong class="text-white">Review Imperative:</strong> The Client assumes full responsibility for reviewing, fact-checking, and approving all AI-generated content, copy, and client-facing communications before they are deployed into the market.</li>
+                    <li><strong class="text-white">Indemnification:</strong> You indemnify and hold Ainexlify harmless against any claims, losses, or damages arising from the dissemination of AI-generated content, including but not limited to false advertising claims, misrepresentation of your building capabilities, or incorrect pricing structures.</li>
+                </ul>
+            </div>
+
+            <div class="bento-box reveal">
+                <h2 class="text-gold text-2xl md:text-3xl mb-4">4. UPTIME, SLA, AND THIRD-PARTY DEPENDENCIES</h2>
+                <p class="mb-4">Our pipelines are engineered for relentless performance, but they interface with global neural networks beyond our exclusive control.</p>
+                <ul class="list-disc pl-6 space-y-4">
+                    <li><strong class="text-white">SLA Disclaimers:</strong> We do not guarantee 100% uptime. Our Service Level Agreements (SLAs) expressly exclude downtime, latency, or complete outages caused by third-party Large Language Model (LLM) providers (e.g., OpenAI, Anthropic, Google), cloud infrastructure failures (e.g., AWS, GCP), or catastrophic network events.</li>
+                    <li><strong class="text-white">Service Continuity:</strong> In the event of a third-party LLM outage, Ainexlify will execute commercially reasonable efforts to route traffic through redundant nodes where possible, but we accept zero financial liability for lost leads, missed appointments, or revenue disruption during these periods.</li>
+                </ul>
+            </div>
+
+            <div class="bento-box reveal">
+                <h2 class="text-gold text-2xl md:text-3xl mb-4">5. LIMITATION OF LIABILITY</h2>
+                <p>Under no circumstances shall Ainexlify be liable for indirect, incidental, consequential, special, or exemplary damages, including lost profits, lost contracts, or business interruption, arising from your use of our pipelines. Our maximum aggregate liability to you for any claim arising out of this agreement shall not exceed the total fees paid by you to Ainexlify in the thirty (30) days preceding the event giving rise to the claim. We build aggressive systems; you assume the operational risk of scaling.</p>
+            </div>
+
+            <div class="bento-box reveal">
+                <h2 class="text-gold text-2xl md:text-3xl mb-4">6. TERMINATION AND SEVERANCE</h2>
+                <p>We reserve the right to terminate our engagement at any time if you fail to uphold the standards of our partnership, miss payment schedules, or compromise the integrity of our systems. Upon termination, all active campaigns will be immediately halted, and access to the Ainexlify Infrastructure will be revoked.</p>
+            </div>
+
+            <div class="bento-box reveal">
+                <h2 class="text-gold text-2xl md:text-3xl mb-4">7. GOVERNING LAW</h2>
+                <p>These Terms shall be governed by and construed in accordance with the laws of Delaware, USA, without regard to its conflict of law principles. Any dispute arising under these Terms shall be resolved exclusively in the state or federal courts located in Delaware, USA.</p>
+            </div>
+
+            <div class="mt-12 text-center reveal">
+                <hr class="border-[rgba(255,255,255,0.1)] mb-8">
+                <p class="text-muted italic max-w-3xl mx-auto">By initiating an engagement with Ainexlify Agencies, you acknowledge that you have read, understood, and agreed to be bound by the absolute authority of these Terms of Service.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: UNIVERSAL FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-cta">
+                <h3>Engineered for High-Friction Industries: Custom Home Builders, Roofing Contractors, and Premium Trades.</h3>
+                <button class="btn btn-primary open-modal-btn" style="margin-top: 1rem;">Start Your Custom Build</button>
+            </div>
+            
+            <div style="margin-top: 2rem; margin-bottom: 2rem; display: flex; justify-content: center; gap: 2rem;">
+                <a href="/terms/" style="color: var(--gold); text-decoration: none;">Terms of Service</a>
+                <a href="/terms/#sec-8" style="color: var(--gold); text-decoration: none;">Privacy Policy</a>
+                <a href="/terms/#sec-8" style="color: var(--gold); text-decoration: none;">Data Processing Agreement (DPA)</a>
+                <a href="mailto:anas@ainexlifyagencies.com" style="color: var(--gold); text-decoration: none;">Contact Us</a>
+            </div>
+
+            <div class="footer-ip">
+                Intellectual Property Notice: All underlying conversational logic, prompt engineering, LoRA models, and node-based generative pipelines remain the exclusive intellectual property of AI Nexlify Agencies. Clients retain full ownership of generated outputs.
+            </div>
+        </div>
+    </footer>
+
+    <!-- PERSISTENT MOBILE CTA -->
+    <div class="block md:hidden fixed bottom-0 left-0 w-full z-50 p-4 bg-[#050505]/90 backdrop-blur-md border-t border-white/10">
+        <button class="w-full btn btn-primary open-modal-btn">Apply For Partnership</button>
+    </div>
+
+    <!-- JavaScript Interactions -->
     <script>
-        // Mobile Menu Toggle
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('open');
+        // Qual Modal Logic
+        const qBtn = document.getElementById('btn-qualify');
+        const appName = document.getElementById('app-name');
+        const appPhone = document.getElementById('app-phone');
+        const appUrl = document.getElementById('app-url');
+        const qStat = document.getElementById('qual-status');
+        const qModal = document.getElementById('qual-modal');
+        const closeBtn = document.getElementById('close-modal');
+
+        if(qBtn) {
+            qBtn.addEventListener('click', async () => {
+                if(!appName.value || !appPhone.value || !appUrl.value) { 
+                    qStat.textContent = "> ERROR: NAME, PHONE & URL REQUIRED"; 
+                    qStat.style.color = '#ef4444';
+                    qStat.classList.add('shake-red'); 
+                    setTimeout(() => qStat.classList.remove('shake-red'), 400); 
+                    return; 
+                }
+                
+                qStat.style.color = '#10b981';
+                qStat.textContent = "> INITIATING SECURE EMAIL PROTOCOL...";
+                
+                const subject = encodeURIComponent(`Partnership Application: ${appName.value}`);
+                const body = encodeURIComponent(
+                    `Architect Identity: ${appName.value}\n` +
+                    `Secure Comms: ${appPhone.value}\n` +
+                    `Enterprise Framework: ${appUrl.value}`
+                );
+                
+                setTimeout(() => {
+                    qStat.textContent = "> ROUTING TO LOCAL CLIENT...";
+                    window.location.href = `mailto:anas@ainexlifyagencies.com?subject=${subject}&body=${body}`;
+                    setTimeout(() => { qModal.classList.remove('active'); }, 1000);
+                }, 800);
+            });
+            
+            if(closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    qModal.classList.remove('active');
+                });
+            }
+            
+            document.querySelectorAll('.open-modal-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    qModal.classList.add('active');
+                    qStat.textContent = "";
+                });
+            });
         }
 
-        // Active State Scroll Spy
-        const sections = document.querySelectorAll('section');
-        const navItems = document.querySelectorAll('.nav-links a');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                // Add offset to trigger active state accurately
-                if (pageYOffset >= (sectionTop - 150)) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('href').includes(current) && current !== '') {
-                    item.classList.add('active');
-                }
-            });
+        // Scroll Reveal Micro-Animations
+        document.querySelectorAll('h1, h2, .sub-headline, .bento-box').forEach((el) => {
+            el.classList.add('reveal');
         });
 
-        // Close mobile menu on click
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                if (window.innerWidth < 992) {
-                    document.getElementById('navLinks').classList.remove('open');
-                }
+        const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const revealObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
             });
-        });
+        }, revealOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
     </script>
 </body>
 </html>

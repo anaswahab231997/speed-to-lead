@@ -398,6 +398,60 @@ app.post('/api/sentinel/pulse', async (req, res) => {
   }
 })
 
+// POST /api/contact - Layla Deployment Intake Form
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, clinicName, phone, website } = req.body
+
+    const nodemailer = require('nodemailer')
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.gmail.com', 
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    })
+
+    const mailOptions = {
+      from: process.env.SMTP_USER,
+      to: 'anas@ainexlifyagencies.com',
+      subject: `🚨 New Layla Deployment Request: ${clinicName || 'Unknown'}`,
+      html: `
+        <h3>New Autonomous System Lead</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Clinic:</strong> ${clinicName}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Website:</strong> ${website}</p>
+      `,
+    }
+
+    await transporter.sendMail(mailOptions)
+    
+    // Also save to Airtable to have a central record (optional but good)
+    try {
+      const { saveLeadToAirtable } = require('./airtable')
+      await saveLeadToAirtable({
+        name: name || 'Unknown',
+        phone: phone || '+10000000000',
+        lastMessage: `Deployment Request. Clinic: ${clinicName}, Website: ${website}`,
+        laylaReply: 'Awaiting integration call.',
+        intentScore: 10,
+        source: 'website-form',
+        dealer: clinicName || 'Nexlify Agency'
+      })
+    } catch (e) {
+      console.log('[API/CONTACT] Airtable sync failed, but email sent.', e.message)
+    }
+
+    res.status(200).json({ message: "Lead secured successfully." })
+  } catch (error) {
+    console.error('[API/CONTACT]', error.message)
+    res.status(500).json({ error: "Failed to process lead." })
+  }
+})
+
 // POST /api/agency/apply — Apply for membership on the luxury agency showroom
 app.post('/api/agency/apply', async (req, res) => {
   const { name, phone, email, website, contactName, dealerName } = req.body
