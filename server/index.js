@@ -401,7 +401,8 @@ app.post('/api/sentinel/pulse', async (req, res) => {
 // POST /api/contact - Layla Deployment Intake Form
 app.post('/api/contact', async (req, res) => {
   try {
-    const { name, clinicName, phone, website } = req.body
+    const { name, businessName, clinicName, phone, website } = req.body
+    const business = businessName || clinicName;
 
     const nodemailer = require('nodemailer')
     const transporter = nodemailer.createTransport({
@@ -417,11 +418,11 @@ app.post('/api/contact', async (req, res) => {
     const mailOptions = {
       from: process.env.SMTP_USER,
       to: 'anas@ainexlifyagencies.com',
-      subject: `🚨 New Layla Deployment Request: ${clinicName || 'Unknown'}`,
+      subject: `🚨 New Layla Deployment Request: ${business || 'Unknown'}`,
       html: `
         <h3>New Autonomous System Lead</h3>
         <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Clinic:</strong> ${clinicName}</p>
+        <p><strong>Business:</strong> ${business}</p>
         <p><strong>Phone:</strong> ${phone}</p>
         <p><strong>Website:</strong> ${website}</p>
       `,
@@ -435,11 +436,11 @@ app.post('/api/contact', async (req, res) => {
       await saveLeadToAirtable({
         name: name || 'Unknown',
         phone: phone || '+10000000000',
-        lastMessage: `Deployment Request. Clinic: ${clinicName}, Website: ${website}`,
+        lastMessage: `Deployment Request. Business: ${business}, Website: ${website}`,
         laylaReply: 'Awaiting integration call.',
         intentScore: 10,
         source: 'website-form',
-        dealer: clinicName || 'Nexlify Agency'
+        dealer: business || 'Nexlify Agency'
       })
     } catch (e) {
       console.log('[API/CONTACT] Airtable sync failed, but email sent.', e.message)
