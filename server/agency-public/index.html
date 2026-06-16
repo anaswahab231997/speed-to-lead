@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
         :root {
@@ -251,9 +252,61 @@
         .service-item {
             padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);
             background: rgba(255,255,255,0.02); transition: var(--transition-smooth);
+            position: relative; overflow: hidden;
         }
-        .service-item:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+        .service-content { position: relative; z-index: 2; }
+        .service-icon { color: var(--gold); margin-bottom: 1rem; width: 32px; height: 32px; }
+        .service-item:hover { 
+            background: rgba(255,255,255,0.04); 
+            border-color: rgba(196, 159, 59, 0.4); 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(196, 159, 59, 0.1); 
+        }
         .service-item h4 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-white); }
+        
+        /* Terminal / Matrix Hover Effect */
+        .service-item::before {
+            content: 'sys.init()\\A [OK] Kernel Loaded\\A > allocating memory...\\A > decrypting protocols\\A > establishing connection\\A 01011001 01100101\\A 01110011 01101100\\A [SYNC COMPLETE]\\A analyzing packets...\\A bypass active...\\A routing node...';
+            white-space: pre;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 200%;
+            font-family: monospace;
+            font-size: 0.7rem;
+            color: rgba(196, 159, 59, 0.1);
+            line-height: 1.5;
+            padding: 1.5rem;
+            z-index: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+        .service-item::after {
+            content: '';
+            position: absolute;
+            top: -100%; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(196, 159, 59, 0.15), transparent);
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .service-item:hover::before {
+            opacity: 1;
+            animation: terminalScroll 8s linear infinite;
+        }
+        .service-item:hover::after {
+            opacity: 1;
+            animation: dataCascade 2s linear infinite;
+        }
+        @keyframes terminalScroll {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-30%); }
+        }
+        @keyframes dataCascade {
+            0% { top: -100%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
         
         /* Portfolio Carousel Track */
         .portfolio-grid {
@@ -411,20 +464,32 @@
             
             <div class="services-grid">
                 <div class="service-item">
-                    <h4>SEO & Answer Engine Optimization</h4>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">Dominating Google Maps and AI search engines so your clinic is found first.</p>
+                    <div class="service-content">
+                        <i data-lucide="search" class="service-icon"></i>
+                        <h4>SEO & Answer Engine Optimization</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Dominating Google Maps and AI search engines so your clinic is found first.</p>
+                    </div>
                 </div>
                 <div class="service-item">
-                    <h4>Custom Web Design</h4>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">Lightning-fast, accessible, premium web assets designed specifically for medical conversions.</p>
+                    <div class="service-content">
+                        <i data-lucide="layout-template" class="service-icon"></i>
+                        <h4>Custom Web Design</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Lightning-fast, accessible, premium web assets designed specifically for medical conversions.</p>
+                    </div>
                 </div>
                 <div class="service-item">
-                    <h4>Ads Management</h4>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">Precision-targeted Google and Meta campaigns to capture high-intent patients.</p>
+                    <div class="service-content">
+                        <i data-lucide="target" class="service-icon"></i>
+                        <h4>Ads Management</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Precision-targeted Google and Meta campaigns to capture high-intent patients.</p>
+                    </div>
                 </div>
                 <div class="service-item">
-                    <h4>App & Portal Development</h4>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">Custom patient portals, internal clinic dashboards, and scalable mobile apps.</p>
+                    <div class="service-content">
+                        <i data-lucide="smartphone" class="service-icon"></i>
+                        <h4>App & Portal Development</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted);">Custom patient portals, internal clinic dashboards, and scalable mobile apps.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -590,6 +655,9 @@
         window.addEventListener("scroll", reveal);
         // Trigger once on load
         reveal();
+
+        // Initialize Lucide Icons
+        lucide.createIcons();
 
         // Navbar blur effect on scroll
         window.addEventListener("scroll", function() {
