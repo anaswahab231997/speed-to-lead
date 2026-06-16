@@ -3,1189 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Nexlify Agencies | Global Enterprise Infrastructure</title>
-    <meta name="description" content="AI Nexlify Agencies builds automated digital infrastructure for high-friction global businesses. Replace slow human-led sales floors with custom AI Concierges.">
-    <meta property="og:title" content="AI Nexlify Agencies | Enterprise Infrastructure">
-    <meta property="og:description" content="Automated digital infrastructure for high-friction global businesses.">
-    <meta property="og:image" content="https://ainexlifyagencies.com/hyper_seo_matrix.png">
+    <title>AI Nexlify Agencies | Elite AI Autonomous Systems & Digital Marketing</title>
+    <meta name="description" content="Stop driving traffic to dead contact forms. We build full-stack digital marketing campaigns powered by Layla, a 24/7 AI Patient Coordinator.">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
+      "@type": "LocalBusiness",
       "name": "AI Nexlify Agencies",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
+      "description": "Elite AI Autonomous Systems provider specializing in Healthcare and Dental Clinics.",
+      "url": "https://ainexlifyagencies.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "US"
       }
     }
     </script>
     <style>
-        /* CSS Variables */
         :root {
-            --bg-obsidian: #030303;
+            --bg-obsidian: #050505;
             --text-white: #ffffff;
-            --text-muted: #d4d4d8;
-            --emerald: #10b981;
+            --text-muted: #a1a1aa;
+            --gold: #c49f3b;
+            --gold-hover: #e0b643;
             --bleed-red: #ef4444;
-            --font-stack: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-stack: 'Satoshi', system-ui, -apple-system, sans-serif;
+            --font-heading: 'Clash Display', sans-serif;
             --glass-bg: rgba(255, 255, 255, 0.04);
             --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-fallback: rgba(20, 20, 25, 0.9);
+            --transition: all 0.3s ease;
         }
 
-        /* Reset & Base */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background-color: var(--bg-obsidian);
             color: var(--text-white);
             font-family: var(--font-stack);
             line-height: 1.6;
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        section { padding: 6rem 0; }
+        
+        h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 600; line-height: 1.2; }
+        h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 1.5rem; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; color: var(--gold); }
+        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        p { color: var(--text-muted); margin-bottom: 1rem; }
 
-        section {
-            padding: 8rem 0;
-            position: relative;
-        }
-
-        /* Typography */
-        h1 {
-            font-size: clamp(2rem, 5vw, 5.5rem);
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -0.03em;
-            margin-bottom: 1.5rem;
-        }
-
-        h2 {
-            font-size: clamp(1.8rem, 4vw, 3.5rem);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-        }
-
-        .sub-headline {
-            font-size: clamp(1.1rem, 2vw, 1.35rem);
-            color: var(--text-muted);
-            max-width: 800px;
-            margin-bottom: 2.5rem;
-        }
-
-        .text-emerald { color: var(--emerald); }
-        .text-red { color: var(--bleed-red); }
-
-        /* Glassmorphism with Graceful Degradation */
-        .glass-card {
-            background: var(--glass-fallback);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        @supports (backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px)) {
-            @media (min-width: 768px) {
-                .glass-card {
-                    background: var(--glass-bg);
-                    backdrop-filter: blur(16px);
-                    -webkit-backdrop-filter: blur(16px);
-                }
-            }
-        }
-
-        /* Buttons */
-        .btn-group {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
+        a { color: var(--gold); text-decoration: none; transition: var(--transition); }
+        a:hover { color: var(--gold-hover); }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.25rem 2.5rem;
-            font-size: 1.125rem;
-            font-weight: 600;
-            border-radius: 12px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .btn-primary {
-            background-color: var(--emerald);
+            display: inline-block;
+            background-color: var(--gold);
             color: var(--bg-obsidian);
+            padding: 1rem 2.5rem;
+            font-weight: 600;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: var(--transition);
             border: none;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+            cursor: pointer;
+            font-size: 1rem;
         }
-
-        .btn-primary:hover {
-            box-shadow: 0 0 35px rgba(16, 185, 129, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background-color: rgba(255, 255, 255, 0.05);
+        .btn:hover { background-color: var(--gold-hover); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(196, 159, 59, 0.3); }
+        .btn-outline {
+            background-color: transparent;
             color: var(--text-white);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--glass-border);
         }
+        .btn-outline:hover { background-color: var(--glass-bg); color: var(--text-white); }
 
-        .btn-secondary:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-2px);
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 2.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
         }
+        .card:hover { border-color: rgba(196, 159, 59, 0.3); transform: translateY(-4px); }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; }
+
+        /* Header */
+        header { padding: 1.5rem 0; border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; background: rgba(5,5,5,0.9); backdrop-filter: blur(10px); z-index: 100; }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--text-white); }
+        .logo span { color: var(--gold); }
 
         /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 6rem;
-            background: radial-gradient(circle at 50% -20%, rgba(16, 185, 129, 0.15), transparent 60%);
-        }
+        .hero { text-align: center; padding: 10rem 0 8rem; position: relative; overflow: hidden; }
+        .hero-bg-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 800px; background: radial-gradient(circle, rgba(196,159,59,0.05) 0%, rgba(5,5,5,0) 70%); pointer-events: none; }
+        .hero p { font-size: 1.25rem; max-width: 800px; margin: 0 auto 2.5rem; line-height: 1.8; }
+        .hero-ctas { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; position: relative; z-index: 2; }
+        .hero-alert { display: inline-block; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em; }
 
-        /* Calculator */
-        .calculator-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
+        /* Full Stack Services */
+        .service-list { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+        .service-pill { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.9rem; color: var(--text-white); }
+        .service-pill.highlight { background: rgba(196,159,59,0.1); border-color: rgba(196,159,59,0.3); color: var(--gold); }
 
-        .input-group {
-            margin-bottom: 2.5rem;
-        }
+        /* Pricing */
+        .price-tier { display: flex; flex-direction: column; position: relative; }
+        .price-tier.featured { border-color: var(--gold); }
+        .price-badge { position: absolute; top: -12px; right: 2rem; background: var(--gold); color: var(--bg-obsidian); padding: 0.25rem 1rem; font-size: 0.8rem; font-weight: 700; border-radius: 100px; text-transform: uppercase; }
+        .price { font-size: 3rem; font-family: var(--font-heading); margin: 1.5rem 0 0.5rem; color: var(--text-white); }
+        .price-sub { font-size: 1rem; color: var(--gold); font-family: var(--font-stack); margin-bottom: 2rem; font-weight: 600; }
+        .features-list { list-style: none; margin: 0 0 2rem 0; flex-grow: 1; }
+        .features-list li { margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-muted); }
+        .features-list li::before { content: '✓'; color: var(--gold); font-weight: bold; }
 
-        .input-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-muted);
-        }
+        /* Portfolio */
+        .portfolio-card { overflow: hidden; display: flex; flex-direction: column; background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 1.5rem; border-radius: 8px; transition: var(--transition); }
+        .portfolio-card:hover { border-color: rgba(196, 159, 59, 0.3); transform: translateY(-4px); }
+        .portfolio-img { width: 100%; height: 300px; object-fit: cover; object-position: top; transition: object-position 5s ease; border-radius: 4px; margin-bottom: 1.5rem; }
+        .portfolio-card:hover .portfolio-img { object-position: bottom; }
+        .portfolio-meta { flex-grow: 1; }
+        .portfolio-meta h3 { color: var(--text-white); font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 0.5rem; }
+        .portfolio-meta p { font-size: 0.9rem; margin-bottom: 1rem; }
+        .portfolio-meta a { display: inline-block; font-weight: 600; color: var(--gold); }
+
+        /* Layla Demo Section */
+        .layla-ui { background: var(--bg-obsidian); border: 1px solid var(--glass-border); border-radius: 20px; overflow: hidden; }
+        .layla-header { background: rgba(255,255,255,0.03); padding: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; border-bottom: 1px solid var(--glass-border); text-align: center; }
+        .layla-avatar { width: 40px; height: 40px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--bg-obsidian); font-weight: bold; font-size: 1.2rem; margin: 0 auto 0.25rem; }
+        .layla-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; background: #000000; }
+        .chat-msg { max-width: 80%; padding: 0.75rem 1rem; font-size: 0.95rem; line-height: 1.4; }
+        .chat-ai { background: #262626; color: #ffffff; align-self: flex-start; border-radius: 18px; border-bottom-left-radius: 4px; }
+        .chat-user { background: #007aff; color: #ffffff; align-self: flex-end; border-radius: 18px; border-bottom-right-radius: 4px; border: none; }
+
+        /* Form */
+        .contact-section { max-width: 600px; margin: 0 auto; text-align: center; }
+        form { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; text-align: left; }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        label { font-size: 0.9rem; font-weight: 600; }
+        input, select { background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); padding: 1rem; color: var(--text-white); border-radius: 4px; font-family: var(--font-stack); }
+        input:focus, select:focus { outline: none; border-color: var(--gold); }
         
-        .input-controls {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
+        /* Footer */
+        footer { padding: 4rem 0 2rem; border-top: 1px solid var(--glass-border); text-align: center; color: var(--text-muted); font-size: 0.9rem; }
 
-        input[type="range"] {
-            flex-grow: 1;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 4px;
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 32px;
-            height: 32px;
-            background: var(--emerald);
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
-        }
-        
-        input[type="range"]::-moz-range-thumb {
-            width: 32px;
-            height: 32px;
-            background: var(--emerald);
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
-            border: none;
-        }
-
-        input[type="number"] {
-            width: 140px;
-            padding: 0.75rem;
-            border-radius: 8px;
-            border: 1px solid var(--glass-border);
-            background: rgba(0, 0, 0, 0.5);
-            color: var(--text-white);
-            font-size: 1.1rem;
-            font-family: monospace;
-            text-align: right;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input[type="number"]:focus {
-            border-color: var(--emerald);
-        }
-
-        .calc-outputs {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .output-box {
-            padding: 2rem;
-            border-radius: 16px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid var(--glass-border);
-        }
-
-        .output-box.red-box {
-            border-color: rgba(239, 68, 68, 0.4);
-            box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.1);
-        }
-
-        .output-box.green-box {
-            border-color: rgba(16, 185, 129, 0.4);
-            box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.1);
-        }
-        
-        .output-label {
-            font-size: 0.95rem;
-            margin-bottom: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .output-value {
-            font-family: monospace;
-            font-size: clamp(1.5rem, 3vw, 2.5rem);
-            font-weight: 800;
-        }
-
-        /* Concierge Section */
-        .concierge-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .language-toggle {
-            display: inline-flex;
-            gap: 0.75rem;
-            margin-bottom: 2rem;
-            background: rgba(0,0,0,0.6);
-            padding: 0.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
-        }
-
-        .toggle-btn {
-            padding: 0.85rem 1.75rem;
-            border: 1px solid transparent;
-            background: transparent;
-            color: var(--text-muted);
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .toggle-btn:hover {
-            background: rgba(255,255,255,0.05);
-            color: var(--text-white);
-        }
-
-        .toggle-btn.active {
-            background: var(--emerald);
-            color: var(--bg-obsidian);
-            border-color: var(--emerald);
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-        }
-
-        .phone-container {
-            width: 100%;
-            max-width: 380px;
-            margin: 0 auto;
-            border: 12px solid #1a1a1a;
-            border-radius: 40px;
-            background: #000;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
-            overflow: hidden;
-        }
-
-        .phone-header {
-            background: #075e54;
-            padding: 1.5rem 1rem 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .phone-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--emerald);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-weight: bold;
-        }
-
-        .phone-chat {
-            height: 480px;
-            padding: 1.5rem 1rem;
-            background: #0b141a;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .chat-bubble-container {
-            min-height: 180px; /* Prevents CLS on language swap */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-
-        .chat-bubble {
-            max-width: 85%;
-            padding: 0.85rem 1.25rem;
-            border-radius: 12px;
-            font-size: 1rem;
-            line-height: 1.5;
-            transition: opacity 0.2s ease;
-        }
-
-        .bubble-customer {
-            background: #202c33;
-            color: #e9edef;
-            align-self: flex-start;
-            border-top-left-radius: 4px;
-            margin-bottom: 1rem;
-        }
-
-        .bubble-ai {
-            background: #005c4b;
-            color: #e9edef;
-            align-self: flex-end;
-            border-top-right-radius: 4px;
-        }
-
-        /* Protocol Section */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            padding-top: 2rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 24px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: var(--glass-border);
-        }
-
-        .timeline-step {
-            position: relative;
-            padding-left: 70px;
-            margin-bottom: 3rem;
-        }
-        
-        .timeline-step:last-child {
-            margin-bottom: 0;
-        }
-
-        .step-indicator {
-            position: absolute;
-            left: 11px;
-            top: 0;
-            width: 28px;
-            height: 28px;
-            background: var(--bg-obsidian);
-            border: 2px solid var(--emerald);
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-            z-index: 2;
-        }
-
-        .step-title {
-            color: var(--emerald);
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .timeline-step h3 {
-            font-size: 1.8rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .timeline-step p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
-        /* Image Slider */
-        .slider-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 1000px;
-            height: 600px;
-            margin: 4rem auto 0;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--glass-border);
-            user-select: none;
-            background: #111;
-        }
-
-        /* Optimized placeholders using CSS gradients for max performance */
-        .slider-img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 800;
-            color: rgba(255,255,255,0.05);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-        }
-
-        .img-before {
-            background-image: url('showroom_raw.png');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .img-after {
-            background-image: url('showroom_ai_enhanced.png');
-            background-size: cover;
-            background-position: center;
-            clip-path: inset(0 0 0 50%);
-        }
-
-        .slider-divider {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            width: 4px;
-            background: var(--text-white);
-            transform: translateX(-50%);
-            cursor: ew-resize;
-            z-index: 10;
-        }
-
-        .slider-divider::before {
-            content: '⟷';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 48px;
-            height: 48px;
-            background: var(--text-white);
-            color: var(--bg-obsidian);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-        }
-
-        .slider-overlay {
-            position: absolute;
-            bottom: 2rem;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            z-index: 5;
-            background: rgba(0,0,0,0.85);
-            border: 1px solid;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-
-        .overlay-left {
-            left: 2rem;
-            border-color: rgba(239, 68, 68, 0.5);
-            color: var(--text-white);
-        }
-
-        .overlay-right {
-            right: 2rem;
-            border-color: rgba(16, 185, 129, 0.5);
-            color: var(--text-white);
-        }
-
-        /* Footer & Mobile CTA */
-        .footer {
-            border-top: 1px solid var(--glass-border);
-            padding: 5rem 0;
-            text-align: center;
-            background: #000;
-        }
-
-        .footer-cta {
-            margin-bottom: 4rem;
-        }
-
-        .footer-cta h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-muted);
-        }
-
-        .footer-ip {
-            color: #71717a;
-            font-size: 0.9rem;
-            max-width: 900px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
-        
-        .mobile-sticky-cta {
-            display: none;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.95);
-            border-top: 1px solid rgba(16, 185, 129, 0.3);
-            z-index: 999;
-            text-align: center;
-        }
-
-        .mobile-sticky-cta .btn {
-            width: 100%;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .concierge-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .calculator-grid {
-                grid-template-columns: 1fr;
-            }
-            .slider-wrapper {
-                height: 400px;
-            }
-        }
-        
         @media (max-width: 768px) {
-            section { padding: 5rem 0; }
-            .glass-card { padding: 2rem; }
-            .btn-group { flex-direction: column; }
-            .btn { width: 100%; }
-            .overlay-left, .overlay-right {
-                font-size: 0.9rem;
-                padding: 0.75rem 1rem;
-                bottom: 1rem;
-            }
-            .overlay-left { left: 1rem; }
-            .overlay-right { right: 1rem; }
-            .input-controls { flex-direction: column; align-items: stretch; gap: 0.75rem; }
-            input[type="number"] { width: 100%; text-align: left; }
-            
-            /* Enable Sticky CTA on mobile */
-            .mobile-sticky-cta { display: block; }
-            body { padding-bottom: 90px; }
+            section { padding: 4rem 0; }
+            .hero { padding: 6rem 0; }
         }
-        /* 1. Intro Sequence */
-        #sys-intro {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #000; color: #10b981; font-family: monospace;
-            z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-            padding: 2rem;
-        }
-        .glitch { animation: glitch 0.2s linear infinite; }
-        @keyframes glitch { 0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) } 40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) } 80% { transform: translate(2px, -2px) } 100% { transform: translate(0) } }
-        .hidden-intro { opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
-        /* 2. Qualification Modal */
-        .qual-modal {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
-            z-index: 9000; display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transition: all 0.4s ease;
-        }
-        .qual-modal.active { opacity: 1; pointer-events: auto; }
-        .qual-box {
-            background: var(--obsidian); border: 1px solid var(--glass-border);
-            border-radius: 16px; padding: 2rem; width: 90%; max-width: 450px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9); transform: translateY(20px); transition: all 0.4s ease;
-        }
-        .qual-modal.active .qual-box { transform: translateY(0); }
-        .qual-box h3 { color: var(--emerald); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 1rem;}
-        .qual-select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
-        .qual-select option { background: var(--obsidian); color: white; }
-        #qual-status { margin-top: 1rem; font-family: monospace; font-size: 0.8rem; color: var(--emerald); min-height: 20px; }
-        /* 3. Currency & Response Time */
-        .currency-toggles { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-        .curr-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-silver); padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease; }
-        .curr-btn.active { background: var(--text-main); color: var(--obsidian); font-weight: bold; }
-        .shake-red { animation: shakeRed 0.4s ease-in-out; }
-        @keyframes shakeRed { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); color: #ef4444; } 40%, 80% { transform: translateX(5px); color: #ef4444; } }
-        /* 4. Neurological Avatar */
-        .avatar-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--emerald); border: 2px solid #fff; margin-right: 0.5rem; display: inline-block; vertical-align: middle; box-shadow: 0 0 10px var(--emerald-glow); animation: avatarBreathe 3s infinite ease-in-out; }
-        .avatar-icon.computing { animation: avatarCompute 0.5s infinite linear; border-style: dashed; }
-        @keyframes avatarBreathe { 0%, 100% { transform: scale(1); box-shadow: 0 0 10px var(--emerald-glow); } 50% { transform: scale(1.1); box-shadow: 0 0 20px var(--emerald); } }
-        @keyframes avatarCompute { 100% { transform: rotate(360deg); } }
-        /* 5. SVG Wireframe & SLA */
-        .img-before-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .wireframe-svg { width: 150%; height: 150%; stroke: var(--emerald); stroke-width: 1px; fill: none; opacity: 0.5; }
-        .laser-line { position: absolute; left: -1px; top: 0; width: 2px; height: 100%; background: var(--emerald); box-shadow: 0 0 20px var(--emerald), 0 0 40px var(--emerald); z-index: 10; pointer-events: none; }
-        .sla-banner { background: #000; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); padding: 1.5rem 0; text-align: center; font-family: monospace; font-size: 0.85rem; color: var(--text-silver); }
-        .sla-items { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; align-items: center; }
-        .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--emerald); border: 1px solid var(--emerald); padding: 0.4rem 1rem; border-radius: 100px; background: rgba(16,185,129,0.05); }
-        .status-dot { width: 8px; height: 8px; background: var(--emerald); border-radius: 50%; box-shadow: 0 0 8px var(--emerald); animation: pulseDot 1.5s infinite; }
-        @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     </style>
 </head>
 <body>
-    <!-- UPGRADE 1: INTRO SEQUENCE -->
-    <div id="sys-intro">
-        <div style="font-size: 0.8rem; margin-bottom: 2rem;">[SYS.INIT] BOOT SEQUENCE START...</div>
-        <div class="glitch" style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">AI NEXLIFY_AGENCIES v4.0</div>
-        <div id="boot-text" style="font-size: 0.9rem; max-width: 600px; line-height: 1.5; color: var(--text-muted);">
-            > Authenticating secure connection... <br>
-            > Establishing neural handshake with client... <br>
-            > WARNING: High-ticket infrastructure detected.
-        </div>
-        <div style="margin-top: 2rem; width: 200px; height: 2px; background: rgba(16,185,129,0.2); position: relative;">
-            <div id="boot-progress" style="width: 0%; height: 100%; background: var(--emerald); box-shadow: 0 0 10px var(--emerald);"></div>
-        </div>
-    </div>
 
-    <!-- UPGRADE 2: APPLICATION MODAL -->
-    <div class="qual-modal" id="qual-modal">
-        <div class="qual-box">
-            <h3>Enterprise Application</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Due to extreme computational demand, we onboard limited clients. Submit your architecture details.</p>
-            <input type="text" id="app-name" class="qual-select" placeholder="Full Name" style="background: rgba(0,0,0,0.5); color: white;">
-            <input type="text" id="app-phone" class="qual-select" placeholder="WhatsApp Number" style="background: rgba(0,0,0,0.5); color: white;">
-            <input type="text" id="app-url" class="qual-select" placeholder="Business URL" style="background: rgba(0,0,0,0.5); color: white;">
-            <button class="btn btn-primary" id="btn-qualify" style="width: 100%; padding: 1rem;">Initiate System Review</button>
-            <div id="qual-status"></div>
-            <button id="close-modal" style="background: transparent; border: none; color: var(--text-muted); width: 100%; margin-top: 1rem; cursor: pointer;">Close</button>
+    <header>
+        <div class="container nav-content">
+            <div class="logo">AI<span>Nexlify</span></div>
+            <a href="#contact" class="btn">Deploy Layla</a>
         </div>
-    </div>
+    </header>
 
-    <!-- SECTION 1: THE HERO -->
     <section class="hero">
+        <div class="hero-bg-glow"></div>
         <div class="container">
-            <h1>Stop Losing High-Ticket<br>Deals While You Sleep.</h1>
-            <p class="sub-headline">We build automated digital infrastructure for high-friction global businesses. We replace slow, human-led sales floors with custom AI Concierges that qualify leads and close deals 24/7.</p>
-            <div class="btn-group">
-                <button class="btn btn-primary open-modal-btn">Get a Custom AI Blueprint</button>
-                <a href="#protocol" class="btn btn-secondary">See How It Works</a>
+            <div class="hero-alert">The Traditional Agency Model is Dead</div>
+            <h1>Stop Driving Traffic to Dead Contact Forms.</h1>
+            <p>You don't need another $5k/mo SEO retainer. We are an Elite AI Autonomous Systems provider for Healthcare & Dental. We build your web assets, rank your SEO, and install <strong>Layla</strong> — a 24/7 AI Patient Coordinator that triages symptoms and books appointments while your front desk sleeps.</p>
+            <div class="hero-ctas">
+                <a href="#contact" class="btn">Deploy Your AI Agent</a>
+                <a href="#layla" class="btn btn-outline">See How It Works</a>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 2: THE INTERACTIVE ROI CALCULATOR -->
-    <section id="calculator">
+    <section id="pain-points" style="background-color: rgba(255,255,255,0.02);">
         <div class="container">
-            <div class="glass-card calculator-grid">
-                <div>
-                    <h2>Interactive ROI Calculator</h2>
-                    <p class="sub-headline">Visualize the capital bleeding from your current human-led pipeline.</p>
-                    
-                    <!-- UPGRADE 3: CURRENCY SELECTOR -->
-                    <div class="currency-toggles">
-                        <button class="curr-btn active" data-curr="INR" data-rate="1">INR (₹)</button>
-                        <button class="curr-btn" data-curr="AED" data-rate="0.044">AED (د.إ)</button>
-                        <button class="curr-btn" data-curr="USD" data-rate="0.012">USD ($)</button>
-                    </div>
-                    
-                    <div class="input-group">
-                        <label>Monthly Leads</label>
-                        <div class="input-controls">
-                            <input type="range" id="leads-range" min="100" max="10000" step="100" value="1000">
-                            <input type="number" id="leads-number" min="100" max="10000" value="1000">
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <label>Average Ticket Size (₹)</label>
-                        <div class="input-controls">
-                            <input type="range" id="ticket-range" min="5000" max="500000" step="5000" value="50000">
-                            <input type="number" id="ticket-number" min="5000" max="500000" value="50000">
-                        </div>
-                    </div>
+            <h2 style="text-align: center; margin-bottom: 3rem;">Why Traditional Marketing Fails Clinics</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Expensive, Dumb Retainers</h3>
+                    <p>Traditional agencies charge $2,000/mo for SEO, but don't care if the lead actually books. They drive traffic to a static website and call it a day.</p>
                 </div>
-
-                <div class="calc-outputs">
-                    <div class="output-box red-box">
-                        <div class="output-label text-red">Estimated Revenue Lost to Human Delay:</div>
-                        <div class="output-value text-red" id="bleed-output">₹0</div>
-                    </div>
-                    <div class="output-box green-box">
-                        <div class="output-label text-emerald">Revenue Recovered by AI Nexlify:</div>
-                        <div class="output-value text-emerald" id="recovered-output">₹0</div>
-                    </div>
+                <div class="card">
+                    <h3>The After-Hours Bleed</h3>
+                    <p>40% of dental emergencies happen after hours. If they hit your voicemail or a standard web form, they call the next clinic on Google immediately.</p>
+                </div>
+                <div class="card">
+                    <h3>Overwhelmed Front Desk</h3>
+                    <p>Your highly-trained staff shouldn't be spending 20 minutes on the phone answering basic questions about insurance accepted or teeth whitening pricing.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 3: THE UNIVERSAL CONCIERGE -->
-    <section>
-        <div class="container">
-            <div class="concierge-grid">
-                <div>
-                    <h2>Speaks Your Customer's Exact Language.</h2>
-                    <p class="sub-headline">Whether your buyers speak corporate English or street-smart Hinglish, we train the neural network to match their exact bargaining style.</p>
-                    
-                    <div class="language-toggle">
-                        <button class="toggle-btn active" data-lang="en">Global English</button>
-                        <button class="toggle-btn" data-lang="hi">Native Hinglish</button>
-                    </div>
-                </div>
+    <section id="services">
+        <div class="container" style="text-align: center;">
+            <h2 style="margin-bottom: 1rem;">Full-Stack Digital Growth + AI</h2>
+            <p style="max-width: 800px; margin: 0 auto 2rem;">We do everything the traditional guys do, but we supercharge it with AI infrastructure. We don't just generate traffic; we deploy autonomous systems to convert it.</p>
+            <div class="service-list" style="justify-content: center;">
+                <div class="service-pill highlight">Layla: The 24/7 Employee</div>
+                <div class="service-pill">SEO & Answer Engine Optimization</div>
+                <div class="service-pill">Google & Meta Ads Management</div>
+                <div class="service-pill">Custom Web Design</div>
+                <div class="service-pill">App & Patient Portal Development</div>
+                <div class="service-pill">Medical Branding & Identity</div>
+            </div>
+        </div>
+    </section>
 
-                <div class="phone-container">
-                    <div class="phone-header">
-                        <!-- UPGRADE 4: NEUROLOGICAL AVATAR -->
-                        <div class="phone-avatar" style="background: transparent;">
-                            <div class="avatar-icon" id="ai-avatar"></div>
-                        </div>
+    <section id="layla-demo" style="background-color: rgba(255,255,255,0.02);">
+        <div class="container">
+            <div class="grid-2" style="align-items: center;">
+                <div>
+                    <h2 style="color: var(--text-white);">Meet Your New Best Employee.</h2>
+                    <p>Layla doesn't take days off. She doesn't sleep. She intercepts leads the second they hit your website, triages their symptoms, and books them directly into your calendar.</p>
+                    <a href="https://layla-agent.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn" style="margin-top: 1.5rem;">Chat with Layla Live →</a>
+                </div>
+                <div class="card layla-ui" id="layla" style="border-color: rgba(255,255,255,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding: 0;">
+                    <div class="layla-header">
                         <div>
-                            <div style="font-weight: 600; font-size: 1.1rem; color: #fff;">Enterprise Concierge</div>
-                            <div style="color: rgba(255,255,255,0.7); font-size: 0.85rem;">typing...</div>
+                            <div class="layla-avatar">L</div>
+                            <div style="font-weight: 600; color: var(--text-white); font-size: 1.1rem;">Layla (The Employee)</div>
+                            <div style="font-size: 0.8rem; color: #10b981;">Available to chat any hour of the day</div>
                         </div>
                     </div>
-                    <div class="phone-chat">
-                        <div class="chat-bubble-container">
-                            <div class="chat-bubble bubble-customer" id="chat-customer">
-                                Looking for a 4BHK investment.
-                            </div>
-                            <div class="chat-bubble bubble-ai" id="chat-ai">
-                                The 4BHKs project a 6.5% yield. Shall I schedule a broker call to view the property?
-                            </div>
-                        </div>
+                    <div class="layla-body">
+                        <div class="chat-msg chat-user">Hi, do you take Canada Life insurance? I have a terrible toothache.</div>
+                        <div class="chat-msg chat-ai">Hello! Yes, we absolutely accept Canada Life. I'm sorry to hear about your toothache. Is the pain sharp or throbbing, and is it sensitive to hot/cold?</div>
+                        <div class="chat-msg chat-user">Throbbing, very sensitive to cold water.</div>
+                        <div class="chat-msg chat-ai">Thank you. Based on that, the doctor should see you for an emergency exam. I have an opening tomorrow at 9:30 AM or 1:00 PM. Which works best for you?</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 4: THE DEPLOYMENT PROTOCOL -->
-    <section id="protocol">
+    <section id="portfolio">
         <div class="container">
-            <h2 style="text-align: center;">The Deployment Protocol</h2>
-            <p class="sub-headline" style="text-align: center; margin: 0 auto 4rem;">A surgical implementation framework designed for zero operational downtime.</p>
-
-            <div class="timeline">
-                <div class="timeline-step glass-card">
-                    <div class="step-indicator"></div>
-                    <div class="step-title">Phase 1 (Days 1-30)</div>
-                    <h3>The Foundation</h3>
-                    <p>Custom LoRA Training, Conversational LLM setup, Technical SEO structure.</p>
+            <h2 style="text-align: center; margin-bottom: 1rem;">Our Legacy: Builder & Roofer Infrastructure</h2>
+            <p style="text-align: center; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">Before we pivoted to Healthcare AI, we built elite, high-converting digital infrastructure for 7-figure custom home builders and roofing contractors. Check out our live case studies.</p>
+            <div class="grid-2">
+                <div class="portfolio-card">
+                    <img src="assets/portfolio/gosur-full.webp" alt="Gosur Custom Developments" class="portfolio-img">
+                    <div class="portfolio-meta">
+                        <h3>Gosur Custom Developments</h3>
+                        <p>Premium custom home builder site for 7-figure builds. Clean design, fast load, simple lead form.</p>
+                        <a href="https://gosur-development-secure.netlify.app/" target="_blank" rel="noopener noreferrer">→ View Live Site</a>
+                    </div>
                 </div>
-
-                <div class="timeline-step glass-card">
-                    <div class="step-indicator"></div>
-                    <div class="step-title">Phase 2 (Month 2 Onward)</div>
-                    <h3>Autonomous Operations</h3>
-                    <p>24/7 WhatsApp AI Hosting, Daily Visual Asset Generation, Automated Content Publishing.</p>
+                <div class="portfolio-card">
+                    <img src="assets/portfolio/stratum-full.webp" alt="Stratum Roofing & Exteriors" class="portfolio-img">
+                    <div class="portfolio-meta">
+                        <h3>Stratum Roofing & Exteriors</h3>
+                        <p>Mobile-first roofing site with tap-to-call and storm estimate request form.</p>
+                        <a href="https://stratum-foundation.vercel.app/" target="_blank" rel="noopener noreferrer">→ View Live Site</a>
+                    </div>
+                </div>
+                <div class="portfolio-card">
+                    <img src="assets/portfolio/lucky-full.webp" alt="Lucky Custom Homes" class="portfolio-img">
+                    <div class="portfolio-meta">
+                        <h3>Lucky Custom Homes</h3>
+                        <p>Custom home builder site with quote estimation page to filter serious buyers.</p>
+                        <a href="https://lucky-concrete-ghost-build.vercel.app/" target="_blank" rel="noopener noreferrer">→ View Live Site</a>
+                    </div>
+                </div>
+                <div class="portfolio-card">
+                    <img src="assets/portfolio/maxwood-full.webp" alt="Maxwood Roofing Systems" class="portfolio-img">
+                    <div class="portfolio-meta">
+                        <h3>Maxwood Roofing Systems</h3>
+                        <p>Replaced an outdated site with a fast, clean roofing website built to book storm inspections.</p>
+                        <a href="https://maxwood-kitchen.vercel.app/" target="_blank" rel="noopener noreferrer">→ View Live Site</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 5: THE VISUAL PIPELINE -->
-    <section>
+    <section id="process" style="background-color: rgba(255,255,255,0.02);">
         <div class="container">
-            <h2 style="text-align: center;">The Visual Pipeline</h2>
-            <p class="sub-headline" style="text-align: center; margin: 0 auto;">Stop paying for studios. Send a raw smartphone photo, get hyper-realistic composites overnight.</p>
-
-            <div class="slider-wrapper" id="slider">
-                <!-- Optimized CSS gradient placeholders for immediate load & high performance -->
-                <!-- UPGRADE 5: SVG WIREFRAME REVEAL -->
-                <div class="slider-img img-before img-before-svg">
-                    <svg class="wireframe-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <path d="M0 50 Q 25 25, 50 50 T 100 50 M25 0 L25 100 M75 0 L75 100" />
-                        <circle cx="50" cy="50" r="10" />
-                        <rect x="10" y="10" width="80" height="80" />
-                    </svg>
-                    <div class="laser-line"></div>
-                    <div style="position: absolute; color: var(--emerald); font-family: monospace; font-size: 1rem; background: rgba(0,0,0,0.8); padding: 0.5rem; border: 1px solid var(--emerald);">RAW_WIRE_MESH</div>
+            <h2 style="text-align: center; margin-bottom: 3rem;">The Autonomous Pipeline</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3 style="color: var(--gold);">01. Intelligence Audit</h3>
+                    <p>We analyze your current intake bottleneck, patient volume, and local search competitors.</p>
                 </div>
-                <div class="slider-img img-after" id="slider-after">Hyper-Realistic</div>
+                <div class="card">
+                    <h3 style="color: var(--gold);">02. System Training</h3>
+                    <p>We build your web assets and train your custom LLaMA3/Layla model on your clinic's specific services, pricing, and tone.</p>
+                </div>
+                <div class="card">
+                    <h3 style="color: var(--gold);">03. Autonomous Go-Live</h3>
+                    <p>Layla takes over your website chat and SMS follow-ups, booking patients directly into your calendar 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 1rem;">The Undeniable Matrix</h2>
+            <p style="text-align: center; margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">Why pay an agency $5,000 upfront and $2,000/mo? Hire Layla for less than the cost of a daily coffee.</p>
+            
+            <div class="card price-tier featured" style="max-width: 800px; margin: 0 auto;">
+                <div class="price-badge">The Autonomous Clinic Package</div>
+                <h3>System Setup + Full Stack Web Build</h3>
+                <div class="price">$1,497 <span style="font-size: 1rem; color: var(--text-muted); font-family: var(--font-stack);">One-Time Setup</span></div>
+                <div class="price-sub">+ $497/mo (Layla's Salary — roughly $16/day)</div>
                 
-                <div class="slider-divider" id="slider-divider"></div>
-
-                <div class="slider-overlay overlay-left"><span class="text-red">Cost: High. Wait: 3 Weeks.</span></div>
-                <div class="slider-overlay overlay-right"><span class="text-emerald">Cost: Included. Wait: 45 Seconds.</span></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 5.5. AUTONOMOUS SEO ENGINE -->
-    <section class="section">
-        <style>
-            .cyber-matrix-container { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 0 40px rgba(16, 185, 129, 0.1); }
-            .hyper-image { width: 100%; height: auto; display: block; filter: contrast(1.1) brightness(0.9); transform: scale(1.05); }
-            .laser-scanner { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--emerald); box-shadow: 0 0 20px var(--emerald), 0 0 40px var(--emerald); opacity: 0.8; animation: scan 3s ease-in-out infinite; z-index: 5; }
-            @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 98%; opacity: 0; } }
-            .data-stream-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(3,3,3,0.1) 0%, rgba(3,3,3,0.8) 100%); z-index: 2; pointer-events: none; }
-            .ticker-tape { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.9); border-top: 1px solid var(--emerald); padding: 8px 0; overflow: hidden; z-index: 10; }
-            .ticker-content { display: inline-block; white-space: nowrap; color: var(--emerald); font-family: monospace; font-size: 0.8rem; animation: ticker 20s linear infinite; text-shadow: 0 0 5px var(--emerald); }
-            @keyframes ticker { 0% { transform: translateX(500px); } 100% { transform: translateX(-100%); } }
-            .floating-node { position: absolute; width: 8px; height: 8px; background: var(--text-main); border-radius: 50%; box-shadow: 0 0 15px var(--text-main); z-index: 6; animation: floatNode 3s ease-in-out infinite alternate; }
-            @keyframes floatNode { 0% { transform: translateY(0px) scale(1); opacity: 0.5; } 100% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
-        </style>
-        <div class="container">
-            <div class="concierge-grid">
-                <div class="scroll-reveal" style="order: 1;">
-                    <div class="glass-panel" style="padding: 1rem; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.05);">
-                        <div class="cyber-matrix-container">
-                            <img src="hyper_seo_matrix.png" alt="8k Hyperrealistic SEO Agent" class="hyper-image">
-                            <div class="data-stream-overlay"></div>
-                            <div class="laser-scanner"></div>
-                            <div class="floating-node" style="top: 30%; left: 40%; animation-delay: 0s;"></div>
-                            <div class="floating-node" style="top: 60%; left: 70%; animation-delay: 1s;"></div>
-                            <div class="floating-node" style="top: 45%; left: 20%; animation-delay: 2s; background: var(--emerald); box-shadow: 0 0 15px var(--emerald);"></div>
-                            <div class="ticker-tape">
-                                <div class="ticker-content">
-                                    [SYS.LOG] INITIATING DEEP CRAWL... [NODE 04] COMPETITOR KEYWORDS EXTRACTED... [LLM] GENERATING 2,500 WORD ASSET... [CMS] PUSHING TO PRODUCTION... [INDEX] RANKING POSITION #1 SECURED.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="scroll-reveal" style="order: 2;">
-                    <h2>The Autonomous SEO Engine</h2>
-                    <p style="margin-top: 1.5rem; margin-bottom: 2rem;">Our proprietary SEO nodes don't just write blogs; they analyze search volume, generate high-intent articles, deploy them directly to your CMS, and index them—while you sleep.</p>
-                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
-                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> 2x Weekly Automated Publications</li>
-                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> Real-time SERP Data Processing</li>
-                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> Semantic Keyword Matrix Injection</li>
+                <div class="grid-2" style="gap: 2rem; margin-top: 1rem;">
+                    <ul class="features-list">
+                        <li>Layla 24/7 AI Patient Coordinator</li>
+                        <li>Custom Web Design & Deployment</li>
+                        <li>Automated SMS Booking Integration</li>
+                        <li>Basic Local SEO & AEO Setup</li>
+                    </ul>
+                    <ul class="features-list">
+                        <li>Custom LLaMA3 Training on Your Clinic</li>
+                        <li>Ongoing Hosting & Maintenance</li>
+                        <li>Priority Technical Support</li>
+                        <li><strong>7-Day Money-Back Guarantee on Setup Fee</strong></li>
                     </ul>
                 </div>
+                <a href="#contact" class="btn" style="text-align: center; margin-top: 1rem;">Start Onboarding</a>
             </div>
         </div>
     </section>
 
-    <!-- SECTION 6: UNIVERSAL FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-cta">
-                <h3>Engineered for High-Friction Industries Globally: Real Estate, Fine Jewelry, Luxury Fashion, Premium B2B.</h3>
-                <button class="btn btn-primary open-modal-btn" style="margin-top: 1rem;">Start Your Custom Build</button>
-            </div>
-            
-            <div style="margin-top: 2rem; margin-bottom: 2rem; display: flex; justify-content: center; gap: 2rem;">
-                <a href="/terms/" style="color: var(--emerald); text-decoration: none;">Terms of Service</a>
-                <a href="/terms/#sec-8" style="color: var(--emerald); text-decoration: none;">Privacy Policy</a>
-                <a href="/terms/#sec-8" style="color: var(--emerald); text-decoration: none;">Data Processing Agreement (DPA)</a>
-            </div>
+    <section id="contact" style="background-color: rgba(255,255,255,0.02);">
+        <div class="container contact-section">
+            <h2>Deploy Your Autonomous System</h2>
+            <p>Fill out the form below. We will review your clinic's digital presence and contact you to schedule an integration call.</p>
+            <form action="mailto:anas@ainexlifyagencies.com" method="POST" enctype="text/plain" onsubmit="alert('Thank you! Redirecting to email client...');">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="clinic">Clinic Name</label>
+                    <input type="text" id="clinic" name="Clinic" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Direct Phone Number</label>
+                    <input type="tel" id="phone" name="Phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="website">Current Website (If applicable)</label>
+                    <input type="url" id="website" name="Website">
+                </div>
+                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">DEPLOY LAYLA TODAY</button>
+            </form>
+        </div>
+    </section>
 
-            <div class="footer-ip">
-                Intellectual Property Notice: All underlying conversational logic, prompt engineering, LoRA models, and node-based generative pipelines remain the exclusive intellectual property of AI Nexlify Agencies. Clients retain full ownership of generated outputs.
-            </div>
+    <footer>
+        <div class="container">
+            <div class="logo">AI<span>Nexlify</span></div>
+            <p style="margin-top: 2rem;">The client exclusively owns all rights, title, and interest in and to their brand assets and the captured patient data. Ainexlify Agencies retains rights to the proprietary AI system architecture.</p>
+            <p style="margin-top: 1rem;">&copy; 2026 Ainexlify Agencies. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- PERSISTENT MOBILE CTA -->
-    <div class="mobile-sticky-cta">
-        <button class="btn btn-primary open-modal-btn">Initiate Neural Link</button>
-    </div>
-
-    <!-- JavaScript Interactions -->
-    <script>
-        // 1. Calculator Logic with Syncing Inputs
-        const formatINR = (num) => {
-            return new Intl.NumberFormat('en-IN', {
-                style: 'currency',
-                currency: 'INR',
-                maximumFractionDigits: 0
-            }).format(num);
-        };
-
-        const leadsRange = document.getElementById('leads-range');
-        const leadsNumber = document.getElementById('leads-number');
-        const ticketRange = document.getElementById('ticket-range');
-        const ticketNumber = document.getElementById('ticket-number');
-        
-        const bleedOutput = document.getElementById('bleed-output');
-        const recoveredOutput = document.getElementById('recovered-output');
-
-        const calculateROI = (leads, ticket) => {
-            const potentialRevenue = leads * ticket;
-            const bleed = potentialRevenue * 0.30; // 30% drop off
-
-            bleedOutput.textContent = formatINR(bleed);
-            recoveredOutput.textContent = formatINR(bleed);
-        };
-
-        const syncInputs = (source, target, isLeads) => {
-            let val = parseInt(source.value, 10);
-            
-            // Constrain number inputs
-            const min = parseInt(source.min, 10);
-            const max = parseInt(source.max, 10);
-            if (source.type === 'number') {
-                if (val < min) val = min;
-                if (val > max) val = max;
-            }
-            
-            target.value = val;
-            
-            const leads = isLeads ? val : parseInt(leadsNumber.value, 10);
-            const ticket = !isLeads ? val : parseInt(ticketNumber.value, 10);
-            
-            calculateROI(leads, ticket);
-        };
-
-        leadsRange.addEventListener('input', (e) => syncInputs(e.target, leadsNumber, true));
-        leadsNumber.addEventListener('change', (e) => syncInputs(e.target, leadsRange, true));
-        
-        ticketRange.addEventListener('input', (e) => syncInputs(e.target, ticketNumber, false));
-        ticketNumber.addEventListener('change', (e) => syncInputs(e.target, ticketRange, false));
-
-        // Initial Calculation
-        calculateROI(parseInt(leadsRange.value, 10), parseInt(ticketRange.value, 10));
-
-        // 2. Multi-lingual Toggle
-        const chats = {
-            en: {
-                customer: "Looking for a 4BHK investment.",
-                ai: "The 4BHKs project a 6.5% yield. Shall I schedule a broker call to view the property?"
-            },
-            hi: {
-                customer: "Bhaiya, yeh premium bridal lehenga available hai?",
-                ai: "Haan ji, bilkul in-stock hai! Agar budget tight hai, toh ek similar semi-silk variant dikha doon jo ₹5,000 sasta padega?"
-            }
-        };
-
-        const chatCustomer = document.getElementById('chat-customer');
-        const chatAi = document.getElementById('chat-ai');
-        const langBtns = document.querySelectorAll('.toggle-btn');
-
-        langBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                langBtns.forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-
-                const lang = e.target.getAttribute('data-lang');
-                
-                // Fade out
-                chatCustomer.style.opacity = 0;
-                chatAi.style.opacity = 0;
-
-                setTimeout(() => {
-                    chatCustomer.textContent = chats[lang].customer;
-                    chatAi.textContent = chats[lang].ai;
-                    
-                    // Fade in
-                    chatCustomer.style.opacity = 1;
-                    chatAi.style.opacity = 1;
-                }, 200);
-            });
-        });
-
-        // 3. Optimized Image Slider
-        const slider = document.getElementById('slider');
-        const divider = document.getElementById('slider-divider');
-        const imgAfter = document.getElementById('slider-after');
-
-        const doSlide = (e) => {
-            // Support both mouse and touch events
-            let clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-            const rect = slider.getBoundingClientRect();
-            let x = clientX - rect.left;
-            
-            // Constrain
-            if (x < 0) x = 0;
-            if (x > rect.width) x = rect.width;
-            
-            const percent = (x / rect.width) * 100;
-            
-            // Request animation frame for smooth performance
-            requestAnimationFrame(() => {
-                divider.style.left = `${percent}%`;
-                imgAfter.style.clipPath = `inset(0 0 0 ${percent}%)`;
-            });
-        };
-
-        const stopSlide = () => {
-            window.removeEventListener('mousemove', doSlide);
-            window.removeEventListener('touchmove', doSlide);
-            window.removeEventListener('mouseup', stopSlide);
-            window.removeEventListener('touchend', stopSlide);
-        };
-
-        const startSlide = (e) => {
-            window.addEventListener('mousemove', doSlide);
-            window.addEventListener('touchmove', doSlide, { passive: false });
-            window.addEventListener('mouseup', stopSlide);
-            window.addEventListener('touchend', stopSlide);
-            // Fire once initially to snap to exact click location
-            doSlide(e); 
-        };
-
-        slider.addEventListener('mousedown', startSlide);
-        slider.addEventListener('touchstart', startSlide, { passive: true });
-
-        // --- UPGRADE INJECTIONS JS ---
-        // 1. Intro Sequence
-        window.addEventListener('load', () => {
-            const progress = document.getElementById('boot-progress');
-            const intro = document.getElementById('sys-intro');
-            let w = 0;
-            const int = setInterval(() => {
-                w += Math.random() * 15;
-                if(w >= 100) {
-                    w = 100;
-                    clearInterval(int);
-                    setTimeout(() => { intro.classList.add('hidden-intro'); }, 400);
-                }
-                progress.style.width = w + '%';
-            }, 100);
-        });
-
-        // 2. Qual Modal Logic
-        const qBtn = document.getElementById('btn-qualify');
-        const appName = document.getElementById('app-name');
-        const appPhone = document.getElementById('app-phone');
-        const appUrl = document.getElementById('app-url');
-        const qStat = document.getElementById('qual-status');
-        const qModal = document.getElementById('qual-modal');
-        const closeBtn = document.getElementById('close-modal');
-
-        if(qBtn) {
-            qBtn.addEventListener('click', async () => {
-                if(!appName.value || !appPhone.value) { 
-                    qStat.textContent = "> ERROR: NAME & PHONE REQUIRED"; 
-                    qStat.style.color = '#ef4444';
-                    qStat.classList.add('shake-red'); 
-                    setTimeout(() => qStat.classList.remove('shake-red'), 400); 
-                    return; 
-                }
-                
-                qStat.style.color = '#10b981';
-                qStat.textContent = "> PROCESSING ARCHITECTURE REQUEST...";
-                
-                try {
-                    const res = await fetch('/api/agency/apply', {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ name: appName.value, phone: appPhone.value, website: appUrl.value })
-                    });
-                    
-                    if (res.ok) {
-                        qStat.textContent = "> APPLICATION SECURED. AWAITING NEURAL HANDSHAKE.";
-                        setTimeout(() => { 
-                            qModal.classList.remove('active'); 
-                            window.location.href = `https://wa.me/+971501234567?text=Hi,%20I%20just%20submitted%20an%20application%20for%20Nexlify%20Agency.%20Name:%20${appName.value}`;
-                        }, 1500);
-                    } else {
-                        throw new Error('Failed');
-                    }
-                } catch (e) {
-                    qStat.style.color = '#ef4444';
-                    qStat.textContent = "> API ERROR. ROUTING DIRECTLY TO WHATSAPP...";
-                    setTimeout(() => { 
-                        window.location.href = `https://wa.me/+971501234567?text=Hi,%20I%20want%20to%20apply.%20Name:%20${appName.value}`;
-                    }, 1000);
-                }
-            });
-            
-            if(closeBtn) {
-                closeBtn.addEventListener('click', () => {
-                    qModal.classList.remove('active');
-                });
-            }
-            
-            document.querySelectorAll('.open-modal-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    qModal.classList.add('active');
-                    qStat.textContent = "";
-                });
-            });
-        }
-
-        // 3. Currency Toggle Logic
-        const currBtns = document.querySelectorAll('.curr-btn');
-        let currentRate = 1;
-        let currentSym = '₹';
-        const rawFormatINR = (num, sym) => {
-            return sym + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(num);
-        };
-        currBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                currBtns.forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                currentRate = parseFloat(e.target.getAttribute('data-rate'));
-                const curr = e.target.getAttribute('data-curr');
-                currentSym = curr === 'INR' ? '₹' : (curr === 'AED' ? 'د.إ ' : '$');
-                // Re-calculate
-                calculateROI(parseInt(leadsNumber.value, 10), parseInt(ticketNumber.value, 10));
-            });
-        });
-        
-        // Override CalculateROI for Currency
-        window.calculateROI = (leads, ticket) => {
-            const potentialRevenue = leads * ticket;
-            const bleed = potentialRevenue * 0.30;
-            const convertedBleed = bleed * currentRate;
-            bleedOutput.textContent = rawFormatINR(convertedBleed, currentSym);
-            recoveredOutput.textContent = rawFormatINR(convertedBleed, currentSym);
-        };
-        // Initial call after override
-        calculateROI(parseInt(leadsRange.value, 10), parseInt(ticketRange.value, 10));
-
-        // 4. Neurological Avatar Animation
-        const avatar = document.getElementById('ai-avatar');
-        if(avatar) {
-            setInterval(() => {
-                avatar.classList.add('computing');
-                setTimeout(() => avatar.classList.remove('computing'), 800 + Math.random() * 1000);
-            }, 3000);
-        }
-
-    </script>
 </body>
 </html>
