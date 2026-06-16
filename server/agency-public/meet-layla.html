@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet Layla | AI Nexlify Agencies</title>
+    
+    <!-- Premium Plush Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --bg-deep: #030303;
+            --bg-surface: #0a0a0a;
+            --text-white: #ffffff;
+            --text-muted: #a1a1aa;
+            --gold-light: #f5d061;
+            --gold: #c49f3b;
+            --gold-dark: #8c6e23;
+            --emerald: #6ee7b7; /* Emerald-300 */
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-heading: 'Outfit', sans-serif;
+            --font-mono: 'Courier New', Courier, monospace;
+            
+            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-white);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(196, 159, 59, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(196, 159, 59, 0.03), transparent 25%);
+            filter: blur(80px);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; width: 100%; }
+
+        /* Header */
+        header { text-align: center; margin-bottom: 3rem; }
+        h1 { font-family: var(--font-heading); font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1rem; }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+            -webkit-background-clip: text;
+            background-clip: text; color: transparent;
+        }
+        .subtitle { color: var(--text-muted); max-width: 800px; margin: 0 auto; font-size: 1.1rem; line-height: 1.6; }
+
+        /* Glass Room (The IDE/Terminal) */
+        .glass-room {
+            display: flex;
+            background: #000000;
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+            height: 600px;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        .macos-header {
+            position: absolute; top: 0; left: 0; width: 100%; height: 48px;
+            background: #1a1a1a; display: flex; align-items: center;
+            border-bottom: 1px solid #333; z-index: 10;
+        }
+        .traffic-lights { display: flex; gap: 8px; margin-left: 1rem; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot.red { background: #ff5f56; } .dot.yellow { background: #ffbd2e; } .dot.green { background: #27c93f; }
+        .macos-title { width: 100%; text-align: center; color: #888; font-size: 0.85rem; font-weight: 500; padding-right: 60px; }
+
+        /* Telemetry Sidebar */
+        .telemetry-sidebar {
+            width: 300px;
+            background: rgba(10, 10, 10, 0.95);
+            border-right: 1px solid #333;
+            padding: 4rem 1.5rem 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--emerald);
+            display: flex; flex-direction: column; gap: 1rem;
+        }
+        .telemetry-title { color: var(--text-muted); font-family: var(--font-heading); font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; }
+        .telemetry-item { display: flex; flex-direction: column; gap: 0.25rem; }
+        .telemetry-label { color: #666; font-size: 0.7rem; }
+        .telemetry-val { text-shadow: 0 0 10px rgba(110, 231, 183, 0.3); }
+        .blinking-cursor { animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Chat Interface */
+        .chat-container {
+            flex: 1;
+            display: flex; flex-direction: column;
+            background: #050505;
+            padding-top: 48px; /* For macos header */
+            position: relative;
+        }
+        .chat-history {
+            flex: 1; padding: 2rem; overflow-y: auto;
+            display: flex; flex-direction: column; gap: 1.5rem;
+        }
+        .message { max-width: 80%; padding: 1rem 1.25rem; border-radius: 20px; font-size: 0.95rem; line-height: 1.5; }
+        .message.ai {
+            background: #1a1a1a; color: #e5e5e5; align-self: flex-start;
+            border-bottom-left-radius: 4px; border: 1px solid #333;
+        }
+        .message.user {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #000;
+            align-self: flex-end; border-bottom-right-radius: 4px;
+            font-weight: 500;
+        }
+
+        /* Input Area & Action Chips */
+        .chat-input-area {
+            padding: 1.5rem; border-top: 1px solid #333; background: #0a0a0a;
+        }
+        .action-chips { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+        .chip {
+            background: rgba(196, 159, 59, 0.1); color: var(--gold); border: 1px solid rgba(196, 159, 59, 0.3);
+            padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.8rem; font-weight: 600;
+            cursor: pointer; transition: var(--transition-smooth);
+        }
+        .chip:hover { background: var(--gold); color: #000; transform: translateY(-2px); }
+
+        .input-box { display: flex; gap: 1rem; }
+        .input-box input {
+            flex: 1; background: #1a1a1a; border: 1px solid #333; color: #fff;
+            padding: 1rem 1.5rem; border-radius: 100px; font-family: var(--font-body);
+        }
+        .input-box input:focus { outline: none; border-color: var(--gold); }
+        .send-btn {
+            background: var(--gold); color: #000; border: none; width: 50px; height: 50px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: var(--transition-smooth);
+        }
+        .send-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(196,159,59,0.4); }
+
+        /* Bailout CTA */
+        .bailout-container { text-align: center; margin-top: 2rem; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--glass-bg); color: var(--text-white);
+            border: 1px solid var(--glass-border); padding: 1.25rem 2.5rem;
+            font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem;
+            border-radius: 100px; text-transform: uppercase; letter-spacing: 0.1em;
+            transition: var(--transition-smooth); cursor: pointer; text-decoration: none;
+            backdrop-filter: blur(10px);
+        }
+        .btn:hover {
+            background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2);
+            transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Nav back */
+        .nav-back { position: absolute; top: 2rem; left: 2rem; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; transition: var(--transition-smooth); }
+        .nav-back:hover { color: var(--gold); }
+
+        @media (max-width: 768px) {
+            .glass-room { flex-direction: column; height: 800px; }
+            .telemetry-sidebar { width: 100%; border-right: none; border-bottom: 1px solid #333; padding: 4rem 1rem 1rem; flex-direction: row; flex-wrap: wrap; }
+            .telemetry-item { flex: 1; min-width: 45%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-bg"></div>
+    <a href="index.html" class="nav-back"><i data-lucide="arrow-left"></i> Back to Home</a>
+
+    <div class="container">
+        <header>
+            <h1 class="gradient-text">Test Drive Your Next Best Employee.</h1>
+            <p class="subtitle">Chat with Layla in real-time. She is currently configured as our Agency Onboarding Director, but we will custom-train her neural network on your specific business logic before deployment.</p>
+        </header>
+
+        <div class="glass-room">
+            <div class="macos-header">
+                <div class="traffic-lights">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                </div>
+                <div class="macos-title">layla_engine_v4_active</div>
+            </div>
+
+            <div class="telemetry-sidebar">
+                <div class="telemetry-title">Live Telemetry</div>
+                <div class="telemetry-item">
+                    <span class="telemetry-label">Intent Recognition:</span>
+                    <span class="telemetry-val" id="tel-intent">[Active]<span class="blinking-cursor">_</span></span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="telemetry-label">Latency:</span>
+                    <span class="telemetry-val" id="tel-latency">42ms</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="telemetry-label">Sentiment Analysis:</span>
+                    <span class="telemetry-val" id="tel-sentiment">Neutral</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="telemetry-label">CRM Injection Status:</span>
+                    <span class="telemetry-val" id="tel-crm">Ready</span>
+                </div>
+            </div>
+
+            <div class="chat-container">
+                <div class="chat-history" id="chatHistory">
+                    <div class="message ai">I am Layla, the Director of Autonomous Onboarding at Ainexlify Agencies. What type of business do you run?</div>
+                </div>
+                <div class="chat-input-area">
+                    <div class="action-chips">
+                        <div class="chip" onclick="handleChip('I run a home service business. How can you help?')">“I run a home service business. How can you help?”</div>
+                        <div class="chip" onclick="handleChip('I run a medical clinic. How can you help?')">“I run a medical clinic. How can you help?”</div>
+                        <div class="chip" onclick="handleChip('What is your pricing structure?')">“What is your pricing structure?”</div>
+                    </div>
+                    <form class="input-box" id="chatForm">
+                        <input type="text" id="userInput" placeholder="Type your message..." autocomplete="off">
+                        <button type="submit" class="send-btn"><i data-lucide="send"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="bailout-container">
+            <a href="index.html#contact" class="btn">Skip the Demo — Apply for Setup</a>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        const history = document.getElementById('chatHistory');
+        const form = document.getElementById('chatForm');
+        const input = document.getElementById('userInput');
+        
+        // Telemetry DOM
+        const telIntent = document.getElementById('tel-intent');
+        const telLatency = document.getElementById('tel-latency');
+        const telSentiment = document.getElementById('tel-sentiment');
+        const telCrm = document.getElementById('tel-crm');
+
+        function updateTelemetry(intent, latency, sentiment, crm) {
+            telIntent.innerHTML = `${intent}<span class="blinking-cursor">_</span>`;
+            telLatency.innerText = latency;
+            telSentiment.innerText = sentiment;
+            telCrm.innerText = crm;
+        }
+
+        // Random jitter for latency
+        setInterval(() => {
+            const jitter = Math.floor(Math.random() * 20) + 30;
+            telLatency.innerText = jitter + 'ms';
+        }, 1500);
+
+        function appendMessage(sender, text) {
+            const msg = document.createElement('div');
+            msg.className = `message ${sender}`;
+            msg.innerText = text;
+            history.appendChild(msg);
+            history.scrollTop = history.scrollHeight;
+        }
+
+        function getAiResponse(userText) {
+            const txt = userText.toLowerCase();
+            
+            if (txt.includes('home service') || txt.includes('roofing') || txt.includes('contractor')) {
+                updateTelemetry('Vertical: Home_Service', '84ms', 'Inquisitive', 'Awaiting_Lead');
+                return "I can qualify your inbound estimate requests, filter out low-budget tire-kickers, and book high-ticket site visits directly into your calendar. Are you currently losing leads after hours? Should we schedule a setup call with Anas for Tuesday at 10 AM or Thursday at 2 PM?";
+            }
+            if (txt.includes('medical') || txt.includes('dental') || txt.includes('clinic')) {
+                updateTelemetry('Vertical: Healthcare', '62ms', 'Professional', 'Awaiting_Lead');
+                return "I triage patient symptoms, verify insurance eligibility, and instantly book emergency or routine exams into your practice management software. Are your front desk staff overwhelmed with calls? We can schedule a setup call with Anas on Tuesday at 10 AM or Thursday at 2 PM.";
+            }
+            if (txt.includes('pricing') || txt.includes('cost')) {
+                updateTelemetry('Intent: Pricing_Query', '55ms', 'Curious', 'Ready');
+                return "Our deployment fee is $1,497 for the full architecture build, followed by a $497/month retainer for my continuous operation and server costs. Should we schedule a system architecture consultation to discuss your exact needs?";
+            }
+            if (txt.includes('yes') || txt.includes('tuesday') || txt.includes('thursday') || txt.includes('schedule') || txt.includes('book')) {
+                updateTelemetry('Intent: Booking_Confirmation', '120ms', 'Positive', 'Injecting_Row...');
+                setTimeout(() => { telCrm.innerText = 'Row_Added [Success]'; }, 1000);
+                return "Excellent. I have provisionally logged the request. Please click 'Skip the Demo — Apply for Setup' below to finalize the injection into our CRM, and Anas will contact you shortly.";
+            }
+
+            // Default fallback
+            updateTelemetry('Intent: General_Inquiry', '42ms', 'Neutral', 'Ready');
+            return "I am configured to map your business logic and automate your intake. What specific industry do you operate in, so I can explain my utility?";
+        }
+
+        async function handleUserInput(text) {
+            if(!text.trim()) return;
+            appendMessage('user', text);
+            input.value = '';
+            
+            updateTelemetry('Processing...', '...', 'Analyzing...', 'Ready');
+
+            // Simulate network delay
+            setTimeout(() => {
+                const response = getAiResponse(text);
+                appendMessage('ai', response);
+            }, 800);
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handleUserInput(input.value);
+        });
+
+        window.handleChip = function(text) {
+            handleUserInput(text);
+        };
+    </script>
+</body>
+</html>
