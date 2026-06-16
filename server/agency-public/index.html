@@ -3,364 +3,566 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Nexlify Agencies | Elite AI Autonomous Systems & Digital Marketing</title>
+    <title>AI Nexlify Agencies | Elite AI Autonomous Systems</title>
     <meta name="description" content="Stop driving traffic to dead contact forms. We build full-stack digital marketing campaigns powered by Layla, a 24/7 AI Patient Coordinator.">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "AI Nexlify Agencies",
-      "description": "Elite AI Autonomous Systems provider specializing in Healthcare and Dental Clinics.",
-      "url": "https://ainexlifyagencies.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "US"
-      }
-    }
-    </script>
+    
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --bg-obsidian: #050505;
+            --bg-deep: #030303;
+            --bg-surface: #0a0a0a;
             --text-white: #ffffff;
             --text-muted: #a1a1aa;
+            --gold-light: #f5d061;
             --gold: #c49f3b;
-            --gold-hover: #e0b643;
-            --bleed-red: #ef4444;
-            --font-stack: 'Satoshi', system-ui, -apple-system, sans-serif;
-            --font-heading: 'Clash Display', sans-serif;
-            --glass-bg: rgba(255, 255, 255, 0.04);
+            --gold-dark: #8c6e23;
+            --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
-            --transition: all 0.3s ease;
+            --glass-glow: rgba(196, 159, 59, 0.15);
+            
+            --font-body: 'Inter', sans-serif;
+            --font-heading: 'Outfit', sans-serif;
+            
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-smooth: all 0.5s var(--ease-out);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
-            background-color: var(--bg-obsidian);
+            background-color: var(--bg-deep);
             color: var(--text-white);
-            font-family: var(--font-stack);
+            font-family: var(--font-body);
             line-height: 1.6;
+            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Ambient Background Glow */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(196, 159, 59, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(196, 159, 59, 0.03), transparent 25%);
+            filter: blur(80px);
+        }
+
         .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-        section { padding: 6rem 0; }
+        section { padding: 8rem 0; position: relative; }
         
-        h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 600; line-height: 1.2; }
-        h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 1.5rem; }
-        h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; color: var(--gold); }
-        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-        p { color: var(--text-muted); margin-bottom: 1rem; }
+        h1, h2, h3, h4 { font-family: var(--font-heading); line-height: 1.1; letter-spacing: -0.02em; }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
 
-        a { color: var(--gold); text-decoration: none; transition: var(--transition); }
-        a:hover { color: var(--gold-hover); }
-
+        a { color: var(--gold); text-decoration: none; transition: var(--transition-smooth); }
+        
+        /* Buttons */
         .btn {
-            display: inline-block;
-            background-color: var(--gold);
-            color: var(--bg-obsidian);
-            padding: 1rem 2.5rem;
-            font-weight: 600;
-            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-deep);
+            padding: 1.25rem 2.5rem;
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.1rem;
+            border-radius: 100px;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: var(--transition);
+            letter-spacing: 0.1em;
+            transition: var(--transition-smooth);
             border: none;
             cursor: pointer;
-            font-size: 1rem;
+            box-shadow: 0 0 20px rgba(196, 159, 59, 0.2);
+            position: relative;
+            overflow: hidden;
         }
-        .btn:hover { background-color: var(--gold-hover); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(196, 159, 59, 0.3); }
+        .btn::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        .btn:hover::before { left: 100%; }
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(196, 159, 59, 0.4);
+        }
+
         .btn-outline {
-            background-color: transparent;
+            background: var(--glass-bg);
             color: var(--text-white);
             border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            box-shadow: none;
         }
-        .btn-outline:hover { background-color: var(--glass-bg); color: var(--text-white); }
-
-        .card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            padding: 2.5rem;
-            border-radius: 8px;
-            transition: var(--transition);
+        .btn-outline:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: translateY(-3px);
         }
-        .card:hover { border-color: rgba(196, 159, 59, 0.3); transform: translateY(-4px); }
-
-        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; }
 
         /* Header */
-        header { padding: 1.5rem 0; border-bottom: 1px solid var(--glass-border); position: sticky; top: 0; background: rgba(5,5,5,0.9); backdrop-filter: blur(10px); z-index: 100; }
+        header { 
+            padding: 1.5rem 0; 
+            position: fixed; top: 0; left: 0; width: 100%; 
+            background: rgba(3,3,3,0.7); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border); 
+            z-index: 1000; 
+            transition: var(--transition-smooth);
+        }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--text-white); }
+        .logo { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 900; color: var(--text-white); letter-spacing: -0.03em; }
         .logo span { color: var(--gold); }
 
-        /* Hero */
-        .hero { text-align: center; padding: 10rem 0 8rem; position: relative; overflow: hidden; }
-        .hero-bg-glow { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 800px; height: 800px; background: radial-gradient(circle, rgba(196,159,59,0.05) 0%, rgba(5,5,5,0) 70%); pointer-events: none; }
-        .hero p { font-size: 1.25rem; max-width: 800px; margin: 0 auto 2.5rem; line-height: 1.8; }
-        .hero-ctas { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; position: relative; z-index: 2; }
-        .hero-alert { display: inline-block; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); color: #ef4444; padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        /* Cinematic Hero */
+        .hero { 
+            min-height: 100vh; 
+            display: flex; align-items: center; justify-content: center; 
+            text-align: center; 
+            padding-top: 6rem;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(196, 159, 59, 0.1);
+            border: 1px solid var(--gold);
+            color: var(--gold-light);
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 0 20px rgba(196, 159, 59, 0.2);
+            animation: pulseGlow 3s infinite alternate;
+        }
+        .hero h1 { 
+            font-size: clamp(3rem, 7vw, 6.5rem); 
+            margin-bottom: 1.5rem; 
+            max-width: 1000px;
+            margin-left: auto; margin-right: auto;
+        }
+        .hero p { 
+            font-size: clamp(1.1rem, 2vw, 1.35rem); 
+            color: var(--text-muted); 
+            max-width: 700px; 
+            margin: 0 auto 3rem; 
+        }
+        .hero-ctas { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
 
-        /* Full Stack Services */
-        .service-list { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
-        .service-pill { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.9rem; color: var(--text-white); }
-        .service-pill.highlight { background: rgba(196,159,59,0.1); border-color: rgba(196,159,59,0.3); color: var(--gold); }
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 10px rgba(196, 159, 59, 0.1); }
+            100% { box-shadow: 0 0 30px rgba(196, 159, 59, 0.4); }
+        }
 
-        /* Pricing */
-        .price-tier { display: flex; flex-direction: column; position: relative; }
-        .price-tier.featured { border-color: var(--gold); }
-        .price-badge { position: absolute; top: -12px; right: 2rem; background: var(--gold); color: var(--bg-obsidian); padding: 0.25rem 1rem; font-size: 0.8rem; font-weight: 700; border-radius: 100px; text-transform: uppercase; }
-        .price { font-size: 3rem; font-family: var(--font-heading); margin: 1.5rem 0 0.5rem; color: var(--text-white); }
-        .price-sub { font-size: 1rem; color: var(--gold); font-family: var(--font-stack); margin-bottom: 2rem; font-weight: 600; }
-        .features-list { list-style: none; margin: 0 0 2rem 0; flex-grow: 1; }
-        .features-list li { margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-muted); }
-        .features-list li::before { content: '✓'; color: var(--gold); font-weight: bold; }
+        /* Glass Cards & Bento Box */
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        }
+        .glass-card:hover {
+            border-color: rgba(196, 159, 59, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 40px rgba(196, 159, 59, 0.1);
+        }
 
-        /* Portfolio */
-        .portfolio-card { overflow: hidden; display: flex; flex-direction: column; background: var(--glass-bg); border: 1px solid var(--glass-border); padding: 1.5rem; border-radius: 8px; transition: var(--transition); }
-        .portfolio-card:hover { border-color: rgba(196, 159, 59, 0.3); transform: translateY(-4px); }
-        .portfolio-img { width: 100%; height: 300px; object-fit: cover; object-position: top; transition: object-position 5s ease; border-radius: 4px; margin-bottom: 1.5rem; }
-        .portfolio-card:hover .portfolio-img { object-position: bottom; }
-        .portfolio-meta { flex-grow: 1; }
-        .portfolio-meta h3 { color: var(--text-white); font-family: var(--font-heading); font-size: 1.25rem; margin-bottom: 0.5rem; }
-        .portfolio-meta p { font-size: 0.9rem; margin-bottom: 1rem; }
-        .portfolio-meta a { display: inline-block; font-weight: 600; color: var(--gold); }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+        .bento-large { grid-column: span 2; }
+        .bento-icon {
+            width: 50px; height: 50px; border-radius: 12px; background: rgba(196,159,59,0.1);
+            display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;
+            border: 1px solid rgba(196,159,59,0.2); color: var(--gold); font-size: 1.5rem; font-weight: bold;
+        }
 
-        /* Layla Demo Section */
-        .layla-ui { background: var(--bg-obsidian); border: 1px solid var(--glass-border); border-radius: 20px; overflow: hidden; }
-        .layla-header { background: rgba(255,255,255,0.03); padding: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; border-bottom: 1px solid var(--glass-border); text-align: center; }
-        .layla-avatar { width: 40px; height: 40px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--bg-obsidian); font-weight: bold; font-size: 1.2rem; margin: 0 auto 0.25rem; }
-        .layla-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; background: #000000; }
-        .chat-msg { max-width: 80%; padding: 0.75rem 1rem; font-size: 0.95rem; line-height: 1.4; }
-        .chat-ai { background: #262626; color: #ffffff; align-self: flex-start; border-radius: 18px; border-bottom-left-radius: 4px; }
-        .chat-user { background: #007aff; color: #ffffff; align-self: flex-end; border-radius: 18px; border-bottom-right-radius: 4px; border: none; }
+        /* macOS Terminal Layla */
+        .macos-window {
+            background: #000000;
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+            transition: var(--transition-smooth);
+        }
+        .macos-window:hover {
+            transform: translateY(-10px) scale(1.02) perspective(1000px) rotateX(2deg);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 50px rgba(196, 159, 59, 0.15);
+        }
+        .macos-header {
+            background: #1a1a1a;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            position: relative;
+        }
+        .traffic-lights { display: flex; gap: 8px; position: absolute; left: 1rem; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+        .macos-title { width: 100%; text-align: center; color: #888; font-family: var(--font-body); font-size: 0.85rem; font-weight: 500; }
+        
+        .macos-body { padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+        .imessage-ai {
+            background: #262626; color: #fff; align-self: flex-start;
+            padding: 1rem 1.25rem; border-radius: 20px; border-bottom-left-radius: 4px;
+            max-width: 85%; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .imessage-user {
+            background: #007aff; color: #fff; align-self: flex-end;
+            padding: 1rem 1.25rem; border-radius: 20px; border-bottom-right-radius: 4px;
+            max-width: 85%; font-size: 0.95rem; box-shadow: 0 4px 15px rgba(0,122,255,0.2);
+        }
+
+        /* Services Grid */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+        .service-item {
+            padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.02); transition: var(--transition-smooth);
+        }
+        .service-item:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
+        .service-item h4 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-white); }
+        
+        /* Portfolio Carousel Track */
+        .portfolio-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin-top: 4rem;
+        }
+        .portfolio-card {
+            position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 16/10;
+            border: 1px solid var(--glass-border); group; cursor: pointer;
+        }
+        .portfolio-card img { width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform 6s var(--ease-out), filter 0.5s; }
+        .portfolio-card:hover img { transform: scale(1.05); filter: blur(4px) brightness(0.4); }
+        
+        .portfolio-overlay {
+            position: absolute; inset: 0; padding: 2rem; display: flex; flex-direction: column; justify-content: flex-end;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            opacity: 0; transform: translateY(20px); transition: var(--transition-smooth);
+        }
+        .portfolio-card:hover .portfolio-overlay { opacity: 1; transform: translateY(0); }
+        .portfolio-overlay h3 { color: var(--gold); font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .portfolio-overlay a { margin-top: 1rem; color: #fff; font-weight: bold; display: inline-block; padding: 0.5rem 1.5rem; background: rgba(255,255,255,0.1); border-radius: 100px; backdrop-filter: blur(5px); }
+        .portfolio-overlay a:hover { background: var(--gold); color: #000; }
+
+        /* The Glowing Monolith Pricing */
+        .monolith {
+            max-width: 600px; margin: 0 auto; position: relative; border-radius: 24px;
+            background: var(--bg-surface); padding: 4rem; text-align: center;
+            border: 1px solid rgba(196, 159, 59, 0.3);
+        }
+        /* Animated Border Magic */
+        .monolith::before {
+            content: ''; position: absolute; inset: -2px; border-radius: 26px; z-index: -1;
+            background: linear-gradient(45deg, var(--gold), transparent, var(--gold-dark), transparent);
+            background-size: 400% 400%; animation: borderGlow 8s ease infinite;
+        }
+        @keyframes borderGlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        .monolith .price { font-size: 4.5rem; font-family: var(--font-heading); font-weight: 900; line-height: 1; margin: 2rem 0 0.5rem; }
+        .monolith .price-sub { color: var(--gold); font-size: 1.1rem; font-weight: 600; margin-bottom: 3rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .monolith-features { text-align: left; margin-bottom: 3rem; }
+        .monolith-features li { margin-bottom: 1rem; color: var(--text-muted); display: flex; align-items: center; gap: 1rem; }
+        .monolith-features li::before { content: ''; display: inline-block; width: 6px; height: 6px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 10px var(--gold); }
 
         /* Form */
-        .contact-section { max-width: 600px; margin: 0 auto; text-align: center; }
-        form { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; text-align: left; }
-        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
-        label { font-size: 0.9rem; font-weight: 600; }
-        input, select { background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border); padding: 1rem; color: var(--text-white); border-radius: 4px; font-family: var(--font-stack); }
-        input:focus, select:focus { outline: none; border-color: var(--gold); }
+        input, select { 
+            width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); 
+            padding: 1.25rem; color: var(--text-white); border-radius: 12px; font-family: var(--font-body); 
+            margin-top: 0.5rem; transition: var(--transition-smooth);
+        }
+        input:focus { outline: none; border-color: var(--gold); background: rgba(255,255,255,0.05); box-shadow: 0 0 20px rgba(196,159,59,0.1); }
         
-        /* Footer */
-        footer { padding: 4rem 0 2rem; border-top: 1px solid var(--glass-border); text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+        /* Scroll Animations Class */
+        .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        @media (max-width: 768px) {
-            section { padding: 4rem 0; }
-            .hero { padding: 6rem 0; }
+        @media (max-width: 992px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-large { grid-column: span 1; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .monolith { padding: 3rem 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <div class="ambient-bg"></div>
+
+    <header id="navbar">
         <div class="container nav-content">
             <div class="logo">AI<span>Nexlify</span></div>
-            <a href="#contact" class="btn">Deploy Layla</a>
+            <a href="#contact" class="btn" style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">Deploy Layla</a>
         </div>
     </header>
 
-    <section class="hero">
-        <div class="hero-bg-glow"></div>
+    <section class="hero reveal">
         <div class="container">
-            <div class="hero-alert">The Traditional Agency Model is Dead</div>
-            <h1>Stop Driving Traffic to Dead Contact Forms.</h1>
-            <p>You don't need another $5k/mo SEO retainer. We are an Elite AI Autonomous Systems provider for Healthcare & Dental. We build your web assets, rank your SEO, and install <strong>Layla</strong> — a 24/7 AI Patient Coordinator that triages symptoms and books appointments while your front desk sleeps.</p>
+            <div class="hero-badge">Healthcare Autonomous Systems</div>
+            <h1 class="gradient-text">Stop Driving Traffic to<br>Dead Contact Forms.</h1>
+            <p>We are an Elite AI Autonomous Systems provider for Healthcare & Dental. We build your web assets, rank your SEO, and install <strong>Layla</strong> — a 24/7 AI Patient Coordinator that books appointments while your front desk sleeps.</p>
             <div class="hero-ctas">
-                <a href="#contact" class="btn">Deploy Your AI Agent</a>
-                <a href="#layla" class="btn btn-outline">See How It Works</a>
+                <a href="#layla" class="btn">Meet Layla</a>
+                <a href="#contact" class="btn btn-outline">Apply For Setup</a>
             </div>
         </div>
     </section>
 
-    <section id="pain-points" style="background-color: rgba(255,255,255,0.02);">
+    <!-- Bento Grid Section -->
+    <section id="problem">
         <div class="container">
-            <h2 style="text-align: center; margin-bottom: 3rem;">Why Traditional Marketing Fails Clinics</h2>
-            <div class="grid-3">
-                <div class="card">
+            <div style="text-align: center; margin-bottom: 4rem;" class="reveal">
+                <h2 class="gradient-text" style="font-size: 3rem;">The Traditional Agency is Dead.</h2>
+                <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Agencies charge $5,000 upfront and $2,000/mo just to drive traffic to a static website. Here is why that fails clinics.</p>
+            </div>
+
+            <div class="bento-grid reveal">
+                <div class="glass-card bento-large">
+                    <div class="bento-icon">💸</div>
                     <h3>Expensive, Dumb Retainers</h3>
-                    <p>Traditional agencies charge $2,000/mo for SEO, but don't care if the lead actually books. They drive traffic to a static website and call it a day.</p>
+                    <p style="color: var(--text-muted); margin-top: 1rem; font-size: 1.1rem;">Traditional marketing agencies celebrate when they get you clicks. They don't care if the patient actually books. They funnel expensive Google Ads traffic into a standard contact form, pat themselves on the back, and collect their $2k retainer.</p>
                 </div>
-                <div class="card">
+                <div class="glass-card">
+                    <div class="bento-icon">🌙</div>
                     <h3>The After-Hours Bleed</h3>
-                    <p>40% of dental emergencies happen after hours. If they hit your voicemail or a standard web form, they call the next clinic on Google immediately.</p>
+                    <p style="color: var(--text-muted); margin-top: 1rem;">40% of dental emergencies happen after hours. If a patient with a toothache hits your voicemail at 9 PM, they instantly call the next clinic on Google Maps.</p>
                 </div>
-                <div class="card">
+                <div class="glass-card">
+                    <div class="bento-icon">📞</div>
                     <h3>Overwhelmed Front Desk</h3>
-                    <p>Your highly-trained staff shouldn't be spending 20 minutes on the phone answering basic questions about insurance accepted or teeth whitening pricing.</p>
+                    <p style="color: var(--text-muted); margin-top: 1rem;">Your highly-trained staff shouldn't be spending 20 minutes on the phone answering basic questions about whether you accept Canada Life insurance.</p>
+                </div>
+                <div class="glass-card bento-large" style="background: linear-gradient(145deg, rgba(196,159,59,0.1), rgba(0,0,0,0.5)); border-color: rgba(196,159,59,0.3);">
+                    <div class="bento-icon" style="background: var(--gold); color: #000;">⚡</div>
+                    <h3 style="color: var(--gold-light);">The Autonomous Solution</h3>
+                    <p style="color: #fff; margin-top: 1rem; font-size: 1.1rem;">We don't just generate traffic; we deploy autonomous AI infrastructure to convert it. We build your digital presence and install a custom-trained LLaMA3 agent to intercept leads instantly.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="services">
-        <div class="container" style="text-align: center;">
-            <h2 style="margin-bottom: 1rem;">Full-Stack Digital Growth + AI</h2>
-            <p style="max-width: 800px; margin: 0 auto 2rem;">We do everything the traditional guys do, but we supercharge it with AI infrastructure. We don't just generate traffic; we deploy autonomous systems to convert it.</p>
-            <div class="service-list" style="justify-content: center;">
-                <div class="service-pill highlight">Layla: The 24/7 Employee</div>
-                <div class="service-pill">SEO & Answer Engine Optimization</div>
-                <div class="service-pill">Google & Meta Ads Management</div>
-                <div class="service-pill">Custom Web Design</div>
-                <div class="service-pill">App & Patient Portal Development</div>
-                <div class="service-pill">Medical Branding & Identity</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="layla-demo" style="background-color: rgba(255,255,255,0.02);">
+    <!-- Interactive Layla Section -->
+    <section id="layla">
         <div class="container">
-            <div class="grid-2" style="align-items: center;">
-                <div>
-                    <h2 style="color: var(--text-white);">Meet Your New Best Employee.</h2>
-                    <p>Layla doesn't take days off. She doesn't sleep. She intercepts leads the second they hit your website, triages their symptoms, and books them directly into your calendar.</p>
-                    <a href="https://layla-agent.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn" style="margin-top: 1.5rem;">Chat with Layla Live →</a>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 4rem; align-items: center;">
+                <div class="reveal">
+                    <div class="hero-badge" style="margin-bottom: 1rem;">The Wedge</div>
+                    <h2 style="font-size: 3.5rem; margin-bottom: 1.5rem;">Meet Your New Best Employee.</h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">Layla doesn't take days off. She doesn't sleep. She intercepts leads the second they hit your website, triages their symptoms, and books them directly into your calendar.</p>
+                    <a href="https://layla-agent.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn">Chat With Layla Live</a>
                 </div>
-                <div class="card layla-ui" id="layla" style="border-color: rgba(255,255,255,0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.5); padding: 0;">
-                    <div class="layla-header">
-                        <div>
-                            <div class="layla-avatar">L</div>
-                            <div style="font-weight: 600; color: var(--text-white); font-size: 1.1rem;">Layla (The Employee)</div>
-                            <div style="font-size: 0.8rem; color: #10b981;">Available to chat any hour of the day</div>
+                
+                <div class="macos-window reveal" style="transition-delay: 0.2s;">
+                    <div class="macos-header">
+                        <div class="traffic-lights">
+                            <div class="dot red"></div>
+                            <div class="dot yellow"></div>
+                            <div class="dot green"></div>
                         </div>
+                        <div class="macos-title">Layla AI — Available 24/7/365</div>
                     </div>
-                    <div class="layla-body">
-                        <div class="chat-msg chat-user">Hi, do you take Canada Life insurance? I have a terrible toothache.</div>
-                        <div class="chat-msg chat-ai">Hello! Yes, we absolutely accept Canada Life. I'm sorry to hear about your toothache. Is the pain sharp or throbbing, and is it sensitive to hot/cold?</div>
-                        <div class="chat-msg chat-user">Throbbing, very sensitive to cold water.</div>
-                        <div class="chat-msg chat-ai">Thank you. Based on that, the doctor should see you for an emergency exam. I have an opening tomorrow at 9:30 AM or 1:00 PM. Which works best for you?</div>
+                    <div class="macos-body">
+                        <div class="imessage-user">Hi, do you take Canada Life insurance? I have a terrible toothache.</div>
+                        <div class="imessage-ai">Hello! Yes, we absolutely accept Canada Life. I'm sorry to hear about your toothache. Is the pain sharp or throbbing, and is it sensitive to hot/cold?</div>
+                        <div class="imessage-user">Throbbing, very sensitive to cold water.</div>
+                        <div class="imessage-ai">Thank you. Based on that, the doctor should see you for an emergency exam. I have an opening tomorrow at 9:30 AM or 1:00 PM. Which works best for you?</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Services Grid -->
+    <section id="services" style="background: rgba(0,0,0,0.3); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
+        <div class="container reveal">
+            <h2 style="text-align: center; margin-bottom: 1rem;">Full-Stack Digital Growth</h2>
+            <p style="text-align: center; max-width: 600px; margin: 0 auto; color: var(--text-muted);">Layla is the closer, but we still build the machine that feeds her. We offer elite digital marketing tailored for healthcare.</p>
+            
+            <div class="services-grid">
+                <div class="service-item">
+                    <h4>SEO & Answer Engine Optimization</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Dominating Google Maps and AI search engines so your clinic is found first.</p>
+                </div>
+                <div class="service-item">
+                    <h4>Custom Web Design</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Lightning-fast, accessible, premium web assets designed specifically for medical conversions.</p>
+                </div>
+                <div class="service-item">
+                    <h4>Ads Management</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Precision-targeted Google and Meta campaigns to capture high-intent patients.</p>
+                </div>
+                <div class="service-item">
+                    <h4>App & Portal Development</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">Custom patient portals, internal clinic dashboards, and scalable mobile apps.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio / Legacy Section -->
     <section id="portfolio">
-        <div class="container">
-            <h2 style="text-align: center; margin-bottom: 1rem;">Our Legacy: Builder & Roofer Infrastructure</h2>
-            <p style="text-align: center; margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">Before we pivoted to Healthcare AI, we built elite, high-converting digital infrastructure for 7-figure custom home builders and roofing contractors. Check out our live case studies.</p>
-            <div class="grid-2">
+        <div class="container reveal">
+            <h2 style="text-align: center; font-size: 3rem;">Our Legacy Infrastructure</h2>
+            <p style="text-align: center; max-width: 700px; margin: 1rem auto 0; font-size: 1.1rem; color: var(--text-muted);">Before pivoting to Healthcare AI, we built elite, high-converting digital infrastructure for 7-figure custom home builders and roofing contractors. Explore our live case studies.</p>
+            
+            <div class="portfolio-grid">
                 <div class="portfolio-card">
-                    <img src="assets/portfolio/gosur-full.webp" alt="Gosur Custom Developments" class="portfolio-img">
-                    <div class="portfolio-meta">
-                        <h3>Gosur Custom Developments</h3>
-                        <p>Premium custom home builder site for 7-figure builds. Clean design, fast load, simple lead form.</p>
-                        <a href="https://gosur-development-secure.netlify.app/" target="_blank" rel="noopener noreferrer">→ View Live Site</a>
+                    <img src="assets/portfolio/gosur-full.webp" alt="Gosur Custom Developments">
+                    <div class="portfolio-overlay">
+                        <h3>Gosur Developments</h3>
+                        <p>Premium custom home builder site for 7-figure builds. Clean design, fast load.</p>
+                        <div><a href="https://gosur-development-secure.netlify.app/" target="_blank" rel="noopener noreferrer">View Live Site</a></div>
                     </div>
                 </div>
                 <div class="portfolio-card">
-                    <img src="assets/portfolio/stratum-full.webp" alt="Stratum Roofing & Exteriors" class="portfolio-img">
-                    <div class="portfolio-meta">
-                        <h3>Stratum Roofing & Exteriors</h3>
+                    <img src="assets/portfolio/stratum-full.webp" alt="Stratum Roofing & Exteriors">
+                    <div class="portfolio-overlay">
+                        <h3>Stratum Roofing</h3>
                         <p>Mobile-first roofing site with tap-to-call and storm estimate request form.</p>
-                        <a href="https://stratum-foundation.vercel.app/" target="_blank" rel="noopener noreferrer">→ View Live Site</a>
+                        <div><a href="https://stratum-foundation.vercel.app/" target="_blank" rel="noopener noreferrer">View Live Site</a></div>
                     </div>
                 </div>
                 <div class="portfolio-card">
-                    <img src="assets/portfolio/lucky-full.webp" alt="Lucky Custom Homes" class="portfolio-img">
-                    <div class="portfolio-meta">
+                    <img src="assets/portfolio/lucky-full.webp" alt="Lucky Custom Homes">
+                    <div class="portfolio-overlay">
                         <h3>Lucky Custom Homes</h3>
                         <p>Custom home builder site with quote estimation page to filter serious buyers.</p>
-                        <a href="https://lucky-concrete-ghost-build.vercel.app/" target="_blank" rel="noopener noreferrer">→ View Live Site</a>
+                        <div><a href="https://lucky-concrete-ghost-build.vercel.app/" target="_blank" rel="noopener noreferrer">View Live Site</a></div>
                     </div>
                 </div>
                 <div class="portfolio-card">
-                    <img src="assets/portfolio/maxwood-full.webp" alt="Maxwood Roofing Systems" class="portfolio-img">
-                    <div class="portfolio-meta">
-                        <h3>Maxwood Roofing Systems</h3>
-                        <p>Replaced an outdated site with a fast, clean roofing website built to book storm inspections.</p>
-                        <a href="https://maxwood-kitchen.vercel.app/" target="_blank" rel="noopener noreferrer">→ View Live Site</a>
+                    <img src="assets/portfolio/maxwood-full.webp" alt="Maxwood Roofing Systems">
+                    <div class="portfolio-overlay">
+                        <h3>Maxwood Roofing</h3>
+                        <p>Replaced an outdated site with a fast, clean site built to book storm inspections.</p>
+                        <div><a href="https://maxwood-kitchen.vercel.app/" target="_blank" rel="noopener noreferrer">View Live Site</a></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="process" style="background-color: rgba(255,255,255,0.02);">
-        <div class="container">
-            <h2 style="text-align: center; margin-bottom: 3rem;">The Autonomous Pipeline</h2>
-            <div class="grid-3">
-                <div class="card">
-                    <h3 style="color: var(--gold);">01. Intelligence Audit</h3>
-                    <p>We analyze your current intake bottleneck, patient volume, and local search competitors.</p>
-                </div>
-                <div class="card">
-                    <h3 style="color: var(--gold);">02. System Training</h3>
-                    <p>We build your web assets and train your custom LLaMA3/Layla model on your clinic's specific services, pricing, and tone.</p>
-                </div>
-                <div class="card">
-                    <h3 style="color: var(--gold);">03. Autonomous Go-Live</h3>
-                    <p>Layla takes over your website chat and SMS follow-ups, booking patients directly into your calendar 24/7.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- Monolith Pricing -->
     <section id="pricing">
-        <div class="container">
-            <h2 style="text-align: center; margin-bottom: 1rem;">The Undeniable Matrix</h2>
-            <p style="text-align: center; margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">Why pay an agency $5,000 upfront and $2,000/mo? Hire Layla for less than the cost of a daily coffee.</p>
-            
-            <div class="card price-tier featured" style="max-width: 800px; margin: 0 auto;">
-                <div class="price-badge">The Autonomous Clinic Package</div>
-                <h3>System Setup + Full Stack Web Build</h3>
-                <div class="price">$1,497 <span style="font-size: 1rem; color: var(--text-muted); font-family: var(--font-stack);">One-Time Setup</span></div>
-                <div class="price-sub">+ $497/mo (Layla's Salary — roughly $16/day)</div>
+        <div class="container reveal">
+            <div class="monolith">
+                <div class="hero-badge" style="margin-bottom: 1rem; background: #000;">The Autonomous Package</div>
+                <h2>System Setup + Web Build</h2>
+                <div class="price">$1,497</div>
+                <div class="price-sub">+ $497/mo (Layla's Salary: ~$16/day)</div>
                 
-                <div class="grid-2" style="gap: 2rem; margin-top: 1rem;">
-                    <ul class="features-list">
-                        <li>Layla 24/7 AI Patient Coordinator</li>
-                        <li>Custom Web Design & Deployment</li>
-                        <li>Automated SMS Booking Integration</li>
-                        <li>Basic Local SEO & AEO Setup</li>
-                    </ul>
-                    <ul class="features-list">
-                        <li>Custom LLaMA3 Training on Your Clinic</li>
-                        <li>Ongoing Hosting & Maintenance</li>
-                        <li>Priority Technical Support</li>
-                        <li><strong>7-Day Money-Back Guarantee on Setup Fee</strong></li>
-                    </ul>
-                </div>
-                <a href="#contact" class="btn" style="text-align: center; margin-top: 1rem;">Start Onboarding</a>
+                <ul class="monolith-features">
+                    <li>Layla 24/7 AI Patient Coordinator Integration</li>
+                    <li>Full-Stack Custom Web Design & Deployment</li>
+                    <li>Custom LLaMA3 Training on Your Clinic Data</li>
+                    <li>Basic Local SEO & Answer Engine Prep</li>
+                    <li>Priority Technical Support & Hosting</li>
+                    <li><strong style="color: var(--text-white);">7-Day Money-Back Guarantee on Setup Fee</strong></li>
+                </ul>
+                <a href="#contact" class="btn" style="width: 100%;">Start Onboarding</a>
+            </div>
+            <p style="text-align: center; margin-top: 2rem; color: var(--text-muted);">Why pay a traditional agency $5,000 upfront and $2,000/mo? Hire Layla for less than the cost of a daily coffee.</p>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section id="contact" style="background: rgba(255,255,255,0.01); border-top: 1px solid var(--glass-border);">
+        <div class="container reveal">
+            <div class="glass-card" style="max-width: 700px; margin: 0 auto; padding: 4rem;">
+                <h2 style="text-align: center; margin-bottom: 1rem;">Deploy Your System</h2>
+                <p style="text-align: center; margin-bottom: 3rem; color: var(--text-muted);">Fill out the form below. We will review your clinic's digital presence and contact you to schedule an integration call.</p>
+                <form action="mailto:anas@ainexlifyagencies.com" method="POST" enctype="text/plain" onsubmit="alert('Redirecting to email client...');">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div>
+                            <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-white);">Your Name</label>
+                            <input type="text" name="Name" required placeholder="Dr. John Doe">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-white);">Clinic Name</label>
+                            <input type="text" name="Clinic" required placeholder="Toronto Dental Center">
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-white);">Direct Phone Number</label>
+                        <input type="tel" name="Phone" required placeholder="(555) 123-4567">
+                    </div>
+                    <div style="margin-bottom: 3rem;">
+                        <label style="font-size: 0.9rem; font-weight: 600; color: var(--text-white);">Current Website</label>
+                        <input type="url" name="Website" placeholder="https://yourclinic.com">
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%;">DEPLOY LAYLA TODAY</button>
+                </form>
             </div>
         </div>
     </section>
 
-    <section id="contact" style="background-color: rgba(255,255,255,0.02);">
-        <div class="container contact-section">
-            <h2>Deploy Your Autonomous System</h2>
-            <p>Fill out the form below. We will review your clinic's digital presence and contact you to schedule an integration call.</p>
-            <form action="mailto:anas@ainexlifyagencies.com" method="POST" enctype="text/plain" onsubmit="alert('Thank you! Redirecting to email client...');">
-                <div class="form-group">
-                    <label for="name">Your Name</label>
-                    <input type="text" id="name" name="Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="clinic">Clinic Name</label>
-                    <input type="text" id="clinic" name="Clinic" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Direct Phone Number</label>
-                    <input type="tel" id="phone" name="Phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="website">Current Website (If applicable)</label>
-                    <input type="url" id="website" name="Website">
-                </div>
-                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">DEPLOY LAYLA TODAY</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
+    <footer style="padding: 4rem 0 2rem; text-align: center; border-top: 1px solid var(--glass-border);">
         <div class="container">
-            <div class="logo">AI<span>Nexlify</span></div>
-            <p style="margin-top: 2rem;">The client exclusively owns all rights, title, and interest in and to their brand assets and the captured patient data. Ainexlify Agencies retains rights to the proprietary AI system architecture.</p>
-            <p style="margin-top: 1rem;">&copy; 2026 Ainexlify Agencies. All rights reserved.</p>
+            <div class="logo" style="font-size: 1.5rem; opacity: 0.5;">AI<span>Nexlify</span></div>
+            <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted); max-width: 600px; margin-left: auto; margin-right: auto;">The client exclusively owns all rights, title, and interest in and to their brand assets and the captured patient data. Ainexlify Agencies retains rights to the proprietary AI system architecture.</p>
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.3);">&copy; 2026 Ainexlify Agencies. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- Scroll Reveal Script -->
+    <script>
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+
+        // Navbar blur effect on scroll
+        window.addEventListener("scroll", function() {
+            var header = document.getElementById("navbar");
+            if(window.scrollY > 50) {
+                header.style.background = "rgba(3,3,3,0.85)";
+                header.style.padding = "1rem 0";
+            } else {
+                header.style.background = "rgba(3,3,3,0.5)";
+                header.style.padding = "1.5rem 0";
+            }
+        });
+    </script>
 </body>
 </html>
