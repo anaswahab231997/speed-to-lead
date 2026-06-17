@@ -95,15 +95,28 @@
         </header>
 
         <div class="glass-room">
-            <!-- Placeholder for Calendar Embed (e.g., Calendly) -->
-            <div style="border: 1px dashed var(--glass-border); padding: 5rem 2rem; border-radius: 12px; background: rgba(255,255,255,0.02); max-width: 600px; margin: 0 auto;">
-                <i data-lucide="calendar-clock" style="width: 48px; height: 48px; color: var(--emerald); margin-bottom: 1.5rem;"></i>
-                <h3 style="color: var(--text-white); font-family: var(--font-heading); margin-bottom: 0.5rem; font-size: 1.5rem;">Select a Time</h3>
-                <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem;">Loading Calendar Injection Script...</p>
-                <div style="width: 100%; height: 200px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid #333; display: flex; align-items: center; justify-content: center;">
-                    <span style="color: #666; font-family: var(--font-mono); font-size: 0.8rem;">[ Calendly / Acuity Embed Area ]</span>
+            <!-- Zoho Bookings Calendar Injection -->
+            <div class="calendar-container" style="width: 100%; height: 750px; border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);">
+                <!-- Replace the src below with your actual Zoho Bookings URL -->
+                <iframe 
+                    src="about:blank" 
+                    id="zoho-calendar-frame"
+                    style="width: 100%; height: 100%; border: none;" 
+                    allowfullscreen>
+                </iframe>
+                <div id="calendar-loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; text-align: center;">
+                    <i data-lucide="loader-2" style="width: 32px; height: 32px; color: var(--emerald); animation: spin 2s linear infinite; margin-bottom: 1rem;"></i>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Initializing Secure Architecture Protocol...</p>
                 </div>
             </div>
+
+            <style>
+                @keyframes spin { 100% { transform: rotate(360deg); } }
+                /* Hide loader once iframe loads */
+                iframe:not([src="about:blank"]) + #calendar-loading {
+                    display: none;
+                }
+            </style>
         </div>
     </div>
 
