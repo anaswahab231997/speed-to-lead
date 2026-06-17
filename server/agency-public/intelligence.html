@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligence Hub | AI Nexlify Agencies</title>
+    
+    <!-- Premium Plush Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Authority Layer JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Ainexlify Agencies",
+      "url": "https://www.ainexlifyagencies.com",
+      "description": "Elite AI Autonomous Systems provider engineering bespoke, high-speed web applications and custom-trained AI agents for high-ticket service businesses."
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-deep: #030303;
+            --bg-surface: #0a0a0a;
+            --text-white: #ffffff;
+            --text-muted: #a1a1aa;
+            --gold-light: #f5d061;
+            --gold: #c49f3b;
+            --gold-dark: #8c6e23;
+            --emerald: #6ee7b7; /* Emerald-300 */
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-heading: 'Outfit', sans-serif;
+            
+            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-white);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(196, 159, 59, 0.05), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(110, 231, 183, 0.03), transparent 25%);
+            filter: blur(80px);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 6rem 1.5rem; width: 100%; }
+
+        /* Nav back */
+        .nav-back { position: absolute; top: 2rem; left: 2rem; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; transition: var(--transition-smooth); }
+        .nav-back:hover { color: var(--gold); }
+
+        /* Header */
+        header { text-align: center; margin-bottom: 5rem; }
+        .hero-badge {
+            display: inline-block; background: rgba(110, 231, 183, 0.1); border: 1px solid var(--emerald);
+            color: var(--emerald); padding: 0.5rem 1.25rem; border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1.5rem; box-shadow: 0 0 20px rgba(110, 231, 183, 0.2);
+        }
+        h1 { font-family: var(--font-heading); font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; margin-bottom: 1.5rem; }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .subtitle { color: var(--text-muted); max-width: 800px; margin: 0 auto; font-size: 1.15rem; line-height: 1.6; }
+
+        /* Grid */
+        .hub-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .hub-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--glass-border); border-radius: 20px; padding: 2.5rem;
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            transition: var(--transition-smooth); position: relative; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: space-between;
+            min-height: 350px;
+        }
+        .hub-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--emerald), transparent); opacity: 0; transition: var(--transition-smooth);
+        }
+        .hub-card:hover { border-color: rgba(110, 231, 183, 0.3); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(110, 231, 183, 0.1); }
+        .hub-card:hover::before { opacity: 1; }
+
+        .tag { color: var(--emerald); font-size: 0.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; display: block; }
+        .hub-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-white); }
+        .hub-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; }
+        
+        .read-more { display: flex; align-items: center; gap: 0.5rem; color: var(--gold); font-weight: 600; text-decoration: none; font-size: 0.9rem; transition: var(--transition-smooth); margin-top: auto; }
+        .read-more i { width: 18px; height: 18px; transition: transform 0.3s ease; }
+        .hub-card:hover .read-more i { transform: translateX(5px); }
+
+        .placeholder-card {
+            background: rgba(255,255,255,0.01); border: 1px dashed var(--glass-border);
+            display: flex; align-items: center; justify-content: center; text-align: center; flex-direction: column; gap: 1rem;
+        }
+        .placeholder-card p { margin-bottom: 0; color: rgba(255,255,255,0.2); font-weight: bold; font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.1em; }
+        
+        @media (max-width: 768px) {
+            .hub-grid { grid-template-columns: 1fr; }
+            .nav-back { top: 1.5rem; left: 1.5rem; }
+            .container { padding-top: 5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-bg"></div>
+    <a href="index.html" class="nav-back"><i data-lucide="arrow-left"></i> Back to Root</a>
+
+    <div class="container">
+        <header>
+            <div class="hero-badge">Intelligence Hub</div>
+            <h1 class="gradient-text">System Architecture & Case Studies</h1>
+            <p class="subtitle">Deep-dive technical teardowns, algorithmic routing strategies, and deployment post-mortems of our highest-converting autonomous systems.</p>
+        </header>
+
+        <div class="hub-grid">
+            <div class="hub-card">
+                <div>
+                    <span class="tag">Case Study: Roofing</span>
+                    <h3>Deploying Zero-Latency Estimate Qualification</h3>
+                    <p>How we bypassed standard CRM lead leakage by injecting a custom LLaMA3 agent directly into Stratum Roofing's intake flow, filtering $10k+ jobs autonomously.</p>
+                </div>
+                <a href="#" class="read-more">Read Teardown <i data-lucide="arrow-right"></i></a>
+            </div>
+
+            <div class="hub-card">
+                <div>
+                    <span class="tag">Architecture</span>
+                    <h3>The End of the Web Form</h3>
+                    <p>Why driving PPC traffic to a static HTML contact form is mathematically guaranteed to hemorrhage 40% of your high-ticket leads after 6 PM.</p>
+                </div>
+                <a href="#" class="read-more">Read Teardown <i data-lucide="arrow-right"></i></a>
+            </div>
+
+            <div class="hub-card placeholder-card">
+                <i data-lucide="lock" style="color: rgba(255,255,255,0.2); width: 32px; height: 32px;"></i>
+                <p>Decoding Legal Intake<br><span style="font-size: 0.75rem; font-family: var(--font-body); text-transform: none; font-weight: normal;">(Deploying Soon)</span></p>
+            </div>
+            
+            <div class="hub-card placeholder-card">
+                <i data-lucide="lock" style="color: rgba(255,255,255,0.2); width: 32px; height: 32px;"></i>
+                <p>Healthcare NLP Parsing<br><span style="font-size: 0.75rem; font-family: var(--font-body); text-transform: none; font-weight: normal;">(Deploying Soon)</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
