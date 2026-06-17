@@ -186,9 +186,42 @@
         .nav-back:hover { color: var(--gold); }
 
         @media (max-width: 768px) {
-            .glass-room { flex-direction: column; height: 800px; }
-            .telemetry-sidebar { width: 100%; border-right: none; border-bottom: 1px solid #333; padding: 4rem 1rem 1rem; flex-direction: row; flex-wrap: wrap; }
-            .telemetry-item { flex: 1; min-width: 45%; }
+            /* Hide Web Artifacts */
+            header, .telemetry-sidebar, .ambient-bg, .nav-back, .macos-header .traffic-lights, .bailout-container {
+                display: none !important;
+            }
+
+            /* Force Edge-to-Edge Container */
+            .container { padding: 0; max-width: 100%; height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
+            body { overflow: hidden; background: #000; } 
+            
+            /* Glass Room to Native Chat Window */
+            .glass-room {
+                flex: 1; border-radius: 0; border: none; height: 100%; margin: 0;
+                box-shadow: none; display: flex; flex-direction: column;
+            }
+
+            /* Center Native Contact Header */
+            .macos-header { height: 60px; background: rgba(20,20,20,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+            .macos-title { padding-right: 0; color: #fff; font-weight: 600; font-size: 1.1rem; }
+            .macos-title::after { content: ' • Online'; color: var(--emerald); font-size: 0.8rem; font-weight: normal; }
+            
+            /* Chat Constraints */
+            .chat-container { flex: 1; padding-top: 60px; display: flex; flex-direction: column; overflow: hidden; }
+            .chat-history { padding: 1.5rem 1rem; flex: 1; overflow-y: auto; }
+            .message { max-width: 90%; font-size: 1rem; padding: 0.8rem 1.1rem; }
+            
+            /* Anti-Zoom Sticky Input */
+            .chat-input-area { padding: 1rem; background: #0a0a0a; border-top: 1px solid #222; }
+            .input-box input { font-size: 16px; padding: 1rem; border-radius: 24px; }
+            
+            /* Horizontal Action Chips */
+            .action-chips {
+                flex-wrap: nowrap; overflow-x: auto; white-space: nowrap;
+                padding-bottom: 0.75rem; -webkit-overflow-scrolling: touch;
+            }
+            .chip { font-size: 0.9rem; padding: 0.6rem 1.2rem; }
+            .action-chips::-webkit-scrollbar { display: none; }
         }
     </style>
 </head>
