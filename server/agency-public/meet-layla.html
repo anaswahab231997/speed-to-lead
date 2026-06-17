@@ -326,44 +326,40 @@
             history.scrollTop = history.scrollHeight;
         }
 
-        function getAiResponse(userText) {
-            const txt = userText.toLowerCase();
-            
-            if (txt.includes('home service') || txt.includes('roofing') || txt.includes('contractor') || txt.includes('clean') || txt.includes('maid')) {
-                updateTelemetry('Vertical: Home_Service', '84ms', 'Inquisitive', 'Awaiting_Lead');
-                return "I can qualify your inbound estimate requests, filter out low-budget tire-kickers, and book high-ticket site visits directly into your calendar. Are you currently losing leads after hours? Should we schedule a setup call with Anas for Tuesday at 10 AM or Thursday at 2 PM?";
-            }
-            if (txt.includes('medical') || txt.includes('dental') || txt.includes('clinic')) {
-                updateTelemetry('Vertical: Healthcare', '62ms', 'Professional', 'Awaiting_Lead');
-                return "I triage patient symptoms, verify insurance eligibility, and instantly book emergency or routine exams into your practice management software. Are your front desk staff overwhelmed with calls? We can schedule a setup call with Anas on Tuesday at 10 AM or Thursday at 2 PM.";
-            }
-            if (txt.includes('pricing') || txt.includes('cost')) {
-                updateTelemetry('Intent: Pricing_Query', '55ms', 'Curious', 'Ready');
-                return "Our deployment fee is $1,497 for the full architecture build, followed by a $497/month retainer for my continuous operation and server costs. Should we schedule a system architecture consultation to discuss your exact needs?";
-            }
-            if (txt.includes('yes') || txt.includes('tuesday') || txt.includes('thursday') || txt.includes('schedule') || txt.includes('book')) {
-                updateTelemetry('Intent: Booking_Confirmation', '120ms', 'Positive', 'Injecting_Row...');
-                setTimeout(() => { telCrm.innerText = 'Row_Added [Success]'; }, 1000);
-                return "Excellent. I have provisionally logged the request. Please click 'Skip the Demo — Apply for Setup' below to finalize the injection into our CRM, and Anas will contact you shortly.";
-            }
-
-            // Default fallback
-            updateTelemetry('Intent: Qualification', '42ms', 'Analytical', 'Mapping_Industry');
-            return "Understood. I can build a custom neural-trained intake system tailored specifically to your vertical. We deploy AI receptionists that handle bookings, qualify inbound leads, and sync straight to your CRM 24/7. Should we pull up Anas's calendar to discuss the architecture?";
-        }
+        let conversationHistory = [];
 
         async function handleUserInput(text) {
             if(!text.trim()) return;
             appendMessage('user', text);
             input.value = '';
             
-            updateTelemetry('Processing...', '...', 'Analyzing...', 'Ready');
+            updateTelemetry('Processing...', '...', 'Neural_Routing...', 'Ready');
 
-            // Simulate network delay
-            setTimeout(() => {
-                const response = getAiResponse(text);
-                appendMessage('ai', response);
-            }, 800);
+            const start = Date.now();
+            try {
+                const response = await fetch('/api/chat/web', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text, history: conversationHistory })
+                });
+                
+                const data = await response.json();
+                const latency = Date.now() - start;
+                
+                if (data.reply) {
+                    appendMessage('ai', data.reply);
+                    conversationHistory.push({ role: 'user', content: text });
+                    conversationHistory.push({ role: 'assistant', content: data.reply });
+                    
+                    updateTelemetry('Neural_Response', latency + 'ms', 'Dynamic', 'Live');
+                } else {
+                    appendMessage('ai', "I'm experiencing a brief system interrupt. Could you please repeat that?");
+                    updateTelemetry('Error', latency + 'ms', 'Interrupt', 'Failed');
+                }
+            } catch (err) {
+                appendMessage('ai', "My neural link is currently offline. Please try again shortly.");
+                updateTelemetry('Offline', '0ms', 'Disconnected', 'Failed');
+            }
         }
 
         form.addEventListener('submit', (e) => {

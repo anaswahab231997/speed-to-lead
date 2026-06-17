@@ -2,7 +2,8 @@ require('dotenv').config({ path: require('path').join(__dirname, '.env') })
 const express = require('express')
 const cors = require('cors')
 const rateLimit = require('express-rate-limit')
-const { handleInboundMessage } = require('./layla')
+const { handleInboundMessage, buildLaylaSystem } = require('./layla')
+const { generateResponse } = require('./ai_gateway')
 const { scheduleFollowUps } = require('./followup')
 const { runStressTest } = require('./stressTest')
 const { getAvailableInventory, leadsCache, logSystemHealth, injectInventoryUpdate } = require('./supabase')
@@ -41,6 +42,39 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 app.use(express.json())
+
+app.post('/api/chat/web', async (req, res) => {
+  try {
+    const { message, history } = req.body
+    if (!message) return res.status(400).json({ error: 'Message is required' })
+    
+    // Normalize history format
+    const formattedHistory = (history || []).map(h => ({
+      role: h.role === 'ai' || h.role === 'assistant' ? 'assistant' : 'user',
+      content: h.content || h.text || ''
+    }))
+
+    // Build the rigorous Ainexlify SDR prompt
+    const systemPrompt = await buildLaylaSystem('Ainexlify Agencies')
+    
+    // Process via the Golden Model (Gemini 2.5 Flash)
+    const reply = await generateResponse({
+      systemPrompt,
+      history: [...formattedHistory, { role: 'user', content: message }],
+      maxTokens: 1000,
+      temperature: 0.7
+    })
+
+    if (!reply) {
+      return res.status(500).json({ error: 'Neural Engine Blackout. Please try again.' })
+    }
+
+    res.json({ reply })
+  } catch (err) {
+    console.error('🚨 [WEB CHAT] Exception:', err)
+    res.status(500).json({ error: 'Internal server error' })
+  }
+})
 app.use(express.urlencoded({ extended: true }))
 
 // ─── SaaS Routers ───────────────────────────────────────────────────────────

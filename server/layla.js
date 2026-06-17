@@ -195,4 +195,4 @@ function extractCarMention(text, history) {
   return ''
 }
 
-module.exports = { handleInboundMessage }
+module.exports = { handleInboundMessage, buildLaylaSystem }
