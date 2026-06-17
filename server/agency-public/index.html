@@ -50,16 +50,31 @@
 
     <style>
         :root {
-            --bg-deep: #030303;
-            --bg-surface: #0a0a0a;
-            --text-white: #ffffff;
+            /* Architectural Canvas */
+            --bg-deep: #050505;
+            --bg-surface: #0e0e0e;
+            --bg-elevated: #171717;
+
+            /* Typographic Hierarchy */
+            --text-primary: #fafafa;
             --text-muted: #a1a1aa;
-            --gold-light: #f5d061;
-            --gold: #c49f3b;
-            --gold-dark: #8c6e23;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-glow: rgba(196, 159, 59, 0.15);
+
+            /* Primary Accent: Premium Gold Spectrum */
+            --gold-light: #fbe28d;
+            --gold: #d4af37;
+            --gold-dark: #997a15;
+
+            /* Secondary Accent: Ainexlify Emerald */
+            --emerald-accent: #34d399;
+            --emerald-glow: rgba(52, 211, 153, 0.15);
+
+            /* Glassmorphism & Structural Edges */
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.06);
+            --glass-focus: rgba(212, 175, 55, 0.30);
+            
+            /* Illumination & Aura */
+            --gold-glow: rgba(212, 175, 55, 0.15);
             
             --font-body: 'Plus Jakarta Sans', sans-serif;
             --font-heading: 'Outfit', sans-serif;
@@ -73,7 +88,7 @@
 
         body {
             background-color: var(--bg-deep);
-            color: var(--text-white);
+            color: var(--text-primary);
             font-family: var(--font-body);
             line-height: 1.6;
             overflow-x: hidden;
@@ -141,7 +156,7 @@
 
         .btn-outline {
             background: var(--glass-bg);
-            color: var(--text-white);
+            color: var(--text-primary);
             border: 1px solid var(--glass-border);
             backdrop-filter: blur(10px);
             box-shadow: none;
@@ -165,7 +180,7 @@
             transition: var(--transition-smooth);
         }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 900; color: var(--text-white); letter-spacing: -0.03em; }
+        .logo { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 900; color: var(--text-primary); letter-spacing: -0.03em; }
         .logo span { color: var(--gold); }
 
         /* Cinematic Hero */
@@ -211,13 +226,15 @@
 
         /* Glass Cards & Bento Box */
         .glass-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid var(--glass-border);
+            background: var(--bg-surface);
+            border: 1px solid transparent;
+            background: linear-gradient(var(--bg-surface), var(--bg-surface)) padding-box,
+                        linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 100%) border-box;
             border-radius: 24px;
             padding: 3rem;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: var(--transition-smooth);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
             position: relative;
             overflow: hidden;
         }
@@ -227,8 +244,13 @@
         }
         .glass-card:hover {
             border-color: rgba(196, 159, 59, 0.3);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 40px rgba(196, 159, 59, 0.1);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--glass-focus);
+        }
+        
+        @keyframes pulse-emerald {
+            0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4); }
+            100% { box-shadow: 0 0 0 12px rgba(52, 211, 153, 0); }
         }
 
         .bento-grid {
