@@ -492,7 +492,7 @@ app.post('/api/contact', async (req, res) => {
     res.status(200).json({ message: "Lead secured successfully." })
   } catch (error) {
     console.error('[API/CONTACT]', error.message)
-    res.status(500).json({ error: "Failed to process lead." })
+    res.status(500).json({ error: "Failed to process lead.", details: error.message, smtp_user_configured: !!process.env.SMTP_USER })
   }
 })
 
