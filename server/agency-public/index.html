@@ -298,8 +298,18 @@
         .dot.red { background: #ff5f56; }
         .dot.yellow { background: #ffbd2e; }
         .dot.green { background: #27c93f; }
-        .macos-title { width: 100%; text-align: center; color: #888; font-family: var(--font-body); font-size: 0.85rem; font-weight: 500; }
-        
+        .macos-title { 
+            width: 100%; 
+            text-align: center; 
+            color: #888; 
+            font-family: var(--font-body); 
+            font-size: 0.85rem; 
+            font-weight: 500; 
+            padding: 0 60px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .macos-body { padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
         .imessage-ai {
             background: #262626; color: #fff; align-self: flex-start;
