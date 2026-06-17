@@ -419,11 +419,48 @@
         .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        @media (max-width: 992px) {
-            .bento-grid { grid-template-columns: 1fr; }
+        /* 1. Tablet Optimization (max-width: 1024px) */
+        @media (max-width: 1024px) {
+            section { padding: 6rem 5%; }
+            .bento-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            .bento-large { grid-column: span 2; }
+            .portfolio-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+            .monolith { padding: 4rem 3rem; }
+            h1, .hero h1 { font-size: clamp(3rem, 5vw, 4.5rem); }
+        }
+
+        /* 2. Mobile Optimization (max-width: 768px) */
+        @media (max-width: 768px) {
+            section { padding: 4rem 5%; }
+            
+            :root {
+                --font-size-base: clamp(1rem, 2vw, 1.125rem);
+                --font-size-h1: clamp(2.5rem, 6vw, 3.5rem);
+                --font-size-h2: clamp(2rem, 5vw, 2.75rem);
+            }
+            body { font-size: var(--font-size-base); }
+            h1, .hero h1 { font-size: var(--font-size-h1); }
+            h2, .section-title { font-size: var(--font-size-h2); }
+
+            .nav-content { flex-direction: column; padding: 1rem 0; gap: 1rem; }
+            .nav-content > div:last-child { width: 100%; display: flex; flex-direction: column; gap: 0.5rem; }
+            
+            .bento-grid, .portfolio-grid { grid-template-columns: 1fr; gap: 1.25rem; }
             .bento-large { grid-column: span 1; }
-            .portfolio-grid { grid-template-columns: 1fr; }
-            .monolith { padding: 3rem 2rem; }
+            .monolith { padding: 3rem 2rem; border-radius: 1rem; }
+            
+            .btn { width: 100%; text-align: center; justify-content: center; padding: 1rem 2rem; }
+            .hero-ctas { flex-direction: column; width: 100%; }
+        }
+
+        /* 3. Small Mobile Optimization (max-width: 480px) */
+        @media (max-width: 480px) {
+            section { padding: 3rem 1rem; }
+            .monolith { margin-left: -1rem; margin-right: -1rem; border-radius: 0; padding: 2.5rem 1.5rem; width: calc(100% + 2rem); }
+            .service-item { padding: 1.5rem; }
+            
+            .btn, button, input, select { min-height: 44px; min-width: 44px; }
+            h1, .hero h1 { font-size: 2.25rem; line-height: 1.1; }
         }
     </style>
 </head>
@@ -435,7 +472,7 @@
         <div class="container nav-content">
             <div class="logo">AI<span>Nexlify</span></div>
             <div style="display: flex; gap: 1rem;">
-                <a href="/schedule.html" class="btn btn-outline" style="padding: 0.75rem 1.5rem; font-size: 0.9rem; border-color: var(--emerald); color: var(--emerald);">Book Audit</a>
+                <a href="/schedule.html" class="btn btn-outline" style="padding: 0.75rem 1.5rem; font-size: 0.9rem; border-color: var(--emerald-accent); color: var(--emerald-accent);">Book Audit</a>
                 <a href="#contact" class="btn" style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">Deploy Layla</a>
             </div>
         </div>
@@ -448,7 +485,7 @@
             <p>We build elite, high-speed web applications powered by custom-trained AI agents. Whether you are a legal firm, a custom home builder, or a medical clinic, we engineer autonomous systems that intercept leads, qualify clients, and book appointments 24/7.</p>
             <div class="hero-ctas">
                 <a href="#layla" class="btn">Meet Layla</a>
-                <a href="/schedule.html" class="btn btn-outline" style="border-color: var(--emerald); color: var(--emerald);">Book Architecture Audit</a>
+                <a href="/schedule.html" class="btn btn-outline" style="border-color: var(--emerald-accent); color: var(--emerald-accent);">Book Architecture Audit</a>
             </div>
         </div>
     </section>
