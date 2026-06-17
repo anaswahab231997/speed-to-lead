@@ -1,0 +1,105 @@
+/**
+ * ========================================================================
+ * OMEGA PROTOCOL OPTIMIZATION MATRIX
+ * Universal Fluid Responsiveness CSS Architecture
+ * ========================================================================
+ * Mathematical Scaling Range: 320px -> 1440px
+ * Ultrawide Constraint: 1920px
+ * Aspect Ratios Enforced: Golden Ratio (1:1.618), Widescreen (16:9)
+ */
+
+:root {
+  /* 
+   * 1. ROOT CLAMP TYPOGRAPHY FORMULAS 
+   * Calculated using `clamp(min, calc(intersection + slope * 100vw), max)`
+   * Viewport bounds: 320px (20rem) to 1440px (90rem)
+   */
+  --font-size-base: clamp(1rem, 0.857rem + 0.714vw, 1.5rem);       /* 16px -> 24px */
+  --font-size-h3:   clamp(1.25rem, 1.071rem + 0.892vw, 2rem);      /* 20px -> 32px */
+  --font-size-h2:   clamp(1.5rem, 1.142rem + 1.785vw, 3rem);       /* 24px -> 48px */
+  --font-size-h1:   clamp(2rem, 1.428rem + 2.857vw, 4rem);         /* 32px -> 64px */
+  --font-size-hero: clamp(3rem, 1.857rem + 5.714vw, 7.8rem);       /* 48px -> 124.8px */
+
+  /* 
+   * 2. FLUID SPACING & MARGINS (vw/vh hybrids)
+   */
+  --space-xs:  clamp(0.5rem, 0.428rem + 0.357vw, 0.8rem);          /* 8px -> 12.8px */
+  --space-sm:  clamp(1rem, 0.714rem + 1.428vw, 2rem);              /* 16px -> 32px */
+  --space-md:  clamp(2rem, 1.428rem + 2.857vw, 4rem);              /* 32px -> 64px */
+  --space-lg:  clamp(4rem, 2.857rem + 5.714vw, 8rem);              /* 64px -> 128px */
+  --space-xl:  clamp(6rem, 4.285rem + 8.571vw, 12rem);             /* 96px -> 192px */
+
+  /* Viewport Height Spacing for Sections */
+  --section-padding-y: clamp(4rem, 5vh + 2rem, 10rem);
+  --section-padding-x: clamp(1.25rem, 5vw, 6rem);
+}
+
+/* ========================================================================
+ * FLUID TYPOGRAPHY IMPLEMENTATION
+ * ======================================================================== */
+html {
+  font-size: 16px;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Prevent double-declaration conflicts, apply fluid sizes globally */
+body {
+  font-size: var(--font-size-base) !important;
+}
+
+h1, .text-h1 { font-size: var(--font-size-h1) !important; }
+h2, .text-h2 { font-size: var(--font-size-h2) !important; }
+h3, .text-h3 { font-size: var(--font-size-h3) !important; }
+.text-hero   { font-size: var(--font-size-hero) !important; line-height: 1; }
+
+/* ========================================================================
+ * GRID LAYOUTS & ASPECT RATIO PRESERVATION
+ * ======================================================================== */
+
+.omega-grid-fluid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(250px, 30vw, 400px), 1fr));
+  gap: var(--space-md);
+}
+
+.ratio-golden-card { aspect-ratio: 1 / 1.618; width: 100%; overflow: hidden; }
+.ratio-golden-landscape { aspect-ratio: 1.618 / 1; width: 100%; }
+.ratio-media-16-9 { aspect-ratio: 16 / 9; width: 100%; object-fit: cover; object-position: center; }
+.ratio-square { aspect-ratio: 1 / 1; width: 100%; }
+
+/* Enforce absolute containment for media */
+img, video, iframe, svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ========================================================================
+ * ULTRAWIDE & EDGE-CASE MITIGATION (1920px+)
+ * ======================================================================== */
+
+.omega-container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--section-padding-x);
+  max-width: 1920px;
+}
+
+.omega-section {
+  padding-block: var(--section-padding-y);
+  width: 100%;
+}
+
+@media (min-width: 1921px) {
+  .omega-container, .container {
+    padding-inline: calc((100vw - 1920px) / 2 + var(--section-padding-x));
+    max-width: none; /* Let the padding control the center lock */
+  }
+}
+
+@media (max-aspect-ratio: 1/2) {
+  .omega-section, section {
+    padding-block: clamp(3rem, 10vh, 6rem);
+  }
+}
