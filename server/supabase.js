@@ -162,6 +162,31 @@ async function markLeadFollowedUp(phone) {
   } catch(e) {}
 }
 
+async function getBlueprintLeads(hoursThreshold = 48) {
+  const cutoff = new Date(Date.now() - hoursThreshold * 60 * 60 * 1000).toISOString()
+  try {
+    const { data, error } = await supabase
+      .from('leads')
+      .select('*')
+      .eq('status', 'Blueprint Downloaded')
+      .lt('created_at', cutoff)
+      
+    if (error) throw error
+    return data || []
+  } catch (err) {
+    console.error('[SUPABASE] getBlueprintLeads failed:', err.message)
+    return []
+  }
+}
+
+async function markBlueprintRetargeted(phone) {
+  try {
+    await supabase.from('leads').update({ status: 'Blueprint Retargeted', last_activity: new Date().toISOString() }).eq('phone', phone)
+  } catch(e) {
+    console.error('[SUPABASE] markBlueprintRetargeted failed:', e.message)
+  }
+}
+
 async function toggleLeadAiActive(phone, active) {
   try {
     const { error } = await supabase.from('leads').update({ ai_active: active !== false }).eq('phone', phone)
@@ -259,6 +284,8 @@ module.exports = {
   updateLeadScore,
   getColdLeads,
   markLeadFollowedUp,
+  getBlueprintLeads,
+  markBlueprintRetargeted,
   logSystemHealth,
   logUrgentNotification,
   saveDealerProspect,

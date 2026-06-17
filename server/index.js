@@ -411,35 +411,78 @@ app.post('/api/contact', async (req, res) => {
       },
     })
 
-    const mailOptions = {
-      from: process.env.SMTP_USER,
-      to: 'anas@ainexlifyagencies.com',
-      subject: `🚨 New Layla Deployment Request: ${business || 'Unknown'}`,
-      html: `
-        <h3>New Autonomous System Lead</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Business:</strong> ${business}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Website:</strong> ${website}</p>
-      `,
-    }
+    if (business === 'Blueprint Request') {
+      // 1. Send the PDF directly to the prospect
+      const pdfPath = path.join(__dirname, 'agency-public', 'assets', 'The_2026_Autonomous_Blueprint.pdf');
+      
+      const blueprintMailOptions = {
+        from: process.env.SMTP_USER,
+        to: email || 'anas@ainexlifyagencies.com', // fallback to admin if no email provided
+        subject: `ACCESS GRANTED: Your 2026 Autonomous Blueprint`,
+        html: `Here is the architecture. Read the ROI Matrix. When you are ready to stop bleeding leads, my calendar link is at the bottom of the document.`,
+        attachments: [
+          {
+            filename: 'The_2026_Autonomous_Blueprint.pdf',
+            path: pdfPath
+          }
+        ]
+      }
 
-    await transporter.sendMail(mailOptions)
-    
-    // Also save to Airtable to have a central record (optional but good)
-    try {
-      const { saveLeadToAirtable } = require('./supabase')
-      await saveLeadToAirtable({
-        name: name || 'Unknown',
-        phone: phone || '+10000000000',
-        lastMessage: `Deployment Request. Business: ${business}, Website: ${website}`,
-        laylaReply: 'Awaiting integration call.',
-        intentScore: 10,
-        source: 'website-form',
-        dealer: business || 'Nexlify Agency'
-      })
-    } catch (e) {
-      console.log('[API/CONTACT] Airtable sync failed, but email sent.', e.message)
+      await transporter.sendMail(blueprintMailOptions);
+
+      // 2. Log in Supabase with Blueprint specific status
+      try {
+        const { saveLead } = require('./supabase')
+        await saveLead({
+          name: name || 'Unknown',
+          phone: phone || email || '+10000000000',
+          lastMessage: `Blueprint Request. Email: ${email}`,
+          laylaReply: 'Dispatched PDF.',
+          intentScore: 8,
+          source: 'blueprint-magnet',
+          dealer: 'Nexlify Agency'
+        });
+        
+        // Ensure status reflects the download for retargeting
+        const { supabase } = require('./supabase');
+        await supabase.from('leads').update({ status: 'Blueprint Downloaded' }).eq('phone', phone || email || '+10000000000');
+        
+      } catch (e) {
+        console.log('[API/CONTACT] Supabase sync failed, but blueprint email sent.', e.message)
+      }
+
+    } else {
+      // Normal Contact Form Logic
+      const mailOptions = {
+        from: process.env.SMTP_USER,
+        to: 'anas@ainexlifyagencies.com',
+        subject: `🚨 New Layla Deployment Request: ${business || 'Unknown'}`,
+        html: `
+          <h3>New Autonomous System Lead</h3>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Business:</strong> ${business}</p>
+          <p><strong>Phone:</strong> ${phone}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Website:</strong> ${website}</p>
+        `,
+      }
+
+      await transporter.sendMail(mailOptions)
+      
+      try {
+        const { saveLead } = require('./supabase')
+        await saveLead({
+          name: name || 'Unknown',
+          phone: phone || '+10000000000',
+          lastMessage: `Deployment Request. Business: ${business}, Website: ${website}, Email: ${email}`,
+          laylaReply: 'Awaiting integration call.',
+          intentScore: 10,
+          source: 'website-form',
+          dealer: business || 'Nexlify Agency'
+        })
+      } catch (e) {
+        console.log('[API/CONTACT] Supabase sync failed, but email sent.', e.message)
+      }
     }
 
     res.status(200).json({ message: "Lead secured successfully." })

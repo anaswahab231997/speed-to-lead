@@ -40,9 +40,59 @@ async function runFollowUpCycle() {
 function scheduleFollowUps() {
   // Run every hour on the hour
   cron.schedule('0 * * * *', runFollowUpCycle)
-  console.log('[FOLLOWUP] Scheduler active — checking for cold leads every hour')
+  cron.schedule('0 * * * *', runBlueprintRetargeting)
+  console.log('[FOLLOWUP] Scheduler active — checking for cold leads and blueprint retargeting every hour')
+}
+
+async function runBlueprintRetargeting() {
+  console.log('[FOLLOWUP] Running 48h blueprint retargeting check...')
+  try {
+    const { getBlueprintLeads, markBlueprintRetargeted } = require('./supabase')
+    const leads = await getBlueprintLeads(48)
+    if (leads.length === 0) return
+
+    console.log(`[FOLLOWUP] Found ${leads.length} blueprint leads ready for retargeting`)
+    const nodemailer = require('nodemailer')
+    const transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    })
+
+    for (const lead of leads) {
+      const email = lead.phone // We stored email in the phone field for blueprint requests
+      if (!email || !email.includes('@')) continue;
+
+      const mailOptions = {
+        from: process.env.SMTP_USER,
+        to: email,
+        subject: `Did you map out your lead drop-off nodes yet?`,
+        html: `<p>Hi ${lead.name || 'there'},</p>
+<p>Just checking in to see if you had a chance to review the 2026 Autonomous Blueprint I sent over.</p>
+<p>If you've mapped out the exact nodes where your leads are dropping, let's get on a brief architecture audit to plug the leaks.</p>
+<p>You can grab a time that works for you here: <a href="https://ainexlifyagencies.com/schedule">ainexlifyagencies.com/schedule</a></p>
+<p>Best,<br>Anas</p>`,
+      }
+
+      try {
+        await transporter.sendMail(mailOptions)
+        await markBlueprintRetargeted(lead.phone)
+        console.log(`[FOLLOWUP] Retargeted blueprint lead: ${email}`)
+      } catch (err) {
+        console.error(`[FOLLOWUP] Failed to retarget blueprint lead ${email}:`, err.message)
+      }
+
+      await sleep(2000)
+    }
+  } catch (err) {
+    console.error('[FOLLOWUP] Blueprint retargeting failed:', err.message)
+  }
 }
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)) }
 
-module.exports = { scheduleFollowUps, runFollowUpCycle }
+module.exports = { scheduleFollowUps, runFollowUpCycle, runBlueprintRetargeting }
