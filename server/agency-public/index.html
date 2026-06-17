@@ -552,16 +552,29 @@
 
     <!-- Interactive Layla Section -->
     <section id="layla">
-        <div class="container">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 4rem; align-items: center;">
-                <div class="reveal">
+        <div class="container" style="padding-left: clamp(1rem, 5vw, 4rem); padding-right: clamp(1rem, 5vw, 4rem);">
+            <style>
+                .wedge-layout { display: flex; flex-direction: column; gap: 2rem; align-items: center; }
+                .wedge-text { width: 100%; order: 1; text-align: left; }
+                .wedge-chat { width: 100%; max-width: 32rem; margin: 0 auto; order: 2; }
+                @media (min-width: 768px) {
+                    .wedge-layout { flex-direction: row; gap: 3rem; }
+                    .wedge-text { flex: 1; }
+                    .wedge-chat { flex: 1; max-width: none; margin: 0; }
+                }
+                .wedge-h2 { font-size: clamp(1.875rem, 4vw + 1rem, 3rem); margin-bottom: 1.5rem; line-height: 1.1; }
+                .wedge-p { font-size: clamp(0.875rem, 1vw + 0.5rem, 1.125rem); margin-bottom: 2rem; color: var(--text-muted); }
+                .btn-layla { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; padding: 0 1.5rem; }
+            </style>
+            <div class="wedge-layout">
+                <div class="reveal wedge-text">
                     <div class="hero-badge" style="margin-bottom: 1rem;">The Wedge</div>
-                    <h2 style="font-size: 3.5rem; margin-bottom: 1.5rem;">Meet Your New Best Employee.</h2>
-                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">Layla doesn't come out of the box. We audit your business logic, ingest your pricing and services, and custom-train her neural network before deployment. She can triage a dental emergency, qualify a $100k roofing lead, or do legal intake—all while sounding completely human.</p>
-                    <a href="/meet-layla.html" class="btn">Chat With Layla Live</a>
+                    <h2 class="wedge-h2">Meet Your New Best Employee.</h2>
+                    <p class="wedge-p">Layla doesn't come out of the box. We audit your business logic, ingest your pricing and services, and custom-train her neural network before deployment. She can triage a dental emergency, qualify a $100k roofing lead, or do legal intake-all while sounding completely human.</p>
+                    <a href="/meet-layla.html" class="btn btn-layla">Chat With Layla Live</a>
                 </div>
                 
-                <div class="macos-window reveal" style="transition-delay: 0.2s;">
+                <div class="macos-window reveal wedge-chat" style="transition-delay: 0.2s;">
                     <div class="macos-header">
                         <div class="traffic-lights">
                             <div class="dot red"></div>
