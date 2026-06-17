@@ -491,6 +491,32 @@
         </div>
     </section>
 
+    <!-- Legacy Marquee Component -->
+    <section id="legacy-marquee" style="width: 100%; padding: 4rem 0; background-color: var(--bg-deep); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); overflow: hidden; position: relative;">
+        <div class="container" style="margin-bottom: 2rem; text-align: center;">
+            <p style="color: var(--text-muted); font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.1em; font-family: monospace;">
+                Our foundational web architectures power established 7-figure brands.
+            </p>
+        </div>
+        <div style="position: relative; display: flex; width: 100%; overflow: hidden;">
+            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 8rem; background: linear-gradient(to right, var(--bg-deep), transparent); z-index: 10; pointer-events: none;"></div>
+            <div class="marquee-track" style="display: flex; white-space: nowrap; animation: marquee-scroll 25s linear infinite;">
+                <div class="marquee-item">GOSUR DEVELOPMENTS</div>
+                <div class="marquee-item">STRATUM ROOFING</div>
+                <div class="marquee-item">LUCKY CUSTOM HOMES</div>
+                <div class="marquee-item">GOSUR DEVELOPMENTS</div>
+                <div class="marquee-item">STRATUM ROOFING</div>
+                <div class="marquee-item">LUCKY CUSTOM HOMES</div>
+            </div>
+            <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 8rem; background: linear-gradient(to left, var(--bg-deep), transparent); z-index: 10; pointer-events: none;"></div>
+        </div>
+        <style>
+            @keyframes marquee-scroll { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+            .marquee-item { display: flex; align-items: center; justify-content: center; margin: 0 3rem; font-size: 1.5rem; font-weight: bold; letter-spacing: -0.05em; color: #3f3f46; text-transform: uppercase; mix-blend-mode: screen; opacity: 0.7; transition: opacity 0.5s ease; }
+            .marquee-item:hover { opacity: 1; }
+        </style>
+    </section>
+
     <!-- Bento Grid Section -->
     <section id="problem">
         <div class="container">
@@ -553,6 +579,55 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- Internal Telemetry Component -->
+    <section id="internal-telemetry" style="padding: 6rem 0; background: var(--bg-surface); border-top: 1px solid var(--glass-border);">
+        <div style="width: 100%; max-width: 42rem; margin: 0 auto; background-color: var(--bg-deep); border-radius: 0.75rem; border: 1px solid var(--glass-border); box-shadow: 0 0 40px rgba(52,211,153,0.05); overflow: hidden; font-family: monospace;" class="reveal">
+            <!-- Terminal Header -->
+            <div style="display: flex; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); background-color: #050505;">
+                <div style="display: flex; gap: 0.5rem; margin-right: 1rem;">
+                    <div style="width: 0.75rem; height: 0.75rem; border-radius: 50%; background-color: rgba(239,68,68,0.8);"></div>
+                    <div style="width: 0.75rem; height: 0.75rem; border-radius: 50%; background-color: rgba(234,179,8,0.8);"></div>
+                    <div style="width: 0.75rem; height: 0.75rem; border-radius: 50%; background-color: rgba(34,197,94,0.8);"></div>
+                </div>
+                <span style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                    Case Study 001: Ainexlify Internal Deployment
+                </span>
+            </div>
+            <!-- Terminal Body -->
+            <div style="padding: 2rem;">
+                <p style="color: #ffffff; line-height: 1.625; margin-bottom: 2rem; font-size: 1rem;">
+                    <span style="color: #34d399; margin-right: 0.5rem;">❯</span>
+                    We never sell infrastructure we don't use ourselves. Our entire agency intake is run autonomously by Layla.
+                </p>
+                <!-- Metrics Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;">
+                    <div class="telemetry-card">
+                        <p class="telemetry-label">System Latency</p>
+                        <p class="telemetry-value gold-value">42ms</p>
+                    </div>
+                    <div class="telemetry-card">
+                        <p class="telemetry-label">Availability</p>
+                        <p class="telemetry-value gold-value">24/7/365</p>
+                    </div>
+                    <div class="telemetry-card emerald-card">
+                        <p class="telemetry-label">Human Intervention</p>
+                        <p class="telemetry-value emerald-value">0%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            .telemetry-card { padding: 1rem; background-color: rgba(255,255,255,0.02); border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.03); transition: background-color 0.3s, border-color 0.3s; position: relative; overflow: hidden; }
+            .telemetry-card:hover { border-color: rgba(196,159,59,0.3); }
+            .telemetry-label { color: var(--text-muted); font-size: 0.75rem; margin-bottom: 0.25rem; transition: color 0.3s; position: relative; z-index: 10; }
+            .telemetry-card:hover .telemetry-label { color: #ffffff; }
+            .telemetry-value { font-size: 1.5rem; font-weight: bold; position: relative; z-index: 10; }
+            .gold-value { color: var(--gold); }
+            .emerald-card:hover { border-color: rgba(52,211,153,0.3); }
+            .emerald-value { color: #34d399; }
+        </style>
     </section>
 
     <!-- Services Grid -->
@@ -664,6 +739,44 @@
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- Lead Architect Component -->
+    <section id="lead-architect" style="padding: 6rem 0; border-top: 1px solid var(--glass-border);">
+        <div style="width: 100%; max-width: 56rem; margin: 0 auto; padding: 0 1.5rem;" class="reveal">
+            <div class="architect-card">
+                <div class="architect-glow"></div>
+                <div style="display: flex; flex-direction: row; align-items: center; gap: 2rem; position: relative; z-index: 10; flex-wrap: wrap;">
+                    <div style="flex-shrink: 0;">
+                        <div class="architect-avatar">
+                            <div class="architect-ping"></div>
+                            <span style="color: var(--gold); font-size: 2.25rem; font-weight: 300; letter-spacing: 0.1em; text-transform: uppercase;">AW</span>
+                        </div>
+                    </div>
+                    <div style="flex: 1;">
+                        <h3 style="font-size: 1.5rem; font-weight: 300; color: #ffffff; margin-bottom: 0.5rem; letter-spacing: -0.02em;">
+                            Anas <span style="color: var(--gold);">|</span> <span style="color: var(--text-muted); font-size: 1.125rem;">Lead Systems Architect</span>
+                        </h3>
+                        <p style="color: var(--text-muted); line-height: 1.625; margin-bottom: 2rem; font-weight: 300; font-size: 1rem; max-width: 42rem;">
+                            I am not a traditional agency owner. I am a systems engineer based in Kolkata. I spent years building complex web infrastructure for high-ticket contractors. Now, I engineer bespoke, autonomous AI agents to solve their biggest bottleneck: <span style="color: #34d399; font-weight: 500;">off-hours lead bleeding</span>.
+                        </p>
+                        <a href="/schedule.html" class="btn" style="background: var(--gold); color: #000; border: none; font-weight: bold; padding: 14px 28px;">Secure an Architecture Audit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            .architect-card { position: relative; padding: 3rem; background: linear-gradient(to bottom right, rgba(255,255,255,0.03), transparent); border-radius: 1rem; border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(4px); overflow: hidden; transition: border-color 0.7s; }
+            .architect-card:hover { border-color: rgba(196,159,59,0.3); }
+            .architect-glow { position: absolute; top: 0; right: 0; width: 24rem; height: 24rem; background: radial-gradient(circle, var(--gold) 0%, transparent 70%); opacity: 0; filter: blur(40px); border-radius: 50%; transition: opacity 1s; pointer-events: none; }
+            .architect-card:hover .architect-glow { opacity: 0.05; }
+            .architect-avatar { width: 8rem; height: 8rem; border-radius: 50%; border: 1px solid rgba(196,159,59,0.2); background-color: #0a0a0a; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 30px rgba(196,159,59,0.1); position: relative; transition: box-shadow 0.7s; }
+            .architect-card:hover .architect-avatar { box-shadow: 0 0 40px rgba(196,159,59,0.2); }
+            .architect-ping { position: absolute; inset: 0; border-radius: 50%; border: 1px solid var(--gold); opacity: 0; pointer-events: none; }
+            @keyframes ping { 0% { transform: scale(1); opacity: 0.5; } 75%, 100% { transform: scale(1.5); opacity: 0; } }
+            .architect-card:hover .architect-ping { animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+            @media (max-width: 768px) { .architect-card { padding: 2rem; } .architect-avatar { width: 6rem; height: 6rem; margin: 0 auto; } }
+        </style>
     </section>
 
     <!-- Monolith Pricing -->
