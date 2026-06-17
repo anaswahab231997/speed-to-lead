@@ -422,7 +422,7 @@ app.post('/api/contact', async (req, res) => {
             <h2>Here is your architecture.</h2>
             <p>Read the ROI Matrix. When you are ready to stop bleeding leads, my calendar link is at the bottom of the document.</p>
             <div style="margin: 30px 0;">
-              <a href="https://ijrbeggiomunrjpuzqms.supabase.co/storage/v1/object/public/assets/The_2026_Autonomous_Blueprint.pdf" 
+              <a href="https://ijrbeggiomunrjpuzqms.supabase.co/storage/v1/object/public/AI%20Nexlify%20Agencies/The_2026_Autonomous_Blueprint.pdf" 
                  style="background-color: #34d399; color: #000; padding: 14px 24px; text-decoration: none; font-weight: bold; border-radius: 8px; display: inline-block;">
                 Download Blueprint PDF (0ms Latency)
               </a>
