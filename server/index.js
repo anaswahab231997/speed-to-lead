@@ -95,21 +95,17 @@ app.post('/api/onboard/dealer', async (req, res) => {
   if (!dealerName || !phoneNumberId || !wabaId || !metaAccessToken) {
     return res.status(400).json({ success: false, error: 'Missing required credentials.' });
   }
-  try {
-    const Airtable = require('airtable');
-    const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base('appjPcjcc62gV2I0g');
-    await base('Admin_Dealerships').create([{
-      fields: {
-        'Dealership Name': dealerName,
-        'Phone Number ID': String(phoneNumberId),
-        'WABA ID': String(wabaId),
-        'Meta Access Token': metaAccessToken,
-        'Status': 'Provisioned',
-        'Onboarded At': new Date().toISOString()
-      }
-    }]);
-
-    const twilio = require('twilio');
+    try {
+      const { supabase } = require('./supabase');
+      await supabase.from('admin_dealerships').insert([{
+        dealership_name: dealerName,
+        phone_number_id: String(phoneNumberId),
+        waba_id: String(wabaId),
+        meta_access_token: metaAccessToken,
+        status: 'Provisioned'
+      }]);
+  
+      const twilio = require('twilio');
     const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
     await client.messages.create({
       body: `🟢 [NODE ACTIVATED] New dealership [${dealerName}] has submitted Meta credentials. Ready for cognitive sync.`,
