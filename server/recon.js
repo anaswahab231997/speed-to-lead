@@ -1,7 +1,7 @@
 require('dotenv').config()
 const axios = require('axios')
 const cheerio = require('cheerio')
-const { saveDealerProspect } = require('./airtable')
+const { saveDealerProspect } = require('./supabase')
 const { ApifyClient } = require('apify-client')
 
 const SERPER_API_KEY = process.env.SERPER_API_KEY

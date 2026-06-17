@@ -94,7 +94,7 @@ async function sendViaMake(to, message, retries) {
   let dealerHours = '9 AM to 9 PM daily'
 
   try {
-    const { getLeadByPhone } = require('./airtable')
+    const { getLeadByPhone } = require('./supabase')
     const lead = await getLeadByPhone(to)
     if (lead) {
       if (lead.name && lead.name !== 'Unknown') {

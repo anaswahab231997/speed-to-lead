@@ -1,6 +1,6 @@
 require('dotenv').config()
 const cron = require('node-cron')
-const { getColdLeads, markLeadFollowedUp } = require('./airtable')
+const { getColdLeads, markLeadFollowedUp } = require('./supabase')
 const { sendWhatsAppMessage } = require('./whatsapp')
 
 const FOLLOW_UP_MESSAGES = [

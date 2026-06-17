@@ -7,7 +7,7 @@ const ExcelJS = require('exceljs')
 const path = require('path')
 const fs = require('fs')
 const { captureWin } = require('./learnings')
-const { leadsCache, toggleLeadAiActive, assignLead, logActivity } = require('./airtable')
+const { leadsCache, toggleLeadAiActive, assignLead, logActivity } = require('./supabase')
 const { saveDealerCredentials } = require('./db')
 
 const app = express()
@@ -725,7 +725,7 @@ app.post('/api/subscribe', async (req, res) => {
   console.log(`[SUBSCRIPTION] Registering Dealer Subscriber: ${dealerName} (${contactName})`)
   
   try {
-    const { saveLeadToAirtable } = require('./airtable')
+    const { saveLeadToAirtable } = require('./supabase')
     const token = `dl_${dealerName.replace(/[^a-zA-Z0-9]/g, '')}_${Date.now().toString().slice(-4)}`
     const accessLink = `https://ainexlifyagencies.com/ignite?token=${token}`
 

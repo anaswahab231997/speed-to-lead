@@ -1,5 +1,5 @@
 require('dotenv').config({ path: require('path').join(__dirname, '.env') })
-const { saveLeadToAirtable, getLeadByPhone, updateLeadScore, getInventorySummaryForLayla, logUrgentNotification } = require('./airtable')
+const { saveLeadToAirtable, getLeadByPhone, updateLeadScore, getInventorySummaryForLayla, logUrgentNotification } = require('./supabase')
 const { generateResponse } = require('./ai_gateway')
 const { scoreLeadFull } = require('./scorer')
 const { sendWhatsAppMessage } = require('./whatsapp')

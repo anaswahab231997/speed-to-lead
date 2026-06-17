@@ -1,4 +1,4 @@
-const { logSystemHealth, logUrgentNotification } = require('./airtable')
+const { logSystemHealth, logUrgentNotification } = require('./supabase')
 const { sendWhatsAppMessage } = require('./whatsapp')
 
 const ALERT_NUMBER = '+917439379780'

@@ -1,6 +1,6 @@
 require('dotenv').config()
 const Anthropic = require('@anthropic-ai/sdk')
-const { getInventorySummaryForLayla } = require('./airtable')
+const { getInventorySummaryForLayla } = require('./supabase')
 const { scoreLeadFull } = require('./scorer')
 
 const client = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY })

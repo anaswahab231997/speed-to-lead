@@ -1,4 +1,4 @@
-const { logSystemHealth, getInventorySummaryForLayla } = require('../airtable');
+const { logSystemHealth, getInventorySummaryForLayla } = require('../supabase');
 const { handleInboundMessage } = require('../layla');
 
 /**

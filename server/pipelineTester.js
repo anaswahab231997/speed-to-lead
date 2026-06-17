@@ -4,7 +4,7 @@
  */
 require('dotenv').config({ path: './.env' });
 const { handleInboundMessage } = require('./layla');
-const { getLeadByPhone } = require('./airtable');
+const { getLeadByPhone } = require('./supabase');
 
 const TEST_PHONE = '+971599999999'; // Unique test number
 

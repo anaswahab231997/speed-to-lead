@@ -5,7 +5,7 @@ const rateLimit = require('express-rate-limit')
 const { handleInboundMessage } = require('./layla')
 const { scheduleFollowUps } = require('./followup')
 const { runStressTest } = require('./stressTest')
-const { getAvailableInventory, leadsCache, logSystemHealth, injectInventoryUpdate } = require('./airtable')
+const { getAvailableInventory, leadsCache, logSystemHealth, injectInventoryUpdate } = require('./supabase')
 const { handlePulsePayload } = require('./sentinel')
 const { startOrchestrator, getAgentStatus } = require('./agents/orchestrator')
 
@@ -428,7 +428,7 @@ app.post('/api/contact', async (req, res) => {
     
     // Also save to Airtable to have a central record (optional but good)
     try {
-      const { saveLeadToAirtable } = require('./airtable')
+      const { saveLeadToAirtable } = require('./supabase')
       await saveLeadToAirtable({
         name: name || 'Unknown',
         phone: phone || '+10000000000',
@@ -459,7 +459,7 @@ app.post('/api/agency/apply', async (req, res) => {
   }
   
   try {
-    const { saveLeadToAirtable } = require('./airtable')
+    const { saveLeadToAirtable } = require('./supabase')
     const result = await saveLeadToAirtable({
       name: finalName,
       phone,
@@ -529,7 +529,7 @@ app.post('/api/agency/audit', auditLimiter, async (req, res) => {
     // 2. Perform heavy background tasks (PDF, CRM, Email)
     const runBackgroundTasks = async () => {
       try {
-        const { saveDealerProspect, saveLeadToAirtable } = require('./airtable')
+        const { saveDealerProspect, saveLeadToAirtable } = require('./supabase')
         const { generateVulnerabilityPDF } = require('./pdfGenerator')
         const { sendEmail } = require('./agents/google_auth')
 
