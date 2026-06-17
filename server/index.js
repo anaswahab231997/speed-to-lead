@@ -413,19 +413,23 @@ app.post('/api/contact', async (req, res) => {
 
     if (business === 'Blueprint Request') {
       // 1. Send the PDF directly to the prospect
-      const pdfPath = path.join(__dirname, 'agency-public', 'assets', 'The_2026_Autonomous_Blueprint.pdf');
-      
       const blueprintMailOptions = {
         from: process.env.SMTP_USER,
         to: email || 'anas@ainexlifyagencies.com', // fallback to admin if no email provided
         subject: `ACCESS GRANTED: Your 2026 Autonomous Blueprint`,
-        html: `Here is the architecture. Read the ROI Matrix. When you are ready to stop bleeding leads, my calendar link is at the bottom of the document.`,
-        attachments: [
-          {
-            filename: 'The_2026_Autonomous_Blueprint.pdf',
-            path: pdfPath
-          }
-        ]
+        html: `
+          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1a1a1a;">
+            <h2>Here is your architecture.</h2>
+            <p>Read the ROI Matrix. When you are ready to stop bleeding leads, my calendar link is at the bottom of the document.</p>
+            <div style="margin: 30px 0;">
+              <a href="https://ijrbeggiomunrjpuzqms.supabase.co/storage/v1/object/public/assets/The_2026_Autonomous_Blueprint.pdf" 
+                 style="background-color: #34d399; color: #000; padding: 14px 24px; text-decoration: none; font-weight: bold; border-radius: 8px; display: inline-block;">
+                Download Blueprint PDF (0ms Latency)
+              </a>
+            </div>
+            <p>Best,<br>Anas Wahab<br>Nexlify Agencies</p>
+          </div>
+        `
       }
 
       await transporter.sendMail(blueprintMailOptions);
