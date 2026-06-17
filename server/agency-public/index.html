@@ -412,7 +412,10 @@
     <header id="navbar">
         <div class="container nav-content">
             <div class="logo">AI<span>Nexlify</span></div>
-            <a href="#contact" class="btn" style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">Deploy Layla</a>
+            <div style="display: flex; gap: 1rem;">
+                <a href="/schedule.html" class="btn btn-outline" style="padding: 0.75rem 1.5rem; font-size: 0.9rem; border-color: var(--emerald); color: var(--emerald);">Book Audit</a>
+                <a href="#contact" class="btn" style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">Deploy Layla</a>
+            </div>
         </div>
     </header>
 
@@ -423,7 +426,7 @@
             <p>We build elite, high-speed web applications powered by custom-trained AI agents. Whether you are a legal firm, a custom home builder, or a medical clinic, we engineer autonomous systems that intercept leads, qualify clients, and book appointments 24/7.</p>
             <div class="hero-ctas">
                 <a href="#layla" class="btn">Meet Layla</a>
-                <a href="#contact" class="btn btn-outline">Apply For Setup</a>
+                <a href="/schedule.html" class="btn btn-outline" style="border-color: var(--emerald); color: var(--emerald);">Book Architecture Audit</a>
             </div>
         </div>
     </section>
@@ -608,23 +611,72 @@
         <div class="container reveal">
             <div class="monolith">
                 <div class="hero-badge" style="margin-bottom: 1rem; background: #000;">The Autonomous Package</div>
-                <h2>System Setup + Web Build</h2>
-                <div class="price">$1,497</div>
-                <div class="price-sub">+ $497/mo (Layla's Salary: ~$16/day)</div>
+                <h2>$1,497 Setup + $497/mo Retainer (Layla's Salary)</h2>
                 
                 <ul class="monolith-features">
-                    <li>Layla 24/7 Autonomous Agent Integration</li>
-                    <li>Full-Stack Custom Web Design & Deployment</li>
-                    <li>Custom Neural-Network Training on Your Business Logic</li>
-                    <li>Basic Local SEO & Answer Engine Prep</li>
-                    <li>Priority Technical Support & Hosting</li>
-                    <li><strong style="color: var(--text-white);">7-Day Money-Back Guarantee on Setup Fee</strong></li>
+                    <li>Custom AI Training</li>
+                    <li>Zero-Latency Deployment</li>
+                    <li>CRM Injection</li>
+                    <li><strong style="color: var(--text-white);">7-Day Money-Back Guarantee</strong></li>
                 </ul>
                 <a href="#contact" class="btn" style="width: 100%;">Start Onboarding</a>
             </div>
             <p style="text-align: center; margin-top: 2rem; color: var(--text-muted);">Why pay a traditional agency $5,000 upfront and $2,000/mo? Hire Layla for less than the cost of a daily coffee.</p>
         </div>
     </section>
+
+    <!-- LEAD MAGNET SECTION -->
+    <section id="lead-magnet" style="padding: 6rem 0; background: var(--bg-surface); position: relative; overflow: hidden; border-top: 1px solid var(--glass-border);">
+        <div class="ambient-bg" style="background: radial-gradient(circle at 50% 50%, rgba(110, 231, 183, 0.05), transparent 40%);"></div>
+        <div class="container reveal">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center; border: 1px solid var(--emerald); border-radius: 24px; padding: 4rem 2rem; background: rgba(0,0,0,0.4); box-shadow: 0 0 40px rgba(110,231,183,0.1), inset 0 0 20px rgba(110,231,183,0.05); position: relative;">
+                <i data-lucide="box" style="width: 48px; height: 48px; color: var(--emerald); margin-bottom: 1.5rem; filter: drop-shadow(0 0 10px var(--emerald));"></i>
+                <h2 style="font-family: var(--font-heading); font-size: 3rem; margin-bottom: 1rem; color: var(--text-white);">Steal Our Architecture.</h2>
+                <p style="font-size: 1.1rem; color: var(--text-muted); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">Download the exact 2026 Autonomous Systems Blueprint we use to replace $4,000/mo traditional marketing retainers.</p>
+                
+                <form id="blueprintForm" style="display: flex; gap: 1rem; max-width: 500px; margin: 0 auto; flex-direction: column;">
+                    <input type="email" name="email" required placeholder="Enter your best email..." style="width: 100%; padding: 1.25rem 1.5rem; border-radius: 100px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: var(--text-white); font-family: var(--font-body); font-size: 1rem; outline: none;">
+                    <button type="submit" id="blueprintBtn" class="btn" style="width: 100%; background: linear-gradient(135deg, var(--emerald), #34d399); color: #000; border: none; font-weight: 800;">Download Blueprint</button>
+                </form>
+                <div id="blueprintSuccess" style="display:none; margin-top: 1.5rem; color: var(--emerald); font-weight: bold;">Blueprint dispatched to your inbox.</div>
+            </div>
+        </div>
+    </section>
+    
+    <script>
+        document.getElementById('blueprintForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('blueprintBtn');
+            const originalText = btn.innerText;
+            btn.innerText = 'SENDING...';
+            btn.style.opacity = '0.7';
+            btn.style.pointerEvents = 'none';
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: data.email, businessName: 'Blueprint Request' })
+                });
+
+                if (response.ok) {
+                    document.getElementById('blueprintSuccess').style.display = 'block';
+                    e.target.reset();
+                } else {
+                    alert('Failed to send request. Please try again.');
+                }
+            } catch (err) {
+                alert('Network error. Please check your connection and try again.');
+            } finally {
+                btn.innerText = originalText;
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }
+        });
+    </script>
 
     <!-- Contact Form -->
     <section id="contact" style="background: rgba(255,255,255,0.01); border-top: 1px solid var(--glass-border);">
@@ -699,6 +751,7 @@
     <footer style="padding: 4rem 0 2rem; text-align: center; border-top: 1px solid var(--glass-border);">
         <div class="container">
             <div class="logo" style="font-size: 1.5rem; opacity: 0.5;">AI<span>Nexlify</span></div>
+            <p style="margin-top: 1rem; font-size: 1.1rem; color: var(--text-white); font-weight: bold;">Contact Desk: +1 (800) 555-0199</p>
             <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted); max-width: 600px; margin-left: auto; margin-right: auto;">The client exclusively owns all rights, title, and interest in and to their brand assets and the captured patient data. Ainexlify Agencies retains rights to the proprietary AI system architecture.</p>
             <p style="margin-top: 1rem; font-size: 0.8rem; color: rgba(255,255,255,0.3);">&copy; 2026 Ainexlify Agencies. All rights reserved.</p>
         </div>

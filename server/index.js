@@ -401,7 +401,7 @@ app.post('/api/sentinel/pulse', async (req, res) => {
 // POST /api/contact - Layla Deployment Intake Form
 app.post('/api/contact', async (req, res) => {
   try {
-    const { name, businessName, clinicName, phone, website } = req.body
+    const { name, businessName, clinicName, phone, website, email } = req.body
     const business = businessName || clinicName;
 
     const nodemailer = require('nodemailer')
