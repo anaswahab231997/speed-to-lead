@@ -329,7 +329,7 @@
         function getAiResponse(userText) {
             const txt = userText.toLowerCase();
             
-            if (txt.includes('home service') || txt.includes('roofing') || txt.includes('contractor')) {
+            if (txt.includes('home service') || txt.includes('roofing') || txt.includes('contractor') || txt.includes('clean') || txt.includes('maid')) {
                 updateTelemetry('Vertical: Home_Service', '84ms', 'Inquisitive', 'Awaiting_Lead');
                 return "I can qualify your inbound estimate requests, filter out low-budget tire-kickers, and book high-ticket site visits directly into your calendar. Are you currently losing leads after hours? Should we schedule a setup call with Anas for Tuesday at 10 AM or Thursday at 2 PM?";
             }
@@ -348,8 +348,8 @@
             }
 
             // Default fallback
-            updateTelemetry('Intent: General_Inquiry', '42ms', 'Neutral', 'Ready');
-            return "I am configured to map your business logic and automate your intake. What specific industry do you operate in, so I can explain my utility?";
+            updateTelemetry('Intent: Qualification', '42ms', 'Analytical', 'Mapping_Industry');
+            return "Understood. I can build a custom neural-trained intake system tailored specifically to your vertical. We deploy AI receptionists that handle bookings, qualify inbound leads, and sync straight to your CRM 24/7. Should we pull up Anas's calendar to discuss the architecture?";
         }
 
         async function handleUserInput(text) {
