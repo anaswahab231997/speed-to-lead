@@ -191,7 +191,11 @@
             padding-top: 6rem;
         }
         @media (max-width: 768px) {
-            .hero { padding-top: 8rem; } /* pt-32 for strict mobile collision buffer */
+            .hero { 
+                padding-top: 8rem; 
+                align-items: flex-start; /* CRITICAL: Prevents upward overflow on short viewports */
+                padding-bottom: 4rem;
+            } 
         }
         .hero-badge {
             display: inline-block;
