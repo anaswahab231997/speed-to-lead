@@ -197,8 +197,13 @@
             
             /* Glass Room to Native Chat Window */
             .glass-room {
-                flex: 1; border-radius: 0; border: none; height: 100%; margin: 0;
+                position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+                width: 100%; max-width: 448px; margin: 0 auto;
+                height: 100vh; height: 100dvh;
+                z-index: 50;
+                border-radius: 0; border: none;
                 box-shadow: none; display: flex; flex-direction: column;
+                background: var(--bg-deep);
             }
 
             /* Center Native Contact Header */
