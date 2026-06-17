@@ -90,7 +90,7 @@ async function saveLead(data) {
         phone: data.phone,
         name: data.name || 'Unknown',
         intent_score: data.intentScore || 0,
-        status: 'New',
+        status: data.status || 'New',
         car_interest: data.lastMessage || '',
         layla_reply: data.laylaReply || '',
         dealer: data.dealer || 'Nexlify',

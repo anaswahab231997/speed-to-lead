@@ -394,6 +394,25 @@ app.post('/api/sentinel/pulse', async (req, res) => {
   }
 })
 
+// ─── CRON ENDPOINTS ───────────────────────────────────────────────────────────
+
+// GET /api/cron/retargeting - Vercel Serverless Trigger
+app.get('/api/cron/retargeting', async (req, res) => {
+  const authHeader = req.headers.authorization
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return res.status(401).json({ success: false, error: 'Unauthorized cron request' })
+  }
+
+  try {
+    const { runBlueprintRetargeting } = require('./followup')
+    await runBlueprintRetargeting()
+    res.json({ success: true, message: 'Retargeting loop executed' })
+  } catch (err) {
+    console.error('[CRON ERROR]', err.message)
+    res.status(500).json({ success: false, error: err.message })
+  }
+})
+
 // POST /api/contact - Layla Deployment Intake Form
 app.post('/api/contact', async (req, res) => {
   try {
@@ -443,6 +462,7 @@ app.post('/api/contact', async (req, res) => {
           lastMessage: `Blueprint Request. Email: ${email}`,
           laylaReply: 'Dispatched PDF.',
           intentScore: 8,
+          status: 'Blueprint Downloaded',
           source: 'blueprint-magnet',
           dealer: 'Nexlify Agency'
         });
