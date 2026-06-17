@@ -352,6 +352,17 @@
                     conversationHistory.push({ role: 'assistant', content: data.reply });
                     
                     updateTelemetry('Neural_Response', latency + 'ms', 'Dynamic', 'Live');
+                } else if (data.details) {
+                    if (data.details === "RATE_LIMIT") {
+                        appendMessage('ai', "I am currently experiencing a high volume of requests. Please wait about 60 seconds before asking your next question.");
+                    } else if (data.details === "API_KEY_MISSING") {
+                        appendMessage('ai', "My architect has not provided me with a valid API key in this environment. I am offline.");
+                    } else if (data.details === "TIMEOUT") {
+                        appendMessage('ai', "My neural link timed out while processing your request. Could you please repeat that?");
+                    } else {
+                        appendMessage('ai', `I encountered an unexpected anomaly: ${data.details}. Please try again later.`);
+                    }
+                    updateTelemetry('Error', latency + 'ms', 'Anomaly', 'Failed');
                 } else {
                     appendMessage('ai', "I'm experiencing a brief system interrupt. Could you please repeat that?");
                     updateTelemetry('Error', latency + 'ms', 'Interrupt', 'Failed');

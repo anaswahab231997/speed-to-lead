@@ -65,8 +65,12 @@ app.post('/api/chat/web', async (req, res) => {
       temperature: 0.7
     })
 
-    if (!reply) {
-      return res.status(500).json({ error: 'Neural Engine Blackout. Please try again.' })
+    if (!reply || reply.error) {
+      const reason = reply?.reason || 'UNKNOWN_ERROR';
+      return res.status(500).json({ 
+        error: 'Neural Engine Blackout. Please try again.',
+        details: reason
+      })
     }
 
     res.json({ reply })

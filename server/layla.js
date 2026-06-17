@@ -115,9 +115,11 @@ async function handleInboundMessage({ from, text, messageId, dealerNameOverride 
   }
 
   // ─── Emergency Total Blackout Fallback ──────────────────────────────────────────────
-  if (!reply) {
-    console.error(`🚨 [LAYLA CRITICAL] TOTAL AI BLACKOUT for ${from}. Both Gemini and Anthropic failed.`);
-    reply = "Hey, give me just a sec — having a small technical moment. I'll be right back with you!"
+  if (!reply || reply.error) {
+    console.error(`🚨 [LAYLA CRITICAL] TOTAL AI BLACKOUT for ${from}. Reason: ${reply?.reason || 'Unknown'}`);
+    
+    // Instead of completely failing, Layla fails gracefully and retains persona.
+    reply = "I apologize, but my core neural link is currently recalibrating due to network congestion. Please hold on for a brief moment or try again in 60 seconds.";
     
     if (from === '+917977441599' || from === '+917439379780') {
       try {

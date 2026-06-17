@@ -9,7 +9,7 @@ async function generateResponse({ systemPrompt, history, maxTokens = 1000, tempe
   
   if (!GEMINI_API_KEY) {
     console.error('❌ [AI GATEWAY] CRITICAL: GEMINI_API_KEY is missing!');
-    return null;
+    return { error: true, reason: "API_KEY_MISSING" };
   }
 
   const relayBase = process.env.GEMINI_RELAY_URL 
@@ -61,17 +61,21 @@ async function generateResponse({ systemPrompt, history, maxTokens = 1000, tempe
       const errJson = await response.json().catch(() => ({}));
       const errMsg = errJson.error?.message || response.statusText || response.status;
       console.error(`🚨 [AI GATEWAY] ${model} Critical Error (${response.status}): ${errMsg}`);
+      if (response.status === 429) return { error: true, reason: "RATE_LIMIT" };
+      return { error: true, reason: `API_ERROR: ${errMsg}` };
     }
   } catch (err) {
     if (err.name === 'AbortError') {
       console.error(`🕒 [AI GATEWAY] ${model} timed out after 20s.`);
+      return { error: true, reason: "TIMEOUT" };
     } else {
       console.error(`🚨 [AI GATEWAY] ${model} Exception:`, err.message);
+      return { error: true, reason: `EXCEPTION: ${err.message}` };
     }
   }
 
   console.error(`❌ [AI GATEWAY] TOTAL SYSTEM BLACKOUT.`);
-  return null;
+  return { error: true, reason: "UNKNOWN_BLACKOUT" };
 }
 
 module.exports = { generateResponse };
