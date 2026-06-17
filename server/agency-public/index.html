@@ -172,11 +172,11 @@
         header { 
             padding: 1.5rem 0; 
             position: fixed; top: 0; left: 0; width: 100%; 
-            background: rgba(3,3,3,0.7); 
+            background: rgba(14, 11, 30, 0.9); 
             backdrop-filter: blur(20px); 
             -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border); 
-            z-index: 1000; 
+            z-index: 50; 
             transition: var(--transition-smooth);
         }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
@@ -189,6 +189,9 @@
             display: flex; align-items: center; justify-content: center; 
             text-align: center; 
             padding-top: 6rem;
+        }
+        @media (max-width: 768px) {
+            .hero { padding-top: 8rem; } /* pt-32 for strict mobile collision buffer */
         }
         .hero-badge {
             display: inline-block;
@@ -982,10 +985,10 @@
         window.addEventListener("scroll", function() {
             var header = document.getElementById("navbar");
             if(window.scrollY > 50) {
-                header.style.background = "rgba(3,3,3,0.85)";
+                header.style.background = "rgba(14, 11, 30, 0.95)";
                 header.style.padding = "1rem 0";
             } else {
-                header.style.background = "rgba(3,3,3,0.5)";
+                header.style.background = "rgba(14, 11, 30, 0.9)";
                 header.style.padding = "1.5rem 0";
             }
         });
