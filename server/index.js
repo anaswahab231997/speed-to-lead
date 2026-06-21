@@ -34,13 +34,7 @@ const app = express()
 app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }))
 
 // ─── Security Hardening ──────────────────────────────────────────────────────
-const corsOptions = {
-  origin: ['https://ainexlifyagencies.com', 'https://ainexlify-agencies.onrender.com', 'http://localhost:5173', 'http://localhost:5174', 'http://localhost:3001'],
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 204
-}
-app.use(cors(corsOptions))
+app.use(cors({ origin: '*', methods: ['GET', 'POST'] }))
 app.use(express.json())
 
 app.post('/api/chat/web', async (req, res) => {
