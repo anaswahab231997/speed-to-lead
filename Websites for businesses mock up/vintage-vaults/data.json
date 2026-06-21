@@ -1,0 +1,118 @@
+{
+  "schema_type": "B2B_Lead_Database_Scrape",
+  "source_file": "dataset_crawler-google-places_2026-06-06_09-40-10-896.csv",
+  "target_entity": "Vintage Vaults Prospects",
+  "extracted_payloads": [
+    {
+      "business_name": "KingsGate Luxury Homes Inc.",
+      "high_ticket_services": [
+        "Custom home builder",
+        "Construction company",
+        "Home builder",
+        "Real estate developer"
+      ],
+      "trust_signals": {
+        "rating": "5",
+        "reviews_count": "95"
+      },
+      "contact": {
+        "phone": "+1 416-888-2288",
+        "website": "https://kingsgateluxuryhomes.com/",
+        "address": "101 Duncan Mill Rd Unit 103, , Ontario"
+      },
+      "legacy_urls": {
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=KingsGate%20Luxury%20Homes%20Inc.&query_place_id=ChIJTVh8zx8tK4gRc1-evtzZrdA"
+      }
+    },
+    {
+      "business_name": "Aria Build",
+      "high_ticket_services": [
+        "Custom home builder",
+        "Contractor",
+        "Home builder"
+      ],
+      "trust_signals": {
+        "rating": "4.8",
+        "reviews_count": "80"
+      },
+      "contact": {
+        "phone": "+1 416-833-1308",
+        "website": "http://ariabuild.ca/",
+        "address": "1315 Lawrence Ave E unit 502, , Ontario"
+      },
+      "legacy_urls": {
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=Aria%20Build&query_place_id=ChIJa4CjhFLb1IkRod8ycFEbmxg"
+      }
+    },
+    {
+      "business_name": "RS Homes",
+      "high_ticket_services": [
+        "Custom home builder",
+        "Architect",
+        "Architectural designer",
+        "Bathroom remodeler",
+        "Construction company",
+        "Home builder",
+        "Interior designer",
+        "Kitchen remodeler",
+        "Remodeler"
+      ],
+      "trust_signals": {
+        "rating": "4.4",
+        "reviews_count": "30"
+      },
+      "contact": {
+        "phone": "+1 416-480-0282",
+        "website": "http://www.rshomes.ca/",
+        "address": "23 Lesmill Rd, , Ontario"
+      },
+      "legacy_urls": {
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=RS%20Homes&query_place_id=ChIJz1TRzksrK4gRrzjJKqxn1jI"
+      }
+    },
+    {
+      "business_name": "Arham Home Builder & Renovator Inc",
+      "high_ticket_services": [
+        "Construction company"
+      ],
+      "trust_signals": {
+        "rating": "5",
+        "reviews_count": "50"
+      },
+      "contact": {
+        "phone": "+1 416-841-5825",
+        "website": "https://arhamhomebuilder.com/",
+        "address": "136 Linden Ave, , Ontario"
+      },
+      "legacy_urls": {
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=Arham%20Home%20Builder%20%26%20Renovator%20Inc&query_place_id=ChIJXbO5zCMlaSMR5vbjtjhkOnM"
+      }
+    },
+    {
+      "business_name": "Eastern Western Design & Build Toronto",
+      "high_ticket_services": [
+        "Custom home builder",
+        "Bathroom remodeler",
+        "Construction company",
+        "Flooring contractor",
+        "Foundation",
+        "General contractor",
+        "Kitchen remodeler",
+        "Remodeler",
+        "Tile contractor"
+      ],
+      "trust_signals": {
+        "rating": "4.9",
+        "reviews_count": "61"
+      },
+      "contact": {
+        "phone": "+1 437-580-3557",
+        "website": "http://www.eastern-western.com/",
+        "address": "Home Addition Custom Home Basement Reno Bathroom Renovations, Gerrard St E, Toronto, Ontario"
+      },
+      "legacy_urls": {
+        "google_maps": "https://www.google.com/maps/search/?api=1&query=Eastern%20Western%20Design%20%26%20Build%20Toronto&query_place_id=ChIJLewI7kvN1IkRnpcTSpiU-Qc"
+      }
+    }
+  ]
+}

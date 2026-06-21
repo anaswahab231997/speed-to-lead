@@ -78,4 +78,67 @@ async function generateResponse({ systemPrompt, history, maxTokens = 1000, tempe
   return { error: true, reason: "UNKNOWN_BLACKOUT" };
 }
 
-module.exports = { generateResponse };
+async function streamResponse({ systemPrompt, history, maxTokens = 1000, temperature = 0.7, onChunk, onError, onComplete }) {
+  const GEMINI_API_KEY = process.env.GEMINI_API_KEY || process.env.Gemini_Api_Key;
+  if (!GEMINI_API_KEY) return onError(new Error("API_KEY_MISSING"));
+
+  const relayBase = process.env.GEMINI_RELAY_URL ? process.env.GEMINI_RELAY_URL.replace(/\/$/, '') : 'https://generativelanguage.googleapis.com';
+  const model = 'gemini-2.5-flash';
+  const geminiUrl = `${relayBase}/v1beta/models/${model}:streamGenerateContent?alt=sse&key=${GEMINI_API_KEY}`;
+
+  try {
+    const payload = {
+      system_instruction: { parts: [{ text: systemPrompt }] },
+      contents: history.map(h => ({
+        role: h.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: h.content }]
+      })),
+      generationConfig: { maxOutputTokens: maxTokens, temperature, topP: 0.95, topK: 40 }
+    };
+
+    console.log(`📡 [AI GATEWAY] Dispatching STREAM to Golden Model...`);
+    
+    const response = await fetch(geminiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const errJson = await response.json().catch(() => ({}));
+      return onError(new Error(errJson.error?.message || response.statusText));
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+    let fullText = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value, { stream: true });
+      const lines = chunk.split('\n');
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const dataStr = line.replace('data: ', '').trim();
+          if (dataStr === '[DONE]') continue;
+          try {
+            const dataObj = JSON.parse(dataStr);
+            const textChunk = dataObj.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            if (textChunk) {
+              fullText += textChunk;
+              onChunk(textChunk);
+            }
+          } catch (e) {}
+        }
+      }
+    }
+    console.log(`✅ [AI GATEWAY] STREAM completed.`);
+    if (onComplete) onComplete(fullText);
+  } catch (err) {
+    console.error(`🚨 [AI GATEWAY] Stream Exception:`, err.message);
+    onError(err);
+  }
+}
+
+module.exports = { generateResponse, streamResponse };

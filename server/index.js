@@ -3,7 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const rateLimit = require('express-rate-limit')
 const { handleInboundMessage, buildLaylaSystem } = require('./layla')
-const { generateResponse } = require('./ai_gateway')
+const { generateResponse, streamResponse } = require('./ai_gateway')
 const { scheduleFollowUps } = require('./followup')
 const { runStressTest } = require('./stressTest')
 const { getAvailableInventory, leadsCache, logSystemHealth, injectInventoryUpdate } = require('./supabase')
@@ -48,6 +48,11 @@ app.post('/api/chat/web', async (req, res) => {
     const { message, history } = req.body
     if (!message) return res.status(400).json({ error: 'Message is required' })
     
+    // Set SSE headers
+    res.setHeader('Content-Type', 'text/event-stream')
+    res.setHeader('Cache-Control', 'no-cache')
+    res.setHeader('Connection', 'keep-alive')
+    
     // Normalize history format
     const formattedHistory = (history || []).map(h => ({
       role: h.role === 'ai' || h.role === 'assistant' ? 'assistant' : 'user',
@@ -57,26 +62,32 @@ app.post('/api/chat/web', async (req, res) => {
     // Build the rigorous Ainexlify SDR prompt
     const systemPrompt = await buildLaylaSystem('Ainexlify Agencies')
     
-    // Process via the Golden Model (Gemini 2.5 Flash)
-    const reply = await generateResponse({
+    // Process via the Golden Model (Gemini 2.5 Flash) using SSE
+    await streamResponse({
       systemPrompt,
       history: [...formattedHistory, { role: 'user', content: message }],
       maxTokens: 1000,
-      temperature: 0.7
+      temperature: 0.7,
+      onChunk: (chunk) => {
+        res.write(`data: ${JSON.stringify({ text: chunk })}\n\n`);
+      },
+      onError: (err) => {
+        res.write(`data: ${JSON.stringify({ error: err.message || 'Stream error' })}\n\n`);
+        res.end();
+      },
+      onComplete: () => {
+        res.write(`data: [DONE]\n\n`);
+        res.end();
+      }
     })
-
-    if (!reply || reply.error) {
-      const reason = reply?.reason || 'UNKNOWN_ERROR';
-      return res.status(500).json({ 
-        error: 'Neural Engine Blackout. Please try again.',
-        details: reason
-      })
-    }
-
-    res.json({ reply })
   } catch (err) {
     console.error('🚨 [WEB CHAT] Exception:', err)
-    res.status(500).json({ error: 'Internal server error' })
+    if (!res.headersSent) {
+      res.status(500).json({ error: 'Internal server error' })
+    } else {
+      res.write(`data: ${JSON.stringify({ error: 'Internal server error' })}\n\n`);
+      res.end();
+    }
   }
 })
 app.use(express.urlencoded({ extended: true }))

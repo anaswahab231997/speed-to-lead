@@ -6,3 +6,7 @@ server/.env
 .DS_Store
 dist/
 build/
+
+.env.local
+
+server/.env.vercel.template

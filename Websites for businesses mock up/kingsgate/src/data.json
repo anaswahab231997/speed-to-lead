@@ -1,0 +1,26 @@
+{
+  "brand": "KingsGate Luxury Homes Inc.",
+  "philosophy": "A luxury home isn't won in the last 10%—it's won in planning, documentation, and daily site control.",
+  "hero_subtext": "Luxury custom homes in Toronto, delivered with permit-ready planning and meticulous finish control. Decisions are documented early, timelines are tracked by milestones, and finish quality is managed through on-site standards from framing through final walkthrough.",
+  "services": [
+    {
+      "title": "Permit-Ready Planning",
+      "description": "Feasibility review, zoning checks, and permit planning. Approvals are coordinated early to reduce delays and protect the timeline."
+    },
+    {
+      "title": "Scope Control & Coordination",
+      "description": "Design-build coordination with clear scope, specs, and selections. Change orders are strictly tracked with price and schedule impact."
+    },
+    {
+      "title": "Milestone Quality Control",
+      "description": "Standards enforced at framing, mechanical, envelope, insulation, and finishes. Inspections happen at the stages that matter most."
+    }
+  ],
+  "trust_signals": {
+    "rating": "5.0",
+    "reviews": "95",
+    "experience": "17+",
+    "awards": ["Best Custom Home over $1 Million", "Consumer Choice Award – Toronto Central", "Best of Houzz – Service"]
+  },
+  "cta": "Build Your Toronto Dream Home Today"
+}

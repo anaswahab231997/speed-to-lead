@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Nexlify Agencies | Global Enterprise Infrastructure</title>
-    <meta name="description" content="AI Nexlify Agencies builds automated digital infrastructure for high-friction global businesses. Replace slow human-led sales floors with custom AI Concierges.">
-    <meta property="og:title" content="AI Nexlify Agencies | Enterprise Infrastructure">
-    <meta property="og:description" content="Automated digital infrastructure for high-friction global businesses.">
-    <meta property="og:image" content="https://ainexlifyagencies.com/hyper_seo_matrix.png">
+    <title>High-Converting Websites & AI Lead Gen for Builders & Roofers</title>
+    <meta name="description" content="Stop losing $50k jobs to missed calls. We build ultra-fast web assets integrated with Layla, a 24/7 AI sales agent that books estimates while you sleep.">
+    <meta property="og:title" content="High-Converting Websites & AI Lead Gen for Builders & Roofers">
+    <meta property="og:description" content="Stop losing $50k jobs to missed calls. We build ultra-fast web assets integrated with Layla, a 24/7 AI sales agent that books estimates while you sleep.">
+    <meta property="og:image" content="https://ainexlifyagencies.com/assets/phase3_asset.png">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -22,18 +22,32 @@
       }
     }
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { corePlugins: { preflight: false } }</script>
     <style>
         /* CSS Variables */
         :root {
-            --bg-obsidian: #030303;
+            --bg-obsidian: #050505;
             --text-white: #ffffff;
-            --text-muted: #d4d4d8;
-            --emerald: #10b981;
+            --text-muted: #a1a1aa;
+            --gold: #c49f3b; /* Matte Architectural Gold */
             --bleed-red: #ef4444;
-            --font-stack: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-stack: 'Satoshi', system-ui, -apple-system, sans-serif;
+            --font-heading: 'Clash Display', sans-serif;
             --glass-bg: rgba(255, 255, 255, 0.04);
             --glass-border: rgba(255, 255, 255, 0.08);
             --glass-fallback: rgba(20, 20, 25, 0.9);
+        }
+
+        /* Micro-Animations & Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Reset & Base */
@@ -66,49 +80,59 @@
 
         /* Typography */
         h1 {
-            font-size: clamp(2rem, 5vw, 5.5rem);
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -0.03em;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            letter-spacing: -0.01em;
             margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #a1a1aa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         h2 {
-            font-size: clamp(1.8rem, 4vw, 3.5rem);
-            font-weight: 700;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            letter-spacing: -0.01em;
             margin-bottom: 1rem;
         }
 
         .sub-headline {
             font-size: clamp(1.1rem, 2vw, 1.35rem);
             color: var(--text-muted);
+            font-weight: 400;
             max-width: 800px;
             margin-bottom: 2.5rem;
         }
 
-        .text-emerald { color: var(--emerald); }
+        .text-gold { color: var(--gold); }
         .text-red { color: var(--bleed-red); }
 
-        /* Glassmorphism with Graceful Degradation */
+        /* Premium Minimalist UI (Borderless Deep Shadow) */
         .glass-card {
-            background: var(--glass-fallback);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
+            background: #0a0a0a;
+            border: 1px solid rgba(255,255,255,0.03);
+            border-radius: 20px;
             padding: 3rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            box-shadow: inset 0 2px 10px rgba(255,255,255,0.02), 0 20px 50px rgba(0, 0, 0, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: inset 0 2px 15px rgba(255,255,255,0.04), 0 30px 60px rgba(0, 0, 0, 0.9);
         }
 
-        @supports (backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px)) {
-            @media (min-width: 768px) {
-                .glass-card {
-                    background: var(--glass-bg);
-                    backdrop-filter: blur(16px);
-                    -webkit-backdrop-filter: blur(16px);
-                }
-            }
+        /* Bento Box Architecture */
+        .bento-box {
+            background: rgba(10, 10, 12, 0.8);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02), 0 20px 40px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            margin-bottom: 2rem;
         }
+        .py-24 { padding-top: 6rem; padding-bottom: 6rem; }
+        .py-32 { padding-top: 8rem; padding-bottom: 8rem; }
 
         /* Buttons */
         .btn-group {
@@ -131,14 +155,14 @@
         }
 
         .btn-primary {
-            background-color: var(--emerald);
+            background-color: var(--gold);
             color: var(--bg-obsidian);
             border: none;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 0 20px rgba(196, 159, 59, 0.3);
         }
 
         .btn-primary:hover {
-            box-shadow: 0 0 35px rgba(16, 185, 129, 0.5);
+            box-shadow: 0 0 35px rgba(196, 159, 59, 0.5);
             transform: translateY(-2px);
         }
 
@@ -160,7 +184,10 @@
             display: flex;
             align-items: center;
             padding-top: 6rem;
-            background: radial-gradient(circle at 50% -20%, rgba(16, 185, 129, 0.15), transparent 60%);
+            background: linear-gradient(rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.95)), url('/assets/hero_bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
 
         /* Calculator */
@@ -201,19 +228,19 @@
             -webkit-appearance: none;
             width: 32px;
             height: 32px;
-            background: var(--emerald);
+            background: var(--gold);
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+            box-shadow: 0 0 15px rgba(196, 159, 59, 0.5);
         }
         
         input[type="range"]::-moz-range-thumb {
             width: 32px;
             height: 32px;
-            background: var(--emerald);
+            background: var(--gold);
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+            box-shadow: 0 0 15px rgba(196, 159, 59, 0.5);
             border: none;
         }
 
@@ -232,7 +259,7 @@
         }
 
         input[type="number"]:focus {
-            border-color: var(--emerald);
+            border-color: var(--gold);
         }
 
         .calc-outputs {
@@ -253,9 +280,9 @@
             box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.1);
         }
 
-        .output-box.green-box {
-            border-color: rgba(16, 185, 129, 0.4);
-            box-shadow: inset 0 0 20px rgba(16, 185, 129, 0.1);
+        .output-box.gold-box {
+            border-color: rgba(196, 159, 59, 0.4);
+            box-shadow: inset 0 0 20px rgba(196, 159, 59, 0.1);
         }
         
         .output-label {
@@ -280,109 +307,7 @@
             align-items: center;
         }
 
-        .language-toggle {
-            display: inline-flex;
-            gap: 0.75rem;
-            margin-bottom: 2rem;
-            background: rgba(0,0,0,0.6);
-            padding: 0.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--glass-border);
-        }
 
-        .toggle-btn {
-            padding: 0.85rem 1.75rem;
-            border: 1px solid transparent;
-            background: transparent;
-            color: var(--text-muted);
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .toggle-btn:hover {
-            background: rgba(255,255,255,0.05);
-            color: var(--text-white);
-        }
-
-        .toggle-btn.active {
-            background: var(--emerald);
-            color: var(--bg-obsidian);
-            border-color: var(--emerald);
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
-        }
-
-        .phone-container {
-            width: 100%;
-            max-width: 380px;
-            margin: 0 auto;
-            border: 12px solid #1a1a1a;
-            border-radius: 40px;
-            background: #000;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
-            overflow: hidden;
-        }
-
-        .phone-header {
-            background: #075e54;
-            padding: 1.5rem 1rem 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .phone-avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--emerald);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-weight: bold;
-        }
-
-        .phone-chat {
-            height: 480px;
-            padding: 1.5rem 1rem;
-            background: #0b141a;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .chat-bubble-container {
-            min-height: 180px; /* Prevents CLS on language swap */
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-
-        .chat-bubble {
-            max-width: 85%;
-            padding: 0.85rem 1.25rem;
-            border-radius: 12px;
-            font-size: 1rem;
-            line-height: 1.5;
-            transition: opacity 0.2s ease;
-        }
-
-        .bubble-customer {
-            background: #202c33;
-            color: #e9edef;
-            align-self: flex-start;
-            border-top-left-radius: 4px;
-            margin-bottom: 1rem;
-        }
-
-        .bubble-ai {
-            background: #005c4b;
-            color: #e9edef;
-            align-self: flex-end;
-            border-top-right-radius: 4px;
-        }
 
         /* Protocol Section */
         .timeline {
@@ -405,7 +330,7 @@
         .timeline-step {
             position: relative;
             padding-left: 70px;
-            margin-bottom: 3rem;
+            padding-bottom: 1.5rem;
         }
         
         .timeline-step:last-child {
@@ -419,14 +344,14 @@
             width: 28px;
             height: 28px;
             background: var(--bg-obsidian);
-            border: 2px solid var(--emerald);
+            border: 2px solid var(--gold);
             border-radius: 50%;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 0 15px rgba(196, 159, 59, 0.4);
             z-index: 2;
         }
 
         .step-title {
-            color: var(--emerald);
+            color: var(--gold);
             font-weight: 700;
             font-size: 1.1rem;
             margin-bottom: 0.5rem;
@@ -444,106 +369,6 @@
             font-size: 1.1rem;
         }
 
-        /* Image Slider */
-        .slider-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 1000px;
-            height: 600px;
-            margin: 4rem auto 0;
-            border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--glass-border);
-            user-select: none;
-            background: #111;
-        }
-
-        /* Optimized placeholders using CSS gradients for max performance */
-        .slider-img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 800;
-            color: rgba(255,255,255,0.05);
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-        }
-
-        .img-before {
-            background-image: url('showroom_raw.png');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .img-after {
-            background-image: url('showroom_ai_enhanced.png');
-            background-size: cover;
-            background-position: center;
-            clip-path: inset(0 0 0 50%);
-        }
-
-        .slider-divider {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            width: 4px;
-            background: var(--text-white);
-            transform: translateX(-50%);
-            cursor: ew-resize;
-            z-index: 10;
-        }
-
-        .slider-divider::before {
-            content: '⟷';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 48px;
-            height: 48px;
-            background: var(--text-white);
-            color: var(--bg-obsidian);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-        }
-
-        .slider-overlay {
-            position: absolute;
-            bottom: 2rem;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            z-index: 5;
-            background: rgba(0,0,0,0.85);
-            border: 1px solid;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-
-        .overlay-left {
-            left: 2rem;
-            border-color: rgba(239, 68, 68, 0.5);
-            color: var(--text-white);
-        }
-
-        .overlay-right {
-            right: 2rem;
-            border-color: rgba(16, 185, 129, 0.5);
-            color: var(--text-white);
-        }
 
         /* Footer & Mobile CTA */
         .footer {
@@ -579,21 +404,21 @@
             width: 100%;
             padding: 1rem;
             background: rgba(0, 0, 0, 0.95);
-            border-top: 1px solid rgba(16, 185, 129, 0.3);
+            border-top: 1px solid rgba(196, 159, 59, 0.3);
             z-index: 999;
             text-align: center;
         }
 
         .mobile-sticky-cta .btn {
             width: 100%;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 0 20px rgba(196, 159, 59, 0.4);
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(196, 159, 59, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(196, 159, 59, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(196, 159, 59, 0); }
         }
 
         /* Responsive */
@@ -631,16 +456,7 @@
             .mobile-sticky-cta { display: block; }
             body { padding-bottom: 90px; }
         }
-        /* 1. Intro Sequence */
-        #sys-intro {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #000; color: #10b981; font-family: monospace;
-            z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-            padding: 2rem;
-        }
-        .glitch { animation: glitch 0.2s linear infinite; }
-        @keyframes glitch { 0% { transform: translate(0) } 20% { transform: translate(-2px, 2px) } 40% { transform: translate(-2px, -2px) } 60% { transform: translate(2px, 2px) } 80% { transform: translate(2px, -2px) } 100% { transform: translate(0) } }
-        .hidden-intro { opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+
         /* 2. Qualification Modal */
         .qual-modal {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -650,51 +466,56 @@
         }
         .qual-modal.active { opacity: 1; pointer-events: auto; }
         .qual-box {
-            background: var(--obsidian); border: 1px solid var(--glass-border);
+            background: var(--bg-obsidian); border: 1px solid var(--glass-border);
             border-radius: 16px; padding: 2rem; width: 90%; max-width: 450px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.9); transform: translateY(20px); transition: all 0.4s ease;
         }
         .qual-modal.active .qual-box { transform: translateY(0); }
-        .qual-box h3 { color: var(--emerald); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 1rem;}
+        .qual-box h3 { color: var(--gold); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.1em; font-size: 1rem;}
         .qual-select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: white; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; font-size: 0.9rem; }
-        .qual-select option { background: var(--obsidian); color: white; }
-        #qual-status { margin-top: 1rem; font-family: monospace; font-size: 0.8rem; color: var(--emerald); min-height: 20px; }
-        /* 3. Currency & Response Time */
-        .currency-toggles { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
-        .curr-btn { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-silver); padding: 0.4rem 1rem; border-radius: 100px; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease; }
-        .curr-btn.active { background: var(--text-main); color: var(--obsidian); font-weight: bold; }
+        .qual-select option { background: var(--bg-obsidian); color: white; }
+        #qual-status { margin-top: 1rem; font-family: monospace; font-size: 0.8rem; color: var(--gold); min-height: 20px; }
+        /* 3. Validation Animations */
         .shake-red { animation: shakeRed 0.4s ease-in-out; }
         @keyframes shakeRed { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-5px); color: #ef4444; } 40%, 80% { transform: translateX(5px); color: #ef4444; } }
-        /* 4. Neurological Avatar */
-        .avatar-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--emerald); border: 2px solid #fff; margin-right: 0.5rem; display: inline-block; vertical-align: middle; box-shadow: 0 0 10px var(--emerald-glow); animation: avatarBreathe 3s infinite ease-in-out; }
-        .avatar-icon.computing { animation: avatarCompute 0.5s infinite linear; border-style: dashed; }
-        @keyframes avatarBreathe { 0%, 100% { transform: scale(1); box-shadow: 0 0 10px var(--emerald-glow); } 50% { transform: scale(1.1); box-shadow: 0 0 20px var(--emerald); } }
-        @keyframes avatarCompute { 100% { transform: rotate(360deg); } }
         /* 5. SVG Wireframe & SLA */
         .img-before-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .wireframe-svg { width: 150%; height: 150%; stroke: var(--emerald); stroke-width: 1px; fill: none; opacity: 0.5; }
-        .laser-line { position: absolute; left: -1px; top: 0; width: 2px; height: 100%; background: var(--emerald); box-shadow: 0 0 20px var(--emerald), 0 0 40px var(--emerald); z-index: 10; pointer-events: none; }
-        .sla-banner { background: #000; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); padding: 1.5rem 0; text-align: center; font-family: monospace; font-size: 0.85rem; color: var(--text-silver); }
+        .wireframe-svg { width: 150%; height: 150%; stroke: var(--gold); stroke-width: 1px; fill: none; opacity: 0.5; }
+        .laser-line { position: absolute; left: -1px; top: 0; width: 2px; height: 100%; background: var(--gold); box-shadow: 0 0 20px var(--gold), 0 0 40px var(--gold); z-index: 10; pointer-events: none; }
+        .sla-banner { background: #000; border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border); padding: 1.5rem 0; text-align: center; font-family: monospace; font-size: 0.85rem; color: var(--text-muted); }
         .sla-items { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; align-items: center; }
-        .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--emerald); border: 1px solid var(--emerald); padding: 0.4rem 1rem; border-radius: 100px; background: rgba(16,185,129,0.05); }
-        .status-dot { width: 8px; height: 8px; background: var(--emerald); border-radius: 50%; box-shadow: 0 0 8px var(--emerald); animation: pulseDot 1.5s infinite; }
+        .status-badge { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--gold); border: 1px solid var(--gold); padding: 0.4rem 1rem; border-radius: 100px; background: rgba(196,159,59,0.05); }
+        .status-dot { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; box-shadow: 0 0 8px var(--gold); animation: pulseDot 1.5s infinite; }
         @keyframes pulseDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .cyber-matrix-container { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 0 40px rgba(196, 159, 59, 0.1); }
+        .hyper-image { width: 100%; height: auto; display: block; filter: contrast(1.1) brightness(0.9); transform: scale(1.05); }
+        .laser-scanner { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold); box-shadow: 0 0 20px var(--gold), 0 0 40px var(--gold); opacity: 0.8; animation: scan 3s ease-in-out infinite; z-index: 5; }
+        @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 98%; opacity: 0; } }
+        .data-stream-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(3,3,3,0.1) 0%, rgba(3,3,3,0.8) 100%); z-index: 2; pointer-events: none; }
+        .ticker-tape { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.9); border-top: 1px solid var(--gold); padding: 8px 0; overflow: hidden; z-index: 10; }
+        .ticker-content { display: inline-block; white-space: nowrap; color: var(--gold); font-family: monospace; font-size: 0.8rem; animation: ticker 20s linear infinite; text-shadow: 0 0 5px var(--gold); }
+        @keyframes ticker { 0% { transform: translateX(500px); } 100% { transform: translateX(-100%); } }
+        .floating-node { position: absolute; width: 8px; height: 8px; background: var(--text-white); border-radius: 50%; box-shadow: 0 0 15px var(--text-white); z-index: 6; animation: floatNode 3s ease-in-out infinite alternate; }
+        @keyframes floatNode { 0% { transform: translateY(0px) scale(1); opacity: 0.5; } 100% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
     </style>
 </head>
 <body>
-    <!-- UPGRADE 1: INTRO SEQUENCE -->
-    <div id="sys-intro">
-        <div style="font-size: 0.8rem; margin-bottom: 2rem;">[SYS.INIT] BOOT SEQUENCE START...</div>
-        <div class="glitch" style="font-size: 2rem; font-weight: bold; margin-bottom: 1rem;">AI NEXLIFY_AGENCIES v4.0</div>
-        <div id="boot-text" style="font-size: 0.9rem; max-width: 600px; line-height: 1.5; color: var(--text-muted);">
-            > Authenticating secure connection... <br>
-            > Establishing neural handshake with client... <br>
-            > WARNING: High-ticket infrastructure detected.
+    <!-- BRANDED HEADER -->
+    <header class="fixed top-0 left-0 w-full z-[100] bg-[#050505]/80 backdrop-blur-md border-b border-[rgba(255,255,255,0.05)] transition-all duration-300">
+        <div class="container mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded bg-gradient-to-br from-[#c49f3b] to-[#8a6d20] flex items-center justify-center shadow-[0_0_15px_rgba(196,159,59,0.4)]">
+                    <span class="text-[#050505] font-bold tracking-tighter" style="font-family: var(--font-heading);">AI</span>
+                </div>
+                <span class="text-xl font-bold tracking-widest text-[#c49f3b] uppercase" style="font-family: var(--font-heading);">Nexlify</span>
+            </div>
+            <div class="hidden md:block">
+                <button class="btn btn-primary open-modal-btn" style="padding: 0.5rem 1.5rem; font-size: 0.9rem;">Apply For Partnership</button>
+            </div>
         </div>
-        <div style="margin-top: 2rem; width: 200px; height: 2px; background: rgba(16,185,129,0.2); position: relative;">
-            <div id="boot-progress" style="width: 0%; height: 100%; background: var(--emerald); box-shadow: 0 0 10px var(--emerald);"></div>
-        </div>
-    </div>
+    </header>
+
+    <!-- BOOT SEQUENCE REMOVED -->
 
     <!-- UPGRADE 2: APPLICATION MODAL -->
     <div class="qual-modal" id="qual-modal">
@@ -713,43 +534,38 @@
     <!-- SECTION 1: THE HERO -->
     <section class="hero">
         <div class="container">
-            <h1>Stop Losing High-Ticket<br>Deals While You Sleep.</h1>
-            <p class="sub-headline">We build automated digital infrastructure for high-friction global businesses. We replace slow, human-led sales floors with custom AI Concierges that qualify leads and close deals 24/7.</p>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl leading-tight">Stop Losing High-Ticket Contracts<br>to Missed Calls & Slow Websites.</h1>
+            <p class="sub-headline">We build premium, lightning-fast digital architecture specifically for Custom Home Builders & Roofing Contractors. Every site is armed with Layla—an exclusive AI vetting process that pre-qualifies traffic, eliminates tire kickers, and books estimates directly to your calendar while you are on the job site.</p>
             <div class="btn-group">
-                <button class="btn btn-primary open-modal-btn">Get a Custom AI Blueprint</button>
-                <a href="#protocol" class="btn btn-secondary">See How It Works</a>
+                <button class="btn btn-primary open-modal-btn">Apply For Partnership</button>
+                <a href="#protocol" class="btn btn-secondary">Review The Protocol</a>
             </div>
         </div>
     </section>
 
     <!-- SECTION 2: THE INTERACTIVE ROI CALCULATOR -->
-    <section id="calculator">
+    <section id="calculator" class="py-24">
         <div class="container">
-            <div class="glass-card calculator-grid">
-                <div>
-                    <h2>Interactive ROI Calculator</h2>
+            <div class="bento-box calculator-grid">
+                <div class="calculator-inputs">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl leading-tight">Interactive ROI Calculator</h2>
                     <p class="sub-headline">Visualize the capital bleeding from your current human-led pipeline.</p>
                     
-                    <!-- UPGRADE 3: CURRENCY SELECTOR -->
-                    <div class="currency-toggles">
-                        <button class="curr-btn active" data-curr="INR" data-rate="1">INR (₹)</button>
-                        <button class="curr-btn" data-curr="AED" data-rate="0.044">AED (د.إ)</button>
-                        <button class="curr-btn" data-curr="USD" data-rate="0.012">USD ($)</button>
-                    </div>
+                    <!-- US ROI CALCULATOR -->
                     
                     <div class="input-group">
                         <label>Monthly Leads</label>
                         <div class="input-controls">
-                            <input type="range" id="leads-range" min="100" max="10000" step="100" value="1000">
-                            <input type="number" id="leads-number" min="100" max="10000" value="1000">
+                            <input type="range" id="leads-range" min="10" max="200" step="1" value="40">
+                            <input type="number" id="leads-number" min="10" max="200" value="40">
                         </div>
                     </div>
 
                     <div class="input-group">
-                        <label>Average Ticket Size (₹)</label>
+                        <label>Average Project Value</label>
                         <div class="input-controls">
-                            <input type="range" id="ticket-range" min="5000" max="500000" step="5000" value="50000">
-                            <input type="number" id="ticket-number" min="5000" max="500000" value="50000">
+                            <input type="range" id="ticket-range" min="5000" max="1000000" step="5000" value="20000">
+                            <input type="number" id="ticket-number" min="5000" max="1000000" value="20000">
                         </div>
                     </div>
                 </div>
@@ -757,11 +573,11 @@
                 <div class="calc-outputs">
                     <div class="output-box red-box">
                         <div class="output-label text-red">Estimated Revenue Lost to Human Delay:</div>
-                        <div class="output-value text-red" id="bleed-output">₹0</div>
+                        <div class="output-value text-red" id="bleed-output">$0</div>
                     </div>
-                    <div class="output-box green-box">
-                        <div class="output-label text-emerald">Revenue Recovered by AI Nexlify:</div>
-                        <div class="output-value text-emerald" id="recovered-output">₹0</div>
+                    <div class="output-box gold-box">
+                        <div class="output-label text-gold">Revenue Recovered by AI Nexlify:</div>
+                        <div class="output-value text-gold" id="recovered-output">$0</div>
                     </div>
                 </div>
             </div>
@@ -769,122 +585,104 @@
     </section>
 
     <!-- SECTION 3: THE UNIVERSAL CONCIERGE -->
-    <section>
+    <!-- THE BLEEDING CASH SECTION -->
+    <section id="bleeding-cash">
         <div class="container">
-            <div class="concierge-grid">
-                <div>
-                    <h2>Speaks Your Customer's Exact Language.</h2>
-                    <p class="sub-headline">Whether your buyers speak corporate English or street-smart Hinglish, we train the neural network to match their exact bargaining style.</p>
-                    
-                    <div class="language-toggle">
-                        <button class="toggle-btn active" data-lang="en">Global English</button>
-                        <button class="toggle-btn" data-lang="hi">Native Hinglish</button>
-                    </div>
+            <h2 class="reveal text-3xl md:text-4xl lg:text-5xl leading-tight" style="text-align: center; margin-bottom: 3rem;">Why Your Current Digital Infrastructure is Bleeding Leads.</h2>
+            <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 md:grid md:grid-cols-3 md:gap-8">
+                <div class="glass-card reveal snap-center min-w-[85%] md:min-w-0">
+                    <h3 style="color: var(--gold); margin-bottom: 1rem; font-size: 1.5rem;">01. Speed Kills</h3>
+                    <p>If your site takes longer than 3 seconds to load on mobile, 53% of users bounce. We build monolithic architectures that load instantly, keeping wealthy clients on your page.</p>
                 </div>
+                <div class="glass-card reveal snap-center min-w-[85%] md:min-w-0">
+                    <h3 style="color: var(--gold); margin-bottom: 1rem; font-size: 1.5rem;">02. Missed Calls</h3>
+                    <p>When you are on a roof or managing a build, you miss calls. Every missed call is a competitor's gain. Our architecture ensures zero dropped leads.</p>
+                </div>
+                <div class="glass-card reveal snap-center min-w-[85%] md:min-w-0">
+                    <h3 style="color: var(--gold); margin-bottom: 1rem; font-size: 1.5rem;">03. Cheap Templates</h3>
+                    <p>Wealthy homeowners buying custom builds do not trust businesses with cheap, template-based websites. We inject a multi-million dollar 'Aura' into your brand identity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="phone-container">
-                    <div class="phone-header">
-                        <!-- UPGRADE 4: NEUROLOGICAL AVATAR -->
-                        <div class="phone-avatar" style="background: transparent;">
-                            <div class="avatar-icon" id="ai-avatar"></div>
-                        </div>
-                        <div>
-                            <div style="font-weight: 600; font-size: 1.1rem; color: #fff;">Enterprise Concierge</div>
-                            <div style="color: rgba(255,255,255,0.7); font-size: 0.85rem;">typing...</div>
-                        </div>
-                    </div>
-                    <div class="phone-chat">
-                        <div class="chat-bubble-container">
-                            <div class="chat-bubble bubble-customer" id="chat-customer">
-                                Looking for a 4BHK investment.
-                            </div>
-                            <div class="chat-bubble bubble-ai" id="chat-ai">
-                                The 4BHKs project a 6.5% yield. Shall I schedule a broker call to view the property?
-                            </div>
-                        </div>
-                    </div>
+    <!-- THE SOLUTIONS GRID -->
+    <section id="solutions" class="py-32">
+        <div class="container">
+            <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 md:grid md:grid-cols-3 md:gap-8">
+                <div class="bento-box reveal snap-center min-w-[85%] md:min-w-0">
+                    <img src="/assets/phase1_asset.png" style="width: 100%; height: 200px; object-fit: cover; border-radius: 16px; margin-bottom: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" alt="Foundation Wireframe">
+                    <h3 style="color: var(--text-white); margin-bottom: 1rem; font-size: 1.5rem;">Phase 1: Foundation</h3>
+                    <div style="color: var(--gold); font-weight: bold; margin-bottom: 1rem;">High-Converting Assets</div>
+                    <p>We hand-code high-fidelity web assets featuring cinematic video headers, parallax grids, and custom conversion funnels designed exclusively to signal high status to affluent clientele.</p>
+                </div>
+                <div class="bento-box reveal snap-center min-w-[85%] md:min-w-0">
+                    <img src="/assets/phase2_asset.png" style="width: 100%; height: 200px; object-fit: cover; border-radius: 16px; margin-bottom: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" alt="Neural Network Vetting">
+                    <h3 style="color: var(--text-white); margin-bottom: 1rem; font-size: 1.5rem;">Phase 2: Autonomous</h3>
+                    <div style="color: var(--gold); font-weight: bold; margin-bottom: 1rem;">Exclusive Vetting Process</div>
+                    <p>Deploy Layla, our exclusive AI agent. She actively pre-qualifies incoming traffic, completely eliminating "tire kickers" and exclusively booking serious buyers who respect your premium budget.</p>
+                </div>
+                <div class="bento-box reveal snap-center min-w-[85%] md:min-w-0">
+                    <img src="/assets/phase3_asset.png" style="width: 100%; height: 200px; object-fit: cover; border-radius: 16px; margin-bottom: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5);" alt="SEO Heatmap">
+                    <h3 style="color: var(--text-white); margin-bottom: 1rem; font-size: 1.5rem;">Phase 3: Domination</h3>
+                    <div style="color: var(--gold); font-weight: bold; margin-bottom: 1rem;">Full Market Capture</div>
+                    <p>Combine ultra-fast web architecture and AI vetting with our Autonomous SEO engine. Command absolute authority in your local market and eradicate the feast-or-famine cycle for good.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- SECTION 4: THE DEPLOYMENT PROTOCOL -->
-    <section id="protocol">
+    <section id="protocol" class="py-8">
         <div class="container">
-            <h2 style="text-align: center;">The Deployment Protocol</h2>
-            <p class="sub-headline" style="text-align: center; margin: 0 auto 4rem;">A surgical implementation framework designed for zero operational downtime.</p>
+            <h2 class="reveal text-3xl md:text-4xl lg:text-5xl leading-tight" style="text-align: center;">The Deployment Protocol</h2>
+            <p class="sub-headline reveal" style="text-align: center; margin: 0 auto 4rem;">A surgical implementation framework designed for zero operational downtime.</p>
 
             <div class="timeline">
-                <div class="timeline-step glass-card">
+                <div class="timeline-step glass-card reveal">
                     <div class="step-indicator"></div>
-                    <div class="step-title">Phase 1 (Days 1-30)</div>
-                    <h3>The Foundation</h3>
-                    <p>Custom LoRA Training, Conversational LLM setup, Technical SEO structure.</p>
+                    <div class="step-title">Step 1</div>
+                    <h3>The Deep Audit</h3>
+                    <p>Analyze speed & missed leads.</p>
                 </div>
 
-                <div class="timeline-step glass-card">
+                <div class="timeline-step glass-card reveal">
                     <div class="step-indicator"></div>
-                    <div class="step-title">Phase 2 (Month 2 Onward)</div>
-                    <h3>Autonomous Operations</h3>
-                    <p>24/7 WhatsApp AI Hosting, Daily Visual Asset Generation, Automated Content Publishing.</p>
+                    <div class="step-title">Step 2</div>
+                    <h3>The Architecture Build</h3>
+                    <p>Construct the ghost asset.</p>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- SECTION 5: THE VISUAL PIPELINE -->
-    <section>
-        <div class="container">
-            <h2 style="text-align: center;">The Visual Pipeline</h2>
-            <p class="sub-headline" style="text-align: center; margin: 0 auto;">Stop paying for studios. Send a raw smartphone photo, get hyper-realistic composites overnight.</p>
-
-            <div class="slider-wrapper" id="slider">
-                <!-- Optimized CSS gradient placeholders for immediate load & high performance -->
-                <!-- UPGRADE 5: SVG WIREFRAME REVEAL -->
-                <div class="slider-img img-before img-before-svg">
-                    <svg class="wireframe-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <path d="M0 50 Q 25 25, 50 50 T 100 50 M25 0 L25 100 M75 0 L75 100" />
-                        <circle cx="50" cy="50" r="10" />
-                        <rect x="10" y="10" width="80" height="80" />
-                    </svg>
-                    <div class="laser-line"></div>
-                    <div style="position: absolute; color: var(--emerald); font-family: monospace; font-size: 1rem; background: rgba(0,0,0,0.8); padding: 0.5rem; border: 1px solid var(--emerald);">RAW_WIRE_MESH</div>
+                <div class="timeline-step glass-card reveal">
+                    <div class="step-indicator"></div>
+                    <div class="step-title">Step 3</div>
+                    <h3>The Layla Deployment</h3>
+                    <p>Train your bespoke AI agent.</p>
                 </div>
-                <div class="slider-img img-after" id="slider-after">Hyper-Realistic</div>
-                
-                <div class="slider-divider" id="slider-divider"></div>
 
-                <div class="slider-overlay overlay-left"><span class="text-red">Cost: High. Wait: 3 Weeks.</span></div>
-                <div class="slider-overlay overlay-right"><span class="text-emerald">Cost: Included. Wait: 45 Seconds.</span></div>
+                <div class="timeline-step glass-card reveal">
+                    <div class="step-indicator"></div>
+                    <div class="step-title">Step 4</div>
+                    <h3>The Launch</h3>
+                    <p>Transition domain and turn on the lead-capture engine.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- 5.5. AUTONOMOUS SEO ENGINE -->
     <section class="section">
-        <style>
-            .cyber-matrix-container { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 0 40px rgba(16, 185, 129, 0.1); }
-            .hyper-image { width: 100%; height: auto; display: block; filter: contrast(1.1) brightness(0.9); transform: scale(1.05); }
-            .laser-scanner { position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--emerald); box-shadow: 0 0 20px var(--emerald), 0 0 40px var(--emerald); opacity: 0.8; animation: scan 3s ease-in-out infinite; z-index: 5; }
-            @keyframes scan { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 98%; opacity: 0; } }
-            .data-stream-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(3,3,3,0.1) 0%, rgba(3,3,3,0.8) 100%); z-index: 2; pointer-events: none; }
-            .ticker-tape { position: absolute; bottom: 0; left: 0; width: 100%; background: rgba(0, 0, 0, 0.9); border-top: 1px solid var(--emerald); padding: 8px 0; overflow: hidden; z-index: 10; }
-            .ticker-content { display: inline-block; white-space: nowrap; color: var(--emerald); font-family: monospace; font-size: 0.8rem; animation: ticker 20s linear infinite; text-shadow: 0 0 5px var(--emerald); }
-            @keyframes ticker { 0% { transform: translateX(500px); } 100% { transform: translateX(-100%); } }
-            .floating-node { position: absolute; width: 8px; height: 8px; background: var(--text-main); border-radius: 50%; box-shadow: 0 0 15px var(--text-main); z-index: 6; animation: floatNode 3s ease-in-out infinite alternate; }
-            @keyframes floatNode { 0% { transform: translateY(0px) scale(1); opacity: 0.5; } 100% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
-        </style>
         <div class="container">
             <div class="concierge-grid">
                 <div class="scroll-reveal" style="order: 1;">
                     <div class="glass-panel" style="padding: 1rem; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(255,255,255,0.05);">
                         <div class="cyber-matrix-container">
-                            <img src="hyper_seo_matrix.png" alt="8k Hyperrealistic SEO Agent" class="hyper-image">
+                            <img src="/assets/phase3_asset.png" alt="Local SEO Authority Dashboard" class="hyper-image">
                             <div class="data-stream-overlay"></div>
                             <div class="laser-scanner"></div>
                             <div class="floating-node" style="top: 30%; left: 40%; animation-delay: 0s;"></div>
                             <div class="floating-node" style="top: 60%; left: 70%; animation-delay: 1s;"></div>
-                            <div class="floating-node" style="top: 45%; left: 20%; animation-delay: 2s; background: var(--emerald); box-shadow: 0 0 15px var(--emerald);"></div>
+                            <div class="floating-node" style="top: 45%; left: 20%; animation-delay: 2s; background: var(--gold); box-shadow: 0 0 15px var(--gold);"></div>
                             <div class="ticker-tape">
                                 <div class="ticker-content">
                                     [SYS.LOG] INITIATING DEEP CRAWL... [NODE 04] COMPETITOR KEYWORDS EXTRACTED... [LLM] GENERATING 2,500 WORD ASSET... [CMS] PUSHING TO PRODUCTION... [INDEX] RANKING POSITION #1 SECURED.
@@ -894,13 +692,13 @@
                     </div>
                 </div>
 
-                <div class="scroll-reveal" style="order: 2;">
-                    <h2>The Autonomous SEO Engine</h2>
-                    <p style="margin-top: 1.5rem; margin-bottom: 2rem;">Our proprietary SEO nodes don't just write blogs; they analyze search volume, generate high-intent articles, deploy them directly to your CMS, and index them—while you sleep.</p>
+                <div class="scroll-reveal bento-box" style="order: 2;">
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl leading-tight">The Autonomous SEO Engine</h2>
+                    <p style="margin-top: 1.5rem; margin-bottom: 2rem;">Our proprietary SEO nodes don't just write blogs; they analyze search volume, generate high-intent articles, and deploy them directly to your CMS—commanding local authority and driving security-focused roofing clients and status-driven custom home buyers directly to your digital doorstep.</p>
                     <ul style="list-style: none; display: flex; flex-direction: column; gap: 1rem;">
-                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> 2x Weekly Automated Publications</li>
-                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> Real-time SERP Data Processing</li>
-                        <li style="display: flex; gap: 10px; color: var(--text-silver);"><span style="color: var(--emerald); font-weight: bold;">></span> Semantic Keyword Matrix Injection</li>
+                        <li style="display: flex; gap: 10px; color: var(--text-muted);"><span style="color: var(--gold); font-weight: bold;">></span> 2x Weekly Automated Publications</li>
+                        <li style="display: flex; gap: 10px; color: var(--text-muted);"><span style="color: var(--gold); font-weight: bold;">></span> Real-time SERP Data Processing</li>
+                        <li style="display: flex; gap: 10px; color: var(--text-muted);"><span style="color: var(--gold); font-weight: bold;">></span> Semantic Keyword Matrix Injection</li>
                     </ul>
                 </div>
             </div>
@@ -911,14 +709,14 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-cta">
-                <h3>Engineered for High-Friction Industries Globally: Real Estate, Fine Jewelry, Luxury Fashion, Premium B2B.</h3>
+                <h3>Engineered for High-Friction Industries: Custom Home Builders, Roofing Contractors, and Premium Trades.</h3>
                 <button class="btn btn-primary open-modal-btn" style="margin-top: 1rem;">Start Your Custom Build</button>
             </div>
             
             <div style="margin-top: 2rem; margin-bottom: 2rem; display: flex; justify-content: center; gap: 2rem;">
-                <a href="/terms/" style="color: var(--emerald); text-decoration: none;">Terms of Service</a>
-                <a href="/terms/#sec-8" style="color: var(--emerald); text-decoration: none;">Privacy Policy</a>
-                <a href="/terms/#sec-8" style="color: var(--emerald); text-decoration: none;">Data Processing Agreement (DPA)</a>
+                <a href="/terms/" style="color: var(--gold); text-decoration: none;">Terms of Service</a>
+                <a href="/terms/#sec-8" style="color: var(--gold); text-decoration: none;">Privacy Policy</a>
+                <a href="/terms/#sec-8" style="color: var(--gold); text-decoration: none;">Data Processing Agreement (DPA)</a>
             </div>
 
             <div class="footer-ip">
@@ -928,19 +726,15 @@
     </footer>
 
     <!-- PERSISTENT MOBILE CTA -->
-    <div class="mobile-sticky-cta">
-        <button class="btn btn-primary open-modal-btn">Initiate Neural Link</button>
+    <div class="block md:hidden fixed bottom-0 left-0 w-full z-50 p-4 bg-[#050505]/90 backdrop-blur-md border-t border-white/10">
+        <button class="w-full btn btn-primary open-modal-btn">Apply For Partnership</button>
     </div>
 
     <!-- JavaScript Interactions -->
     <script>
         // 1. Calculator Logic with Syncing Inputs
-        const formatINR = (num) => {
-            return new Intl.NumberFormat('en-IN', {
-                style: 'currency',
-                currency: 'INR',
-                maximumFractionDigits: 0
-            }).format(num);
+        const formatUSD = (num) => {
+            return '$' + new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(num);
         };
 
         const leadsRange = document.getElementById('leads-range');
@@ -952,11 +746,14 @@
         const recoveredOutput = document.getElementById('recovered-output');
 
         const calculateROI = (leads, ticket) => {
-            const potentialRevenue = leads * ticket;
-            const bleed = potentialRevenue * 0.30; // 30% drop off
+            const missedCallRate = 0.25;
+            const closeRate = 0.10;
+            const missedLeads = leads * missedCallRate;
+            const lostRevenue = missedLeads * closeRate * ticket;
+            const recoveredRevenue = lostRevenue * 0.85;
 
-            bleedOutput.textContent = formatINR(bleed);
-            recoveredOutput.textContent = formatINR(bleed);
+            bleedOutput.textContent = formatUSD(lostRevenue);
+            recoveredOutput.textContent = formatUSD(recoveredRevenue);
         };
 
         const syncInputs = (source, target, isLeads) => {
@@ -987,103 +784,8 @@
         // Initial Calculation
         calculateROI(parseInt(leadsRange.value, 10), parseInt(ticketRange.value, 10));
 
-        // 2. Multi-lingual Toggle
-        const chats = {
-            en: {
-                customer: "Looking for a 4BHK investment.",
-                ai: "The 4BHKs project a 6.5% yield. Shall I schedule a broker call to view the property?"
-            },
-            hi: {
-                customer: "Bhaiya, yeh premium bridal lehenga available hai?",
-                ai: "Haan ji, bilkul in-stock hai! Agar budget tight hai, toh ek similar semi-silk variant dikha doon jo ₹5,000 sasta padega?"
-            }
-        };
 
-        const chatCustomer = document.getElementById('chat-customer');
-        const chatAi = document.getElementById('chat-ai');
-        const langBtns = document.querySelectorAll('.toggle-btn');
 
-        langBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                langBtns.forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-
-                const lang = e.target.getAttribute('data-lang');
-                
-                // Fade out
-                chatCustomer.style.opacity = 0;
-                chatAi.style.opacity = 0;
-
-                setTimeout(() => {
-                    chatCustomer.textContent = chats[lang].customer;
-                    chatAi.textContent = chats[lang].ai;
-                    
-                    // Fade in
-                    chatCustomer.style.opacity = 1;
-                    chatAi.style.opacity = 1;
-                }, 200);
-            });
-        });
-
-        // 3. Optimized Image Slider
-        const slider = document.getElementById('slider');
-        const divider = document.getElementById('slider-divider');
-        const imgAfter = document.getElementById('slider-after');
-
-        const doSlide = (e) => {
-            // Support both mouse and touch events
-            let clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-            const rect = slider.getBoundingClientRect();
-            let x = clientX - rect.left;
-            
-            // Constrain
-            if (x < 0) x = 0;
-            if (x > rect.width) x = rect.width;
-            
-            const percent = (x / rect.width) * 100;
-            
-            // Request animation frame for smooth performance
-            requestAnimationFrame(() => {
-                divider.style.left = `${percent}%`;
-                imgAfter.style.clipPath = `inset(0 0 0 ${percent}%)`;
-            });
-        };
-
-        const stopSlide = () => {
-            window.removeEventListener('mousemove', doSlide);
-            window.removeEventListener('touchmove', doSlide);
-            window.removeEventListener('mouseup', stopSlide);
-            window.removeEventListener('touchend', stopSlide);
-        };
-
-        const startSlide = (e) => {
-            window.addEventListener('mousemove', doSlide);
-            window.addEventListener('touchmove', doSlide, { passive: false });
-            window.addEventListener('mouseup', stopSlide);
-            window.addEventListener('touchend', stopSlide);
-            // Fire once initially to snap to exact click location
-            doSlide(e); 
-        };
-
-        slider.addEventListener('mousedown', startSlide);
-        slider.addEventListener('touchstart', startSlide, { passive: true });
-
-        // --- UPGRADE INJECTIONS JS ---
-        // 1. Intro Sequence
-        window.addEventListener('load', () => {
-            const progress = document.getElementById('boot-progress');
-            const intro = document.getElementById('sys-intro');
-            let w = 0;
-            const int = setInterval(() => {
-                w += Math.random() * 15;
-                if(w >= 100) {
-                    w = 100;
-                    clearInterval(int);
-                    setTimeout(() => { intro.classList.add('hidden-intro'); }, 400);
-                }
-                progress.style.width = w + '%';
-            }, 100);
-        });
 
         // 2. Qual Modal Logic
         const qBtn = document.getElementById('btn-qualify');
@@ -1096,8 +798,8 @@
 
         if(qBtn) {
             qBtn.addEventListener('click', async () => {
-                if(!appName.value || !appPhone.value) { 
-                    qStat.textContent = "> ERROR: NAME & PHONE REQUIRED"; 
+                if(!appName.value || !appPhone.value || !appUrl.value) { 
+                    qStat.textContent = "> ERROR: NAME, PHONE & URL REQUIRED"; 
                     qStat.style.color = '#ef4444';
                     qStat.classList.add('shake-red'); 
                     setTimeout(() => qStat.classList.remove('shake-red'), 400); 
@@ -1118,7 +820,7 @@
                         qStat.textContent = "> APPLICATION SECURED. AWAITING NEURAL HANDSHAKE.";
                         setTimeout(() => { 
                             qModal.classList.remove('active'); 
-                            window.location.href = `https://wa.me/+971501234567?text=Hi,%20I%20just%20submitted%20an%20application%20for%20Nexlify%20Agency.%20Name:%20${appName.value}`;
+                            window.location.href = `https://wa.me/+10000000000?text=Hi,%20I%20just%20submitted%20an%20application%20for%20Nexlify%20Agency.%20Name:%20${encodeURIComponent(appName.value)}`;
                         }, 1500);
                     } else {
                         throw new Error('Failed');
@@ -1127,7 +829,7 @@
                     qStat.style.color = '#ef4444';
                     qStat.textContent = "> API ERROR. ROUTING DIRECTLY TO WHATSAPP...";
                     setTimeout(() => { 
-                        window.location.href = `https://wa.me/+971501234567?text=Hi,%20I%20want%20to%20apply.%20Name:%20${appName.value}`;
+                        window.location.href = `https://wa.me/+10000000000?text=Hi,%20I%20want%20to%20apply.%20Name:%20${encodeURIComponent(appName.value)}`;
                     }, 1000);
                 }
             });
@@ -1147,44 +849,23 @@
             });
         }
 
-        // 3. Currency Toggle Logic
-        const currBtns = document.querySelectorAll('.curr-btn');
-        let currentRate = 1;
-        let currentSym = '₹';
-        const rawFormatINR = (num, sym) => {
-            return sym + new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(num);
-        };
-        currBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                currBtns.forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                currentRate = parseFloat(e.target.getAttribute('data-rate'));
-                const curr = e.target.getAttribute('data-curr');
-                currentSym = curr === 'INR' ? '₹' : (curr === 'AED' ? 'د.إ ' : '$');
-                // Re-calculate
-                calculateROI(parseInt(leadsNumber.value, 10), parseInt(ticketNumber.value, 10));
-            });
-        });
-        
-        // Override CalculateROI for Currency
-        window.calculateROI = (leads, ticket) => {
-            const potentialRevenue = leads * ticket;
-            const bleed = potentialRevenue * 0.30;
-            const convertedBleed = bleed * currentRate;
-            bleedOutput.textContent = rawFormatINR(convertedBleed, currentSym);
-            recoveredOutput.textContent = rawFormatINR(convertedBleed, currentSym);
-        };
-        // Initial call after override
-        calculateROI(parseInt(leadsRange.value, 10), parseInt(ticketRange.value, 10));
 
-        // 4. Neurological Avatar Animation
-        const avatar = document.getElementById('ai-avatar');
-        if(avatar) {
-            setInterval(() => {
-                avatar.classList.add('computing');
-                setTimeout(() => avatar.classList.remove('computing'), 800 + Math.random() * 1000);
-            }, 3000);
-        }
+
+        // 5. Scroll Reveal Micro-Animations
+        document.querySelectorAll('h1, h2, .sub-headline, .glass-card, .timeline-step').forEach((el) => {
+            el.classList.add('reveal');
+        });
+
+        const revealOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const revealObserver = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            });
+        }, revealOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     </script>
 </body>

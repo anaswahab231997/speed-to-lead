@@ -1,0 +1,22 @@
+{
+  "system_status": "Target Acquisition & Viability Audit",
+  "director": "Anas",
+  "active_context": {
+    "projects": [
+      "Gosur Development, Calgary",
+      "vintage-vaults-suspended"
+    ],
+    "burned_targets": [
+      "hillcrest-construction"
+    ],
+    "current_focus": "Deep Intelligence Profile: KingsGate Luxury Homes Inc.",
+    "last_learning_cycle": "N/A"
+  },
+  "learnings": [
+    "Hillcrest Construction structural degradation confirmed severe. Target designated BURNED.",
+    "Vintage Vaults ghost build suspended due to lack of localized site data.",
+    "Tactical pivot executed: Utilizing B2B_Lead_Database_Scrape to hunt for a high-value Custom Home Builder. KingsGate Luxury Homes Inc. selected."
+  ],
+  "swarms_active": 0,
+  "last_updated": "2026-06-08T14:26:35+05:30"
+}

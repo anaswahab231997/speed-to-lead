@@ -1,0 +1,19 @@
+Subject: Quick question about patient routing at [Clinic Name]
+
+Hi [First Name or Clinic Director],
+
+[Insert the custom LLaMA3 opening line here].
+
+I build intelligent patient routing systems for high-end healthcare practices. While digital marketing agencies charge $2,000/month just to drive traffic to a standard contact form, I deploy autonomous patient coordinators that convert that traffic—triaging symptoms, answering pricing questions, and booking appointments directly into your calendar 24/7.
+
+I already built a live prototype specifically for premium clinics. You can chat with her right here:
+https://layla-agent.vercel.app/
+
+I can integrate this exact system into your existing website within 48 hours. The setup is a flat $1,497, and her ongoing "salary" is just $497/month (roughly $16/day for a 24/7 employee). 
+
+Because I know this works instantly, I offer a 7-day, no-questions-asked money-back guarantee on the setup. If she isn't performing flawlessly in the first week, you don't pay.
+
+Let me know what you think of the demo.
+
+Best,
+Anas
