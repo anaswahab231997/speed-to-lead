@@ -4,6 +4,7 @@ const { createClient } = require('@supabase/supabase-js')
 // Supabase client initialization
 const supabaseUrl = process.env.SUPABASE_URL || 'https://placeholder.supabase.co'
 const supabaseKey = process.env.SUPABASE_KEY || 'placeholder_key'
+console.log("SUPABASE URL VALID:", !!process.env.SUPABASE_URL && process.env.SUPABASE_URL.startsWith('https://'));
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 // In-memory caches to maintain zero-latency
