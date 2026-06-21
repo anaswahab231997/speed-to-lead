@@ -1,0 +1,13 @@
+name: Layla Keep-Alive Bot
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render Backend
+        run: curl -s -o /dev/null -w "%{http_code}" https://dashboard.render.com/web/srv-d8rv057avr4c73f3kmp0
