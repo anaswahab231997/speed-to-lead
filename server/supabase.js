@@ -26,7 +26,7 @@ async function getAvailableInventory(dealerId = null) {
     data.forEach(item => inventoryCache.push(item))
     return inventoryCache
   } catch (err) {
-    console.error('[SUPABASE] Failed to fetch inventory:', err.message)
+    console.error('[SUPABASE] Failsafe activated: bypassing inventory', err.message)
     return []
   }
 }
