@@ -1,50 +1,65 @@
-# 🚀 AI Nexlify Agencies — Speed To Lead™ Platform
+# ⚡ Speed To Lead™ — Autonomous Inbound Revenue Engine
 
-Speed To Lead™ is an enterprise-grade autonomous customer acquisition and closing engine built for high-ticket automotive dealerships. The engine engages web leads within 4 seconds flat, qualifications through conversational intelligence, inventory matching, and reserves showroom appointments cleanly.
-
----
-
-## 🛰️ System & Product Hierarchy
-*   **The Company:** **AI Nexlify Agencies** (Your B2B AI consultancy).
-*   **The Product:** **Speed To Lead™** (The live autonomous pipeline and Layla's conversational closer brain).
-*   **The App:** **Nexlify OS** (The premium dealer-facing management and analytics dashboard).
+Production inbound qualification pipeline and conversational closing engine powering [ainexlifyagencies.com](https://www.ainexlifyagencies.com). Compresses lead response times from 45+ minutes to <25 seconds with real-time multi-channel engagement.
 
 ---
 
-## ⚙️ Required Production Environment Variables
-To transition this platform onto any live cloud server hosting provider (Render, Railway, Heroku, AWS, etc.), you must copy and configure the following credentials into your host’s **Environment Variable Dashboard**:
+## 🏛️ Architecture Overview
 
-### 🧠 1. Anthropic AI Brain Core
-*   `CLAUDE_API_KEY`: The production API key for your Claude intelligence models. Must support `'claude-sonnet-4-6'`.
-
-### 📞 2. Twilio Communications Gateway
-*   `TWILIO_ACCOUNT_SID`: Your main Twilio Account SID.
-*   `TWILIO_AUTH_TOKEN`: Your private Twilio Auth Token.
-
-### 📊 3. Airtable CRM Persistence
-*   `AIRTABLE_API_KEY`: The personal access token (PAT) representing your Airtable integration.
-*   `AIRTABLE_BASE_ID`: The unique ID of the Airtable workspace base.
-*   `AIRTABLE_TABLE_NAME`: Name of the tables (e.g. `Leads`, `Inventory`).
-
-### 🌐 4. Host Configurations
-*   `PORT`: Bind dynamically. Leaving this undefined defaults local test server to `3001` or lets the host inject its dynamic server port automatically.
-
----
-
-## 📦 Cloud Bootstrap & Launch Trigger
-The root `package.json` contains a clean script framework that routes boot configurations into the server directory automatically:
-
-```bash
-# 1. Install all dependencies inside the server container
-npm run install-all
-
-# 2. Boot the live production server
-npm start
+```mermaid
+flowchart LR
+    A["Inbound Webhook / Web Form"] --> B["Express 5.x Router"]
+    B --> C["Layla Neural Engine"]
+    C --> D{"Gemini AI Gateway"}
+    D -->|"Primary Tier"| E["Gemini 2.5 Flash"]
+    D -->|"Rate-Limit Failover"| F["Gemini 1.5 Flash"]
+    C --> G["Supabase / PostgreSQL"]
+    C --> H["Twilio / WhatsApp Dispatch"]
+    B --> I["SSE Streaming Client (/api/chat/web)"]
 ```
 
+## 🛠️ Tech Stack & Production Components
+* **Runtime & Routing:** Node.js / Express 5.x with catch-all edge serverless rewriting.
+* **AI Orchestration:** Google Gemini 2.5 Flash with automated failover to Gemini 1.5 Flash on 429/503 rate limits.
+* **Real-Time Streaming:** Server-Sent Events (SSE) via `/api/chat/web` delivering sub-1.5s initial token latency.
+* **Data & Persistence:** Supabase PostgreSQL with Row-Level Security (RLS) for lead records, audit telemetry, and inventory caching.
+* **Edge Hosting:** Vercel Production deployment aliased to `ainexlifyagencies.com`.
+
+## 📡 Live Production Endpoints
+* **Web Chat SSE Stream:** `POST https://www.ainexlifyagencies.com/api/chat/web`
+* **Lead Qualification Webhook:** `POST https://www.ainexlifyagencies.com/api/contact`
+* **Health & Latency Telemetry:** `GET https://www.ainexlifyagencies.com/health`
+
+## 🔒 Security & Reliability Guards
+* **Rate Limiting:** IP-based sliding window limiter via `express-rate-limit`.
+* **Model Failover:** Graceful error handling and retry backoff preventing user drop-off during peak traffic.
+* **Credential Isolation:** Strict `.gitignore` preventing all `.env.vercel*` secrets from git history.
+
 ---
 
-## 🔒 Security Guarantee
-All confidential system variables are strictly ignored and prevented from entering public Git streams via active `.gitignore` guards. 
+## 🚀 Local Development
 
-***Created by Chief Systems Architect at AI Nexlify Agencies. All Rights Secured.***
+1. **Install Dependencies:**
+   ```bash
+   cd server
+   npm install
+   ```
+
+2. **Configure Environment:**
+   Create `server/.env` based on required production credentials:
+   ```env
+   GEMINI_API_KEY=your_gemini_api_key
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+   TWILIO_ACCOUNT_SID=your_twilio_sid
+   TWILIO_AUTH_TOKEN=your_twilio_token
+   PORT=3001
+   ```
+
+3. **Run Server:**
+   ```bash
+   node index.js
+   ```
+
+---
+*Engineered by Anas Wahab • [AI Nexlify Agencies](https://www.ainexlifyagencies.com)*
