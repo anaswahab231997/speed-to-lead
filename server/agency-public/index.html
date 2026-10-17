@@ -692,29 +692,29 @@
                 <div class="proof-item">
                     <i data-lucide="cpu" class="proof-icon"></i>
                     <div class="proof-text">
-                        <h4>Zero Developer Tax</h4>
-                        <p>Builds internal tooling in Python, Node, SQL, and webhooks without pulling devs off sprints</p>
+                        <h4>Zero Core Sprint Dependency</h4>
+                        <p>Independently builds internal tooling in Python, Node, and webhooks without pulling core devs off roadmaps</p>
                     </div>
                 </div>
                 <div class="proof-item">
                     <i data-lucide="shield-check" class="proof-icon"></i>
                     <div class="proof-text">
-                        <h4>Upstream Contributor</h4>
-                        <p>PR #42490 in BerriAI/litellm: Scoped Anthropic OAuth tokens strictly to api.anthropic.com</p>
+                        <h4>Upstream Security Contributor</h4>
+                        <p>Author of PR #42490 in BerriAI/litellm (In-Review: Scoped Anthropic OAuth tokens strictly to api.anthropic.com)</p>
                     </div>
                 </div>
                 <div class="proof-item">
                     <i data-lucide="check-circle-2" class="proof-icon"></i>
                     <div class="proof-text">
-                        <h4>Deterministic Extraction</h4>
-                        <p>Dynamic Pydantic AST schemas strictly locked to verified Chart of Accounts</p>
+                        <h4>Token-Constrained Extraction</h4>
+                        <p>Dynamic Pydantic Enum schemas locked at runtime to verified client Chart of Accounts</p>
                     </div>
                 </div>
                 <div class="proof-item">
                     <i data-lucide="zap" class="proof-icon"></i>
                     <div class="proof-text">
-                        <h4>Sub-25s Inbound Engine</h4>
-                        <p>Event-driven microservice with SSE streaming &amp; Gemini 2.5 &rarr; 1.5 automated failover</p>
+                        <h4>Sub-25s Qualification Pipeline</h4>
+                        <p>Event-driven Express 5 microservice with SSE streaming &amp; multi-model automated failover</p>
                     </div>
                 </div>
             </div>
@@ -737,7 +737,7 @@
                 <div class="system-card-header">
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <span class="system-tag">System 01</span>
-                        <span style="color: #ffffff; font-weight: 600; font-size: 0.95rem;">Deterministic Financial Invariant Engine</span>
+                        <span style="color: #ffffff; font-weight: 600; font-size: 0.95rem;">Token-Constrained Fiscal Extraction Engine</span>
                     </div>
                     <div class="system-links">
                         <a href="https://github.com/anaswahab231997/invisible-accountant" target="_blank" rel="noopener noreferrer">
@@ -748,22 +748,22 @@
                 <div class="system-body">
                     <div>
                         <h3 class="system-title">The Invisible Accountant</h3>
-                        <div class="system-subtitle">Autonomous UK Financial Document Extraction Prototype</div>
+                        <div class="system-subtitle">Autonomous UK Fiscal Document Extraction &amp; HMRC Compliance Prototype</div>
                         <p class="system-desc">
-                            Engineered to eliminate the core flaw in commercial AI bookkeeping: LLM category hallucinations. Instead of allowing models to guess account codes, this engine dynamically constructs Pydantic AST enum schemas at runtime strictly constrained to the verified client Chart of Accounts.
+                            Engineered to eliminate LLM category hallucinations in automated bookkeeping. Rather than permitting models to guess account codes, this engine queries the client's live accounting Chart of Accounts and dynamically metaprograms Pydantic Enum schemas at runtime, physically restricting model output tokens to valid ledger entries.
                         </p>
                         <div class="pill-group">
                             <span class="tech-pill">Python 3.12</span>
                             <span class="tech-pill">FastAPI</span>
                             <span class="tech-pill">Pydantic v2 (Dynamic Enums)</span>
                             <span class="tech-pill">PostgreSQL / asyncpg</span>
-                            <span class="tech-pill">AES-GCM Encryption</span>
+                            <span class="tech-pill">AES-256-GCM Encryption</span>
                             <span class="tech-pill">asyncio.Semaphore</span>
                         </div>
                         <ul class="spec-list">
-                            <li><strong>Dynamic Enum AST Enforcement:</strong> Constrains generation at the token level, guaranteeing the model cannot invent expense accounts or tax rates not present in the ledger.</li>
-                            <li><strong>Two-Phase Idempotency Locks:</strong> Implements atomic check-and-claim database transactions, preventing duplicate ledger entries from retrying webhooks.</li>
-                            <li><strong>Burst Rate-Limiting:</strong> Uses an <code>asyncio.Semaphore</code> concurrency gate to handle WhatsApp transaction bursts without triggering 429 API rate limits.</li>
+                            <li><strong>Runtime Enum Token Constraints:</strong> Uses <code>pydantic.create_model</code> to dynamically synthesize enum types from live Chart of Accounts, eliminating out-of-ledger hallucinations.</li>
+                            <li><strong>Two-Phase Idempotency Locks:</strong> Implements atomic check-and-claim database transactions in PostgreSQL, preventing duplicate ledger entries from retrying webhooks.</li>
+                            <li><strong>API Concurrency Control:</strong> Uses an <code>asyncio.Semaphore</code> concurrency gate to throttle background external API transmissions and prevent rate-limit saturation.</li>
                         </ul>
                     </div>
                     <div>
@@ -774,23 +774,22 @@
                                     <div class="arch-dot arch-dot-yellow"></div>
                                     <div class="arch-dot arch-dot-green"></div>
                                 </div>
-                                <span class="arch-terminal-title">extraction_validator.py</span>
+                                <span class="arch-terminal-title">agents.py (Dynamic Schema Compilation)</span>
                             </div>
                             <div class="arch-terminal-code">
-<span class="code-cmt"># Invariant token-constrained validation</span>
-<span class="code-kwd">class</span> <span class="code-fn">HMRCInvoiceSchema</span>(BaseModel):
-    invoice_ref: <span class="code-str">str</span>
-    subtotal: <span class="code-num">Decimal</span>
-    vat_total: <span class="code-num">Decimal</span>
-    total: <span class="code-num">Decimal</span>
-    category: <span class="code-fn">build_chart_enum</span>()
+<span class="code-cmt"># Dynamic schema locked to live Chart of Accounts</span>
+acct_dict = {safe_enum_name(a[<span class="code-str">'Code'</span>]): a[<span class="code-str">'Code'</span>] <span class="code-kwd">for</span> a <span class="code-kwd">in</span> accts <span class="code-kwd">if</span> a.get(<span class="code-str">'Code'</span>)}
+tax_dict = {safe_enum_name(t[<span class="code-str">'TaxType'</span>]): t[<span class="code-str">'TaxType'</span>] <span class="code-kwd">for</span> t <span class="code-kwd">in</span> taxes <span class="code-kwd">if</span> t.get(<span class="code-str">'TaxType'</span>)}
 
-    <span class="code-kwd">@model_validator</span>(mode=<span class="code-str">'after'</span>)
-    <span class="code-kwd">def</span> <span class="code-fn">verify_vat_checksum</span>(self):
-        expected = self.subtotal + self.vat_total
-        <span class="code-kwd">if</span> abs(self.total - expected) &gt; <span class="code-num">0.02</span>:
-            <span class="code-kwd">raise</span> InvariantViolationError()
-        <span class="code-kwd">return</span> self
+DynamicAccountEnum = enum.Enum(<span class="code-str">'DynamicAccountEnum'</span>, acct_dict)
+DynamicTaxEnum = enum.Enum(<span class="code-str">'DynamicTaxEnum'</span>, tax_dict)
+
+dynamic_schema = create_model(
+    <span class="code-str">'DynamicExpenseCategorization'</span>,
+    __base__=ExpenseCategorization,
+    account_code=(DynamicAccountEnum, ...),
+    tax_code=(DynamicTaxEnum, ...)
+)
                             </div>
                         </div>
                     </div>
@@ -815,22 +814,22 @@
                 </div>
                 <div class="system-body">
                     <div>
-                        <h3 class="system-title">Layla Core Engine (Speed To Lead™)</h3>
-                        <div class="system-subtitle">Event-Driven Inbound Qualification &amp; SSE Streaming</div>
+                        <h3 class="system-title">Layla Core Engine: Speed-to-Lead Inbound Architecture</h3>
+                        <div class="system-subtitle">Event-Driven Inbound Qualification &amp; SSE Streaming Microservice</div>
                         <p class="system-desc">
-                            An asynchronous inbound lead interception engine engineered to compress qualification latency to sub-25 seconds. Solves API unreliability and webhook duplicate delivery through distributed caching and dual-model automatic failover.
+                            An asynchronous inbound lead interception engine engineered to compress qualification latency to sub-25 seconds. Solves API unreliability and webhook duplicate delivery through in-memory LoopGuard state deduplication and multi-model automatic failover.
                         </p>
                         <div class="pill-group">
                             <span class="tech-pill">Node.js / Express 5</span>
                             <span class="tech-pill">Server-Sent Events (SSE)</span>
-                            <span class="tech-pill">Gemini 2.5 &rarr; 1.5 Failover</span>
-                            <span class="tech-pill">Redis Idempotency (NX/EX)</span>
+                            <span class="tech-pill">Multi-Model Automated Failover</span>
+                            <span class="tech-pill">Stateful LoopGuard Deduplication</span>
                             <span class="tech-pill">Twilio Webhooks</span>
                         </div>
                         <ul class="spec-list">
-                            <li><strong>Automated Dual-Model Fallback:</strong> Real-time failover circuit breaker from Gemini 2.5 Flash to Gemini 1.5 Flash ensures zero downtime during upstream rate-limiting.</li>
-                            <li><strong>Stateful Conversation Tracking:</strong> Evaluates commercial intent and minimum project criteria before generating calendar reservations.</li>
-                            <li><strong>Redis Check-and-Claim Locks:</strong> Prevents duplicate outreach execution on retrying ad webhooks using atomic Redis keys.</li>
+                            <li><strong>Automated Model Failover:</strong> Real-time failover circuit breaker cascading across Gemini Flash tiers ensures continuous availability during upstream rate-limiting.</li>
+                            <li><strong>Stateful Lead Qualification:</strong> Evaluates commercial intent and minimum project criteria over multi-turn context before triggering scheduling workflows.</li>
+                            <li><strong>Stateful Deduplication Guard:</strong> Uses an in-memory lock map with flat-file persistence (<code>loopGuard.js</code>) to eliminate duplicate outreach triggers across retrying webhooks.</li>
                         </ul>
                     </div>
                     <div>
@@ -841,19 +840,22 @@
                                     <div class="arch-dot arch-dot-yellow"></div>
                                     <div class="arch-dot arch-dot-green"></div>
                                 </div>
-                                <span class="arch-terminal-title">live_telemetry_stream.js</span>
+                                <span class="arch-terminal-title">server/index.js (SSE Stream Route)</span>
                             </div>
                             <div class="arch-terminal-code">
-<span class="code-cmt">// Event-Driven Sub-25s Qualification</span>
-app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd">async</span> (req, res) =&gt; {
-  <span class="code-kwd">const</span> lock = <span class="code-kwd">await</span> redis.set(
-    <span class="code-str">`lead_lock:${req.body.phone}`</span>, <span class="code-str">'1'</span>, 
-    <span class="code-str">'NX'</span>, <span class="code-str">'EX'</span>, <span class="code-num">30</span>
-  );
-  <span class="code-kwd">if</span> (!lock) <span class="code-kwd">return</span> res.status(<span class="code-num">429</span>).end();
-
+<span class="code-cmt">// Express 5.x: Real-Time SSE Stream Route</span>
+app.post(<span class="code-str">'/api/chat/web'</span>, <span class="code-kwd">async</span> (req, res) =&gt; {
   res.setHeader(<span class="code-str">'Content-Type'</span>, <span class="code-str">'text/event-stream'</span>);
-  <span class="code-kwd">await</span> engine.streamQualification(req.body, res);
+  res.setHeader(<span class="code-str">'Cache-Control'</span>, <span class="code-str">'no-cache'</span>);
+  res.setHeader(<span class="code-str">'Connection'</span>, <span class="code-str">'keep-alive'</span>);
+
+  <span class="code-kwd">await</span> streamResponse({
+    systemPrompt: QUALIFICATION_PROMPT,
+    history: formattedHistory,
+    onChunk: (chunk) =&gt; res.write(<span class="code-str">`data: ${JSON.stringify({ text: chunk })}\n\n`</span>),
+    onError: (err) =&gt; res.write(<span class="code-str">`data: ${JSON.stringify({ error: err.message })}\n\n`</span>),
+    onComplete: () =&gt; { res.write(<span class="code-str">'data: [DONE]\n\n'</span>); res.end(); }
+  });
 });
                             </div>
                         </div>
@@ -866,7 +868,7 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                 <div class="system-card-header">
                     <div style="display: flex; align-items: center; gap: 0.75rem;">
                         <span class="system-tag">System 03</span>
-                        <span style="color: #ffffff; font-weight: 600; font-size: 0.95rem;">Upstream Open-Source Security</span>
+                        <span style="color: #ffffff; font-weight: 600; font-size: 0.95rem;">Upstream Open-Source Security Patch</span>
                     </div>
                     <div class="system-links">
                         <a href="https://github.com/BerriAI/litellm/pull/42490" target="_blank" rel="noopener noreferrer">
@@ -891,7 +893,7 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                         <ul class="spec-list">
                             <li><strong>Vulnerability Neutralized:</strong> Scoped Anthropic OAuth credentials strictly to <code>api.anthropic.com</code>, eliminating multi-provider credential leakage across proxy endpoints.</li>
                             <li><strong>Multi-Tenant Hardening:</strong> Ensures enterprise proxy instances managing shared gateways cannot inadvertently transmit OAuth bearer tokens to auxiliary endpoints.</li>
-                            <li><strong>Status:</strong> Submitted and code-reviewed in upstream repository <code>BerriAI/litellm</code> (PR #42490).</li>
+                            <li><strong>Status:</strong> Authored by Anas Wahab; currently In-Review in upstream <code>BerriAI/litellm</code> (PR #42490, closes issue #42172).</li>
                         </ul>
                     </div>
                     <div>
@@ -902,17 +904,25 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                                     <div class="arch-dot arch-dot-yellow"></div>
                                     <div class="arch-dot arch-dot-green"></div>
                                 </div>
-                                <span class="arch-terminal-title">litellm/llms/anthropic/chat/transformation.py</span>
+                                <span class="arch-terminal-title">litellm/llms/anthropic/common_utils.py</span>
                             </div>
                             <div class="arch-terminal-code">
-<span class="code-cmt"># Upstream Security Patch (PR #42490)</span>
-<span class="code-kwd">def</span> <span class="code-fn">validate_oauth_token_scope</span>(endpoint_url: <span class="code-str">str</span>, headers: <span class="code-str">dict</span>):
-    parsed = <span class="code-fn">urlparse</span>(endpoint_url)
-    <span class="code-kwd">if</span> parsed.netloc != <span class="code-str">"api.anthropic.com"</span>:
-        <span class="code-cmt"># Strip Anthropic OAuth to prevent leakage</span>
-        headers.pop(<span class="code-str">"anthropic-auth-token"</span>, <span class="code-kwd">None</span>)
-        headers.pop(<span class="code-str">"Authorization"</span>, <span class="code-kwd">None</span>)
-    <span class="code-kwd">return</span> headers
+<span class="code-cmt"># Upstream Security Patch (PR #42490 by anaswahab231997)</span>
+<span class="code-kwd">def</span> <span class="code-fn">optionally_handle_anthropic_oauth</span>(headers: <span class="code-str">dict</span>, api_key: <span class="code-str">str</span> | <span class="code-kwd">None</span>, api_base: <span class="code-str">str</span> | <span class="code-kwd">None</span> = <span class="code-kwd">None</span>):
+    auth_header = <span class="code-fn">next</span>((v <span class="code-kwd">for</span> k, v <span class="code-kwd">in</span> headers.items() <span class="code-kwd">if</span> k.lower() == <span class="code-str">"authorization"</span>), <span class="code-str">""</span>)
+
+    <span class="code-kwd">def</span> <span class="code-fn">_is_anthropic_host</span>(url: <span class="code-str">str</span> | <span class="code-kwd">None</span>) -&gt; <span class="code-str">bool</span>:
+        <span class="code-kwd">if not</span> url: <span class="code-kwd">return True</span>
+        <span class="code-kwd">try</span>: <span class="code-kwd">return</span> urlparse(url).hostname == <span class="code-str">"api.anthropic.com"</span>
+        <span class="code-kwd">except</span> ValueError: <span class="code-kwd">return False</span>
+
+    <span class="code-kwd">if not</span> _is_anthropic_host(api_base):
+        <span class="code-cmt"># Strip Anthropic OAuth when targeting custom / non-Anthropic endpoints</span>
+        <span class="code-kwd">if</span> auth_header.startswith(<span class="code-str">f"Bearer {ANTHROPIC_OAUTH_TOKEN_PREFIX}"</span>):
+            headers = {k: v <span class="code-kwd">for</span> k, v <span class="code-kwd">in</span> headers.items() <span class="code-kwd">if</span> k.lower() != <span class="code-str">"authorization"</span>}
+        <span class="code-kwd">if</span> api_key <span class="code-kwd">and</span> api_key.startswith(ANTHROPIC_OAUTH_TOKEN_PREFIX):
+            api_key = <span class="code-kwd">None</span>
+        <span class="code-kwd">return</span> headers, api_key
                             </div>
                         </div>
                     </div>
@@ -927,22 +937,25 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                         <span style="color: #ffffff; font-weight: 600; font-size: 0.95rem;">Hybrid Decision Architecture (System 1 + System 2 Orchestration)</span>
                     </div>
                     <div class="system-links">
+                        <a href="https://github.com/NandhaKishorM/laya" target="_blank" rel="noopener noreferrer" style="color: var(--gold); display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.8rem; text-decoration: none;">
+                            <i data-lucide="git-branch" style="width: 14px; height: 14px;"></i> NandhaKishorM/laya
+                        </a>
                         <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--gold); display: inline-flex; align-items: center; gap: 0.4rem;">
-                            <i data-lucide="zap" style="width: 14px; height: 14px;"></i> 33ms Invariant Latency
+                            <i data-lucide="zap" style="width: 14px; height: 14px;"></i> ~33ms CPU Forward Pass
                         </span>
                     </div>
                 </div>
                 <div class="system-body">
                     <div>
-                        <h3 class="system-title">Deterministic Intent Triage &amp; Generative Routing</h3>
-                        <div class="system-subtitle">Non-Autoregressive Classifier (Laya) + Dynamic Fallback Gateways</div>
+                        <h3 class="system-title">Hybrid Intent Triage &amp; Generative Routing Blueprint</h3>
+                        <div class="system-subtitle">Architectural Integration: Laya (by NandhaKishorM) + Dynamic Fallback Gateways</div>
                         <p class="system-desc">
-                            Standard industry workflows route simple operational decisions through multi-billion-parameter LLMs, incurring 1.5–3.0s latency, unpredictable schema formatting, and hallucination risks. My architecture introduces <strong>Laya</strong>—a non-autoregressive encoder decision model—as the deterministic System 1 layer before delegating to generative models.
+                            Standard industry workflows route simple operational decisions through multi-billion-parameter LLMs, incurring 1.5–3.0s latency, unpredictable schema formatting, and hallucination risks. My systems architecture integrates <strong>Laya</strong>—an open-source non-autoregressive encoder decision model created by <a href="https://github.com/NandhaKishorM/laya" target="_blank" rel="noopener noreferrer" style="color: var(--gold); text-decoration: underline;">Nandakishor Mukkunnoth</a>—as the deterministic System 1 layer before delegating to generative models.
                         </p>
                         <div class="pill-group">
                             <span class="tech-pill">Laya Decision Engine</span>
                             <span class="tech-pill">ModernBERT / mmBERT</span>
-                            <span class="tech-pill">33ms Single Forward Pass</span>
+                            <span class="tech-pill">~33ms CPU Forward Pass</span>
                             <span class="tech-pill">Zero Generative Hallucination</span>
                             <span class="tech-pill">Typed Choice Constraints</span>
                             <span class="tech-pill">Gemini / Claude Fallback</span>
@@ -961,10 +974,10 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                                     <div class="arch-dot arch-dot-yellow"></div>
                                     <div class="arch-dot arch-dot-green"></div>
                                 </div>
-                                <span class="arch-terminal-title">hybrid_decision_gate.py</span>
+                                <span class="arch-terminal-title">integration_pattern_laya.py (Architectural Blueprint)</span>
                             </div>
                             <div class="arch-terminal-code">
-<span class="code-cmt"># System 1: Deterministic Intent Gate (33ms)</span>
+<span class="code-cmt"># System 1: Deterministic Intent Gate (~33ms)</span>
 decision = laya.decide(
     context=event.payload,
     choices=[<span class="code-str">"deflect_faq"</span>, <span class="code-str">"escalate_human"</span>, <span class="code-str">"deep_reason"</span>]
@@ -1038,7 +1051,7 @@ decision = laya.decide(
                         Disjointed operational tools (CRMs, payment gateways, ERPs, inventory systems) frequently desynchronize, causing silent failures, duplicate records, and manual data-entry taxes.
                     </p>
                     <p class="ops-desc" style="color: var(--text-dim); font-size: 0.85rem;">
-                        <strong>Proposed System:</strong> Distributed, event-driven integration layer built with Redis distributed locking (NX/EX) for atomic idempotency, schema enforcement via dynamic Pydantic models, and automated dead-letter queues (DLQ) for zero data loss.
+                        <strong>Proposed System:</strong> Distributed, event-driven integration layer built with PostgreSQL transactional check-and-claim locks and in-memory LoopGuard state for atomic idempotency, schema enforcement via dynamic Pydantic models, and automated dead-letter queues (DLQ) for zero data loss.
                     </p>
                     <div class="pill-group" style="margin-top: auto; margin-bottom: 0;">
                         <span class="tech-pill">Two-Phase Idempotency</span>
@@ -1072,7 +1085,7 @@ decision = laya.decide(
                     <div class="timeline-col">
                         <h4>Phase 2: Hybrid System 1/2 Automation</h4>
                         <p>
-                            Deploy rapid sub-50ms intent routing for triage, wire deterministic schema extraction for document flows, and establish robust Redis-backed webhook synchronization with error budgets.
+                            Deploy rapid sub-50ms intent routing for triage, wire schema-constrained document extraction flows, and establish robust event-driven webhook synchronization with error budgets.
                         </p>
                     </div>
                     <div class="timeline-col">
@@ -1114,7 +1127,7 @@ decision = laya.decide(
                     <div class="stack-tags">
                         <span class="stack-tag">Laya Decision Engine (ModernBERT)</span>
                         <span class="stack-tag">LiteLLM Proxy</span>
-                        <span class="stack-tag">Google Gemini 2.5 Flash</span>
+                        <span class="stack-tag">Google Gemini (Flash &amp; Pro)</span>
                         <span class="stack-tag">Anthropic Claude</span>
                         <span class="stack-tag">Pydantic v2 (Dynamic Enums)</span>
                         <span class="stack-tag">Structured Outputs</span>
@@ -1129,7 +1142,7 @@ decision = laya.decide(
                         <span class="stack-tag">Python 3.12 (FastAPI)</span>
                         <span class="stack-tag">Node.js (Express 5.x)</span>
                         <span class="stack-tag">asyncpg / PostgreSQL</span>
-                        <span class="stack-tag">Redis (NX / EX Locks)</span>
+                        <span class="stack-tag">Stateful Deduplication &amp; LoopGuard</span>
                         <span class="stack-tag">Server-Sent Events</span>
                     </div>
                 </div>
