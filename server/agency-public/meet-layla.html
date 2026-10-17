@@ -387,31 +387,70 @@
                     body: JSON.stringify({ message: text, history: conversationHistory })
                 });
                 
-                const data = await response.json();
                 hideTyping();
                 const latency = Date.now() - start;
-                
-                if (data.reply) {
-                    appendMessage('ai', data.reply);
-                    conversationHistory.push({ role: 'user', content: text });
-                    conversationHistory.push({ role: 'assistant', content: data.reply });
-                    
-                    updateTelemetry('Neural_Response', latency + 'ms', 'Dynamic', 'Live');
-                } else if (data.details) {
-                    if (data.details === "RATE_LIMIT") {
-                        appendMessage('ai', "I am currently experiencing a high volume of requests. Please wait about 60 seconds before asking your next question.");
-                    } else if (data.details === "API_KEY_MISSING") {
-                        appendMessage('ai', "My architect has not provided me with a valid API key in this environment. I am offline.");
-                    } else if (data.details === "TIMEOUT") {
-                        appendMessage('ai', "My neural link timed out while processing your request. Could you please repeat that?");
-                    } else {
-                        appendMessage('ai', `I encountered an unexpected anomaly: ${data.details}. Please try again later.`);
-                    }
+
+                if (!response.ok) {
+                    appendMessage('ai', "I encountered an anomaly. Please try again.");
                     updateTelemetry('Error', latency + 'ms', 'Anomaly', 'Failed');
-                } else {
-                    appendMessage('ai', "I'm experiencing a brief system interrupt. Could you please repeat that?");
-                    updateTelemetry('Error', latency + 'ms', 'Interrupt', 'Failed');
+                    return;
                 }
+
+                // Create a container for the streaming text
+                const msgElem = document.createElement('div');
+                msgElem.className = 'message ai';
+                history.appendChild(msgElem);
+                
+                let fullResponse = "";
+                
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder('utf-8');
+                let buffer = "";
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n');
+                    buffer = lines.pop(); // Keep the last incomplete line in buffer
+                    
+                    for (const line of lines) {
+                        if (line.trim() === '') continue;
+                        if (line.startsWith('data: ')) {
+                            const dataStr = line.slice(6);
+                            if (dataStr === '[DONE]') {
+                                continue;
+                            }
+                            try {
+                                const data = JSON.parse(dataStr);
+                                if (data.text !== undefined && data.text !== null && data.text !== '') {
+                                    fullResponse += data.text;
+                                    msgElem.innerHTML = fullResponse.replace(/\n/g, '<br>');
+                                    history.scrollTop = history.scrollHeight;
+                                } else if (data.error) {
+                                    console.error("Stream Error:", data.error);
+                                    if (data.error.includes("API_KEY_MISSING")) {
+                                        fullResponse = "My architect has not provided me with a valid API key. I am offline.";
+                                    } else if (data.error.includes("RATE_LIMIT") || data.error.includes("429")) {
+                                        fullResponse = "I am currently experiencing a high volume of requests. Please wait 60 seconds.";
+                                    } else {
+                                        fullResponse = `System Anomaly: ${data.error}`;
+                                    }
+                                    msgElem.innerHTML = fullResponse;
+                                    history.scrollTop = history.scrollHeight;
+                                }
+                            } catch (e) {
+                                console.error("Error parsing chunk:", e);
+                            }
+                        }
+                    }
+                }
+                
+                conversationHistory.push({ role: 'user', content: text });
+                conversationHistory.push({ role: 'assistant', content: fullResponse });
+                updateTelemetry('Neural_Response', latency + 'ms', 'Dynamic', 'Live');
+
             } catch (err) {
                 hideTyping();
                 appendMessage('ai', "My neural link is currently offline. Please try again shortly.");

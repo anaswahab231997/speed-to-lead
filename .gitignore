@@ -8,5 +8,7 @@ dist/
 build/
 
 .env.local
-
+.env.*
+server/.env.*
+*.env.vercel*
 server/.env.vercel.template

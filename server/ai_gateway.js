@@ -16,61 +16,72 @@ async function generateResponse({ systemPrompt, history, maxTokens = 1000, tempe
     ? process.env.GEMINI_RELAY_URL.replace(/\/$/, '') 
     : 'https://generativelanguage.googleapis.com';
   
-  // 🛰️ THE GOLDEN MODEL: Identified via rigorous discovery as the most stable & responsive tier.
-  const model = 'gemini-2.5-flash';
   const version = 'v1beta';
-  const geminiUrl = `${relayBase}/${version}/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+  const modelsToTry = ['gemini-2.5-flash', 'gemini-1.5-flash'];
 
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s for deep sales reasoning
-
-    const payload = {
-      system_instruction: { parts: [{ text: systemPrompt }] },
-      contents: history.map(h => ({
-        role: h.role === 'assistant' ? 'model' : 'user',
-        parts: [{ text: h.content }]
-      })),
-      generationConfig: { 
-        maxOutputTokens: maxTokens, 
-        temperature: temperature,
-        topP: 0.95,
-        topK: 40
-      }
-    };
-
-    console.log(`📡 [AI GATEWAY] Dispatching to Golden Model: ${model} (${version})...`);
-    
-    const response = await fetch(geminiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: controller.signal
-    });
-
-    clearTimeout(timeoutId);
-
-    if (response.ok) {
-      const data = await response.json();
-      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (reply) {
-        console.log(`✅ [AI GATEWAY] ${model} response secured.`);
-        return reply;
-      }
-    } else {
-      const errJson = await response.json().catch(() => ({}));
-      const errMsg = errJson.error?.message || response.statusText || response.status;
-      console.error(`🚨 [AI GATEWAY] ${model} Critical Error (${response.status}): ${errMsg}`);
-      if (response.status === 429) return { error: true, reason: "RATE_LIMIT" };
-      return { error: true, reason: `API_ERROR: ${errMsg}` };
+  const payload = {
+    system_instruction: { parts: [{ text: systemPrompt }] },
+    contents: history.map(h => ({
+      role: h.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: h.content }]
+    })),
+    generationConfig: { 
+      maxOutputTokens: maxTokens, 
+      temperature: temperature,
+      topP: 0.95,
+      topK: 40
     }
-  } catch (err) {
-    if (err.name === 'AbortError') {
-      console.error(`🕒 [AI GATEWAY] ${model} timed out after 20s.`);
-      return { error: true, reason: "TIMEOUT" };
-    } else {
-      console.error(`🚨 [AI GATEWAY] ${model} Exception:`, err.message);
-      return { error: true, reason: `EXCEPTION: ${err.message}` };
+  };
+
+  for (let i = 0; i < modelsToTry.length; i++) {
+    const model = modelsToTry[i];
+    const geminiUrl = `${relayBase}/${version}/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+    
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s timeout
+
+      console.log(`📡 [AI GATEWAY] Dispatching to Model: ${model} (${version})...`);
+      
+      const response = await fetch(geminiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+
+      clearTimeout(timeoutId);
+
+      if (response.ok) {
+        const data = await response.json();
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (reply) {
+          console.log(`✅ [AI GATEWAY] ${model} response secured.`);
+          return reply;
+        }
+      } else {
+        const errJson = await response.json().catch(() => ({}));
+        const errMsg = errJson.error?.message || response.statusText || response.status;
+        console.error(`🚨 [AI GATEWAY] ${model} Critical Error (${response.status}): ${errMsg}`);
+        
+        if ((response.status === 429 || response.status === 503) && i < modelsToTry.length - 1) {
+          console.warn(`⚠️ [AI GATEWAY] ${model} overloaded. Falling back to next model...`);
+          continue; // Try the next model
+        }
+        
+        if (response.status === 429 || response.status === 503) return { error: true, reason: "RATE_LIMIT" };
+        return { error: true, reason: `API_ERROR: ${errMsg}` };
+      }
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        console.error(`🕒 [AI GATEWAY] ${model} timed out after 20s.`);
+        if (i < modelsToTry.length - 1) continue;
+        return { error: true, reason: "TIMEOUT" };
+      } else {
+        console.error(`🚨 [AI GATEWAY] ${model} Exception:`, err.message);
+        if (i < modelsToTry.length - 1) continue;
+        return { error: true, reason: `EXCEPTION: ${err.message}` };
+      }
     }
   }
 

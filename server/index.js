@@ -66,7 +66,12 @@ app.post('/api/chat/web', async (req, res) => {
         res.write(`data: ${JSON.stringify({ text: chunk })}\n\n`);
       },
       onError: (err) => {
-        res.write(`data: ${JSON.stringify({ error: err.message || 'Stream error' })}\n\n`);
+        const errMsg = err.message || 'Stream error';
+        if (errMsg.includes('Quota exceeded') || errMsg.includes('429')) {
+          res.write(`data: ${JSON.stringify({ text: 'I am currently handling an unusually high volume of onboarding inquiries. Please give me about 60 seconds to clear my queue, and try your message again.' })}\n\n`);
+        } else {
+          res.write(`data: ${JSON.stringify({ error: errMsg })}\n\n`);
+        }
         res.end();
       },
       onComplete: () => {
@@ -99,7 +104,7 @@ const auditLimiter = rateLimit({
 })
 
 const path = require('path')
-app.use(express.static(path.join(__dirname, 'agency-public')))
+app.use(express.static(path.join(__dirname, 'agency-public'), { extensions: ['html'] }))
 
 // 🏛️ IGNITION PORTAL (Decentralized Onboarding)
 app.get('/ignite', (req, res) => {
@@ -110,6 +115,14 @@ app.get('/ignite', (req, res) => {
       res.status(404).send('Ignition Portal Not Found. Please ensure ignite.html exists in agency-public.');
     }
   });
+})
+
+app.get('/schedule', (req, res) => {
+  res.sendFile(path.join(__dirname, 'agency-public', 'schedule.html'))
+})
+
+app.get('/meet-layla', (req, res) => {
+  res.sendFile(path.join(__dirname, 'agency-public', 'meet-layla.html'))
 })
 
 app.get(/^\/dealer-pulse/, (req, res) => {
@@ -736,15 +749,20 @@ app.use((err, req, res, next) => {
 })
 
 const PORT = process.env.PORT || 3001
-app.listen(PORT, () => {
-  console.clear()
-  console.log('\n🟩 [AI NEXLIFY AGENCIES] SPEED TO LEAD™ TUNNEL SECURED. LAYLA IS AWAKE. 🟩\n')
-  console.log(`⚡ Speed To Lead — server on port ${PORT}`)
-  console.log(`📡 Dashboard API → http://localhost:${PORT}/api/`)
-  console.log(`🤖 WhatsApp-Centric Engine ready`)
 
-  scheduleFollowUps()
-  
-  // Start the WhatsApp-Centric Orchestrator (Email Triage Decommissioned)
-  startOrchestrator()
-})
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.clear()
+    console.log('\n🟩 [AI NEXLIFY AGENCIES] SPEED TO LEAD™ TUNNEL SECURED. LAYLA IS AWAKE. 🟩\n')
+    console.log(`⚡ Speed To Lead — server on port ${PORT}`)
+    console.log(`📡 Dashboard API → http://localhost:${PORT}/api/`)
+    console.log(`🤖 WhatsApp-Centric Engine ready`)
+
+    scheduleFollowUps()
+    
+    // Start the WhatsApp-Centric Orchestrator (Email Triage Decommissioned)
+    startOrchestrator()
+  })
+}
+
+module.exports = app;

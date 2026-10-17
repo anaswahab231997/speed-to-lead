@@ -6,6 +6,20 @@
     <title>AI Nexlify Agencies | Elite AI Autonomous Systems</title>
     <meta name="description" content="Stop driving traffic to dead contact forms. We engineer bespoke, high-speed web applications powered by custom-trained autonomous AI agents that intercept leads, qualify clients, and book appointments 24/7.">
     
+    <!-- Google SERP & Social SEO Layer -->
+    <link rel="canonical" href="https://www.ainexlifyagencies.com/" />
+    <meta property="og:title" content="AI Nexlify Agencies | Elite AI Autonomous Systems">
+    <meta property="og:description" content="Stop driving traffic to dead contact forms. We engineer bespoke, high-speed web applications powered by custom-trained autonomous AI agents.">
+    <meta property="og:url" content="https://www.ainexlifyagencies.com/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AI Nexlify Agencies | Elite AI Autonomous Systems">
+    <meta name="twitter:description" content="Stop driving traffic to dead contact forms. We engineer bespoke, high-speed web applications powered by custom-trained autonomous AI agents.">
+
+    <!-- App & SERP Icons (Strict 192x192 multiple for Google) -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    
     <!-- Premium Plush Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -180,8 +194,29 @@
             transition: var(--transition-smooth);
         }
         .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-family: var(--font-heading); font-size: 1.75rem; font-weight: 900; color: var(--text-primary); letter-spacing: -0.03em; }
+        .logo { 
+            font-family: var(--font-heading); 
+            font-size: 1.75rem; 
+            font-weight: 900; 
+            color: var(--text-primary); 
+            letter-spacing: -0.03em;
+            transition: var(--transition-smooth);
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            border: 1px solid transparent;
+        }
         .logo span { color: var(--gold); }
+        .logo:hover {
+            background: var(--glass-bg);
+            border-color: var(--glass-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(196, 159, 59, 0.2);
+        }
+        .logo:hover img {
+            filter: drop-shadow(0 0 8px rgba(196, 159, 59, 0.4));
+        }
 
         /* Cinematic Hero */
         .hero { 
@@ -488,7 +523,9 @@
 
     <header id="navbar">
         <div class="container nav-content">
-            <div class="logo">AI<span>Nexlify</span></div>
+            <a href="/" class="logo" style="display: flex; align-items: center; text-decoration: none;">
+                <img src="/nexlify-logo.png" alt="AI Nexlify" style="height: 40px; width: auto;" />
+            </a>
             <div style="display: flex; gap: 1rem;">
                 <a href="/schedule.html" class="btn btn-outline" style="padding: 0.75rem 1.5rem; font-size: 0.9rem; border-color: var(--emerald-accent); color: var(--emerald-accent);">Book Audit</a>
                 <a href="#contact" class="btn" style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">Deploy Layla</a>
