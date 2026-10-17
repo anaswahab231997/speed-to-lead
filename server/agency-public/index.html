@@ -642,14 +642,15 @@
         <div class="container nav-content">
             <a href="/" class="nav-brand" aria-label="Anas Wahab Home">
                 <img src="/nexlify-logo.png" alt="Anas Wahab" />
-                <span class="nav-brand-title">Anas Wahab <span>/ CoS</span></span>
+                <span class="nav-brand-title">Anas Wahab <span>/ AI Systems</span></span>
             </a>
             <ul class="nav-links">
-                <li><a href="#about">Executive Profile</a></li>
                 <li><a href="#systems">Engineered Systems</a></li>
-                <li><a href="#operations">Shopify &amp; Operations</a></li>
-                <li><a href="#proposal">30-60-90 Plan</a></li>
+                <li><a href="#solutions">Workflow Solutions</a></li>
+                <li><a href="#deployment">Deployment Blueprint</a></li>
                 <li><a href="#stack">Tech Stack</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
                 <li>
                     <a href="/assets/Anas_Wahab_Chief_of_Staff_Resume.pdf" target="_blank" class="btn btn-outline" style="padding: 0.45rem 1.15rem; font-size: 0.82rem; border-color: var(--gold); color: var(--gold-light);">
                         <i data-lucide="download" style="width: 14px; height: 14px;"></i> Resume (PDF)
@@ -664,22 +665,22 @@
         <div class="container">
             <div class="hero-badge">
                 <span class="status-dot"></span>
-                <span>Chief of Staff &bull; Technical Operator &bull; Zero-Engineering-Tax</span>
+                <span>Applied AI Systems &bull; Autonomous Workflow Automation</span>
             </div>
             <h1>Bridging Commercial Strategy with Autonomous Systems Execution.</h1>
             <p>
-                Chief of Staff candidate and technical operator. I eliminate operational drag, build internal automation, and execute cross-functional initiatives—without consuming core engineering sprint points. Upstream contributor to <code>BerriAI/litellm</code>.
+                I architect and deploy fault-tolerant AI systems, deterministic data pipelines, and sub-35ms decision engines to automate company workflows—without consuming core engineering sprint points. Upstream contributor to <code>BerriAI/litellm</code>.
             </p>
             <div class="hero-ctas">
-                <a href="#proposal" class="btn">Review 30-60-90 Day Plan</a>
+                <a href="#deployment" class="btn">View Deployment Blueprint</a>
                 <a href="/assets/Anas_Wahab_Chief_of_Staff_Resume.pdf" target="_blank" class="btn btn-outline" style="border-color: var(--emerald-accent); color: var(--emerald-accent);">
-                    <i data-lucide="file-text" style="width: 16px; height: 16px;"></i> Download CoS Resume
+                    <i data-lucide="file-text" style="width: 16px; height: 16px;"></i> Download Resume
                 </a>
-                <a href="#contact" class="btn btn-outline">Schedule 15-Min Founder Briefing</a>
+                <a href="#contact" class="btn btn-outline">Schedule Technical Briefing</a>
             </div>
             <div class="relocation-badge">
                 <i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--gold);"></i>
-                <span>Location: Mumbai &rarr; <strong>Immediate Relocation to Baner, Pune</strong> (WeWork Eleven West) &bull; Notice: <strong>0 Days</strong></span>
+                <span>Location: Mumbai &bull; <strong>Open to Relocation (e.g. Pune / Bangalore) &amp; Remote</strong> &bull; Notice: <strong>0 Days</strong></span>
             </div>
         </div>
     </section>
@@ -917,111 +918,177 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                     </div>
                 </div>
             </div>
+
+            <!-- System 04: Hybrid Decision Architecture (Laya + Generative Gateways) -->
+            <div class="system-card reveal" style="border: 1px solid rgba(212, 160, 23, 0.35); background: linear-gradient(180deg, rgba(20, 20, 26, 0.95) 0%, rgba(12, 12, 16, 0.98) 100%);">
+                <div class="system-card-header">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <span class="system-tag" style="background: rgba(212, 160, 23, 0.2); color: var(--gold); border-color: rgba(212, 160, 23, 0.4);">System 04</span>
+                        <span style="color: #ffffff; font-weight: 600; font-size: 0.95rem;">Hybrid Decision Architecture (System 1 + System 2 Orchestration)</span>
+                    </div>
+                    <div class="system-links">
+                        <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--gold); display: inline-flex; align-items: center; gap: 0.4rem;">
+                            <i data-lucide="zap" style="width: 14px; height: 14px;"></i> 33ms Invariant Latency
+                        </span>
+                    </div>
+                </div>
+                <div class="system-body">
+                    <div>
+                        <h3 class="system-title">Deterministic Intent Triage &amp; Generative Routing</h3>
+                        <div class="system-subtitle">Non-Autoregressive Classifier (Laya) + Dynamic Fallback Gateways</div>
+                        <p class="system-desc">
+                            Standard industry workflows route simple operational decisions through multi-billion-parameter LLMs, incurring 1.5–3.0s latency, unpredictable schema formatting, and hallucination risks. My architecture introduces <strong>Laya</strong>—a non-autoregressive encoder decision model—as the deterministic System 1 layer before delegating to generative models.
+                        </p>
+                        <div class="pill-group">
+                            <span class="tech-pill">Laya Decision Engine</span>
+                            <span class="tech-pill">ModernBERT / mmBERT</span>
+                            <span class="tech-pill">33ms Single Forward Pass</span>
+                            <span class="tech-pill">Zero Generative Hallucination</span>
+                            <span class="tech-pill">Typed Choice Constraints</span>
+                            <span class="tech-pill">Gemini / Claude Fallback</span>
+                        </div>
+                        <ul class="spec-list">
+                            <li><strong>System 1 (Deterministic Triage):</strong> Laya classifies input intent into typed choices (<code>choice</code>, <code>score</code>, <code>noul</code>) within ~33ms on CPU/edge without generating tokens—mathematically eliminating text hallucination.</li>
+                            <li><strong>System 2 (Deep Synthesis):</strong> Only when high-dimensional extraction or complex reasoning is required does the engine dispatch to Gemini or Claude via resilient rate-limited gateways.</li>
+                            <li><strong>Production Economics:</strong> Filters out routine classification volume before touching LLM endpoints, slashing API overhead and delivering instantaneous workflow reactions.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <div class="arch-terminal">
+                            <div class="arch-terminal-header">
+                                <div class="arch-dots">
+                                    <div class="arch-dot arch-dot-red"></div>
+                                    <div class="arch-dot arch-dot-yellow"></div>
+                                    <div class="arch-dot arch-dot-green"></div>
+                                </div>
+                                <span class="arch-terminal-title">hybrid_decision_gate.py</span>
+                            </div>
+                            <div class="arch-terminal-code">
+<span class="code-cmt"># System 1: Deterministic Intent Gate (33ms)</span>
+decision = laya.decide(
+    context=event.payload,
+    choices=[<span class="code-str">"deflect_faq"</span>, <span class="code-str">"escalate_human"</span>, <span class="code-str">"deep_reason"</span>]
+)
+
+<span class="code-kwd">if</span> decision.choice != <span class="code-str">"deep_reason"</span>:
+    <span class="code-cmt"># Zero token generation, zero hallucination</span>
+    <span class="code-kwd">return</span> execute_deterministic_sop(decision.choice)
+
+<span class="code-cmt"># System 2: Generative Reasoning (Gemini/Claude)</span>
+<span class="code-kwd">return await</span> generative_gateway.extract(event.payload)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Section 2: E-Commerce & Shopify Operations -->
-    <section id="operations" style="background: rgba(0, 0, 0, 0.4); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
+    <!-- Section 2: Universal AI Workflow Solutions -->
+    <section id="solutions" style="background: rgba(0, 0, 0, 0.4); border-top: 1px solid var(--glass-border); border-bottom: 1px solid var(--glass-border);">
         <div class="container">
             <div style="text-align: center; margin-bottom: 3.5rem;" class="reveal">
-                <div class="hero-badge" style="margin-bottom: 1rem;">Ecosystem Leverage</div>
-                <h2 style="font-size: 2.75rem; margin-bottom: 1rem;">Shopify &amp; E-Commerce Operational Initiatives</h2>
+                <div class="hero-badge" style="margin-bottom: 1rem;">Deployable AI Solutions</div>
+                <h2 style="font-size: 2.75rem; margin-bottom: 1rem;">Applied AI Workflows &amp; Operations Architecture</h2>
                 <p style="color: var(--text-muted); max-width: 750px; margin: 0 auto; font-size: 1.05rem;">
-                    Concrete operational initiatives designed for high-volume Shopify app ecosystems (e.g. StarApps Studio). Bridging customer success, engineering, and merchant retention.
+                    Universal operational workflows engineered to automate high-friction touchpoints, deflect repetitive support volume, and eliminate data silos across modern tech and e-commerce ecosystems.
                 </p>
             </div>
 
             <div class="ops-grid reveal">
-                <!-- Initiative 1: Theme Triage -->
+                <!-- Solution 1: Theme Triage & Deflection -->
                 <div class="ops-card">
-                    <span class="ops-badge">30-Day Proposed Sprint</span>
-                    <h3 class="ops-title">Automated Theme Conflict Triage Tool</h3>
+                    <span class="ops-badge">Support Operations</span>
+                    <h3 class="ops-title">Automated Support Ticket Triage &amp; Deflection Engine</h3>
                     <p class="ops-desc">
-                        When merchants update custom Liquid themes, CSS and selector clashes frequently flood Customer Success queues for apps like <em>Variant Swatch King</em>.
+                        Customer support queues are routinely overwhelmed by recurring interface issues, configuration errors, and routine FAQs that drain senior agent hours.
                     </p>
                     <p class="ops-desc" style="color: var(--text-dim); font-size: 0.85rem;">
-                        <strong>Proposed System:</strong> Headless DOM-inspection script utilizing Puppeteer/Chrome to automatically inspect merchant storefront URLs, flag missing Liquid container selectors or script collisions, and generate a pre-filled remediation snippet for CS agents before ticket triage.
+                        <strong>Proposed System:</strong> Headless DOM and API inspection pipeline coupled with sub-50ms intent classification. Automatically diagnoses customer storefront/interface state, isolates root anomalies, and compiles verified remediation snippets before the ticket reaches a human agent.
                     </p>
                     <div class="pill-group" style="margin-top: auto; margin-bottom: 0;">
-                        <span class="tech-pill">DOM Inspector</span>
-                        <span class="tech-pill">Liquid Theme AST</span>
-                        <span class="tech-pill">L1 Deflection</span>
+                        <span class="tech-pill">Headless DOM Inspector</span>
+                        <span class="tech-pill">Laya Decision Routing</span>
+                        <span class="tech-pill">L1 Deflection Engine</span>
                     </div>
                 </div>
 
-                <!-- Initiative 2: Churn Alert Telemetry -->
+                <!-- Solution 2: Churn Alert Telemetry -->
                 <div class="ops-card">
-                    <span class="ops-badge">Operational Architecture</span>
-                    <h3 class="ops-title">Merchant Retention &amp; Churn Alert Pipeline</h3>
+                    <span class="ops-badge">Revenue Retention</span>
+                    <h3 class="ops-title">Proactive Retention &amp; Churn Anomaly Telemetry</h3>
                     <p class="ops-desc">
-                        Protecting recurring SaaS revenue across 30,000+ merchants by proactively catching uninstall signals and broken theme integrations before churn occurs.
+                        Protecting recurring SaaS and subscription revenue by detecting subtle usage drop-offs, broken API webhooks, or configuration errors weeks before an account churns.
                     </p>
                     <p class="ops-desc" style="color: var(--text-dim); font-size: 0.85rem;">
-                        <strong>Proposed System:</strong> Ingests Shopify webhook telemetry (app uninstalls, theme change events, API rate anomalies). Automatically triggers proactive CS escalation in Slack 14 days prior to subscription renewal dates for high-tier Plus merchants.
+                        <strong>Proposed System:</strong> Real-time telemetry ingestion pipeline evaluating event frequencies, billing status changes, and webhook anomalies. Triggers proactive Slack alerts and automated account remediation playbooks 14 days prior to contract renewal cycles.
                     </p>
                     <div class="pill-group" style="margin-top: auto; margin-bottom: 0;">
-                        <span class="tech-pill">Shopify Webhooks</span>
-                        <span class="tech-pill">Supabase Events</span>
-                        <span class="tech-pill">Slack CS Routing</span>
+                        <span class="tech-pill">Webhook Telemetry</span>
+                        <span class="tech-pill">Anomaly Detection</span>
+                        <span class="tech-pill">Automated Escalation</span>
                     </div>
                 </div>
 
-                <!-- Initiative 3: Cross-Sell Integration -->
+                <!-- Solution 3: Cross-Platform Data Sync -->
                 <div class="ops-card">
-                    <span class="ops-badge">M&amp;A Integration Leverage</span>
-                    <h3 class="ops-title">AppMaker Enterprise Cross-Sell Workflow</h3>
+                    <span class="ops-badge">Data Orchestration</span>
+                    <h3 class="ops-title">Cross-Platform Webhook &amp; Data Sync Orchestrator</h3>
                     <p class="ops-desc">
-                        Following StarApps' acquisition of AppMaker ($100M+ GMV mobile app builder), unlocking commercial synergies across the shared merchant base.
+                        Disjointed operational tools (CRMs, payment gateways, ERPs, inventory systems) frequently desynchronize, causing silent failures, duplicate records, and manual data-entry taxes.
                     </p>
                     <p class="ops-desc" style="color: var(--text-dim); font-size: 0.85rem;">
-                        <strong>Proposed System:</strong> Cross-references high-volume Variant Swatch King and SA Variants Pro merchants with mobile traffic benchmarks, identifying candidate stores ready for mobile app conversions without engineering overhead.
+                        <strong>Proposed System:</strong> Distributed, event-driven integration layer built with Redis distributed locking (NX/EX) for atomic idempotency, schema enforcement via dynamic Pydantic models, and automated dead-letter queues (DLQ) for zero data loss.
                     </p>
                     <div class="pill-group" style="margin-top: auto; margin-bottom: 0;">
-                        <span class="tech-pill">Post-Merger Ops</span>
-                        <span class="tech-pill">Merchant Scoring</span>
-                        <span class="tech-pill">Zero-Tax Growth</span>
+                        <span class="tech-pill">Two-Phase Idempotency</span>
+                        <span class="tech-pill">Dead-Letter Queues</span>
+                        <span class="tech-pill">Atomic Data Sync</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 3: The 30-60-90 Day Strategic Plan -->
-    <section id="proposal">
+    <!-- Section 3: Production Deployment Blueprint -->
+    <section id="deployment">
         <div class="container reveal">
             <div class="proposal-card">
                 <div style="text-align: center; margin-bottom: 2rem;">
-                    <div class="hero-badge" style="margin-bottom: 0.75rem;">Strategic Alignment</div>
-                    <h2 style="font-size: 2.5rem; margin-bottom: 0.75rem;">StarApps 30-60-90 Day Strategic Proposal</h2>
+                    <div class="hero-badge" style="margin-bottom: 0.75rem;">Execution Framework</div>
+                    <h2 style="font-size: 2.5rem; margin-bottom: 0.75rem;">Production AI Workflow Deployment Blueprint</h2>
                     <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 650px; margin: 0 auto;">
-                        How I hit the ground running as Chief of Staff to Shashank Agrawal in Baner, Pune—operating as a zero-engineering-tax force multiplier.
+                        How I hit the ground running with teams and founders—deploying zero-engineering-tax automation and turning operational bottlenecks into autonomous systems.
                     </p>
                 </div>
 
                 <div class="timeline-grid">
                     <div class="timeline-col">
-                        <h4>Days 1–30: Audit &amp; Quick Wins</h4>
+                        <h4>Phase 1: Discovery &amp; Bottleneck Audit</h4>
                         <p>
-                            Shadow Customer Success on high-frequency Variant Swatch King tickets. Map theme conflict friction, prototype the automated DOM triage tool, and audit trial drop-off points.
+                            Shadow operations, customer success, and data intake. Map manual repetition, quantify ticket friction points, and identify high-ROI automation targets with zero engineering disruption.
                         </p>
                     </div>
                     <div class="timeline-col">
-                        <h4>Days 31–60: Automation &amp; Scale</h4>
+                        <h4>Phase 2: Hybrid System 1/2 Automation</h4>
                         <p>
-                            Deploy internal triage tools to CS, wire proactive merchant churn alerts in Slack, and assist leadership with AppMaker post-acquisition operational integration.
+                            Deploy rapid sub-50ms intent routing for triage, wire deterministic schema extraction for document flows, and establish robust Redis-backed webhook synchronization with error budgets.
                         </p>
                     </div>
                     <div class="timeline-col">
-                        <h4>Days 61–90: Autonomous Leverage</h4>
+                        <h4>Phase 3: Autonomous Scale &amp; SOP Handover</h4>
                         <p>
-                            Standardize operating SOPs, take ownership of cross-functional special projects, and free up 15+ weekly hours of founder bandwidth for Shashank.
+                            Standardize operating SOPs, integrate automated telemetry dashboards, and transition workflows into self-healing, auditable infrastructure that saves 15+ hours of leadership bandwidth weekly.
                         </p>
                     </div>
                 </div>
 
-                <div style="text-align: center;">
-                    <a href="/assets/StarApps_30_60_90_Strategic_Proposal.pdf" target="_blank" class="btn btn-emerald" style="padding: 1rem 2rem;">
-                        <i data-lucide="file-down" style="width: 18px; height: 18px;"></i> Download Complete 30-60-90 Proposal (PDF)
+                <div style="text-align: center; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="#contact" class="btn btn-emerald" style="padding: 1rem 2.25rem;">
+                        <i data-lucide="calendar" style="width: 18px; height: 18px;"></i> Schedule Technical Deployment Briefing
+                    </a>
+                    <a href="#systems" class="btn" style="padding: 1rem 2rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);">
+                        <i data-lucide="cpu" style="width: 18px; height: 18px;"></i> Inspect System Architectures
                     </a>
                 </div>
             </div>
@@ -1045,6 +1112,7 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                     <h3><i data-lucide="cpu" style="color: var(--gold); width: 22px; height: 22px;"></i> AI Systems &amp; Gateways</h3>
                     <p>Production LLM routing, token security, and deterministic schema extraction.</p>
                     <div class="stack-tags">
+                        <span class="stack-tag">Laya Decision Engine (ModernBERT)</span>
                         <span class="stack-tag">LiteLLM Proxy</span>
                         <span class="stack-tag">Google Gemini 2.5 Flash</span>
                         <span class="stack-tag">Anthropic Claude</span>
@@ -1104,7 +1172,7 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                         <div class="architect-portrait"></div>
                     </div>
                     <div class="architect-info">
-                        <div class="architect-role">Candidate Dossier &bull; Chief of Staff</div>
+                        <div class="architect-role">Profile Dossier &bull; Technical Systems &amp; Autonomous AI Operator</div>
                         <h3>Anas Wahab</h3>
                         <p class="architect-bio">
                             I am a technical operator bridging commercial strategy, e-commerce operations, and autonomous AI systems. I hold a <strong>Bachelor's in Mass Media</strong> (Thakur Degree College, 2016–2019), giving me strong stakeholder alignment, strategic communication, and executive writing capabilities.
@@ -1113,7 +1181,7 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                             Unlike traditional chiefs of staff who only build slide decks, I build internal software and automated pipelines myself. Through my independent systems venture (<em>AI Nexlify</em>), I have taken autonomous intake engines, webhook pipelines, and data extraction prototypes from 0 to 1.
                         </p>
                         <p class="architect-bio" style="color: #ffffff; font-weight: 500;">
-                            I am prepared to dedicate 100% of my operational focus as an in-house force multiplier. Based in Mumbai, with an uncompromised commitment to <strong>relocate immediately to Baner, Pune</strong> (WeWork Eleven West) with <strong>0 days notice</strong>.
+                            I am prepared to dedicate 100% of my operational focus as a technical systems builder and force multiplier. Based in Mumbai, with full flexibility for <strong>immediate relocation (e.g. Pune, Bangalore) or remote deployment</strong> with <strong>0 days notice</strong>.
                         </p>
                         <div class="architect-socials">
                             <a href="/assets/Anas_Wahab_Chief_of_Staff_Resume.pdf" target="_blank" style="background: var(--gold); color: #000; font-weight: bold; border-color: var(--gold);">
@@ -1143,7 +1211,7 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                     <div class="hero-badge" style="margin-bottom: 1rem;">Direct Founder Connect</div>
                     <h2 style="font-size: 2.5rem; margin-bottom: 0.75rem;">Schedule a 15-Minute Briefing</h2>
                     <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin: 0 auto;">
-                        Connect directly with Anas Wahab. Discuss the Chief of Staff opening, operational bottlenecks, or the StarApps 30-60-90 day strategic plan.
+                        Connect directly with Anas Wahab. Discuss operational bottlenecks, AI workflow automation pipelines, or technical systems architecture.
                     </p>
                 </div>
 
@@ -1151,17 +1219,17 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Your Name</label>
-                            <input type="text" name="name" required placeholder="e.g. Shashank Agrawal">
+                            <input type="text" name="name" required placeholder="e.g. Alex Morgan">
                         </div>
                         <div class="form-group">
                             <label>Company / Organization</label>
-                            <input type="text" name="businessName" required placeholder="e.g. StarApps Studio">
+                            <input type="text" name="businessName" required placeholder="e.g. Acme Systems / Growth Corp">
                         </div>
                     </div>
                     <div class="form-grid">
                         <div class="form-group">
                             <label>Email Address</label>
-                            <input type="email" name="email" required placeholder="shashank@starapps.io">
+                            <input type="email" name="email" required placeholder="alex@company.com">
                         </div>
                         <div class="form-group">
                             <label>WhatsApp / Phone</label>
@@ -1170,7 +1238,7 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
                         <label>Notes / Operational Context</label>
-                        <textarea name="notes" rows="4" placeholder="Briefly share any immediate operational priorities, AppMaker integration questions, or preferred meeting times..."></textarea>
+                        <textarea name="notes" rows="4" placeholder="Briefly describe your current operational bottleneck, data intake friction, or high-priority automation target..."></textarea>
                     </div>
                     <button type="submit" id="portfolioSubmitBtn" class="btn" style="width: 100%; padding: 1.15rem;">
                         Submit Briefing Request
@@ -1192,13 +1260,13 @@ app.post(<span class="code-str">'/api/lead/stream'</span>, <span class="code-kwd
                 <img src="/nexlify-logo.png" alt="Anas Wahab" style="height: 32px; width: auto; opacity: 0.85;" />
             </div>
             <div>
-                <a href="https://wa.me/917977441599?text=Hi%20Anas%2C%20I%20reviewed%20your%20Chief%20of%20Staff%20portfolio%20and%20would%20like%20to%20connect." target="_blank" rel="noopener noreferrer" class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #25D366; color: #fff; border: none; font-weight: 700; text-decoration: none; padding: 0.8rem 1.75rem; font-size: 0.9rem;">
+                <a href="https://wa.me/917977441599?text=Hi%20Anas%2C%20I%20reviewed%20your%20technical%20systems%20portfolio%20and%20would%20like%20to%20connect." target="_blank" rel="noopener noreferrer" class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #25D366; color: #fff; border: none; font-weight: 700; text-decoration: none; padding: 0.8rem 1.75rem; font-size: 0.9rem;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                     Direct WhatsApp: +91 79774 41599
                 </a>
             </div>
             <p style="margin-top: 2rem; font-size: 0.85rem; color: var(--text-dim); max-width: 650px; margin-left: auto; margin-right: auto; line-height: 1.6;">
-                Anas Wahab &bull; Chief of Staff &amp; Technical Operator &bull; AI Nexlify Systems
+                Anas Wahab &bull; Technical Systems &amp; Autonomous AI Automation &bull; AI Nexlify
             </p>
             <p style="margin-top: 0.75rem; font-size: 0.8rem; color: rgba(255, 255, 255, 0.3); font-family: var(--font-mono);">
                 &copy; 2026 Anas Wahab. Authenticity &amp; Zero Hallucination Standard.
