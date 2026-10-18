@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meet Layla | Speed-to-Lead Inbound Engine Prototype</title>
+    <link rel="canonical" href="https://www.ainexlifyagencies.com/meet-layla.html" />
+    <meta name="description" content="Test drive Layla: event-driven sub-25s inbound lead qualification microservice with Server-Sent Events (SSE) streaming and automated Gemini failover.">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     
     <!-- Premium Plush Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -172,9 +176,10 @@
         .chip {
             background: rgba(196, 159, 59, 0.1); color: var(--gold); border: 1px solid rgba(196, 159, 59, 0.3);
             padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.8rem; font-weight: 600;
-            cursor: pointer; transition: var(--transition-smooth);
+            cursor: pointer; transition: var(--transition-smooth); font-family: inherit;
         }
-        .chip:hover { background: var(--gold); color: #000; transform: translateY(-2px); }
+        .chip:hover, .chip:focus { background: var(--gold); color: #000; transform: translateY(-2px); outline: none; }
+        .chip:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
         .input-box { display: flex; gap: 1rem; }
         .input-box input {
@@ -182,12 +187,23 @@
             padding: 1rem 1.5rem; border-radius: 100px; font-family: var(--font-body);
         }
         .input-box input:focus { outline: none; border-color: var(--gold); }
+        .input-box input:disabled { opacity: 0.5; cursor: not-allowed; }
         .send-btn {
             background: var(--gold); color: #000; border: none; width: 50px; height: 50px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: var(--transition-smooth);
         }
         .send-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px rgba(196,159,59,0.4); }
+        .send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* Accessible Skip Link */
+        .skip-link {
+            position: absolute; top: -50px; left: 1rem;
+            background: var(--gold); color: #000; padding: 0.5rem 1rem;
+            border-radius: 4px; font-weight: 700; z-index: 1000;
+            transition: top 0.2s ease; text-decoration: none; font-size: 0.85rem;
+        }
+        .skip-link:focus { top: 1rem; }
 
         /* Bailout CTA */
         .bailout-container { text-align: center; margin-top: 2rem; }
@@ -209,10 +225,34 @@
         .nav-back { position: absolute; top: 2rem; left: 2rem; color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; transition: var(--transition-smooth); }
         .nav-back:hover { color: var(--gold); }
 
+        .macos-back-btn {
+            display: none;
+            align-items: center;
+            gap: 4px;
+            color: var(--gold-light);
+            font-size: 0.85rem;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            text-decoration: none;
+            padding: 0.35rem 0.65rem;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: var(--transition-smooth);
+            z-index: 20;
+        }
+        .macos-back-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            color: #fff;
+        }
+
         @media (max-width: 768px) {
-            /* Hide Web Artifacts */
+            /* Hide Web Desktop Artifacts */
             header, .telemetry-sidebar, .ambient-bg, .nav-back, .macos-header .traffic-lights, .bailout-container {
                 display: none !important;
+            }
+            .macos-back-btn {
+                display: inline-flex !important;
             }
 
             /* Force Edge-to-Edge Container */
@@ -231,8 +271,17 @@
             }
 
             /* Center Native Contact Header */
-            .macos-header { height: 60px; background: rgba(20,20,20,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.1); }
-            .macos-title { padding-right: 0; color: #fff; font-weight: 600; font-size: 1.1rem; }
+            .macos-header {
+                height: 60px;
+                background: rgba(20,20,20,0.95);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 1rem;
+            }
+            .macos-title { padding-right: 0; color: #fff; font-weight: 600; font-size: 1.05rem; }
             .macos-title::after { content: ' • Online'; color: var(--emerald); font-size: 0.8rem; font-weight: normal; }
             
             /* Chat Constraints */
@@ -256,9 +305,11 @@
 <link rel="stylesheet" href="omega.css">
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div class="ambient-bg"></div>
     <a href="/" class="nav-back"><i data-lucide="arrow-left"></i> Back to Systems</a>
 
+    <main id="main-content" role="main">
     <div class="container">
         <header>
             <h1 class="gradient-text">Layla Core Engine: Live Inbound Qualification</h1>
@@ -267,6 +318,9 @@
 
         <div class="glass-room">
             <div class="macos-header">
+                <a href="/" class="macos-back-btn" aria-label="Back to Systems Portfolio">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg> Systems
+                </a>
                 <div class="traffic-lights">
                     <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
                 </div>
@@ -281,7 +335,7 @@
                 </div>
                 <div class="telemetry-item">
                     <span class="telemetry-label">Latency:</span>
-                    <span class="telemetry-val" id="tel-latency">42ms</span>
+                    <span class="telemetry-val" id="tel-latency">-- (Idle)</span>
                 </div>
                 <div class="telemetry-item">
                     <span class="telemetry-label">Sentiment Analysis:</span>
@@ -294,18 +348,18 @@
             </div>
 
             <div class="chat-container">
-                <div class="chat-history" id="chatHistory">
+                <div class="chat-history" id="chatHistory" role="log" aria-live="polite">
                     <div class="message ai">Hello. I am the Layla intake prototype. I demonstrate sub-25s inbound qualification, intent evaluation, and automated CRM triage. What operational workflow would you like to explore?</div>
                 </div>
                 <div class="chat-input-area">
                     <div class="action-chips">
-                        <div class="chip" onclick="handleChip('How do you handle inbound lead qualification?')">“How do you handle inbound lead qualification?”</div>
-                        <div class="chip" onclick="handleChip('How does the dual-model failover circuit work?')">“How does the dual-model failover circuit work?”</div>
-                        <div class="chip" onclick="handleChip('How does LoopGuard state deduplication prevent duplicate webhook triggers?')">“How does LoopGuard state deduplication prevent duplicate webhook triggers?”</div>
+                        <button type="button" class="chip" onclick="handleChip('How do you handle inbound lead qualification?')">“How do you handle inbound lead qualification?”</button>
+                        <button type="button" class="chip" onclick="handleChip('How does the dual-model failover circuit work?')">“How does the dual-model failover circuit work?”</button>
+                        <button type="button" class="chip" onclick="handleChip('How does LoopGuard state deduplication prevent duplicate webhook triggers?')">“How does LoopGuard state deduplication prevent duplicate webhook triggers?”</button>
                     </div>
                     <form class="input-box" id="chatForm">
-                        <input type="text" id="userInput" placeholder="Type your message..." autocomplete="off">
-                        <button type="submit" class="send-btn"><i data-lucide="send"></i></button>
+                        <input type="text" id="userInput" placeholder="Type your message..." aria-label="Type message to Layla" autocomplete="off">
+                        <button type="submit" class="send-btn" aria-label="Send message"><i data-lucide="send"></i></button>
                     </form>
                 </div>
             </div>
@@ -315,6 +369,7 @@
             <a href="/#contact" class="btn">Schedule Technical Briefing</a>
         </div>
     </div>
+    </main>
 
     <script>
         lucide.createIcons();
@@ -336,12 +391,6 @@
             telCrm.innerText = crm;
         }
 
-        // Random jitter for latency
-        setInterval(() => {
-            const jitter = Math.floor(Math.random() * 20) + 30;
-            telLatency.innerText = jitter + 'ms';
-        }, 1500);
-
         function appendMessage(sender, text) {
             const msg = document.createElement('div');
             msg.className = `message ${sender}`;
@@ -354,8 +403,16 @@
             });
         }
 
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+            });
+        }
+
         let conversationHistory = [];
         let typingElement = null;
+        let isProcessing = false;
+        const sendBtn = form.querySelector('.send-btn');
 
         function showTyping() {
             if (typingElement) return;
@@ -376,14 +433,20 @@
         }
 
         async function handleUserInput(text) {
-            if(!text.trim()) return;
+            if(!text.trim() || isProcessing) return;
+            isProcessing = true;
+            input.disabled = true;
+            if (sendBtn) sendBtn.disabled = true;
+            document.querySelectorAll('.chip').forEach(c => c.disabled = true);
+
             appendMessage('user', text);
             input.value = '';
             
             updateTelemetry('Processing...', '...', 'Neural_Routing...', 'Ready');
             showTyping();
 
-            const start = Date.now();
+            const start = performance.now();
+            let streamError = false;
             try {
                 const response = await fetch('/api/chat/web', {
                     method: 'POST',
@@ -392,7 +455,7 @@
                 });
                 
                 hideTyping();
-                const latency = Date.now() - start;
+                const latency = Math.round(performance.now() - start);
 
                 if (!response.ok) {
                     appendMessage('ai', "I encountered an anomaly. Please try again.");
@@ -430,9 +493,10 @@
                                 const data = JSON.parse(dataStr);
                                 if (data.text !== undefined && data.text !== null && data.text !== '') {
                                     fullResponse += data.text;
-                                    msgElem.innerHTML = fullResponse.replace(/\n/g, '<br>');
+                                    msgElem.innerHTML = escapeHtml(fullResponse).replace(/\n/g, '<br>');
                                     history.scrollTop = history.scrollHeight;
                                 } else if (data.error) {
+                                    streamError = true;
                                     console.error("Stream Error:", data.error);
                                     if (data.error.includes("API_KEY_MISSING")) {
                                         fullResponse = "My architect has not provided me with a valid API key. I am offline.";
@@ -441,7 +505,7 @@
                                     } else {
                                         fullResponse = `System Anomaly: ${data.error}`;
                                     }
-                                    msgElem.innerHTML = fullResponse;
+                                    msgElem.innerHTML = escapeHtml(fullResponse).replace(/\n/g, '<br>');
                                     history.scrollTop = history.scrollHeight;
                                 }
                             } catch (e) {
@@ -453,12 +517,22 @@
                 
                 conversationHistory.push({ role: 'user', content: text });
                 conversationHistory.push({ role: 'assistant', content: fullResponse });
-                updateTelemetry('Neural_Response', latency + 'ms', 'Dynamic', 'Live');
+                if (streamError) {
+                    updateTelemetry('Stream_Error', latency + 'ms', 'Degraded', 'Failed');
+                } else {
+                    updateTelemetry('Neural_Response', latency + 'ms', 'Dynamic', 'Live');
+                }
 
             } catch (err) {
                 hideTyping();
                 appendMessage('ai', "My neural link is currently offline. Please try again shortly.");
                 updateTelemetry('Offline', '0ms', 'Disconnected', 'Failed');
+            } finally {
+                isProcessing = false;
+                input.disabled = false;
+                if (sendBtn) sendBtn.disabled = false;
+                document.querySelectorAll('.chip').forEach(c => c.disabled = false);
+                input.focus();
             }
         }
 
