@@ -23,7 +23,7 @@ process.on('uncaughtException', (err) => {
   setTimeout(() => process.exit(1), 1000);
 });
 
-const { router: authRouter } = require('./auth')
+const { router: authRouter, authMiddleware } = require('./auth')
 const stripeRouter = require('./stripe')
 const dealersRouter = require('./dealers')
 
@@ -33,11 +33,49 @@ const app = express()
 // Must come before express.json()
 app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }))
 
-// ─── Security Hardening ──────────────────────────────────────────────────────
-app.use(cors({ origin: '*', methods: ['GET', 'POST'] }))
+// ─── Security Hardening & CORS ───────────────────────────────────────────────
+const allowedOrigins = [
+  'https://ainexlifyagencies.com',
+  'https://www.ainexlifyagencies.com',
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://localhost:5173',
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:3001',
+  'http://127.0.0.1:5173'
+]
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow non-browser requests (e.g. curl, server-to-server) or approved origins
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      return callback(null, true)
+    }
+    return callback(null, false)
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
+}))
 app.use(express.json())
 
-app.post('/api/chat/web', async (req, res) => {
+// ─── Rate Limiters ───────────────────────────────────────────────────────────
+const chatLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30, // limit each IP to 30 requests per 15 min
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: 'Too many chat requests from this IP. Please wait a few minutes before trying again.' }
+})
+
+const contactLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // limit each IP to 10 submissions per 15 min
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: 'Too many submissions from this IP. Please try again later.' }
+})
+
+app.post('/api/chat/web', chatLimiter, async (req, res) => {
   try {
     const { message, history } = req.body
     if (!message) return res.status(400).json({ error: 'Message is required' })
@@ -106,31 +144,13 @@ const auditLimiter = rateLimit({
 const path = require('path')
 app.use(express.static(path.join(__dirname, 'agency-public'), { extensions: ['html'] }))
 
-// 🏛️ IGNITION PORTAL (Decentralized Onboarding)
-app.get('/ignite', (req, res) => {
-  const filePath = path.join(__dirname, 'agency-public', 'ignite.html');
-  res.sendFile(filePath, (err) => {
-    if (err) {
-      console.error('❌ [SERVER] Error serving ignite.html:', err.message);
-      res.status(404).send('Ignition Portal Not Found. Please ensure ignite.html exists in agency-public.');
-    }
-  });
-})
-
-app.get('/schedule', (req, res) => {
-  res.sendFile(path.join(__dirname, 'agency-public', 'schedule.html'))
+// 🏛️ Decommissioned Legacy Routes (Clean 404 Rejection)
+app.get(['/ignite', '/schedule', /^\/dealer-pulse/], (req, res) => {
+  res.status(404).json({ success: false, error: 'Endpoint deprecated or relocated.' });
 })
 
 app.get('/meet-layla', (req, res) => {
   res.sendFile(path.join(__dirname, 'agency-public', 'meet-layla.html'))
-})
-
-app.get(/^\/dealer-pulse/, (req, res) => {
-  res.sendFile(path.join(__dirname, 'agency-public', 'dealer-pulse', 'index.html'), (err) => {
-    if (err) {
-      res.status(404).send('Dealer Pulse App Not Found');
-    }
-  });
 })
 
 // 🏠 Explicit Root Route (Prevents "Cannot GET /" on some environments)
@@ -146,7 +166,7 @@ app.get('/', (req, res) => {
   });
 })
 
-app.post('/api/onboard/dealer', async (req, res) => {
+app.post('/api/onboard/dealer', authMiddleware, async (req, res) => {
   const { dealerName, phoneNumberId, wabaId, metaAccessToken } = req.body;
   if (!dealerName || !phoneNumberId || !wabaId || !metaAccessToken) {
     return res.status(400).json({ success: false, error: 'Missing required credentials.' });
@@ -197,7 +217,7 @@ app.get('/health', (req, res) => {
 // ─── DASHBOARD API (real-time data) ──────────────────────────────────────────
 
 // Live inventory from Airtable
-app.get('/api/inventory', async (req, res) => {
+app.get('/api/inventory', authMiddleware, async (req, res) => {
   try {
     const cars = await getAvailableInventory()
     res.json({ success: true, data: cars, total: cars.length, updatedAt: new Date().toISOString() })
@@ -207,14 +227,14 @@ app.get('/api/inventory', async (req, res) => {
 })
 
 // All leads (sorted most recent first)
-app.get('/api/leads', (req, res) => {
+app.get('/api/leads', authMiddleware, (req, res) => {
   const leads = Array.from(leadsCache.entries()).map(([phone, data]) => ({ id: phone, phone, ...data }))
   leads.sort((a, b) => new Date(b.lastActivity || 0) - new Date(a.lastActivity || 0))
   res.json({ success: true, data: leads, total: leads.length })
 })
 
 // Single lead
-app.get('/api/leads/:phone', (req, res) => {
+app.get('/api/leads/:phone', authMiddleware, (req, res) => {
   const phone = decodeURIComponent(req.params.phone)
   const lead = leadsCache.get(phone)
   if (!lead) return res.status(404).json({ success: false, error: 'Not found' })
@@ -222,7 +242,7 @@ app.get('/api/leads/:phone', (req, res) => {
 })
 
 // Aggregated stats for dashboard header cards
-app.get('/api/stats', async (req, res) => {
+app.get('/api/stats', authMiddleware, async (req, res) => {
   const leads = Array.from(leadsCache.values())
   const hot = leads.filter(l => (l.intentScore || 0) >= 8).length
   const avgScore = leads.length
@@ -243,7 +263,7 @@ app.get('/api/stats', async (req, res) => {
 })
 
 // Qualify / dismiss actions from dealer
-app.post('/api/leads/:phone/qualify', (req, res) => {
+app.post('/api/leads/:phone/qualify', authMiddleware, (req, res) => {
   const phone = decodeURIComponent(req.params.phone)
   const lead = leadsCache.get(phone)
   if (!lead) return res.status(404).json({ success: false })
@@ -251,7 +271,7 @@ app.post('/api/leads/:phone/qualify', (req, res) => {
   res.json({ success: true })
 })
 
-app.post('/api/leads/:phone/dismiss', (req, res) => {
+app.post('/api/leads/:phone/dismiss', authMiddleware, (req, res) => {
   const phone = decodeURIComponent(req.params.phone)
   const lead = leadsCache.get(phone)
   if (!lead) return res.status(404).json({ success: false })
@@ -261,7 +281,7 @@ app.post('/api/leads/:phone/dismiss', (req, res) => {
 
 // ─── AGENTS DASHBOARD API ─────────────────────────────────────────────────────
 
-app.get('/api/agents/status', (req, res) => {
+app.get('/api/agents/status', authMiddleware, (req, res) => {
   try {
     const statuses = getAgentStatus()
     res.json({ success: true, data: statuses })
@@ -271,7 +291,7 @@ app.get('/api/agents/status', (req, res) => {
 })
 
 // 🏛️ HERMES MASTER PULSE
-app.post('/api/hermes/pulse', async (req, res) => {
+app.post('/api/hermes/pulse', authMiddleware, async (req, res) => {
   try {
     const { runHermesAgent } = require('./agents/hermes')
     const result = await runHermesAgent()
@@ -470,7 +490,7 @@ app.get('/api/cron/retargeting', async (req, res) => {
 })
 
 // POST /api/contact - Layla Deployment Intake Form
-app.post('/api/contact', async (req, res) => {
+app.post('/api/contact', contactLimiter, async (req, res) => {
   try {
     const { name, businessName, clinicName, phone, website, email } = req.body
     const business = businessName || clinicName;
@@ -687,7 +707,7 @@ app.post('/api/agency/audit', auditLimiter, async (req, res) => {
   }
 })
 
-app.post('/stress-test', async (req, res) => {
+app.post('/stress-test', authMiddleware, async (req, res) => {
   const results = await runStressTest(req.body.count || 50)
   res.json(results)
 })

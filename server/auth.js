@@ -4,7 +4,14 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { getDealerByEmail, saveDealerCredentials } = require('./db');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'cyber-luxe-secret-2026';
+const rawJwtSecret = process.env.JWT_SECRET;
+if (!rawJwtSecret && process.env.NODE_ENV === 'production') {
+  throw new Error('FATAL: JWT_SECRET environment variable is required in production.');
+}
+if (!rawJwtSecret) {
+  console.warn('⚠️ [SECURITY WARNING] JWT_SECRET is not set in environment. Using fallback for local development.');
+}
+const JWT_SECRET = rawJwtSecret || 'dev-local-jwt-secret-do-not-use-in-prod-2026';
 
 // Middleware to protect routes
 const authMiddleware = (req, res, next) => {

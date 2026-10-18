@@ -5,7 +5,16 @@ const crypto = require('crypto')
 const DB_PATH = path.join(__dirname, 'multi_tenant_dealers.json')
 
 // AES-256-CBC Encryption configuration for securing Meta Access Tokens
-const ENCRYPTION_KEY = process.env.DB_ENCRYPTION_KEY || crypto.scryptSync('SpeedToLeadSecretKey2026', 'salt', 32)
+const rawEncryptionKey = process.env.DB_ENCRYPTION_KEY;
+if (!rawEncryptionKey && process.env.NODE_ENV === 'production') {
+  throw new Error('FATAL: DB_ENCRYPTION_KEY environment variable is required in production.');
+}
+if (!rawEncryptionKey) {
+  console.warn('⚠️ [SECURITY WARNING] DB_ENCRYPTION_KEY is not set in environment. Using fallback for local development.');
+}
+const ENCRYPTION_KEY = rawEncryptionKey
+  ? (rawEncryptionKey.length === 64 ? Buffer.from(rawEncryptionKey, 'hex') : crypto.scryptSync(rawEncryptionKey, 'salt', 32))
+  : crypto.scryptSync('dev-local-db-key-do-not-use-in-prod-2026', 'salt', 32);
 const IV_LENGTH = 16
 
 function encrypt(text) {
