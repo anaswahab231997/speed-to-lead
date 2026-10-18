@@ -257,12 +257,12 @@
 </head>
 <body>
     <div class="ambient-bg"></div>
-    <a href="index.html" class="nav-back"><i data-lucide="arrow-left"></i> Back to Home</a>
+    <a href="/" class="nav-back"><i data-lucide="arrow-left"></i> Back to Systems</a>
 
     <div class="container">
         <header>
             <h1 class="gradient-text">Layla Core Engine: Live Inbound Qualification</h1>
-            <p class="subtitle">Interactive terminal for the Speed-to-Lead™ asynchronous inbound microservice. Demonstrates sub-second conversational intent tracking, Redis idempotency locking, and automated multi-turn qualification.</p>
+            <p class="subtitle">Interactive terminal for the Speed-to-Lead asynchronous inbound microservice. Demonstrates sub-second conversational intent tracking, stateful LoopGuard deduplication, and automated multi-turn qualification.</p>
         </header>
 
         <div class="glass-room">
@@ -301,7 +301,7 @@
                     <div class="action-chips">
                         <div class="chip" onclick="handleChip('How do you handle inbound lead qualification?')">“How do you handle inbound lead qualification?”</div>
                         <div class="chip" onclick="handleChip('How does the dual-model failover circuit work?')">“How does the dual-model failover circuit work?”</div>
-                        <div class="chip" onclick="handleChip('How do Redis check-and-claim locks prevent duplicate outreach?')">“How do Redis check-and-claim locks prevent duplicate outreach?”</div>
+                        <div class="chip" onclick="handleChip('How does LoopGuard state deduplication prevent duplicate webhook triggers?')">“How does LoopGuard state deduplication prevent duplicate webhook triggers?”</div>
                     </div>
                     <form class="input-box" id="chatForm">
                         <input type="text" id="userInput" placeholder="Type your message..." autocomplete="off">
@@ -312,7 +312,7 @@
         </div>
 
         <div class="bailout-container">
-            <a href="index.html#contact" class="btn">Schedule Technical Briefing</a>
+            <a href="/#contact" class="btn">Schedule Technical Briefing</a>
         </div>
     </div>
 
