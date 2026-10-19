@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const { getDealerByEmail, saveDealerCredentials } = require('./db');
 
 const rawJwtSecret = process.env.JWT_SECRET;
@@ -9,9 +10,9 @@ if (!rawJwtSecret && process.env.NODE_ENV === 'production') {
   throw new Error('FATAL: JWT_SECRET environment variable is required in production.');
 }
 if (!rawJwtSecret) {
-  console.warn('⚠️ [SECURITY WARNING] JWT_SECRET is not set in environment. Using fallback for local development.');
+  console.warn('⚠️ [SECURITY WARNING] JWT_SECRET is not set in environment. Generating ephemeral fallback for local development.');
 }
-const JWT_SECRET = rawJwtSecret || 'dev-local-jwt-secret-do-not-use-in-prod-2026';
+const JWT_SECRET = rawJwtSecret || crypto.randomBytes(32).toString('hex');
 
 // Middleware to protect routes
 const authMiddleware = (req, res, next) => {

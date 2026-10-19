@@ -28,6 +28,7 @@ const stripeRouter = require('./stripe')
 const dealersRouter = require('./dealers')
 
 const app = express()
+app.disable('x-powered-by')
 
 // ─── Stripe Webhook Raw Body Handling ────────────────────────────────────────
 // Must come before express.json()
@@ -495,41 +496,65 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
     const { name, businessName, clinicName, phone, website, email } = req.body
     const business = businessName || clinicName;
 
-    const nodemailer = require('nodemailer')
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.gmail.com', 
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    })
+    let emailSent = false;
+    if (process.env.SMTP_USER && process.env.SMTP_PASS) {
+      try {
+        const nodemailer = require('nodemailer')
+        const transporter = nodemailer.createTransport({
+          host: process.env.SMTP_HOST || 'smtp.gmail.com', 
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS,
+          },
+        })
 
-    if (business === 'Blueprint Request') {
-      // 1. Send the PDF directly to the prospect
-      const blueprintMailOptions = {
-        from: process.env.SMTP_USER,
-        to: email || 'anaswahabofficial@gmail.com', // fallback to admin if no email provided
-        subject: `ACCESS GRANTED: Your 2026 Autonomous Systems Blueprint`,
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1a1a1a;">
-            <h2>Applied AI Systems Architecture Blueprint</h2>
-            <p>Thank you for requesting the systems blueprint. You can download the architecture document directly below.</p>
-            <div style="margin: 30px 0;">
-              <a href="https://www.ainexlifyagencies.com/assets/The_2026_Autonomous_Blueprint.pdf" 
-                 style="background-color: #34d399; color: #000; padding: 14px 24px; text-decoration: none; font-weight: bold; border-radius: 8px; display: inline-block;">
-                Download Architecture Blueprint (PDF)
-              </a>
-            </div>
-            <p>Best regards,<br>Anas Wahab<br>Applied AI Systems Operator & Technical Chief of Staff</p>
-          </div>
-        `
+        if (business === 'Blueprint Request') {
+          await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to: email || 'anaswahabofficial@gmail.com',
+            subject: `ACCESS GRANTED: Your 2026 Autonomous Systems Blueprint`,
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1a1a1a;">
+                <h2>Applied AI Systems Architecture Blueprint</h2>
+                <p>Thank you for requesting the systems blueprint. You can download the architecture document directly below.</p>
+                <div style="margin: 30px 0;">
+                  <a href="https://www.ainexlifyagencies.com/assets/The_2026_Autonomous_Blueprint.pdf" 
+                     style="background-color: #34d399; color: #000; padding: 14px 24px; text-decoration: none; font-weight: bold; border-radius: 8px; display: inline-block;">
+                    Download Architecture Blueprint (PDF)
+                  </a>
+                </div>
+                <p>Best regards,<br>Anas Wahab<br>Applied AI Systems Operator & Technical Chief of Staff</p>
+              </div>
+            `
+          });
+          emailSent = true;
+        } else {
+          await transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to: 'anaswahabofficial@gmail.com',
+            subject: `🚨 Technical Briefing Request: ${business || 'Unknown'}`,
+            html: `
+              <h3>Technical Briefing Request / Portfolio Inquiry</h3>
+              <p><strong>Name:</strong> ${name}</p>
+              <p><strong>Organization:</strong> ${business}</p>
+              <p><strong>Phone:</strong> ${phone}</p>
+              <p><strong>Email:</strong> ${email}</p>
+              <p><strong>Website / Context:</strong> ${website}</p>
+            `,
+          });
+          emailSent = true;
+        }
+      } catch (mailErr) {
+        console.warn('[API/CONTACT] SMTP dispatch warning:', mailErr.message);
       }
+    } else {
+      console.warn('[API/CONTACT] SMTP credentials unconfigured; logging lead to persistence layer.');
+    }
 
-      await transporter.sendMail(blueprintMailOptions);
-
-      // 2. Log in Supabase with Blueprint specific status
+    // Persist to Supabase
+    if (business === 'Blueprint Request') {
       try {
         const { saveLead } = require('./supabase')
         await saveLead({
@@ -543,32 +568,12 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
           dealer: 'Executive Portfolio'
         });
         
-        // Ensure status reflects the download for retargeting
         const { supabase } = require('./supabase');
         await supabase.from('leads').update({ status: 'Blueprint Downloaded' }).eq('phone', phone || email || '+10000000000');
-        
       } catch (e) {
-        console.log('[API/CONTACT] Supabase sync failed, but blueprint email sent.', e.message)
+        console.log('[API/CONTACT] Supabase sync failed:', e.message)
       }
-
     } else {
-      // Normal Contact Form Logic
-      const mailOptions = {
-        from: process.env.SMTP_USER,
-        to: 'anaswahabofficial@gmail.com',
-        subject: `🚨 Technical Briefing Request: ${business || 'Unknown'}`,
-        html: `
-          <h3>Technical Briefing Request / Portfolio Inquiry</h3>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Organization:</strong> ${business}</p>
-          <p><strong>Phone:</strong> ${phone}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Website / Context:</strong> ${website}</p>
-        `,
-      }
-
-      await transporter.sendMail(mailOptions)
-      
       try {
         const { saveLead } = require('./supabase')
         await saveLead({
@@ -581,14 +586,14 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
           dealer: business || 'Nexlify Agency'
         })
       } catch (e) {
-        console.log('[API/CONTACT] Supabase sync failed, but email sent.', e.message)
+        console.log('[API/CONTACT] Supabase sync failed:', e.message)
       }
     }
 
-    res.status(200).json({ message: "Lead secured successfully." })
+    res.status(200).json({ success: true, message: "Lead secured successfully.", emailDispatched: emailSent })
   } catch (error) {
     console.error('[API/CONTACT]', error.message)
-    res.status(500).json({ error: "Failed to process lead.", details: error.message, smtp_user_configured: !!process.env.SMTP_USER })
+    res.status(500).json({ success: false, error: "Failed to process lead.", details: error.message })
   }
 })
 

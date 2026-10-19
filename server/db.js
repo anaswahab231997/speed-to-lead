@@ -10,11 +10,11 @@ if (!rawEncryptionKey && process.env.NODE_ENV === 'production') {
   throw new Error('FATAL: DB_ENCRYPTION_KEY environment variable is required in production.');
 }
 if (!rawEncryptionKey) {
-  console.warn('⚠️ [SECURITY WARNING] DB_ENCRYPTION_KEY is not set in environment. Using fallback for local development.');
+  console.warn('⚠️ [SECURITY WARNING] DB_ENCRYPTION_KEY is not set in environment. Generating ephemeral fallback for local development.');
 }
 const ENCRYPTION_KEY = rawEncryptionKey
   ? (rawEncryptionKey.length === 64 ? Buffer.from(rawEncryptionKey, 'hex') : crypto.scryptSync(rawEncryptionKey, 'salt', 32))
-  : crypto.scryptSync('dev-local-db-key-do-not-use-in-prod-2026', 'salt', 32);
+  : crypto.randomBytes(32);
 const IV_LENGTH = 16
 
 function encrypt(text) {

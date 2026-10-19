@@ -69,7 +69,7 @@
             /* Typographic Hierarchy */
             --text-primary: #fafafa;
             --text-muted: #a1a1aa;
-            --text-dim: #71717a;
+            --text-dim: #94a3b8;
 
             /* Accent: Executive Gold & Emerald */
             --gold-light: #fbe28d;
@@ -295,7 +295,7 @@
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
         .proof-icon { color: var(--emerald-accent); flex-shrink: 0; margin-top: 2px; }
-        .proof-text h4 {
+        .proof-text h4, .proof-text .proof-title {
             font-size: 0.95rem;
             color: #ffffff;
             margin-bottom: 0.25rem;
@@ -504,7 +504,7 @@
             border-radius: 12px;
             padding: 1.5rem;
         }
-        .timeline-col h4 {
+        .timeline-col h3, .timeline-col h4 {
             font-size: 1.05rem;
             color: var(--gold-light);
             margin-bottom: 0.75rem;
@@ -759,9 +759,11 @@
         }
         .skip-link:focus { top: 1.5rem; }
 
-        /* Mobile */
-        @media (max-width: 768px) {
+        /* Tablet & Mobile Nav */
+        @media (max-width: 860px) {
             .nav-links { display: none; }
+        }
+        @media (max-width: 768px) {
             section { padding: 4.5rem 0; }
             .hero { padding-top: 7rem; }
             .hero-ctas { flex-direction: column; width: 100%; }
@@ -833,28 +835,28 @@
                 <div class="proof-item">
                     <i data-lucide="cpu" class="proof-icon"></i>
                     <div class="proof-text">
-                        <h4>Zero Core Sprint Dependency</h4>
+                        <div class="proof-title">Zero Core Sprint Dependency</div>
                         <p>Independently builds internal tooling in Python, Node, and webhooks without pulling core devs off roadmaps</p>
                     </div>
                 </div>
                 <div class="proof-item">
                     <i data-lucide="shield-check" class="proof-icon"></i>
                     <div class="proof-text">
-                        <h4>Upstream Security Contributor</h4>
+                        <div class="proof-title">Upstream Security Contributor</div>
                         <p>Author of PR #42490 in BerriAI/litellm (In-Review: Scoped Anthropic OAuth tokens strictly to api.anthropic.com)</p>
                     </div>
                 </div>
                 <div class="proof-item">
                     <i data-lucide="check-circle-2" class="proof-icon"></i>
                     <div class="proof-text">
-                        <h4>Token-Constrained Extraction</h4>
+                        <div class="proof-title">Token-Constrained Extraction</div>
                         <p>Dynamic Pydantic Enum schemas locked at runtime to verified client Chart of Accounts</p>
                     </div>
                 </div>
                 <div class="proof-item">
                     <i data-lucide="zap" class="proof-icon"></i>
                     <div class="proof-text">
-                        <h4>Sub-25s Qualification Pipeline</h4>
+                        <div class="proof-title">Sub-25s Qualification Pipeline</div>
                         <p>Event-driven Express 5 microservice with SSE streaming &amp; multi-model automated failover</p>
                     </div>
                 </div>
@@ -1218,19 +1220,19 @@ decision = laya.decide(
 
                 <div class="timeline-grid">
                     <div class="timeline-col">
-                        <h4>Phase 1: Discovery &amp; Bottleneck Audit</h4>
+                        <h3>Phase 1: Discovery &amp; Bottleneck Audit</h3>
                         <p>
                             Shadow operations, customer success, and data intake. Map manual repetition, quantify ticket friction points, and identify high-ROI automation targets with zero engineering disruption.
                         </p>
                     </div>
                     <div class="timeline-col">
-                        <h4>Phase 2: Hybrid System 1/2 Automation</h4>
+                        <h3>Phase 2: Hybrid System 1/2 Automation</h3>
                         <p>
                             Deploy rapid sub-50ms intent routing for triage, wire schema-constrained document extraction flows, and establish robust event-driven webhook synchronization with error budgets.
                         </p>
                     </div>
                     <div class="timeline-col">
-                        <h4>Phase 3: Autonomous Scale &amp; SOP Handover</h4>
+                        <h3>Phase 3: Autonomous Scale &amp; SOP Handover</h3>
                         <p>
                             Standardize operating SOPs, integrate automated telemetry dashboards, and transition workflows into self-healing, auditable infrastructure engineered to eliminate recurring manual triage drag.
                         </p>
@@ -1473,21 +1475,21 @@ decision = laya.decide(
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="contact-name">Your Name</label>
-                            <input type="text" id="contact-name" name="name" required placeholder="e.g. Alex Morgan">
+                            <input type="text" id="contact-name" name="name" required placeholder="e.g. Alex Morgan" autocomplete="name">
                         </div>
                         <div class="form-group">
                             <label for="contact-company">Company / Organization</label>
-                            <input type="text" id="contact-company" name="businessName" required placeholder="e.g. Acme Systems / Growth Corp">
+                            <input type="text" id="contact-company" name="businessName" required placeholder="e.g. Acme Systems / Growth Corp" autocomplete="organization">
                         </div>
                     </div>
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="contact-email">Email Address</label>
-                            <input type="email" id="contact-email" name="email" required placeholder="alex@company.com">
+                            <input type="email" id="contact-email" name="email" required placeholder="alex@company.com" autocomplete="email">
                         </div>
                         <div class="form-group">
                             <label for="contact-phone">WhatsApp / Phone</label>
-                            <input type="tel" id="contact-phone" name="phone" required placeholder="+91 99000 00000">
+                            <input type="tel" id="contact-phone" name="phone" required placeholder="+91 99000 00000" autocomplete="tel">
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
@@ -1502,7 +1504,7 @@ decision = laya.decide(
                 <div id="portfolioSuccess" style="display:none; text-align:center; padding: 2rem; background: rgba(52, 211, 153, 0.1); border: 1px solid var(--emerald-accent); border-radius: 12px; margin-top: 1.5rem;">
                     <h3 style="color: var(--emerald-accent); margin-bottom: 0.5rem;">Briefing Request Transmitted</h3>
                     <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">Anas Wahab will review and respond directly via email or WhatsApp within 4 business hours.</p>
-                    <a id="portfolioDirectWaLink" href="https://wa.me/917977441599" target="_blank" rel="noopener noreferrer" class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #25D366; color: #fff; border: none; font-size: 0.85rem; padding: 0.6rem 1.25rem;">
+                    <a id="portfolioDirectWaLink" href="https://wa.me/917977441599" target="_blank" rel="noopener noreferrer" class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #25D366; color: #050505; border: none; font-size: 0.85rem; padding: 0.6rem 1.25rem;">
                         Open in WhatsApp
                     </a>
                 </div>
@@ -1519,7 +1521,7 @@ decision = laya.decide(
                 <img src="/nexlify-logo.png" alt="Anas Wahab" style="height: 32px; width: auto; opacity: 0.85;" />
             </div>
             <div>
-                <a href="https://wa.me/917977441599?text=Hi%20Anas%2C%20I%20reviewed%20your%20technical%20systems%20portfolio%20and%20would%20like%20to%20connect." target="_blank" rel="noopener noreferrer" class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #25D366; color: #fff; border: none; font-weight: 700; text-decoration: none; padding: 0.8rem 1.75rem; font-size: 0.9rem;">
+                <a href="https://wa.me/917977441599?text=Hi%20Anas%2C%20I%20reviewed%20your%20technical%20systems%20portfolio%20and%20would%20like%20to%20connect." target="_blank" rel="noopener noreferrer" class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #25D366; color: #050505; border: none; font-weight: 700; text-decoration: none; padding: 0.8rem 1.75rem; font-size: 0.9rem;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                     Direct WhatsApp: +91 79774 41599
                 </a>
