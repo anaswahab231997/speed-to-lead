@@ -510,19 +510,19 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
       // 1. Send the PDF directly to the prospect
       const blueprintMailOptions = {
         from: process.env.SMTP_USER,
-        to: email || 'anas@ainexlifyagencies.com', // fallback to admin if no email provided
-        subject: `ACCESS GRANTED: Your 2026 Autonomous Blueprint`,
+        to: email || 'anaswahabofficial@gmail.com', // fallback to admin if no email provided
+        subject: `ACCESS GRANTED: Your 2026 Autonomous Systems Blueprint`,
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #1a1a1a;">
-            <h2>Here is your architecture.</h2>
-            <p>Read the ROI Matrix. When you are ready to stop bleeding leads, my calendar link is at the bottom of the document.</p>
+            <h2>Applied AI Systems Architecture Blueprint</h2>
+            <p>Thank you for requesting the systems blueprint. You can download the architecture document directly below.</p>
             <div style="margin: 30px 0;">
               <a href="https://www.ainexlifyagencies.com/assets/The_2026_Autonomous_Blueprint.pdf" 
                  style="background-color: #34d399; color: #000; padding: 14px 24px; text-decoration: none; font-weight: bold; border-radius: 8px; display: inline-block;">
-                Download Blueprint PDF (Direct Access)
+                Download Architecture Blueprint (PDF)
               </a>
             </div>
-            <p>Best,<br>Anas Wahab<br>AI Nexlify Agencies</p>
+            <p>Best regards,<br>Anas Wahab<br>Applied AI Systems Operator & Technical Chief of Staff</p>
           </div>
         `
       }
@@ -540,7 +540,7 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
           intentScore: 8,
           status: 'Blueprint Downloaded',
           source: 'blueprint-magnet',
-          dealer: 'Nexlify Agency'
+          dealer: 'Executive Portfolio'
         });
         
         // Ensure status reflects the download for retargeting
@@ -555,15 +555,15 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
       // Normal Contact Form Logic
       const mailOptions = {
         from: process.env.SMTP_USER,
-        to: 'anas@ainexlifyagencies.com',
-        subject: `🚨 New Layla Deployment Request: ${business || 'Unknown'}`,
+        to: 'anaswahabofficial@gmail.com',
+        subject: `🚨 Technical Briefing Request: ${business || 'Unknown'}`,
         html: `
-          <h3>New Autonomous System Lead</h3>
+          <h3>Technical Briefing Request / Portfolio Inquiry</h3>
           <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Business:</strong> ${business}</p>
+          <p><strong>Organization:</strong> ${business}</p>
           <p><strong>Phone:</strong> ${phone}</p>
           <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Website:</strong> ${website}</p>
+          <p><strong>Website / Context:</strong> ${website}</p>
         `,
       }
 
