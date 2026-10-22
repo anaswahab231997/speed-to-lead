@@ -213,7 +213,7 @@ const htmlContent = `
         <div class="meta-strip">
             <span>Author: <strong>Anas Wahab</strong> (Applied AI Systems Operator &amp; Technical Chief of Staff)</span>
             <span>Standard: <strong>Zero Hallucination / Production-Grade</strong></span>
-            <span>Origin: <strong>ainexlifyagencies.com</strong></span>
+            <span>Origin: <strong>Nexlify Systems Laboratory</strong></span>
         </div>
     </div>
 
@@ -290,7 +290,7 @@ const htmlContent = `
         <div class="footer-right">
             <div>Email: <a href="mailto:anaswahabofficial@gmail.com">anaswahabofficial@gmail.com</a></div>
             <div>GitHub: <a href="https://github.com/anaswahab231997">github.com/anaswahab231997</a></div>
-            <div>Direct WhatsApp: +91 79774 41599</div>
+            <div>LinkedIn: <a href="https://linkedin.com/in/anaswahab97">linkedin.com/in/anaswahab97</a></div>
         </div>
     </div>
 
